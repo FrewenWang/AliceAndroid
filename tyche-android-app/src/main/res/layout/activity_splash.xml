@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ic_films"
+        android:layout_width="@dimen/splash_icon_films_size"
+        android:layout_height="@dimen/splash_icon_films_size"
+        android:layout_marginStart="@dimen/common_content_margin"
+        android:layout_marginLeft="@dimen/common_content_margin"
+        android:layout_marginTop="@dimen/common_content_margin"
+        android:layout_marginEnd="@dimen/common_content_margin"
+        android:layout_marginRight="@dimen/common_content_margin"
+        android:layout_marginBottom="@dimen/common_content_margin"
+        android:contentDescription="@string/splash_icon_description"
+        android:scaleType="center"
+        android:src="@drawable/ic_films_black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_lens"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/splash_icon_description"
+        android:src="@drawable/ic_search_red"
+        app:layout_constraintBottom_toBottomOf="@+id/ic_films"
+        app:layout_constraintEnd_toEndOf="@+id/ic_films"
+        app:layout_constraintStart_toStartOf="@+id/ic_films"
+        app:layout_constraintTop_toTopOf="@+id/ic_films" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_content_margin"
+        android:layout_marginLeft="@dimen/common_content_margin"
+        android:layout_marginTop="@dimen/common_content_margin"
+        android:layout_marginEnd="@dimen/common_content_margin"
+        android:layout_marginRight="@dimen/common_content_margin"
+        android:layout_marginBottom="@dimen/common_content_margin"
+        android:src="@drawable/ic_powered_by_rectangle_green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

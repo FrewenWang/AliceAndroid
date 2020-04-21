@@ -1,0 +1,12 @@
+include ':tyche-android-app', ':optimusnetwork', ':free-network', ':router-annotation', ':router-api', ':router-stub', ':router-compiler'
+
+//include ':aura-toolkits'
+//project(':aura-toolkits').projectDir = new File('../AuraToolKits/aura-toolkits')
+
+//include ':aura-framework'
+//project(':aura-framework').projectDir = new File('../AuraFrameWork/aura-framework')
+
+//include ':aura-ui'
+//project(':aura-ui').projectDir = new File('../AuraUI/aura-ui')
+
+include ':tyche-android-app-library'

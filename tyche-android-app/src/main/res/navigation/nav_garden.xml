@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/view_pager_fragment">
+
+    <!-- 上面一个Fragment是 fragment_view_pager-->
+    <fragment
+        android:id="@+id/view_pager_fragment"
+        android:name="com.frewen.android.demo.samples.jetpack.fragment.HomeViewPagerFragment"
+        tools:layout="@layout/fragment_view_pager">
+        <!-- action的 -->
+        <action
+            android:id="@+id/action_view_pager_fragment_to_plant_detail_fragment"
+            app:destination="@id/flower_detail_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+    <!--花朵详情页的Fragment-->
+    <fragment
+        android:id="@+id/flower_detail_fragment"
+        android:name="com.frewen.android.demo.samples.jetpack.fragment.FlowerDetailFragment"
+        android:label="@string/flower_details_title"
+        tools:layout="@layout/fragment_flower_detail">
+        <!--  DataBinding的数据  -->
+        <argument
+            android:name="flowerId"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

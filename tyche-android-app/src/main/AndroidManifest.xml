@@ -30,7 +30,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".samples.dagger2.Dagger2Activity"></activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.Splash">
@@ -46,7 +46,6 @@
         <activity android:name=".samples.unitest.AndroidUnitTestActivity" />
         <activity android:name=".samples.view.ViewTouchConflictActivity" />
         <activity android:name=".samples.retrofit.RetrofitActivity" />
-
         <activity android:name=".MainBackActivity" />
         <activity android:name=".samples.bluetooth.BlueToothDemoActivity" />
         <activity android:name=".samples.jobscheduler.JobSchedulerDemoActivity" />

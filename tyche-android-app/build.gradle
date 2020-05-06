@@ -1,30 +1,65 @@
+// 声明是Android程序，
+//com.android.application 表示这是一个应用程序模块
+//com.android.library 标识这是一个库模块
+//而这区别：前者可以直接运行，后着是依附别的应用程序运行
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'com.didiglobal.booster'
-
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion    //设置编译时候的Android版本
+    //设置编译时使用的构建工具的版本，Android Studio3.0后去除此项配置
     buildToolsVersion rootProject.ext.buildToolsVersion
     // 使用 Databinding必须添加
     dataBinding {
         enabled = true
     }
     defaultConfig {
+        // 项目的包名
         applicationId "com.frewen.android.demo"
+        // 项目最低兼容的版本
+        // 指定项目最低兼容的版本，如果设备小于这个版本或者大于maxSdkVersion(一般不用)将无法安装这个应用，
+        // 这里指定为16，表示最低兼容到Android 4.1系统。
         minSdkVersion rootProject.ext.minSdkVersion
+        // 项目的目标版本
+        // 指定项目的目标版本，表示在该目标版本上已经做过充分测试，
+        // 系统会为该应用启动一些对应该目标系统的最新功能特性，Android系统平台的行为变更，
+        // 只有targetSdkVersion的属性值被设置为大于或等于该系统平台的API版本时，才会生效。
+        // 例如，若指定targetSdkVersion值为22，则表示该程序最高只在Android5.1版本上做过充分测试，
+        // 在Android6.0系统上（对应targetSdkVersion为23）拥有的新特性如系统运行时权限等功能就不会被启用。
         targetSdkVersion rootProject.ext.targetSdkVersion
+        // 版本号 一般每次打包上线时该值只能增加，打包后看不见。
         versionCode 1
+        // 版本名称 展示在应用市场上的版本名称
         versionName "1.0"
+        // 表明要使用AndroidJUnitRunner进行单元测试。
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
+    // 这个闭包主要指定生成安装文件的主要配置，一般包含两个子闭包，一个是debug闭包，用于指定生成测试版安装文件的配置，可以忽略不写；
+    // 另一个是release闭包，用于指定生成正式版安装文件的配置。
+    // 两者能配置的参数相同，最大的区别默认属性配置不一样，两种模式支持的属性配置如下图：
     buildTypes {
-        release {
-            minifyEnabled false
+        release {// 生产环境
+            minifyEnabled false//是否对代码进行混淆
+            //指定混淆的规则文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            pseudoLocalesEnabled false//是否在APK中生成伪语言环境，帮助国际化的东西，一般使用的不多
+            zipAlignEnabled true//是否对APK包执行ZIP对齐优化，减小zip体积，增加运行效率
+        }
+        debug {// 测试环境
+            minifyEnabled false//是否对代码进行混淆
+            //指定混淆的规则文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug//设置签名信息
+            debuggable true     //是否支持断点调试
+            jniDebuggable true  //是否可以调试NDK代码
+            renderscriptDebuggable false//是否开启渲染脚本就是一些c写的渲染方法
+            zipAlignEnabled true//是否对APK包执行ZIP对齐优化，减小zip体积，增加运行效率
+            pseudoLocalesEnabled false//是否在APK中生成伪语言环境，帮助国际化的东西，一般使用的不多
+            applicationIdSuffix 'debug'//在applicationId 中添加了一个后缀，一般使用的不多
+            versionNameSuffix 'debug'//versionName 中添加了一个后缀，一般使用的不多
         }
     }
 

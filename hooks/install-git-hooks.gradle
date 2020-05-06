@@ -14,5 +14,5 @@ task installGitHooks(type: Copy) {
     file.setExecutable(true, false)
 }
 
-//clean.dependsOn installGitHooks
+clean.dependsOn installGitHooks
 //installGitHooks.execute()

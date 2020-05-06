@@ -1,0 +1,33 @@
+task myTask1 {
+    println "hello MyTask1"
+}
+
+task myTask2 {
+    println "hello MyTask2"
+}
+
+myTask1.doFirst {
+    println "hello MyTask1 doFirst"
+}
+
+myTask1.doLast {
+    println "hello MyTask1 doLast"
+}
+
+myTask2.doLast {
+    println "hello MyTask2  doLast"
+}
+
+
+Task taskAfterDebug = project.task('taskAfterDebug') {
+    doLast {
+        println("taskAfterDebug called")
+    }
+}
+
+project.tasks.whenTaskAdded { Task theTask ->
+    if (theTask.name == 'assembleDebug' || theTask.name == 'assembleRelease') {
+        // 编译完apk之后再执行自定义task
+        theTask.dependsOn(taskAfterDebug)
+    }
+}

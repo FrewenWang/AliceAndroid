@@ -65,6 +65,8 @@ apply from: 'hooks/install-git-hooks.gradle'
 
 apply from: 'quality/quality.gradle'
 
+apply from: 'toolkits/gradle_test.gradle'
+
 
 // Define versions in a single place
 ext {

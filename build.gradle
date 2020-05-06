@@ -50,7 +50,7 @@ task clean(type: Delete) {
 //添加工程根目录下外部的的'dependencies.gradle'文件依赖。也是使用在线的依赖配置
 // TODO 后续会使用git submodule 来添加自动下载本地依赖
 //apply from: rootProject.file('../GradleDependence/app_dependencies.gradle')
-apply from: 'https://gitee.com/frewen1225/gradle_dependence/raw/master/app_dependencies.gradle'
+apply from: 'https://gitee.com/frewen1225/gradle_dependence/raw/master/app_dependence.gradle'
 
 // 往.git目录下注入 pre-commit 文件
 apply from: 'hooks/install-git-hooks.gradle'

@@ -1,0 +1,62 @@
+/**
+ * 创建任务和我们定义一个变量一样
+ * 变量名就是和我们定义的Task的名字，类型是Task
+ * 所以我们可以通过任务名，使用Task的Api来访问它的方法、属性或者对任务进行重新配置等等
+ */
+task helloTaskApi1 {
+    println "helloTaskApi1 Configuration Lifecycle  invoked"
+}
+
+// 比如我们可以通过Task名直接给他设置doFirst、doLast方法
+// 但是记住：要使用任务名操作任务，首先必现先定义声明，因为脚本是顺序执行的
+helloTaskApi1.doFirst {
+    println "helloTaskApi1 doFirst  invoked"
+}
+// 对于直接通过任务名直接操作任务的原理是：Project在创建该任务的时候，
+// 同时把该任务的任务名设置为Projects的一个属性。类型为Task
+helloTaskApi1.doLast {
+    // project是返回当前Task所属的project.永远不会为空
+    // 下面这句话执行的结果是true。也证明了helloTaskApi1是project的一个属性
+    println "project hasProperty helloTaskApi1：" + project.hasProperty("helloTaskApi1")
+    println "helloTaskApi1 doLast  invoked"
+}
+
+
+/**
+ * 我们可以通过dependsOn来执行helloTaskDependencies2依赖的前置Task
+ */
+task helloTaskApi2(dependsOn: helloTaskApi1) {
+
+    println "helloTaskApi2 Configuration Lifecycle  invoked"
+
+    doFirst {
+        println "helloTaskApi2 doFirst  invoked"
+    }
+    doLast {
+        println "helloTaskApi2 doLast  invoked"
+    }
+}
+
+/**
+ * 多个Task依赖的方式，就不能使用下面的这种写法
+ * 需要在Task的配置方法体内部调用dependsOn方法，否则会报错误：
+ * Could not find method helloTaskDependencies3() for arguments [{dependsOn=task ':helloTaskDependencies1'}, task ':helloTaskDependencies2',
+ * gradle_task_dependencies_c31v8mot7466f2yg30jiajg3x$_run_closure3@702a8156] on root project 'HelloAndroid' of type org.gradle.api.Project.
+ */
+//task helloTaskDependencies3(dependsOn: helloTaskDependencies1, helloTaskDependencies2) {
+task helloTaskApi3 {
+    /**
+     * dependsOn 其实是Task类的一个方法
+     * @see Task* Task dependsOn(Object... paths);
+     * 可以接受多个参数，作为依赖的任务
+     */
+    dependsOn helloTaskApi1, helloTaskApi2
+    println "helloTaskApi3 Configuration Lifecycle  invoked"
+
+    doFirst {
+        println "helloTaskApi3 doFirst  invoked"
+    }
+    doLast {
+        println "helloTaskApi3 doLast  invoked"
+    }
+}

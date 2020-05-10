@@ -7,6 +7,13 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 android {
+    // 其实下面这个是一个方法：compileSdkVersion（29）
+    // 但是括号可以省略、分号可以省略，就变成下面这个样子了。
+    //  /** @see #getCompileSdkVersion() */
+    //    public void compileSdkVersion(String version) {
+    //        checkWritability();
+    //        this.target = version;
+    //    }
     compileSdkVersion rootProject.ext.compileSdkVersion    //设置编译时候的Android版本
     //设置编译时使用的构建工具的版本，Android Studio3.0后去除此项配置
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -63,6 +70,18 @@ android {
         }
     }
 
+//    productFlavors {
+//        google {}
+//        xiaomi {}
+//        huawei {}
+//    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each {
+
+        }
+    }
+
     //使用Java8
     // Butterknife 也需要 requires Java 8.
     compileOptions {
@@ -74,9 +93,6 @@ android {
         preDexLibraries = false
         javaMaxHeapSize "4g"
     }
-// To inline the bytecode built with JVM target 1.8 into
-// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
-
 
     kotlinOptions {
         jvmTarget = "1.8"

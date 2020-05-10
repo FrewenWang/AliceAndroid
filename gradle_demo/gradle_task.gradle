@@ -18,6 +18,7 @@
  * create(String taskName) { 闭包体}* 然后，方法的括号可以省略
  * create taskName  { 闭包体}* 最终就形成了我们下面的写法
  */
+// 创建Task的第一种方法
 task helloGradleTask {
 
     println "helloGradleTask Configuration Lifecycle  invoked"
@@ -34,6 +35,7 @@ task helloGradleTask {
  * 在Gradle里 Project已经帮我们定义好了一个TaskContainer
  * 他就是tasks 看起来就很像个容器
  */
+// 创建Task的第二种方法
 tasks.create("helloGradleTaskContainer") {
 
     println "helloGradleTaskContainer Configuration Lifecycle  invoked"
@@ -45,3 +47,19 @@ tasks.create("helloGradleTaskContainer") {
         println "helloGradleTaskContainer doLast  invoked"
     }
 }
+
+// 创建Task的第三种方法
+// 这种方式的创建其实就是调用Project的Task的方法
+Task helloGradleTask3 = task("helloGradleTask3") //是否加双引号都可以
+//Task helloGradleTask3 = task(helloGradleTask3)
+helloGradleTask3.doLast {
+    println "helloGradleTask3 doLast  invoked"
+}
+
+
+/**
+ * * What went wrong:
+ * A problem occurred evaluating script.
+ * > Cannot add task 'helloTaskDependencies2' as a task with that name already exists.
+ * 不能在一个定义多个Task.否则会报上面的错误
+ */

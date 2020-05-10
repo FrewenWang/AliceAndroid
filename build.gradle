@@ -25,6 +25,7 @@ buildscript {
      * 其中'3.6.3'为该插件的版本号，可以根据最新的版本号来调整。
      */
     dependencies {
+        // 应用Gradle插件
         classpath 'com.android.tools.build:gradle:3.6.3'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
@@ -57,8 +58,8 @@ task clean(type: Delete) {
 
 //添加工程根目录下外部的的'dependencies.gradle'文件依赖。也是使用在线的依赖配置
 // TODO 后续会使用git submodule 来添加自动下载本地依赖
-//apply from: rootProject.file('../GradleDependence/app_dependencies.gradle')
-apply from: 'https://gitee.com/frewen1225/gradle_dependence/raw/master/app_dependence.gradle'
+apply from: rootProject.file('../GradleDependence/app_dependencies.gradle')
+//apply from: 'https://gitee.com/frewen1225/gradle_dependence/raw/master/app_dependence.gradle'
 
 // 往.git目录下注入 pre-commit 文件
 apply from: 'hooks/install-git-hooks.gradle'
@@ -69,7 +70,11 @@ apply from: 'quality/quality.gradle'
 // 否则会报：Task 'myTask' not found in root project 'HelloAndroid'.
 apply from: 'gradle_demo/gradle_closure.gradle'
 apply from: 'gradle_demo/gradle_task.gradle'
-apply from: 'gradle_demo/gradle_task_dependence.gradle'
+apply from: 'gradle_demo/gradle_task_dependencies.gradle'
+apply from: 'gradle_demo/gradle_task_api.gradle'
+apply from: 'gradle_demo/gradle_ext_property.gradle'
+apply from: 'gradle_demo/gradle_custom_task.gradle'
+apply from: 'gradle_demo/gradle_task_in_order.gradle'
 
 // Define versions in a single place
 ext {

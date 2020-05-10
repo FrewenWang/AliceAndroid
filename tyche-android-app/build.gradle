@@ -147,8 +147,6 @@ dependencies {
 
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
-    // Android架构组件的ROOM的数据库操作相关
-    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     //  材料设计的相关依赖
     implementation "com.google.android.material:material:$rootProject.materialVersion"
 

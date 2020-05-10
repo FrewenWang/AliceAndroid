@@ -65,8 +65,11 @@ apply from: 'hooks/install-git-hooks.gradle'
 
 apply from: 'quality/quality.gradle'
 
-apply from: 'toolkits/gradle_test.gradle'
-
+// 下面就是我们调试Gradle. Gradle中的Task要想被执行。首先必须引导到一个Project中
+// 否则会报：Task 'myTask' not found in root project 'HelloAndroid'.
+apply from: 'gradle_demo/gradle_closure.gradle'
+apply from: 'gradle_demo/gradle_task.gradle'
+apply from: 'gradle_demo/gradle_task_dependence.gradle'
 
 // Define versions in a single place
 ext {
@@ -88,7 +91,7 @@ ext {
     materialVersion = '1.1.0-alpha09'
     navigationVersion = '2.0.0'
 //    recyclerViewVersion = '1.1.0-alpha05'
-    roomVersion = '2.1.0'
+//    roomVersion = '2.1.0'
 //    runnerVersion = '1.0.1'
 //    truthVersion = '0.42'
 //    testExtJunit = '1.1.0'

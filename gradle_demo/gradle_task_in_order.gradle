@@ -24,3 +24,6 @@ tasks.create("helloOrderTask2") {
 
 // 这样调用之后可以保证helloOrderTask1一定在helloOrderTask2之后执行
 helloOrderTask1.mustRunAfter helloOrderTask2
+
+
+// ./gradlew assembleDebug --info | grep -rnEi "Task|assembleDebug"

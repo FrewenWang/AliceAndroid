@@ -169,3 +169,27 @@ dependencies {
 
     implementation 'devlight.io:navigationtabbar:1.2.5'
 }
+
+
+afterEvaluate {
+    assembleDebug {
+        doFirst {
+            println("=================assembleDebug doFirst=================")
+        }
+        doLast {
+            println("=================assembleDebug doLast=================")
+        }
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    println("=====================assembleDebug  whenTaskAdded task:${task.name}=========================")
+    if (task.name == 'assembleDebug') {
+        task.doFirst {
+            println("=====================assembleDebug  whenTaskAdded doFirst=========================")
+        }
+        task.doLast {
+            println("=====================assembleDebug  whenTaskAdded doLast=========================")
+        }
+    }
+}

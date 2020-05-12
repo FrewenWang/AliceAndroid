@@ -1,0 +1,25 @@
+// 删除hooks文件
+//task deleteGitHooks(type: Delete) {
+//    File file = new File(rootProject.rootDir, '.git/hooks/pre-commit')
+//    delete file
+//}
+//deleteGitHooks.execute()
+
+
+task installGitHooks(type: Copy) {
+    println("==========installGitHooks==============")
+    from {
+        println("==========installGitHooks==Copy===from=========")
+        new File(rootProject.rootDir, 'hooks/pre-commit')
+    }
+    into {
+        println("==========installGitHooks==Copy===into=========")
+        new File(rootProject.rootDir, '.git/hooks')
+    }
+    File file = new File(rootProject.rootDir, '.git/hooks/pre-commit')
+    file.setExecutable(true, false)
+}
+
+clean.dependsOn installGitHooks
+//Could not find method execute() for arguments [] on task ':installGitHooks' of type org.gradle.api.tasks.Copy.
+//installGitHooks.execute()

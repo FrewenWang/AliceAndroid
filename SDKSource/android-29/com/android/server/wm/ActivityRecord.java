@@ -235,6 +235,7 @@ import java.util.Objects;
 
 /**
  * An entry in the history stack, representing an activity.
+ * 记录Activity的Stack记录
  */
 final class ActivityRecord extends ConfigurationContainer {
     private static final String TAG = TAG_WITH_CLASS_NAME ? "ActivityRecord" : TAG_ATM;

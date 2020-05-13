@@ -377,6 +377,9 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
 
     final Handler mHandler;
 
+    /**
+     * Activity栈的StackHandler
+     */
     private class ActivityStackHandler extends Handler {
 
         ActivityStackHandler(Looper looper) {
@@ -391,6 +394,7 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
                     // We don't at this point know if the activity is fullscreen,
                     // so we need to be conservative and assume it isn't.
                     Slog.w(TAG, "Activity pause timeout for " + r);
+                    // 以AMS作为对象所，然后执行activityPausedLocked
                     synchronized (mService) {
                         if (r.app != null) {
                             mService.logAppTooSlow(r.app, r.pauseTime, "pausing " + r);
@@ -1388,6 +1392,7 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
     /**
      * Schedule a pause timeout in case the app doesn't respond. We don't give it much time because
      * this directly impacts the responsiveness seen by the user.
+     * 这个方法就是针对当前的Activity的延迟500毫秒进行pause
      */
     private void schedulePauseTimeout(ActivityRecord r) {
         final Message msg = mHandler.obtainMessage(PAUSE_TIMEOUT_MSG);
@@ -1411,9 +1416,12 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
      *                         complete pausing.
      * @return Returns true if an activity now is in the PAUSING state, and we are waiting for
      * it to tell us when it is done.
+     * 在我们需要对当前resumed的activity做pause操作的时候，我们会调用startPausingLocked（ActivityStack.java）
      */
     final boolean startPausingLocked(boolean userLeaving, boolean uiSleeping,
             ActivityRecord resuming, boolean pauseImmediately) {
+
+        // 1.首先完成正在pausing的activity的pause操作，做到有序
         if (mPausingActivity != null) {
             Slog.wtf(TAG, "Going to pause when pause is already pending for " + mPausingActivity
                     + " state=" + mPausingActivity.getState());
@@ -1424,6 +1432,8 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
                 completePauseLocked(false, resuming);
             }
         }
+
+        // 将当前ResumedActivity设置为mPausingActivity
         ActivityRecord prev = mResumedActivity;
 
         if (prev == null) {
@@ -1441,6 +1451,7 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
 
         if (DEBUG_STATES) Slog.v(TAG_STATES, "Moving to PAUSING: " + prev);
         else if (DEBUG_PAUSE) Slog.v(TAG_PAUSE, "Start pausing: " + prev);
+        // 将当前状态为resumed的activity的状态置为pausing并用此activity替换mPausingActivity变量，
         mPausingActivity = prev;
         mLastPausedActivity = prev;
         mLastNoHistoryActivity = (prev.intent.getFlags() & Intent.FLAG_ACTIVITY_NO_HISTORY) != 0
@@ -1492,7 +1503,8 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
             } else if (DEBUG_PAUSE) {
                  Slog.v(TAG_PAUSE, "Key dispatch not paused for screen off");
             }
-
+            // 根据参数pauseImmediately的真假，调用completePauseLocked对mPausingActivity立刻做Pause操作
+            // 或调用schedulePauseTimeout在500ms内完成Pause操作。
             if (pauseImmediately) {
                 // If the caller said they don't want to wait for the pause, then complete
                 // the pause now.
@@ -1500,6 +1512,7 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
                 return false;
 
             } else {
+                //调用schedulePauseTimeout在500ms内完成Pause操作。
                 schedulePauseTimeout(prev);
                 return true;
             }
@@ -1515,13 +1528,20 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         }
     }
 
+    /**
+     * activityPausedLocked调用activityPausedLocked
+     * @param token
+     * @param timeout
+     */
     final void activityPausedLocked(IBinder token, boolean timeout) {
         if (DEBUG_PAUSE) Slog.v(TAG_PAUSE,
             "Activity paused: token=" + token + ", timeout=" + timeout);
 
         final ActivityRecord r = isInStackLocked(token);
         if (r != null) {
+            // 首先将超时消息PAUSE_TIMEOUT_MSG移除
             mHandler.removeMessages(PAUSE_TIMEOUT_MSG, r);
+            // 如果此时活动仍为mPausingActivity，则调用completePauseLocked(true,null)立刻对其进行pause操作
             if (mPausingActivity == r) {
                 if (DEBUG_STATES) Slog.v(TAG_STATES, "Moving to PAUSED: " + r
                         + (timeout ? " (due to timeout)" : " (pause complete)"));
@@ -1533,6 +1553,7 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
                 }
                 return;
             } else {
+                // 否则将活动的状态置为PAUSED
                 EventLog.writeEvent(EventLogTags.AM_FAILED_TO_PAUSE,
                         r.userId, System.identityHashCode(r), r.shortComponentName,
                         mPausingActivity != null
@@ -1542,6 +1563,7 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
                     if (r.finishing) {
                         if (DEBUG_PAUSE) Slog.v(TAG,
                                 "Executing finish of failed to pause activity: " + r);
+                        //如果活动状态已经为finishing还需要调用finishCurrentActivityLocked方法来对其进行finish操作。
                         finishCurrentActivityLocked(r, FINISH_AFTER_VISIBLE, false,
                                 "activityPausedLocked");
                     }
@@ -1551,7 +1573,13 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         mStackSupervisor.ensureActivitiesVisibleLocked(null, 0, !PRESERVE_WINDOWS);
     }
 
+    /**
+     * completePauseLocked方法顾名思义是用来完成当前Activity的pause操作和下个Activity的resume操作。
+     * @param resumeNext
+     * @param resuming
+     */
     private void completePauseLocked(boolean resumeNext, ActivityRecord resuming) {
+        //首先对mPausingActivity进行pause操作，将此活动的状态置为PAUSED，然后根据活动的finishing已经为true
         ActivityRecord prev = mPausingActivity;
         if (DEBUG_PAUSE) Slog.v(TAG_PAUSE, "Complete pause: " + prev);
 
@@ -3795,6 +3823,14 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
     static final int FINISH_AFTER_PAUSE = 1;
     static final int FINISH_AFTER_VISIBLE = 2;
 
+    /**
+     * finish当前的Activity
+     * @param r
+     * @param mode
+     * @param oomAdj
+     * @param reason
+     * @return
+     */
     final ActivityRecord finishCurrentActivityLocked(ActivityRecord r, int mode, boolean oomAdj,
             String reason) {
         // First things first: if this activity is currently visible,
@@ -3804,9 +3840,10 @@ class ActivityStack<T extends StackWindowController> extends ConfigurationContai
         // The activity that we are finishing may be over the lock screen. In this case, we do not
         // want to consider activities that cannot be shown on the lock screen as running and should
         // proceed with finishing the activity if there is no valid next top running activity.
+        // 首先要确保下一个要resumed的活动是否已经是可见的
         final ActivityRecord next = mStackSupervisor.topRunningActivityLocked(
                 true /* considerKeyguardState */);
-
+        // 如果不是，则需要推迟finishing当前活动。
         if (mode == FINISH_AFTER_VISIBLE && (r.visible || r.nowVisible)
                 && next != null && !next.nowVisible) {
             if (!mStackSupervisor.mStoppingActivities.contains(r)) {

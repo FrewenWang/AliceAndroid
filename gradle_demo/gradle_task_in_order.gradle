@@ -22,6 +22,32 @@ tasks.create("helloOrderTask2") {
     }
 }
 
+tasks.create("helloOrderTask3") {
+    // 每次执行完helloOrderTask3 必须执行helloOrderTask1
+    finalizedBy helloOrderTask1
+    println "helloOrderTask3 Configuration Lifecycle  invoked"
+
+
+    doFirst {
+        println "helloOrderTask3 doFirst  invoked"
+    }
+    doLast {
+        println "helloOrderTask3 doLast  invoked"
+    }
+}
+
+/**
+ * 执行结果：
+ * > Task :helloOrderTask3
+ * helloOrderTask3 doFirst  invoked
+ * helloOrderTask3 doLast  invoked
+ *
+ * > Task :helloOrderTask1
+ * helloOrderTask1 doFirst  invoked
+ * helloOrderTask1 doLast  invoked
+ */
+
+
 // 这样调用之后可以保证helloOrderTask1一定在helloOrderTask2之后执行
 helloOrderTask1.mustRunAfter helloOrderTask2
 

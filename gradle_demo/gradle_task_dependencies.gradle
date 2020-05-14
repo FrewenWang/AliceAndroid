@@ -2,7 +2,6 @@
  * Task之间是可以是可以有依赖关系的
  */
 task helloTaskDependencies1 {
-
     println "helloTaskDependencies1 Configuration Lifecycle  invoked"
 
     doFirst {

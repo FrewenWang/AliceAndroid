@@ -12,16 +12,23 @@
 /**
  * Task看起来很像是一个关键字，但是其实他是Project里面的一个方法
  *
- * 这个方法的原型其实是：create(String taskName,Closure configureClosure)
+ * 这个方法的原型其实是：task(String taskName,Closure configureClosure)
  * 方法的参数很明显：
  * 根据Groovy的基础知识，我们知道如果最后一个参数是闭包的话，可以放到括号外面，变形：
- * create(String taskName) { 闭包体}* 然后，方法的括号可以省略
- * create taskName  { 闭包体}* 最终就形成了我们下面的写法
+ * task(String taskName) { 闭包体}* 然后，方法的括号可以省略
+ * task taskName  { 闭包体}* 最终就形成了我们下面的写法
  */
 // 创建Task的第一种方法
 task helloGradleTask {
-
+    // 这个时候调用为NUll
+    println "helloGradleTask Configuration Lifecycle Group：${helloGradleTask.group}"
+    println "helloGradleTask Configuration Lifecycle Group：${helloGradleTask.description}"
+    description 'this is helloGradleTask'
+    group BasePlugin.BUILD_GROUP
     println "helloGradleTask Configuration Lifecycle  invoked"
+    println "helloGradleTask Configuration Lifecycle Group：${helloGradleTask.group}"
+    println "helloGradleTask Configuration Lifecycle Group：${helloGradleTask.description}"
+
 
     doFirst {
         println "helloGradleTask doFirst  invoked"
@@ -33,7 +40,9 @@ task helloGradleTask {
 /**
  * 我们还可以通过TaskContainer来创建任务
  * 在Gradle里 Project已经帮我们定义好了一个TaskContainer
- * 他就是tasks 看起来就很像个容器
+ * 他就是tasks 看起来就很像个容器。
+ * 这个TaskContainer create(String name, Closure configureClosure) throws InvalidUserDataException;
+ * 也是根据上面变形
  */
 // 创建Task的第二种方法
 tasks.create("helloGradleTaskContainer") {
@@ -50,10 +59,24 @@ tasks.create("helloGradleTaskContainer") {
 
 // 创建Task的第三种方法
 // 这种方式的创建其实就是调用Project的Task的方法
+// task(String taskName)
 Task helloGradleTask3 = task("helloGradleTask3") //是否加双引号都可以
 //Task helloGradleTask3 = task(helloGradleTask3)
 helloGradleTask3.doLast {
     println "helloGradleTask3 doLast  invoked"
+}
+
+
+/**
+ * 第四种：创建任务方式：可在Map参数中进行相关配置，如依赖、任务描述、组别等
+ * 方法原型：Task task(Map<String, ?> args, String name) throws InvalidUserDataException;
+ */
+Task helloGradleTask4 = task(group: BasePlugin.BUILD_GROUP, helloGradleTask4, description: "this is helloGradleTask4")
+//配置创建的Task
+helloGradleTask4.doLast {
+    println "helloGradleTask4 Configuration Lifecycle  invoked"
+    println "helloGradleTask4 Configuration Lifecycle Group：${helloGradleTask4.group}"
+    println "helloGradleTask4 Configuration Lifecycle Group：${helloGradleTask4.description}"
 }
 
 

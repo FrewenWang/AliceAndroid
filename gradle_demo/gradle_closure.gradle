@@ -8,7 +8,6 @@
 
 //下面我们我们来分析一下闭包的演进过程：
 //首先，我们定义一个Task
-
 task helloClosure {
 
     println "helloClosure Configuration Lifecycle  invoked"

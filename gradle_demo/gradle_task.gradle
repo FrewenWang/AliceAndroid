@@ -31,6 +31,7 @@ task helloGradleTask {
 
 
     doFirst {
+        println "helloGradleTask doFirst  path ${helloGradleTask.path}"
         println "helloGradleTask doFirst  invoked"
     }
     doLast {

@@ -101,3 +101,21 @@ ext {
 //    viewPagerVersion = '1.0.0-beta03'
 //    workVersion = '2.1.0'
 }
+
+tasks.whenTaskAdded { task ->
+    // 通过这个方法我们可以看看Android的构建
+    println("=====================assembleDebug  whenTaskAdded task:${task.name}=========================")
+    if (task.name == 'assembleDebug') {
+//      helloOrderTask2 = tasks.findByPath('project:helloOrderTask2')
+//        task.mustRunAfter tasks.findByPath('helloOrderTask3')
+        println tasks.size()
+        println tasks.findByPath('helloOrderTask3')
+        println tasks.findByPath('helloOrderTask3')
+        task.doFirst {
+            println("=====================assembleDebug  whenTaskAdded doFirst=========================")
+        }
+        task.doLast {
+            println("=====================assembleDebug  whenTaskAdded doLast=========================")
+        }
+    }
+}

@@ -18,7 +18,8 @@ class RequestInterceptor(private val networkConfig: AbsNetworkConfig) : Intercep
         val builder = chain.request().newBuilder()
         /* builder.cacheControl(CacheControl.FORCE_CACHE); */
         builder.addHeader("os", "android")
-        builder.addHeader("appVersion", networkConfig.getAppVersionCode())
+        // Kotlin中Int转Strong
+        builder.addHeader("appVersion", networkConfig.getAppVersionCode().toString())
         return chain.proceed(builder.build())
     }
 

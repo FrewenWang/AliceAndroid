@@ -173,11 +173,12 @@ dependencies {
 
 afterEvaluate {
     assembleDebug {
+        // dependsOn tasks.findByPath(':helloTaskApi2')
         doFirst {
-            println("=================assembleDebug doFirst=================")
+            println("=================assembleDebug doFirst111111=================")
         }
         doLast {
-            println("=================assembleDebug doLast=================")
+            println("=================assembleDebug doLast2222222=================")
         }
     }
 }
@@ -186,6 +187,12 @@ tasks.whenTaskAdded { task ->
     // 通过这个方法我们可以看看Android的构建
     // println("=====================assembleDebug  whenTaskAdded task:${task.name}=========================")
     if (task.name == 'assembleDebug') {
+        println "task  path = ${task.path}"
+        println tasks.findByPath(':helloOrderTask3')
+        // 这个地方没有生效？？
+        // task.mustRunAfter tasks.findByPath(':helloTaskApi2')
+        // 如果这个工程目录的Task
+        println(tasks.findByPath(":tyche-android-app:assembleDebug"))
         task.doFirst {
             println("=====================assembleDebug  whenTaskAdded doFirst=========================")
         }

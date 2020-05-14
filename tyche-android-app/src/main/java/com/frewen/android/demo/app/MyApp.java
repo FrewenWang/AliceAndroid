@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.frewen.android.demo.di.AppInjector;
+import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.aura.framework.app.BaseApp;
+import com.frewen.github.library.network.core.NetworkApi;
 import com.frewen.keepservice.KeepLiveService;
 import com.frewen.network.core.FreeRxHttp;
 import com.frewen.aura.toolkits.core.FreeToolKits;
@@ -24,9 +26,8 @@ import dagger.android.HasActivityInjector;
  * MyApp
  */
 public class MyApp extends BaseApp implements HasActivityInjector {
-    private static final String TAG = "T:MyApp";
-    private String processName;
 
+    private static final String TAG = "T:MyApp";
     /**
      * 分发Activity的注入
      *
@@ -37,8 +38,10 @@ public class MyApp extends BaseApp implements HasActivityInjector {
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
-    @Override
+    private String processName;
 
+
+    @Override
     protected void attachBaseContext(Context base) {
         // 在这里调用Context的方法会崩溃
         super.attachBaseContext(base);
@@ -53,8 +56,14 @@ public class MyApp extends BaseApp implements HasActivityInjector {
         FreeToolKits.init(this, "AndroidSamples");
 
         initFreeHttp();
+
+        initNetworkApi();
         //Application级别注入
         AppInjector.INSTANCE.inject(this);
+    }
+
+    private void initNetworkApi() {
+        NetworkApi.init(new MyNetworkConfig(this));
     }
 
     private void initFreeHttp() {

@@ -49,6 +49,8 @@ dependencies {
     api 'wang.frewen.aura:aura-toolkits:1.0.0'
     api 'wang.frewen.aura:aura-ui:1.0.0'
     api 'wang.frewen.aura:aura-framework:1.0.0'
+    //OKHttp内置拦截器 https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:4.6.0")
     api project(path: ':optimusnetwork')
     api project(path: ':free-network')
 

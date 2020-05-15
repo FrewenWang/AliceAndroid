@@ -69,9 +69,6 @@ task clean(type: Delete) {
 //apply from: rootProject.file('../GradleDependence/app_dependencies.gradle')
 apply from: 'https://gitee.com/frewen1225/gradle_dependence/raw/master/app_dependence.gradle'
 
-// 往.git目录下注入 pre-commit 文件
-apply from: 'hooks/install-git-hooks.gradle'
-
 apply from: 'quality/quality.gradle'
 
 // 下面就是我们调试Gradle. Gradle中的Task要想被执行。首先必须引导到一个Project中

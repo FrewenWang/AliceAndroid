@@ -191,8 +191,8 @@ afterEvaluate {
 
 tasks.whenTaskAdded { task ->
     // 通过这个方法我们可以看看Android的构建
-    // println("=====================assembleDebug  whenTaskAdded task:${task.name}=========================")
     if (task.name == 'assembleDebug') {
+        println("=====================:tyche-android-app assembleDebug  whenTaskAdded task:${task.name}=========================")
         println "task  path = ${task.path}"
         println tasks.findByPath(':helloOrderTask3')
         // 这个地方没有生效？？

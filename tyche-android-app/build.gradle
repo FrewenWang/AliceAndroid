@@ -3,10 +3,16 @@
 //com.android.library 标识这是一个库模块
 //而这区别：前者可以直接运行，后着是依附别的应用程序运行
 apply plugin: 'com.android.application'
+// 由于其它插件可能与 booster 有冲突，尽可能将 apply plugin: 'com.didiglobal.booster'
+// 放在 apply plugin: 'com.android.application' 的下面第一行
+apply plugin: 'com.didiglobal.booster'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+
+
 android {
+    println "android Configuration Lifecycle  invoked"
     // 其实下面这个是一个方法：compileSdkVersion（29）
     // 但是括号可以省略、分号可以省略，就变成下面这个样子了。
     //  /** @see #getCompileSdkVersion() */

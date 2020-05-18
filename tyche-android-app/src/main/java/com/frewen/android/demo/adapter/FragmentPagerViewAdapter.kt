@@ -1,8 +1,11 @@
 package com.frewen.android.demo.adapter
 
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import java.util.*
 
 /**
  * @filename: FragmentPagerViewAdapter
@@ -12,6 +15,8 @@ import androidx.fragment.app.FragmentPagerAdapter
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 class FragmentPagerViewAdapter(private val fragmentList: List<Fragment>, fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+
+    private val mChannels: ObservableList<Object> = ObservableArrayList()
 
     override fun getItem(position: Int): Fragment {
         return fragmentList[position]

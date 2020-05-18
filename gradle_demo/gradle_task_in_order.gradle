@@ -11,7 +11,7 @@ task helloOrderTask1 {
 }
 
 tasks.create("helloOrderTask2") {
-
+    dependsOn helloOrderTask1
     println "helloOrderTask2 Configuration Lifecycle  invoked"
 
     doFirst {
@@ -24,7 +24,21 @@ tasks.create("helloOrderTask2") {
 
 tasks.create("helloOrderTask3") {
     // 每次执行完helloOrderTask3 必须执行helloOrderTask1
-    finalizedBy helloOrderTask1
+    dependsOn helloOrderTask1
+    println "helloOrderTask3 Configuration Lifecycle  invoked"
+
+
+    doFirst {
+        println "helloOrderTask3 doFirst  invoked"
+    }
+    doLast {
+        println "helloOrderTask3 doLast  invoked"
+    }
+}
+
+tasks.create("helloOrderTask4") {
+    // 每次执行完helloOrderTask3 必须执行helloOrderTask1
+    dependsOn helloOrderTask2,helloOrderTask3
     println "helloOrderTask3 Configuration Lifecycle  invoked"
 
 
@@ -49,7 +63,7 @@ tasks.create("helloOrderTask3") {
 
 
 // 这样调用之后可以保证helloOrderTask1一定在helloOrderTask2之后执行
-helloOrderTask1.mustRunAfter helloOrderTask2
+//helloOrderTask1.mustRunAfter helloOrderTask2
 
 
 // ./gradlew assembleDebug --info | grep -rnEi "Task|assembleDebug"

@@ -18,6 +18,12 @@ class CustomTask extends DefaultTask {
     def doTask() {
         println("CustomTask is Running")
     }
+
+    @TaskAction
+    def doTask2() {
+        println("CustomTask2 is Running")
+    }
+
 }
 
 
@@ -26,20 +32,29 @@ task HelloCustomTask(type: CustomTask) {
     doFirst {
         println("HelloCustomTask doFirst Invoked")
     }
+    doFirst {
+        println("HelloCustomTask doFirst Invoked")
+    }
     doLast {
         println("HelloCustomTask doLast Invoked")
     }
+    doLast {
+        println("HelloCustomTask doLast Invoked")
+    }
+
 }
 
 
 task HelloCopyTask(type: Copy) {
-    println "HelloCopyTask Configuration Lifecycle  invoked  begin"
+    println "1111111111HelloCopyTask Configuration Lifecycle  invoked  begin111111111111"
+
 
     // Task :HelloCopyTask NO-SOURCE
-    // 必须要在Configuration时期呢？？
+    // 下面的代码是在执行期进行执行
     from(rootProject.file("gradle_demo/src/copyFile.txt"))
     println "HelloCopyTask Configuration Lifecycle  invoked running"
     into(rootProject.file("gradle_demo/dist/"))
+
 
     println "HelloCopyTask Configuration Lifecycle  invoked end"
 

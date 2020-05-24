@@ -1,4 +1,17 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+//添加工程根目录下外部的的'dependencies.gradle'文件依赖。也是使用在线的依赖配置
+// TODO 后续会使用git submodule 来添加自动下载本地依赖
+//apply from: rootProject.file('../GradleDependence/app_dependencies.gradle')
+apply from: 'https://gitee.com/frewen1225/gradle_dependence/raw/master/app_dependence.gradle'
+// 下面就是我们调试Gradle. Gradle中的Task要想被执行。首先必须引导到一个Project中
+// 否则会报：Task 'myTask' not found in root project 'HelloAndroid'.
+apply from: 'gradle_demo/gradle_closure.gradle'
+apply from: 'gradle_demo/gradle_task.gradle'
+apply from: 'gradle_demo/gradle_task_dependencies.gradle'
+apply from: 'gradle_demo/gradle_task_api.gradle'
+apply from: 'gradle_demo/gradle_ext_property.gradle'
+apply from: 'gradle_demo/gradle_custom_task.gradle'
+apply from: 'gradle_demo/gradle_task_in_order.gradle'
+apply from: 'gradle_demo/git_info.gradle'
 /**
  * 下面这些都是闭包调用。
  * 设置构建的脚本的版本信息等
@@ -15,12 +28,16 @@ buildscript {
      * 从Android Studio3.0后新增了google()配置，可以引用google上的开源项目。
      */
     repositories {
-        google()
-        jcenter()
-        maven { url 'https://oss.sonatype.org/content/repositories/public' }
+//        if (getGitBranch() == "dev") {
         // 这个闭包里面传入的插件依赖的仓库。注意：使用本地依赖库，首先要启动artifactory
         // 具体见：//tool_kits/artifactory-start.sh
-//        maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
+        maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
+//        } else {
+//            google()
+//            jcenter()
+//        }
+        maven { url 'https://oss.sonatype.org/content/repositories/public' }
+
     }
     /**
      * 该闭包使用classpath声明了一个Gradle插件，
@@ -64,22 +81,9 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-//添加工程根目录下外部的的'dependencies.gradle'文件依赖。也是使用在线的依赖配置
-// TODO 后续会使用git submodule 来添加自动下载本地依赖
-//apply from: rootProject.file('../GradleDependence/app_dependencies.gradle')
-apply from: 'https://gitee.com/frewen1225/gradle_dependence/raw/master/app_dependence.gradle'
 
 apply from: 'quality/quality.gradle'
 
-// 下面就是我们调试Gradle. Gradle中的Task要想被执行。首先必须引导到一个Project中
-// 否则会报：Task 'myTask' not found in root project 'HelloAndroid'.
-apply from: 'gradle_demo/gradle_closure.gradle'
-apply from: 'gradle_demo/gradle_task.gradle'
-apply from: 'gradle_demo/gradle_task_dependencies.gradle'
-apply from: 'gradle_demo/gradle_task_api.gradle'
-apply from: 'gradle_demo/gradle_ext_property.gradle'
-apply from: 'gradle_demo/gradle_custom_task.gradle'
-apply from: 'gradle_demo/gradle_task_in_order.gradle'
 
 // Define versions in a single place
 ext {

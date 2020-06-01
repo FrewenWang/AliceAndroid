@@ -4036,6 +4036,7 @@ public class ActivityManager {
 
     /**
      * @hide
+     * 获取单例独对象的get方法
      */
     @UnsupportedAppUsage
     public static IActivityManager getService() {
@@ -4046,6 +4047,9 @@ public class ActivityManager {
         return ActivityTaskManager.getService();
     }
 
+    /**
+     * ServiceManager.getService(Context.ACTIVITY_SERVICE) 来获得ActivityManaerService的Binder对象
+     */
     @UnsupportedAppUsage
     private static final Singleton<IActivityManager> IActivityManagerSingleton =
             new Singleton<IActivityManager>() {

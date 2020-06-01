@@ -1,0 +1,94 @@
+/**
+ * 获取Git 分支名
+ */
+def getGitBranch() {
+    return 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+}
+
+/**
+ * 获取Git 版本号
+ */
+def getGitSHA() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
+}
+
+/**
+ * 获取Git Tag
+ */
+def getGitTag() {
+    return 'git describe --tags'.execute([], project.rootDir).text.trim()
+}
+
+/**
+ * 获取Git 提交次数
+ */
+def getGitCommitCount() {
+    return 100 + Interger.parse('git rev-list --count HEAD'.execute([], project.rootDir).text.trim())
+}
+
+/**
+ * 判断是否有jenkins
+ */
+boolean isInJenkins() {
+    Map<String, String> map = System.getenv()
+    if (map == null) {
+        return false
+    }
+    String str = map.get("Path")
+    if (str != null) {
+        //it's windows
+        return false
+    } else {
+        str = ""
+        Iterator it = map.iterator()
+        while (it.hasNext()) {
+            str += it.next()
+        }
+        return str.contains("jenkins")
+    }
+}
+
+/**
+ * 获取jenkins任务名
+ */
+def getJenkinsName() {
+    boolean flag = isInJenkins()
+    if (flag) {
+        ext.env = System.getenv()
+        ext.name = env.JOB_URL
+        String[] stringArray = ext.name.split("/")
+        if (stringArray.length > 0) {
+            return stringArray[stringArray.length - 1]
+        } else {
+            return "Local"
+        }
+    } else {
+        return "Local"
+    }
+}
+
+/**
+ * 获取Jenkins Build 号
+ * @return
+ */
+def getJenkinsBuildCode() {
+    boolean flag = isInJenkins()
+    if (flag) {
+        ext.env = System.getenv()
+        ext.buildNumber = env.BUILD_NUMBER?.toInteger()
+        return "$buildNumber"
+    } else {
+        return 0
+    }
+}
+
+/**
+ * 定义几个变量，在build.gradle里面引用
+ */
+ext {
+    gitTag = getGitTag()
+    gitBranch = getGitBranch()
+    gitSHA = getGitSHA()
+    jenkinsRevision = getJenkinsBuildCode()
+    jenkinsName = getJenkinsName()
+}

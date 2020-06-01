@@ -1,0 +1,52 @@
+//apply plugin: "java"
+/**
+ * Project和Task都允许用户添加额外的自定义属性
+ * 要添加额外的属性，可以通过应用所属对应的Ext属性即可实现
+ * 添加后，可以通过ext属性对自定义属性读取和设置，如果要同时添加多个自定义属性
+ * 可以通过ext代码块
+ **/
+// 自定义一个Project属性
+ext.age = 18
+
+// 通过代码块同时定义多个属性
+ext {
+    phone = 1308888888
+    address = "BeiJing ChaoYang"
+}
+
+task HelloGetCustomProperty {
+
+    doLast {
+        println("年龄：" + age)
+        println("电话：" + phone)
+        println("地址：${address}")
+    }
+}
+
+//sourceSets.all {
+//    ext.resourceDir = null
+//}
+//
+//sourceSets {
+//    main {
+//        resourceDir = 'main/res'
+//    }
+//    test {
+//        resourceDir = 'test/res'
+//    }
+//}
+
+task HelloGetSourceSetsProperty {
+
+    doLast {
+        println("年龄：" + age)
+        println("电话：" + phone)
+        println("地址：${address}")
+
+        sourceSets.each {
+            println("${it.name}的resourceDir is ${it.resourceDir}")
+        }
+    }
+}
+
+

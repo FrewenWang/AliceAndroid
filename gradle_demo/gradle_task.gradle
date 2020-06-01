@@ -1,0 +1,90 @@
+// 这种双箭头的调用方法已经废弃掉
+// 如果使用会报：Could not find method leftShift() for arguments
+// 操作符 << 在Gradle 4.x中被弃用（deprecated），并且在Gradle 5.0 被移除（removed）
+// 解决方式：删除操作符 <<  使用下面的方法，放在doLast的闭包方法
+//task helloClosure << {
+// 有可能还会看到部分Demo中是下面这样写的。也已经过时了。
+//task helloClosure.leftShift {
+
+//下面我们我们来分析一下闭包的演进过程：
+//首先，我们定义一个Task
+
+/**
+ * Task看起来很像是一个关键字，但是其实他是Project里面的一个方法
+ *
+ * 这个方法的原型其实是：task(String taskName,Closure configureClosure)
+ * 方法的参数很明显：
+ * 根据Groovy的基础知识，我们知道如果最后一个参数是闭包的话，可以放到括号外面，变形：
+ * task(String taskName) { 闭包体}
+ * 然后，方法的括号可以省略
+ * task taskName  { 闭包体}* 最终就形成了我们下面的写法
+ */
+// 创建Task的第一种方法
+task helloGradleTask {
+    // 这个时候调用为NUll
+    println "helloGradleTask Configuration Lifecycle Group：${helloGradleTask.group}"
+    println "helloGradleTask Configuration Lifecycle Group：${helloGradleTask.description}"
+    description 'this is helloGradleTask'
+    group BasePlugin.BUILD_GROUP
+    println "helloGradleTask Configuration Lifecycle  invoked"
+    println "helloGradleTask Configuration Lifecycle Group：${helloGradleTask.group}"
+    println "helloGradleTask Configuration Lifecycle Group：${helloGradleTask.description}"
+
+
+    doFirst {
+        println "helloGradleTask doFirst  path ${helloGradleTask.path}"
+        println "helloGradleTask doFirst  invoked"
+    }
+    doLast {
+        println "helloGradleTask doLast  invoked"
+    }
+}
+/**
+ * 我们还可以通过TaskContainer来创建任务
+ * 在Gradle里 Project已经帮我们定义好了一个TaskContainer
+ * 他就是tasks 看起来就很像个容器。
+ * 这个TaskContainer create(String name, Closure configureClosure) throws InvalidUserDataException;
+ * 也是根据上面变形
+ */
+// 创建Task的第二种方法
+tasks.create("helloGradleTaskContainer") {
+
+    println "helloGradleTaskContainer Configuration Lifecycle  invoked"
+
+    doFirst {
+        println "helloGradleTaskContainer doFirst  invoked"
+    }
+    doLast {
+        println "helloGradleTaskContainer doLast  invoked"
+    }
+}
+
+// 创建Task的第三种方法
+// 这种方式的创建其实就是调用Project的Task的方法
+// task(String taskName)
+Task helloGradleTask3 = task("helloGradleTask3") //是否加双引号都可以
+//Task helloGradleTask3 = task(helloGradleTask3)
+helloGradleTask3.doLast {
+    println "helloGradleTask3 doLast  invoked"
+}
+
+
+/**
+ * 第四种：创建任务方式：可在Map参数中进行相关配置，如依赖、任务描述、组别等
+ * 方法原型：Task task(Map<String, ?> args, String name) throws InvalidUserDataException;
+ */
+Task helloGradleTask4 = task(group: BasePlugin.BUILD_GROUP, helloGradleTask4, description: "this is helloGradleTask4")
+//配置创建的Task
+helloGradleTask4.doLast {
+    println "helloGradleTask4 Configuration Lifecycle  invoked"
+    println "helloGradleTask4 Configuration Lifecycle Group：${helloGradleTask4.group}"
+    println "helloGradleTask4 Configuration Lifecycle Group：${helloGradleTask4.description}"
+}
+
+
+/**
+ * * What went wrong:
+ * A problem occurred evaluating script.
+ * > Cannot add task 'helloTaskDependencies2' as a task with that name already exists.
+ * 不能在一个定义多个Task.否则会报上面的错误
+ */

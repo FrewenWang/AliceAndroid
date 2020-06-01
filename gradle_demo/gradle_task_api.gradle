@@ -1,0 +1,53 @@
+/**
+ * 创建任务和我们定义一个变量一样
+ * 变量名就是和我们定义的Task的名字，类型是Task
+ * 所以我们可以通过任务名，使用Task的Api来访问它的方法、属性或者对任务进行重新配置等等
+ */
+task helloTaskApi1 {
+    println "helloTaskApi1 Configuration Lifecycle  invoked"
+}
+
+// 比如我们可以通过Task名直接给他设置doFirst、doLast方法
+// 但是记住：要使用任务名操作任务，首先必现先定义声明，因为脚本是顺序执行的
+helloTaskApi1.doFirst {
+    println "helloTaskApi1 doFirst  invoked"
+}
+// 对于直接通过任务名直接操作任务的原理是：Project在创建该任务的时候，
+// 同时把该任务的任务名设置为Projects的一个属性。类型为Task
+helloTaskApi1.doLast {
+    // project是返回当前Task所属的project.永远不会为空
+    // 下面这句话执行的结果是true。也证明了helloTaskApi1是project的一个属性
+    println "project hasProperty helloTaskApi1：" + project.hasProperty("helloTaskApi1")
+    println "helloTaskApi1 doLast  invoked"
+}
+
+
+/**
+ * 我们一个Task针对另一个Task的访问
+ */
+task helloTaskApi2 {
+    println "helloTaskApi2 Configuration Lifecycle  invoked"
+}
+
+helloTaskApi2.doFirst {
+    println "helloTaskApi2 doFirst  invoked"
+}
+// 对于直接通过任务名直接操作任务的原理是：Project在创建该任务的时候，
+// 同时把该任务的任务名设置为Projects的一个属性。类型为Task
+helloTaskApi2.doLast {
+    // project是返回当前Task所属的project.永远不会为空
+    // 下面这句话执行的结果是true。也证明了helloTaskApi1是project的一个属性
+    println "project hasProperty helloTaskApi1：" + project.hasProperty("helloTaskApi2")
+    println "helloTaskApi1 doLast  invoked"
+    //通过路径访问任务，参数可以是路径（没有访问成功，写法如下:
+    println "helloTaskApi1 doLast  findByPath:${tasks.findByPath(":helloTaskApi1")}"
+    //通过路径访问任务，参数可以是任务名称.如果跨工程了，就无法访问到了。就必须使用路径
+    println "helloTaskApi1 doLast  findByPath:${tasks.findByPath("helloTaskApi1")}"
+    println "helloTaskApi1 doLast  getByPath:${tasks.getByPath("helloTaskApi1")}"
+}
+
+
+
+
+
+

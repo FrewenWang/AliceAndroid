@@ -1,0 +1,89 @@
+task helloOrderTask1 {
+
+    println "helloOrderTask1 Configuration Lifecycle  invoked"
+
+    doFirst {
+        println "helloOrderTask1 doFirst  invoked"
+    }
+    doLast {
+        println "helloOrderTask1 doLast  invoked"
+    }
+}
+
+tasks.create("helloOrderTask2") {
+    dependsOn helloOrderTask1
+    println "helloOrderTask2 Configuration Lifecycle  invoked"
+
+    doFirst {
+        println "helloOrderTask2 doFirst  invoked"
+    }
+    doLast {
+        println "helloOrderTask2 doLast  invoked"
+    }
+}
+
+tasks.create("helloOrderTask3") {
+    // 每次执行完helloOrderTask3 必须执行helloOrderTask1
+    dependsOn helloOrderTask1
+    println "helloOrderTask3 Configuration Lifecycle  invoked"
+
+
+    doFirst {
+        println "helloOrderTask3 doFirst  invoked"
+    }
+    doLast {
+        println "helloOrderTask3 doLast  invoked"
+    }
+}
+
+tasks.create("helloOrderTask4") {
+    // 每次执行完helloOrderTask3 必须执行helloOrderTask1
+    dependsOn helloOrderTask2,helloOrderTask3
+    println "helloOrderTask3 Configuration Lifecycle  invoked"
+
+
+    doFirst {
+        println "helloOrderTask3 doFirst  invoked"
+    }
+    doLast {
+        println "helloOrderTask3 doLast  invoked"
+    }
+}
+
+/**
+ * 执行结果：
+ * > Task :helloOrderTask3
+ * helloOrderTask3 doFirst  invoked
+ * helloOrderTask3 doLast  invoked
+ *
+ * > Task :helloOrderTask1
+ * helloOrderTask1 doFirst  invoked
+ * helloOrderTask1 doLast  invoked
+ */
+
+
+// 这样调用之后可以保证helloOrderTask1一定在helloOrderTask2之后执行
+//helloOrderTask1.mustRunAfter helloOrderTask2
+
+
+// ./gradlew assembleDebug --info | grep -rnEi "Task|assembleDebug"
+
+
+
+tasks.whenTaskAdded { task ->
+    // 通过这个方法我们可以看看Android的构建
+    println("=====================assembleDebug  whenTaskAdded task:${task.name}=========================")
+    if (task.name == 'assembleDebug') {
+//      helloOrderTask2 = tasks.findByPath('project:helloOrderTask2')
+//        task.mustRunAfter tasks.findByPath('helloOrderTask3')
+        println tasks.size()
+        println tasks.findByPath('helloOrderTask3')
+        println tasks.findByPath('helloOrderTask3')
+        task.doFirst {
+            println("=====================assembleDebug  whenTaskAdded doFirst=========================")
+        }
+        task.doLast {
+            println("=====================assembleDebug  whenTaskAdded doLast=========================")
+        }
+    }
+}

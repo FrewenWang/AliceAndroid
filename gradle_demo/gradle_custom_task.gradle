@@ -1,0 +1,73 @@
+// 这种双箭头的调用方法已经废弃掉
+// 如果使用会报：Could not find method leftShift() for arguments
+// 操作符 << 在Gradle 4.x中被弃用（deprecated），并且在Gradle 5.0 被移除（removed）
+// 解决方式：删除操作符 <<  使用下面的方法，放在doLast的闭包方法
+//task helloClosure << {
+// 有可能还会看到部分Demo中是下面这样写的。也已经过时了。
+//task helloClosure.leftShift {
+
+//下面我们我们来分析一下闭包的演进过程：
+//首先，我们定义一个Task
+
+/**
+ * 自定义一个Task
+ */
+class CustomTask extends DefaultTask {
+
+    @TaskAction
+    def doTask() {
+        println("CustomTask is Running")
+    }
+
+    @TaskAction
+    def doTask2() {
+        println("CustomTask2 is Running")
+    }
+
+}
+
+
+task HelloCustomTask(type: CustomTask) {
+    println "HelloCustomTask Configuration Lifecycle  invoked"
+    doFirst {
+        println("HelloCustomTask doFirst Invoked")
+    }
+    doFirst {
+        println("HelloCustomTask doFirst Invoked")
+    }
+    doLast {
+        println("HelloCustomTask doLast Invoked")
+    }
+    doLast {
+        println("HelloCustomTask doLast Invoked")
+    }
+
+}
+
+
+task HelloCopyTask(type: Copy) {
+    println "1111111111HelloCopyTask Configuration Lifecycle  invoked  begin111111111111"
+
+
+    // Task :HelloCopyTask NO-SOURCE
+    // 下面的代码是在执行期进行执行
+    from(rootProject.file("gradle_demo/src/copyFile.txt"))
+    println "HelloCopyTask Configuration Lifecycle  invoked running"
+    into(rootProject.file("gradle_demo/dist/"))
+
+
+    println "HelloCopyTask Configuration Lifecycle  invoked end"
+
+    doFirst {
+//        放在这个地方是无效的  会报错误： Task :HelloCopyTask NO-SOURCE
+//        就是因为from into 这两个方法是传给Copy 闭包里面的逻辑执行体，而且只会执行一次
+//        from(rootProject.file("gradle_demo/src/copyFile.txt"))
+//        println "HelloCopyTask Configuration Lifecycle  invoked running"
+//        into(rootProject.file("gradle_demo/dist/"))
+
+        println("HelloCopyTask doFirst Invoked")
+    }
+    doLast {
+        println("HelloCopyTask doLast Invoked")
+    }
+}

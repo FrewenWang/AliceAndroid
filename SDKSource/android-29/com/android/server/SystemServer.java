@@ -345,6 +345,7 @@ public final class SystemServer {
     /**
      * The main entry point from zygote.
      * SystemServer进程的main函数入口
+     * 也就是孵化进程启动的这个方法。
      */
     public static void main(String[] args) {
         new SystemServer().run();
@@ -352,6 +353,7 @@ public final class SystemServer {
 
     public SystemServer() {
         // Check for factory test mode.
+        // 记录工厂测试模式
         mFactoryTestMode = FactoryTest.getMode();
 
         // Record process start information.
@@ -365,6 +367,7 @@ public final class SystemServer {
         // We don't use "mStartCount > 1" here because it'll be wrong on a FDE device.
         // TODO: mRuntimeRestart will *not* be set to true if the proccess crashes before
         // sys.boot_completed is set. Fix it.
+        // 记录一下系统是否是刚启动完毕
         mRuntimeRestart = "1".equals(SystemProperties.get("sys.boot_completed"));
     }
 
@@ -481,6 +484,7 @@ public final class SystemServer {
 
             // Initialize native services.
             // 加载了libandroid_servers.so
+            // //加载了动态库libandroid_servers.so
             System.loadLibrary("android_servers");
 
             // Debug builds - allow heap profiling.
@@ -493,10 +497,12 @@ public final class SystemServer {
             performPendingShutdown();
 
             // Initialize the system context.
+            // 这个方法也比较重要，获取Activity 创建系统上下文
             createSystemContext();
 
             // Create the system service manager.
             // 创建SystemServiceManager，它会对系统的服务进行创建、启动和生命周期管理。启动系统的各种服务
+            // 在启动SystemServer的时候，实例化SystemServiceManager对象
             mSystemServiceManager = new SystemServiceManager(mSystemContext);
             mSystemServiceManager.setStartInfo(mRuntimeRestart,
                     mRuntimeStartElapsedTime, mRuntimeStartUptime);
@@ -614,7 +620,9 @@ public final class SystemServer {
     }
 
     private void createSystemContext() {
+        // 获取ActivityThread对象
         ActivityThread activityThread = ActivityThread.systemMain();
+        // 通过ActivityThread获取SystemContext对象
         mSystemContext = activityThread.getSystemContext();
         mSystemContext.setTheme(DEFAULT_SYSTEM_THEME);
 
@@ -659,12 +667,16 @@ public final class SystemServer {
         traceBeginAndSlog("UriGrantsManagerService");
         mSystemServiceManager.startService(UriGrantsManagerService.Lifecycle.class);
         traceEnd();
-
+        // 启动ActivityManagerService
         // Activity manager runs the show.
         traceBeginAndSlog("StartActivityManager");
         // TODO: Might need to move after migration to WM.
+
+        // 通过mSystemServiceManager来启动ActivityManagerService
+        // 我们看到，首先SystemServiceManager.startService启动ActivityTaskManagerService
         ActivityTaskManagerService atm = mSystemServiceManager.startService(
                 ActivityTaskManagerService.Lifecycle.class).getService();
+        // 然后再启动ActivityManagerService
         mActivityManagerService = ActivityManagerService.Lifecycle.startService(
                 mSystemServiceManager, atm);
         mActivityManagerService.setSystemServiceManager(mSystemServiceManager);
@@ -676,6 +688,7 @@ public final class SystemServer {
         // Native daemons may be watching for it to be registered so it must be ready
         // to handle incoming binder calls immediately (including being able to verify
         // the permissions for those calls).
+        // 启动PowerManagerService
         traceBeginAndSlog("StartPowerManager");
         mPowerManagerService = mSystemServiceManager.startService(PowerManagerService.class);
         traceEnd();

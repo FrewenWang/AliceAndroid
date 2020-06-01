@@ -1,6 +1,6 @@
 apply plugin: 'checkstyle'
 // 往.git目录下注入 pre-commit 文件
-apply from: 'quality/hooks/install-git-hooks.gradle'
+apply from: 'toolkits/quality/hooks/install-git-hooks.gradle'
 
 checkstyle {
     toolVersion '6.1.1'

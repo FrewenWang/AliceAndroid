@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 我们将鼠标停留在根布局中，右键转化成为Databinding布局-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="loginViewModel"
+            type="com.frewen.android.demo.ui.profile.MyProfileViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="15dp"
+        tools:context=".ui.profile.MyProfileFragment">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/id_content_title_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账号："
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="账号：" />
+        <!-- "@={}" 是指的双向绑定       -->
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_account_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={loginViewModel.loginName}"
+            app:layout_constraintBaseline_toBaselineOf="@id/id_content_title_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/id_content_title_login"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:hint="输入账号" />
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/id_content_title_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="密码："
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/id_content_title_login"
+            tools:text="密码：" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_pwd_login"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={loginViewModel.password}"
+            app:layout_constraintBaseline_toBaselineOf="@id/id_content_title_pwd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/id_content_title_pwd"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:hint="输入密码" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:onClick="@{()-> loginViewModel.login()}"
+            android:text="登录"
+            app:layout_constraintTop_toBottomOf="@id/id_content_title_pwd"
+            tools:text="登录" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--这种用的是JetPack的navigation的导航的的框架-->
+<!--这种用的startDestination="@+id/navigation_home"表示第一个启动的Fragment-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <!--我们还可以通过action来进行navigation的跳转Action -->
+    <!--action -->
+    <!--launchSingleTop -->
+    <!--我们还可以通过action来进行navigation的跳转Action -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.frewen.android.demo.ui.home.HomeFragment"
@@ -25,7 +32,7 @@
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.frewen.android.demo.ui.notifications.NotificationsFragment"
+        android:name="com.frewen.android.demo.ui.profile.MyProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_profile" />
 </navigation>

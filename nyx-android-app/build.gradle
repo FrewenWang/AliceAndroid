@@ -167,11 +167,12 @@ dependencies {
     implementation 'com.afollestad.material-dialogs:bottomsheets:3.1.1'
 
 
+    // <editor-folder desc = "Dependence:JetPack依赖库">
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
     //  材料设计的相关依赖
     implementation "com.google.android.material:material:$rootProject.materialVersion"
-
+    // </editor-folder>
 
     implementation 'devlight.io:navigationtabbar:1.2.5'
 }

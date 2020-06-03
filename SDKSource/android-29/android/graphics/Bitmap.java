@@ -460,11 +460,11 @@ public final class Bitmap implements Parcelable {
      * well as the ability to display transparent/translucent colors.
      * Bitmap的内部枚举类：
      * Config解析：
-     * 1、Bitmap.Config.ALPHA_8：颜色信息只由透明度组成，占8位。
-     * 2、Bitmap.Config.ARGB_4444：颜色信息由透明度与R（Red），G（Green），B（Blue）四部分组成，每个部分都占4位，总共占16位。
-     * 3、Bitmap.Config.ARGB_8888：颜色信息由透明度与R（Red），G（Green），B（Blue）四部分组成，每个部分都占8位，总共占32位。
+     * 1、Bitmap.Config.ALPHA_8：颜色信息只由透明度组成，占8位。一个字节
+     * 2、Bitmap.Config.ARGB_4444：颜色信息由透明度与R（Red），G（Green），B（Blue）四部分组成，每个部分都占4位，总共占16位。2个字节
+     * 3、Bitmap.Config.ARGB_8888：颜色信息由透明度与R（Red），G（Green），B（Blue）四部分组成，每个部分都占8位，总共占32位。4个字节
      *      是Bitmap默认的颜色配置信息，也是最占空间的一种配置。
-     * 4、Bitmap.Config.RGB_565：颜色信息由R（Red），G（Green），B（Blue）三部分组成，R占5位，G占6位，B占5位，总共占16位。
+     * 4、Bitmap.Config.RGB_565：颜色信息由R（Red），G（Green），B（Blue）三部分组成，R占5位，G占6位，B占5位，总共占16位。2个字节
      * 
      * 通常我们优化Bitmap时，当需要做性能优化或者防止OOM（Out Of Memory），
      * 我们通常会使用Bitmap.Config.RGB_565这个配置，

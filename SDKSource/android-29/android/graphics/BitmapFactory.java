@@ -118,6 +118,9 @@ public class BitmapFactory {
          * If set to true, the decoder will return null (no bitmap), but
          * the <code>out...</code> fields will still be set, allowing the caller to
          * query the bitmap without having to allocate the memory for its pixels.
+         * 当此参数设为true时，解码器会返回null,而不是Bitmap
+         * 但是BitmapFactory会解析图片的原始宽/高信息，并且outWidth、outHeight会被赋值，并不会去真正地加载图片，
+         * 这个时候允许调用者获取Bitmap的原始宽高，而不需要额外的内存开销 所以这个操作是轻量级的。
          */
         public boolean inJustDecodeBounds;
 
@@ -130,6 +133,18 @@ public class BitmapFactory {
          * number of pixels. Any value <= 1 is treated the same as 1. Note: the
          * decoder uses a final value based on powers of 2, any other value will
          * be rounded down to the nearest power of 2.
+         * 采样率：如果设置的值大于1，就会让解码器对原始图像进行二次采样，返回较小的图像以节省内存。
+         * 样本大小是任一维度中与已解码位图中单个像素相对应的像素数。
+         * 例如，inSampleSize == 4返回的图像为原始宽度/高度的1/4，像素数目的1/16。
+         * 拿一张1024×1024像素的图片来说，假定采用ARGB8888格式存储，那么它占有的内存为1024×1024×4，即4MB，
+         * 如果inSampleSize为2，那么采样后的图片其内存占用只有512×512×4，即1MB。
+         * 这样我们也看到了采样率对于节省图片内存的多么的重要
+         *
+         * inSampleSize的取值应该总是为2的指数，比如1、2、4、8、16，等等  任何小于等于1的值都与1相同。
+         *
+         * 注意：解码器使用基于2的幂的最终值，任何其他值将四舍五入为最接近的2的幂。
+         * 比如传入的是7， 那么系统就会按照8来处理，但是要是传入3呢？？系统是按照2还是按照4来处理？？
+         * 还是别自作聪明
          */
         public int inSampleSize;
 
@@ -508,11 +523,14 @@ public class BitmapFactory {
      *         function is not an {@link ColorSpace.Rgb.TransferParameters ICC parametric curve}
      */
     public static Bitmap decodeFile(String pathName, Options opts) {
+        // 校验配置选项
         validate(opts);
         Bitmap bm = null;
         InputStream stream = null;
         try {
+            // 打开文件输入流
             stream = new FileInputStream(pathName);
+            // 调用从文件输入流读取图片
             bm = decodeStream(stream, null, opts);
         } catch (Exception e) {
             /*  do nothing.
@@ -520,6 +538,7 @@ public class BitmapFactory {
             */
             Log.e("BitmapFactory", "Unable to decode stream: " + e);
         } finally {
+            // 向文件输入流这种，最后不要忘了关闭流
             if (stream != null) {
                 try {
                     stream.close();
@@ -831,11 +850,13 @@ public class BitmapFactory {
 
         Trace.traceBegin(Trace.TRACE_TAG_GRAPHICS, "decodeFileDescriptor");
         try {
+            // 和decodeFile不同,这里直接调用nativeDecodeFileDescriptor方法来去读取bm
             if (nativeIsSeekable(fd)) {
                 bm = nativeDecodeFileDescriptor(fd, outPadding, opts,
                         Options.nativeInBitmap(opts),
                         Options.nativeColorSpace(opts));
             } else {
+                // 否则的话，还是使用FileInputStream来进行读取
                 FileInputStream fis = new FileInputStream(fd);
                 try {
                     bm = decodeStreamInternal(fis, outPadding, opts);

@@ -41,14 +41,18 @@ dependencies {
 
 
     //===================添加Aura整体开源框架依赖===============================
-//    api project(path: ':aura-framework')
-//    api project(path: ':optimusnetwork')
-//    api project(path: ':free-network')
-//    api project(path: ':aura-ui')
-//    api project(path: ':aura-toolkits')
-    api 'wang.frewen.aura:aura-toolkits:1.0.0'
-    api 'wang.frewen.aura:aura-ui:1.0.0'
-    api 'wang.frewen.aura:aura-framework:1.0.0'
+    String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+    if (gitBranch == "dev") {
+        api project(path: ':aura-framework')
+        api project(path: ':optimusnetwork')
+        api project(path: ':free-network')
+        api project(path: ':aura-ui')
+        api project(path: ':aura-toolkits')
+    } else {
+        api 'wang.frewen.aura:aura-toolkits:1.0.0'
+        api 'wang.frewen.aura:aura-ui:1.0.0'
+        api 'wang.frewen.aura:aura-framework:1.0.0'
+    }
     //OKHttp内置拦截器 https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.6.0")
     api project(path: ':optimusnetwork')

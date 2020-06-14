@@ -13,7 +13,6 @@ buildscript {
      */
     repositories {
         String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
-        println("repositories gitBranch = " + gitBranch)
         if (gitBranch == "dev") {
             // 这个闭包里面传入的插件依赖的仓库。注意：使用本地依赖库，首先要启动artifactory
             // 具体见：/tool_kits/artifactory-start.sh
@@ -49,7 +48,6 @@ allprojects {
         String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
         println("allprojects repositories gitBranch = " + gitBranch)
         if (gitBranch == "dev") {
-            // 我们在自己的artifactory中包含了google和jcenter的远程maven仓库
             maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
         } else {
             google()

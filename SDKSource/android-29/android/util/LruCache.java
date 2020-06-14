@@ -62,6 +62,9 @@ import java.util.Map;
  * <p>This class appeared in Android 3.1 (Honeycomb MR1); it's available as part
  * of <a href="http://developer.android.com/sdk/compatibility-library.html">Android's
  * Support Package</a> for earlier releases.
+ * LruCache是一个泛型类，它内部采用一个LinkedHashMap以强引用的方式存储外界的缓存对象，
+ * 其提供了get和put方法来完成缓存的获取和添加操作，当缓存满时，LruCache会移除较早使用的缓存对象，
+ * 然后再添加新的缓存对象。
  */
 public class LruCache<K, V> {
     private final LinkedHashMap<K, V> map;

@@ -1,6 +1,5 @@
 package com.frewen.android.demo
 
-import android.app.Activity
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity

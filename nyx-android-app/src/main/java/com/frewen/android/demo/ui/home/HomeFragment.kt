@@ -9,9 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentHomeBinding
 
+@FragmentDestination(pageUrl = "main/tabs/home", asStarter = true)
 class HomeFragment : Fragment() {
     /**
      * 只要在 @see R.layout.fragment_home 里面根布局里面使用<layout>布局包含

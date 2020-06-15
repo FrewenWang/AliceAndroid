@@ -1,0 +1,34 @@
+{
+  "main/tabs/dash": {
+    "isFragment": true,
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/dash",
+    "className": "com.frewen.android.demo.ui.dashboard.DashboardFragment",
+    "id": 1291879138
+  },
+  "main/tabs/home": {
+    "isFragment": true,
+    "asStarter": true,
+    "needLogin": false,
+    "pageUrl": "main/tabs/home",
+    "className": "com.frewen.android.demo.ui.home.HomeFragment",
+    "id": 2071192074
+  },
+  "main/tabs/myProfile": {
+    "isFragment": true,
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/myProfile",
+    "className": "com.frewen.android.demo.ui.profile.MyProfileFragment",
+    "id": 1070197888
+  },
+  "main/tabs/notification": {
+    "isFragment": true,
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/notification",
+    "className": "com.frewen.android.demo.ui.notifications.NotificationsFragment",
+    "id": 278281846
+  }
+}

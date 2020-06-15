@@ -182,6 +182,11 @@ dependencies {
     // </editor-folder>
 
     implementation 'devlight.io:navigationtabbar:1.2.5'
+
+
+    implementation project(':aura-navigation-annotations')
+    //如果你使用kotlin,这里需要使用 kapt project
+    kapt project(":aura-navigation-compiler")
 }
 
 

@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.databinding.FragmentProfileBinding
 
+@FragmentDestination(pageUrl = "main/tabs/myProfile", asStarter = false)
 class MyProfileFragment : Fragment() {
 
     private lateinit var myProfileViewModel: MyProfileViewModel

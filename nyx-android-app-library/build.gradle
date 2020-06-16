@@ -42,6 +42,7 @@ dependencies {
 
     //===================添加Aura整体开源框架依赖===============================
     String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+    println("=========gitBranch ==========" + gitBranch)
     if (gitBranch == "dev") {
         api project(path: ':aura-framework')
         api project(path: ':optimusnetwork')
@@ -55,8 +56,6 @@ dependencies {
     }
     //OKHttp内置拦截器 https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.6.0")
-    api project(path: ':optimusnetwork')
-    api project(path: ':free-network')
 
 
     api 'com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler-Kotlin:v4.0.6'

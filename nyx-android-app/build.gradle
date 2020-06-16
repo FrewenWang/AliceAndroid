@@ -187,6 +187,10 @@ dependencies {
     implementation project(':aura-navigation-annotations')
     //如果你使用kotlin,这里需要使用 kapt project
     kapt project(":aura-navigation-compiler")
+
+    // 引入fastjson的依赖：https://github.com/alibaba/fastjson
+    implementation 'com.alibaba:fastjson:1.2.70'
+    implementation 'com.alibaba:fastjson:1.1.71.android'
 }
 
 

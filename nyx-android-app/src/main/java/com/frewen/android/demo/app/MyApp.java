@@ -10,10 +10,10 @@ import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.aura.framework.app.BaseApp;
+import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.github.library.network.core.NetworkApi;
 import com.frewen.keepservice.KeepLiveService;
 import com.frewen.network.core.FreeRxHttp;
-import com.frewen.aura.toolkits.core.FreeToolKits;
 import com.frewen.aura.toolkits.utils.ProcessInfoUtils;
 
 import javax.inject.Inject;
@@ -53,7 +53,7 @@ public class MyApp extends BaseApp implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
 
-        FreeToolKits.init(this, "AndroidSamples");
+        AuraToolKits.init(null, "AndroidSamples");
 
         initFreeHttp();
 

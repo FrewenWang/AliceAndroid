@@ -3,13 +3,13 @@ package com.frewen.network.core;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.network.interceptor.HttpLoggingInterceptor;
 import com.frewen.network.logger.Logger;
 import com.frewen.network.model.HttpHeaders;
 import com.frewen.network.model.HttpParams;
 import com.frewen.network.request.GetRequest;
 import com.frewen.network.utils.CommonUtils;
-import com.frewen.aura.toolkits.core.FreeToolKits;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +22,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/4/14 23:03
- * Copyright ©2018 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2018 Frewen.Wong. All Rights Reserved.
  */
 public final class FreeRxHttp {
 
@@ -69,7 +69,6 @@ public final class FreeRxHttp {
 
     /**
      * getContext方法
-     * @return
      */
     public Application getContext() {
         CommonUtils.checkNotNull(mContext);
@@ -81,12 +80,11 @@ public final class FreeRxHttp {
      */
     public static void init(Application app) {
         mContext = app;
-        FreeToolKits.init(app, "FreeRxHttp");
+        AuraToolKits.init(app, "FreeRxHttp");
     }
 
     /**
      * 获取单例对象的方法
-     * @return
      */
     public static FreeRxHttp getInstance() {
         CommonUtils.checkNotNull(mContext, "you should init FreeRxHttp First");
@@ -200,8 +198,8 @@ public final class FreeRxHttp {
 
     /**
      * setBaseUrl
+     *
      * @param baseUrl
-     * @return
      */
     public FreeRxHttp setBaseUrl(String baseUrl) {
         mBaseUrl = CommonUtils.checkNotNull(baseUrl, "baseUrl == null");
@@ -210,7 +208,6 @@ public final class FreeRxHttp {
 
     /**
      * getBaseUrl
-     * @return
      */
     public String getBaseUrl() {
         return mBaseUrl;

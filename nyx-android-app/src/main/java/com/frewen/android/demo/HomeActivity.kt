@@ -1,16 +1,27 @@
 package com.frewen.android.demo
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.text.TextUtils
+import android.util.Log
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.frewen.android.demo.databinding.ActivityHomeBinding
+import com.frewen.android.demo.navigation.NavGraphBuilder
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+
+    companion object {
+        private const val TAG = "HomeActivity"
+    }
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
         DataBindingUtil.setContentView<ActivityHomeBinding>(this, R.layout.activity_home)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.nav_host_fragment)
 
         // 配置AppBar的配置
         // Passing each menu ID as a set of Ids because each
@@ -30,5 +41,15 @@ class HomeActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_profile))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        // 使用我们自己的NavGraph
+        NavGraphBuilder.build(navController)
+
+        navView.setOnNavigationItemSelectedListener(this)
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        Log.i(TAG, "item == " + item.itemId)
+        navController.navigate(item.itemId)
+        return !TextUtils.isEmpty(item.title)
     }
 }

@@ -12,8 +12,8 @@ import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentProfileBinding
 
-@FragmentDestination(pageUrl = "main/tabs/notification", asStarter = false)
-class NotificationsFragment : Fragment() {
+@FragmentDestination(pageUrl = "main/tabs/discovery", asStarter = false)
+class DiscoveryFragment : Fragment() {
 
     private lateinit var notificationsViewModel: NotificationsViewModel
 

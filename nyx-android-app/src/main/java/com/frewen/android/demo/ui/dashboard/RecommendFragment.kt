@@ -11,8 +11,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 
-@FragmentDestination(pageUrl = "main/tabs/dash", asStarter = false)
-class DashboardFragment : Fragment() {
+@FragmentDestination(pageUrl = "main/tabs/recommend", asStarter = false)
+class RecommendFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
 

@@ -20,13 +20,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.frewen.android.demo.ui.dashboard.DashboardFragment"
+        android:name="com.frewen.android.demo.ui.dashboard.RecommendFragment"
         android:label="@string/title_recommend"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.frewen.android.demo.ui.notifications.NotificationsFragment"
+        android:name="com.frewen.android.demo.ui.notifications.DiscoveryFragment"
         android:label="@string/title_discovery"
         tools:layout="@layout/fragment_notifications" />
 

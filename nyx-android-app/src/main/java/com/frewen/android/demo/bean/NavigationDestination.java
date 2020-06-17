@@ -2,8 +2,7 @@ package com.frewen.android.demo.bean;
 
 /**
  * @filename: NavigationDestination
- * @introduction:
- * 1、自动生层JavaBean,安装GsonFormat插件，设置快捷键option+s 进行自动生成
+ * @introduction: 1、自动生层JavaBean,安装GsonFormat插件，设置快捷键option+s 进行自动生成
  * @author: Frewen.Wong
  * @time: 2020/6/16 07:25
  *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
@@ -25,7 +24,7 @@ public class NavigationDestination {
     private String className;
     private int id;
 
-    public boolean isIsFragment() {
+    public boolean isFragment() {
         return isFragment;
     }
 
@@ -33,7 +32,7 @@ public class NavigationDestination {
         this.isFragment = isFragment;
     }
 
-    public boolean isAsStarter() {
+    public boolean asStarter() {
         return asStarter;
     }
 

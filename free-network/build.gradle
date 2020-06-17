@@ -1,5 +1,9 @@
 apply plugin: 'com.android.library'
 
+
+// 通过外部文件的引用来执行上传JCenter的任务,master分支使用在线的依赖配置
+String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+
 android {
     compileSdkVersion 28
 
@@ -37,5 +41,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
 
-    implementation 'wang.frewen.aura:aura-toolkits:1.0.0'
+    if (gitBranch == "dev") {
+        implementation project(':aura-toolkits')
+    } else {
+        implementation 'wang.frewen.aura:aura-toolkits:1.0.0'
+    }
 }

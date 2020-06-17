@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize">
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
+        <com.frewen.android.demo.navigation.views.AuraBottomNavigationView
             android:id="@+id/nav_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -21,8 +21,9 @@
             android:background="?android:attr/windowBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:menu="@menu/bottom_nav_menu" />
+            app:layout_constraintRight_toRightOf="parent" />
+        <!-- 我们使用自己来设置的我们AuraBottomNavigationView，通过配置文件来设置menu-->
+        <!-- app:menu="@menu/bottom_nav_menu"-->
 
         <!--JetPack的Fragment的是不就的学习 -->
         <!--JetPack的android:name="androidx.navigation.fragment.NavHostFragment" -->
@@ -37,8 +38,10 @@
             app:layout_constraintBottom_toTopOf="@id/nav_view"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:navGraph="@navigation/mobile_navigation" />
+            app:layout_constraintTop_toTopOf="parent"/>
+            <!-- 我们这个地方注释掉，是因为我们在HomeActivity里面使用我们自己的navGraph -->
+            <!-- NavGraphBuilder.build(navController)-->
+            <!--app:navGraph="@navigation/mobile_navigation"-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

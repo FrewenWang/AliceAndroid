@@ -5,7 +5,6 @@ import android.os.Bundle
 import com.frewen.android.aura.annotations.ActivityDestination
 import com.frewen.android.demo.R
 
-@ActivityDestination(pageUrl = "main/tabs/publish", needLogin = true)
 class PublishActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

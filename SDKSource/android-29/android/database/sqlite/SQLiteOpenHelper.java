@@ -294,6 +294,10 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
     }
 
     /**
+     * 创建或者打开一个可以进行读写的数据库.第一次调用这个方法,QLiteOpenHelper的onCreate或者onUpgrade或者onOpen会被调用
+     * 具体调用情况是初次创建会调用onCreate、onOpen
+     * 升级的时候：onCreate、onOpen。
+     * 非初次创建或者升级的时候，只会回调onOpen
      * Create and/or open a database that will be used for reading and writing.
      * The first time this is called, the database will be opened and
      * {@link #onCreate}, {@link #onUpgrade} and/or {@link #onOpen} will be
@@ -319,6 +323,8 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
     }
 
     /**
+     * 创建或者打开一个数据库。除非出现一些问题，例如磁盘已满或者权限要求数据库必须以只读的形式打开，
+     * 否则这个方法和getWritableDatabase返回的是相同的对象，
      * Create and/or open a database.  This will be the same object returned by
      * {@link #getWritableDatabase} unless some problem, such as a full disk,
      * requires the database to be opened read-only.  In that case, a read-only
@@ -342,35 +348,57 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
         }
     }
 
+    /**
+     * getReadableDatabase和getWritableDatabase都会回调到这个方法
+     * @param writable
+     * @return
+     */
     private SQLiteDatabase getDatabaseLocked(boolean writable) {
+        // 说明我们调用过mDatabase.close()
+        //SQLiteOpenHelper中默认保存当前SQLiteDatabase实例
         if (mDatabase != null) {
+            // mDatabase不为null 说明我们打开过数据库，!mDatabase.isOpen()但是是费打开状态
             if (!mDatabase.isOpen()) {
                 // Darn!  The user closed the database by calling mDatabase.close().
+                //如果数据库已经关闭，需要置为null 需要重新打开
                 mDatabase = null;
             } else if (!writable || !mDatabase.isReadOnly()) {
+                //如果数据库没有关闭
+                //只要是该数据库是可写则直接返回
+                //否则当前申请是只读则直接返回
+                // 这个地方也可以看出，其实etReadableDatabase和getWritableDatabase可以返回同样的对象
                 // The database is already open for business.
                 return mDatabase;
             }
         }
 
+        // 避免重复初始化，这个地方为什么要抛出异常，而不是在最上面直接返回
         if (mIsInitializing) {
             throw new IllegalStateException("getDatabase called recursively");
         }
 
+        // 声明db对象
         SQLiteDatabase db = mDatabase;
         try {
+            // 正在进行初始化
             mIsInitializing = true;
-
+            /// 如果db还是不为null
             if (db != null) {
+                // 要求是读写状态,但是当前数据是只读状态，需要获取可写的数据库
                 if (writable && db.isReadOnly()) {
+                    //此时需要根据配置选项SQLiteDatabaseConfiguration重新打开数据库
                     db.reopenReadWrite();
                 }
             } else if (mName == null) {
+                //数据库名称为null，为MemoryDb
                 db = SQLiteDatabase.createInMemory(mOpenParamsBuilder.build());
             } else {
+                //获取数据库保存路径
                 final File filePath = mContext.getDatabasePath(mName);
+                /// open建造者参数
                 SQLiteDatabase.OpenParams params = mOpenParamsBuilder.build();
                 try {
+                    //创建数据库操作SQLiteDatabase实例  传入的数据库路径
                     db = SQLiteDatabase.openDatabase(filePath, params);
                     // Keep pre-O-MR1 behavior by resetting file permissions to 660
                     setFilePermissionsForDb(filePath.getPath());
@@ -384,19 +412,27 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
                     db = SQLiteDatabase.openDatabase(filePath, params);
                 }
             }
-
+            //onConfigure回调，配置数据库相关
             onConfigure(db);
-
+            //获取当前数据库版本，默认为0。
             final int version = db.getVersion();
+
+            //mNewVersion是自行设置的版本号，一般默认第一个版本为1
+            //如果首次创建传递0，此时将不再执行
             if (version != mNewVersion) {
+                //此时如果是只读状态，将无法对数据库做任何更改
                 if (db.isReadOnly()) {
                     throw new SQLiteException("Can't upgrade read-only database from version " +
                             db.getVersion() + " to " + mNewVersion + ": " + mName);
                 }
-
+                ////例如当前数据库version==3，而mMinimumSupportedVersion==5，（而mMinimumSupportedVersion是我们传入的）此时
+                // 该数据不再不支持，将其删除
                 if (version > 0 && version < mMinimumSupportedVersion) {
+                    // 实例化db文件
                     File databaseFile = new File(db.getPath());
+                    //这个被@hide了
                     onBeforeDelete(db);
+                    // 关闭DB
                     db.close();
                     if (SQLiteDatabase.deleteDatabase(databaseFile)) {
                         mIsInitializing = false;
@@ -406,8 +442,10 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
                                 + mName + " with version " + version);
                     }
                 } else {
+                    /// 开启事务
                     db.beginTransaction();
                     try {
+                        /// 当前版本是version是0的话，说明我们是初次创建
                         if (version == 0) {
                             onCreate(db);
                         } else {
@@ -417,6 +455,7 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
                                 onUpgrade(db, version, mNewVersion);
                             }
                         }
+                        // 设置数据库的版本
                         db.setVersion(mNewVersion);
                         db.setTransactionSuccessful();
                     } finally {
@@ -424,7 +463,7 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
                     }
                 }
             }
-
+            //onOpen被回调
             onOpen(db);
 
             if (db.isReadOnly()) {
@@ -434,6 +473,7 @@ public abstract class SQLiteOpenHelper implements AutoCloseable {
             mDatabase = db;
             return db;
         } finally {
+            //// 关闭
             mIsInitializing = false;
             if (db != null && db != mDatabase) {
                 db.close();

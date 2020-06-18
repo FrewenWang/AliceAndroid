@@ -20,6 +20,8 @@ import android.annotation.UnsupportedAppUsage;
 import java.io.Closeable;
 
 /**
+ * 关于 SQLiteClosable 完全可以理解成 Java为 I/O提供的 Closeable 标准接口，
+ * SQLiteCloseable 就是专门为数据库释放提供的标准 API（SQLiteCloseable 也实现了 Closeable）。
  * An object created from a SQLiteDatabase that can be closed.
  *
  * This class implements a primitive reference counting scheme for database objects.
@@ -53,10 +55,12 @@ public abstract class SQLiteClosable implements Closeable {
      */
     public void acquireReference() {
         synchronized(this) {
+            //表示数据库已经关闭
             if (mReferenceCount <= 0) {
                 throw new IllegalStateException(
                         "attempt to re-open an already-closed object: " + this);
             }
+            //引用计数++
             mReferenceCount++;
         }
     }
@@ -70,9 +74,12 @@ public abstract class SQLiteClosable implements Closeable {
     public void releaseReference() {
         boolean refCountIsZero = false;
         synchronized(this) {
+            //释放对该对象的引用
             refCountIsZero = --mReferenceCount == 0;
         }
         if (refCountIsZero) {
+            //当前不存在任何引用
+            //通知关闭
             onAllReferencesReleased();
         }
     }

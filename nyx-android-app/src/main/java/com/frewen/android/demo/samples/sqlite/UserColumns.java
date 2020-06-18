@@ -14,7 +14,7 @@ public class UserColumns extends BaseColumns {
     public static final String USER_NAME = "name";
     public static final String USER_AGE = "age";
     public static final String USER_TELEPHONE = "telephone";
-    public static final String USER_CONTENT = "telephone";
+    public static final String USER_CONTENT = "content";
     public static final String USER_CREATE_DATE = "create_date";
 
 }

@@ -42,15 +42,25 @@ public final class SQLiteDirectCursorDriver implements SQLiteCursorDriver {
         mCancellationSignal = cancellationSignal;
     }
 
+    /**
+     * SQLiteDirectCursorDriver中query
+     * @param factory
+     * @param selectionArgs
+     * @return
+     */
     public Cursor query(CursorFactory factory, String[] selectionArgs) {
+        //查询使用的是SQLiteQuery
+        //实际SQLiteDirectCursorDriver内部使用SQLiteQuery开始查询数据
         final SQLiteQuery query = new SQLiteQuery(mDatabase, mSql, mCancellationSignal);
         final Cursor cursor;
         try {
             query.bindAllArgsAsStrings(selectionArgs);
-
+            //factory == null 默认返回SQLiteCursor
             if (factory == null) {
                 cursor = new SQLiteCursor(this, mEditTable, query);
             } else {
+                //配置的CursorFactory在这里调用，自定义Cursor
+                // 否则使用用户传入Cursor的来实例化新的cursor
                 cursor = factory.newCursor(mDatabase, this, mEditTable, query);
             }
         } catch (RuntimeException ex) {

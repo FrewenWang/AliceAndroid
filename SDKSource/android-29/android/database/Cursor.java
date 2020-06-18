@@ -27,6 +27,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * Cursor 本质只是一个接口，约束了对查询数据获取的接口规则，实际查询返回的Cursor类型是SQLiteCursor。
+ * 可以看到创建 SQLiteQuery 对象作为参数传入SQLiteCurosr。先看下 SQLiteQuery 的创建过程：
  * This interface provides random read-write access to the result set returned
  * by a database query.
  * <p>

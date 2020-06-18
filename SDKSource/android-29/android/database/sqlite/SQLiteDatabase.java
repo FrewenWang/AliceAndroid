@@ -454,6 +454,7 @@ public final class SQLiteDatabase extends SQLiteClosable {
     }
 
     /**
+     * Android 很看重 SQLite 事务管理。在 SQLiteDatabase 中很多方法用来启动、结束和管理事务的。
      * Begins a transaction in EXCLUSIVE mode.
      * <p>
      * Transactions can be nested.
@@ -1102,6 +1103,8 @@ public final class SQLiteDatabase extends SQLiteClosable {
     }
 
     /**
+     * 将一个 SQL 语句作为参数，返回一个 SQLiteStatement 对象
+     * 事实上，正如函数名表示的，这个函数将编译 SQL 语句并允许将其重用。
      * Compiles an SQL statement into a reusable pre-compiled statement object.
      * The parameters are identical to {@link #execSQL(String)}. You may put ?s in the
      * statement and fill in those values with {@link SQLiteProgram#bindString}
@@ -1436,10 +1439,13 @@ public final class SQLiteDatabase extends SQLiteClosable {
     public Cursor rawQueryWithFactory(
             CursorFactory cursorFactory, String sql, String[] selectionArgs,
             String editTable, CancellationSignal cancellationSignal) {
+        // 引用计数 ++
         acquireReference();
         try {
+            //创建SQLiteCursorDriver对象
             SQLiteCursorDriver driver = new SQLiteDirectCursorDriver(this, sql, editTable,
                     cancellationSignal);
+            //使用SQLiteDirectCursorDriver完成查询
             return driver.query(cursorFactory != null ? cursorFactory : mCursorFactory,
                     selectionArgs);
         } finally {

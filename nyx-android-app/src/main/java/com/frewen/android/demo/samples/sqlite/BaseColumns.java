@@ -8,5 +8,5 @@ package com.frewen.android.demo.samples.sqlite;
  *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class BaseColumns {
-    public static String ID = "id";
+    public static String ID = "_id";
 }

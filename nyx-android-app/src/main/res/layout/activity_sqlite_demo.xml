@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.frewen.android.demo.samples.sqlite.SQLiteDemoActivity">
+
+    <Button
+        android:id="@+id/button24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="224dp"
+        tools:layout_editor_absoluteY="205dp" />
+
+    <Button
+        android:id="@+id/button19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="38dp" />
+
+    <Button
+        android:id="@+id/button20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="222dp"
+        tools:layout_editor_absoluteY="35dp" />
+
+    <Button
+        android:id="@+id/button21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="插入数据API"
+        android:onClick="insertAPI"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="115dp" />
+
+    <Button
+        android:id="@+id/button22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="225dp"
+        tools:layout_editor_absoluteY="114dp" />
+
+    <Button
+        android:id="@+id/button23"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="54dp"
+        tools:layout_editor_absoluteY="208dp" />
+
+    <Button
+        android:id="@+id/button25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="54dp"
+        tools:layout_editor_absoluteY="304dp" />
+
+    <Button
+        android:id="@+id/button26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="224dp"
+        tools:layout_editor_absoluteY="305dp" />
+
+    <Button
+        android:id="@+id/button27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="396dp" />
+
+    <Button
+        android:id="@+id/button28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="226dp"
+        tools:layout_editor_absoluteY="391dp" />
+
+    <Button
+        android:id="@+id/button29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="484dp" />
+
+    <Button
+        android:id="@+id/button30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="230dp"
+        tools:layout_editor_absoluteY="483dp" />
+
+    <Button
+        android:id="@+id/button31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="63dp"
+        tools:layout_editor_absoluteY="581dp" />
+
+    <Button
+        android:id="@+id/button32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="231dp"
+        tools:layout_editor_absoluteY="581dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

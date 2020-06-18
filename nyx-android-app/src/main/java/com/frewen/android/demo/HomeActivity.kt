@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.frewen.android.demo.databinding.ActivityHomeBinding
 import com.frewen.android.demo.navigation.NavGraphBuilder
+import com.frewen.android.demo.samples.sqlite.AuraSQLiteWrapper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {

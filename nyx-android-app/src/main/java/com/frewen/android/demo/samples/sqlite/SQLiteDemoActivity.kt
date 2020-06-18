@@ -49,7 +49,7 @@ class SQLiteDemoActivity : AppCompatActivity() {
         var values = ContentValues()
         values.put(UserColumns.USER_NAME, "Frewen.WangModify")
         values.put(UserColumns.USER_AGE, 30)
-        var count = AuraSQLiteWrapper(this).update(SQLiteConstant.DB_TABLE_NAME, values, "_id=?", String[]("3"))
+        var count = AuraSQLiteWrapper(this).update(SQLiteConstant.DB_TABLE_NAME, values, "_id=?", String[]{ "3" })
 
         if (count > 0) {
             Toast.makeText(this, "更新成功", Toast.LENGTH_LONG).show();
@@ -59,7 +59,7 @@ class SQLiteDemoActivity : AppCompatActivity() {
     }
 
     fun deleteAPI(view: View) {
-        var count = AuraSQLiteWrapper(this).delete(SQLiteConstant.DB_TABLE_NAME, "_id=?", String[]("3"))
+        var count = AuraSQLiteWrapper(this).delete(SQLiteConstant.DB_TABLE_NAME, "_id=?", String[]{ "3" })
 
         if (count > 0) {
             Toast.makeText(this, "删除成功", Toast.LENGTH_LONG).show();

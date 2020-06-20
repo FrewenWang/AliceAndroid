@@ -19,7 +19,7 @@ package com.frewen.network.model;
 import android.os.Build;
 import android.text.TextUtils;
 
-import com.frewen.network.core.FreeRxHttp;
+import com.frewen.network.core.AuraRxHttp;
 import com.frewen.network.logger.Logger;
 
 import org.json.JSONException;
@@ -208,7 +208,7 @@ public class HttpHeaders implements Serializable {
                 Class<?> sysResCls = Class.forName("com.android.internal.R$string");
                 Field webUserAgentField = sysResCls.getDeclaredField("web_user_agent");
                 Integer resId = (Integer) webUserAgentField.get(null);
-                webUserAgent = FreeRxHttp.getInstance().getContext().getString(resId);
+                webUserAgent = AuraRxHttp.getInstance().getContext().getString(resId);
             } catch (Exception e) {
                 // We have nothing to do
             }

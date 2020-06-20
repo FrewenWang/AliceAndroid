@@ -15,7 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 
-import com.frewen.network.core.FreeRxHttp;
+import com.frewen.network.core.AuraRxHttp;
 import com.frewen.aura.toolkits.utils.ThrowableUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -712,7 +712,7 @@ public final class Logger {
     private static void printDeviceInfo(final String filePath) {
         String versionName = "";
         int versionCode = 0;
-        Application application = FreeRxHttp.getInstance().getContext();
+        Application application = AuraRxHttp.getInstance().getContext();
         try {
             PackageInfo pi = application
                     .getPackageManager()
@@ -805,7 +805,7 @@ public final class Logger {
          * 日志打印开关的配置
          */
         private Config() {
-            Application application = FreeRxHttp.getInstance().getContext();
+            Application application = AuraRxHttp.getInstance().getContext();
             if (mDefaultDir != null) {
                 return;
             }
@@ -1122,7 +1122,7 @@ public final class Logger {
          * @return
          */
         private static String getCurrentProcessName() {
-            Application application = FreeRxHttp.getInstance().getContext();
+            Application application = AuraRxHttp.getInstance().getContext();
             ActivityManager am =
                     (ActivityManager) application.getSystemService(Context.ACTIVITY_SERVICE);
             if (am == null) {

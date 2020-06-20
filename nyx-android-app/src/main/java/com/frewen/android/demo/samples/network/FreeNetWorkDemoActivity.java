@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.frewen.android.demo.R;
-import com.frewen.network.core.FreeRxHttp;
+import com.frewen.network.core.AuraRxHttp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +32,6 @@ public class FreeNetWorkDemoActivity extends AppCompatActivity {
      * @param view
      */
     public void onGet(View view) {
-        FreeRxHttp.getInstance();
+        AuraRxHttp.getInstance();
     }
 }

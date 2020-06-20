@@ -1,13 +1,14 @@
-package com.frewen.network;
+package com.frewen.network.response;
 
 /**
  * @filename: BaseResponse
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/4/14 10:07
- * Copyright ©2018 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2018 Frewen.Wong. All Rights Reserved.
  */
-public class BaseResponse<T> {
+public class Response<T> {
+    public boolean isSuccess;
     /**
      * 返回码
      */

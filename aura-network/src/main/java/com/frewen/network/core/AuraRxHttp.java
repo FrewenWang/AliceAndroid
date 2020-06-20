@@ -22,16 +22,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/4/14 23:03
- *         Copyright ©2018 Frewen.Wong. All Rights Reserved.
+ * @copyright: Copyright ©2018 Frewen.Wong. All Rights Reserved.
  */
-public final class FreeRxHttp {
-
+public final class AuraRxHttp {
     /**
      * 默认超时时间：
      */
     public static final int DEFAULT_MILLISECONDS = 5 * 1000;
     private static Application mContext;
-    private static volatile FreeRxHttp mInstance;
+    private static volatile AuraRxHttp mInstance;
     /**
      * 设置重试次数
      */
@@ -55,7 +54,7 @@ public final class FreeRxHttp {
      */
     private HttpHeaders mCommonHeaders;
 
-    private FreeRxHttp() {
+    private AuraRxHttp() {
         okHttpClientBuilder = new OkHttpClient.Builder();
         okHttpClientBuilder.connectTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
         okHttpClientBuilder.readTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
@@ -80,18 +79,18 @@ public final class FreeRxHttp {
      */
     public static void init(Application app) {
         mContext = app;
-        AuraToolKits.init(app, "FreeRxHttp");
+        AuraToolKits.init(app, "AuraHttp");
     }
 
     /**
      * 获取单例对象的方法
      */
-    public static FreeRxHttp getInstance() {
+    public static AuraRxHttp getInstance() {
         CommonUtils.checkNotNull(mContext, "you should init FreeRxHttp First");
         if (mInstance == null) {
-            synchronized (FreeRxHttp.class) {
+            synchronized (AuraRxHttp.class) {
                 if (mInstance == null) {
-                    mInstance = new FreeRxHttp();
+                    mInstance = new AuraRxHttp();
                 }
             }
         }
@@ -101,7 +100,7 @@ public final class FreeRxHttp {
     /**
      * 调试模式,默认打开所有的异常调试
      */
-    public FreeRxHttp setDebug(String tag) {
+    public AuraRxHttp setDebug(String tag) {
         return setDebug(tag, true);
     }
 
@@ -111,7 +110,7 @@ public final class FreeRxHttp {
      * @param tag
      * @param debug
      */
-    public FreeRxHttp setDebug(String tag, boolean debug) {
+    public AuraRxHttp setDebug(String tag, boolean debug) {
         String tempTag = TextUtils.isEmpty(tag) ? "FreeRxHttp" : tag;
         if (debug) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(tempTag, debug);
@@ -157,7 +156,7 @@ public final class FreeRxHttp {
     /**
      * 全局读取超时时间
      */
-    public FreeRxHttp setReadTimeOut(long readTimeOut) {
+    public AuraRxHttp setReadTimeOut(long readTimeOut) {
         okHttpClientBuilder.readTimeout(readTimeOut, TimeUnit.MILLISECONDS);
         return this;
     }
@@ -165,7 +164,7 @@ public final class FreeRxHttp {
     /**
      * 全局写入超时时间
      */
-    public FreeRxHttp setWriteTimeOut(long writeTimeout) {
+    public AuraRxHttp setWriteTimeOut(long writeTimeout) {
         okHttpClientBuilder.writeTimeout(writeTimeout, TimeUnit.MILLISECONDS);
         return this;
     }
@@ -173,7 +172,7 @@ public final class FreeRxHttp {
     /**
      * 全局连接超时时间
      */
-    public FreeRxHttp setConnectTimeout(long connectTimeout) {
+    public AuraRxHttp setConnectTimeout(long connectTimeout) {
         okHttpClientBuilder.connectTimeout(connectTimeout, TimeUnit.MILLISECONDS);
         return this;
     }
@@ -181,7 +180,7 @@ public final class FreeRxHttp {
     /**
      * 超时重试次数
      */
-    public FreeRxHttp setRetryCount(int retryCount) {
+    public AuraRxHttp setRetryCount(int retryCount) {
         if (retryCount < 0) {
             throw new IllegalArgumentException("retryCount must > 0");
         }
@@ -201,7 +200,7 @@ public final class FreeRxHttp {
      *
      * @param baseUrl
      */
-    public FreeRxHttp setBaseUrl(String baseUrl) {
+    public AuraRxHttp setBaseUrl(String baseUrl) {
         mBaseUrl = CommonUtils.checkNotNull(baseUrl, "baseUrl == null");
         return this;
     }
@@ -216,7 +215,7 @@ public final class FreeRxHttp {
     /**
      * 添加全局公共请求参数
      */
-    public FreeRxHttp addCommonParams(HttpParams commonParams) {
+    public AuraRxHttp addCommonParams(HttpParams commonParams) {
         if (mCommonParams == null) {
             mCommonParams = new HttpParams();
         }
@@ -241,7 +240,7 @@ public final class FreeRxHttp {
     /**
      * 添加全局公共请求参数
      */
-    public FreeRxHttp addCommonHeaders(HttpHeaders commonHeaders) {
+    public AuraRxHttp addCommonHeaders(HttpHeaders commonHeaders) {
         if (mCommonHeaders == null) {
             mCommonHeaders = new HttpHeaders();
         }

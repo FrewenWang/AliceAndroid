@@ -21,6 +21,7 @@ import com.frewen.network.listener.ProgressListener;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -36,13 +37,13 @@ import okhttp3.MediaType;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/4/15 0015 下午5:33
- * Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
 public class HttpParams implements Serializable {
     /**
      * 普通的键值对参数
      */
-    public LinkedHashMap<String, String> urlParamsMap;
+    public LinkedHashMap<String, Object> urlParamsMap;
     /**
      * 文件的键值对参数
      */
@@ -78,8 +79,16 @@ public class HttpParams implements Serializable {
         urlParamsMap.putAll(params);
     }
 
-    public void put(String key, String value) {
-        urlParamsMap.put(key, value);
+    public void put(String key, Object value) {
+        try {
+            Field field = value.getClass().getField("TYPE");
+            Class clazz = (Class) field.get(null);
+            if (clazz.isPrimitive()) {
+                urlParamsMap.put(key, value);
+            }
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public <T extends File> void put(String key, T file, ProgressListener responseCallBack) {
@@ -191,7 +200,7 @@ public class HttpParams implements Serializable {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        for (ConcurrentHashMap.Entry<String, String> entry : urlParamsMap.entrySet()) {
+        for (ConcurrentHashMap.Entry<String, Object> entry : urlParamsMap.entrySet()) {
             if (result.length() > 0) result.append("&");
             result.append(entry.getKey()).append("=").append(entry.getValue());
         }

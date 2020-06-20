@@ -13,7 +13,7 @@ import com.frewen.aura.framework.app.BaseApp;
 import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.github.library.network.core.NetworkApi;
 import com.frewen.keepservice.KeepLiveService;
-import com.frewen.network.core.FreeRxHttp;
+import com.frewen.network.core.AuraRxHttp;
 import com.frewen.aura.toolkits.utils.ProcessInfoUtils;
 
 import javax.inject.Inject;
@@ -67,8 +67,8 @@ public class MyApp extends BaseApp implements HasActivityInjector {
     }
 
     private void initFreeHttp() {
-        FreeRxHttp.init(this);
-        FreeRxHttp.getInstance()
+        AuraRxHttp.init(this);
+        AuraRxHttp.getInstance()
                 .setBaseUrl(Constant.BASE_URL)
                 .setDebug("FreeRxHttp", true)
                 .setReadTimeOut(5 * 1000)

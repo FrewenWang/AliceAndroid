@@ -44,20 +44,38 @@ dependencies {
 
 
     //===================添加Aura整体开源框架依赖===============================
-    println("=========gitBranch ==========" + gitBranch)
-//    if (gitBranch == "dev") {
-    api project(path: ':aura-framework')
-    api project(path: ':optimusnetwork')
-    api project(path: ':free-network')
-    api project(path: ':aura-ui')
-    api project(path: ':aura-toolkits')
-//    } else {
-//        api 'wang.frewen.aura:aura-toolkits:1.0.0'
-//        api 'wang.frewen.aura:aura-ui:1.0.0'
-//        api 'wang.frewen.aura:aura-framework:1.0.0'
-//    }
+    if (gitBranch == "dev") {
+        api project(path: ':aura-framework')
+        api project(path: ':optimusnetwork')
+        api project(path: ':aura-network')
+        api project(path: ':aura-ui')
+        api project(path: ':aura-toolkits')
+    } else {
+        api 'wang.frewen.aura:aura-toolkits:1.0.0'
+        api 'wang.frewen.aura:aura-ui:1.0.0'
+        api 'wang.frewen.aura:aura-framework:1.0.0'
+    }
+    //===================添加Aura整体开源框架依赖===============================
+
     //OKHttp内置拦截器 https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.6.0")
+    api dep.okhttp3Log
+
+    //===================JetPack的Room框架依赖===============================
+    // JetPack的Room框架：Room持久性库在 SQLite 的基础上提供了一个抽象层，
+    // 让用户能够在充分利用 SQLite 的强大功能的同时，获享更强健的数据库访问机制。
+    // https://developer.android.com/jetpack/androidx/releases/room
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$room_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+    //===================JetPack的Room框架依赖===============================
 
 
     api 'com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler-Kotlin:v4.0.6'

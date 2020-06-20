@@ -1,13 +1,19 @@
 package com.frewen.android.demo.network
 
-import com.frewen.github.library.common.Config
 import com.frewen.aura.framework.net.LoggerInterceptor
+import com.frewen.github.library.common.Config
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.security.KeyManagementException
+import java.security.NoSuchAlgorithmException
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.*
 
 /**
  * @filename: RetrofitFactory
@@ -85,6 +91,36 @@ class RetrofitFactory private constructor() {
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build()
+
+        try {
+            /**
+             * 解决Https的证书问题
+             */
+            var trustManagers: Array<TrustManager> = arrayOf<TrustManager>(object : X509TrustManager {
+                @Throws(CertificateException::class)
+                override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
+                }
+
+                @Throws(CertificateException::class)
+                override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+                }
+
+                override fun getAcceptedIssuers(): Array<X509Certificate?> {
+                    return arrayOfNulls<X509Certificate>(0)
+                }
+            })
+
+            val ssl: SSLContext = SSLContext.getInstance("SSL")
+            ssl.init(null, trustManagers, SecureRandom())
+
+            HttpsURLConnection.setDefaultSSLSocketFactory(ssl.socketFactory)
+            // 域名校验
+            HttpsURLConnection.setDefaultHostnameVerifier { hostname, session -> true }
+        } catch (e: NoSuchAlgorithmException) {
+            e.printStackTrace();
+        } catch (e: KeyManagementException) {
+            e.printStackTrace();
+        }
     }
 
     /**

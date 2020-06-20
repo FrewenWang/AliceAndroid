@@ -1,6 +1,5 @@
-package com.frewen.android.demo.ui.dashboard
+package com.frewen.android.demo.ui.recommend
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,24 +9,26 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
+import com.frewen.aura.framework.fragment.BaseFragment
 
 @FragmentDestination(pageUrl = "main/tabs/recommend", asStarter = false)
-class RecommendFragment : Fragment() {
+class RecommendFragment : BaseFragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var recommendViewModel: RecommendViewModel
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+    /**
+     * Fragment子类需要实现的方法。用来生成Fragment需要的View
+     */
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, b: Boolean): View {
+        recommendViewModel =
+                ViewModelProviders.of(this).get(RecommendViewModel::class.java)
+
+        val root = inflater.inflate(R.layout.fragment_main_recommend, container, false)
+        val textView: TextView = root.findViewById(R.id.text_recommend)
+        recommendViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
     }
+
 }

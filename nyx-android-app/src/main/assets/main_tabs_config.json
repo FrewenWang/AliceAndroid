@@ -1,6 +1,6 @@
 {
-  "activeColor": "#333333",
-  "inActiveColor": "#666666",
+  "activeColor": "#000000",
+  "inActiveColor": "#BFBFBF",
   "selectTab": 0,
   "tabs": [
     {
@@ -21,7 +21,7 @@
       "size": 40,
       "enable": true,
       "index": 2,
-      "tintColor": "#ff678f",
+      "tintColor": "#BF00FF",
       "pageUrl": "main/tabs/publish",
       "title": ""
     },

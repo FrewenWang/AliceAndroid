@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.frewen.android.aura.annotations.FragmentDestination
-import com.frewen.android.demo.databinding.FragmentProfileBinding
+import com.frewen.android.demo.databinding.FragmentMainMyProfileBinding
+import com.frewen.aura.framework.fragment.BaseFragment
 
 @FragmentDestination(pageUrl = "main/tabs/myProfile", asStarter = false)
-class MyProfileFragment : Fragment() {
+class MyProfileFragment : BaseFragment() {
 
     private lateinit var myProfileViewModel: MyProfileViewModel
 
@@ -21,16 +22,11 @@ class MyProfileFragment : Fragment() {
                 ViewModelProviders.of(this).get(MyProfileViewModel::class.java)
     }
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, b: Boolean): View {
         // 我们来使用FragmentProfileBinding 来代替之前的inflater.inflate布局的方式
         // 这个时候，我们返回的值也需要变化成binding.root
-        val binding = FragmentProfileBinding.inflate(inflater, container, false)
-        // val root = inflater.inflate(R.layout.fragment_profile, container, false)
+        val binding = FragmentMainMyProfileBinding.inflate(inflater, container, false)
+        // val root = inflater.inflate(R.layout.fragment_main_my_profile, container, false)
 
         // 这个通过给FragmentProfileBinding的对象进行赋值
         binding.loginViewModel = myProfileViewModel

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    
+    <!-- 我们应用的主题色为紫色-->
     <color name="black">#de000000</color>
     <color name="gray_50">#fafafa</color>
-    <color name="gray_50_a600">#99fafafa</color>
+    <color name="gray_50_a600">#99FAFAFA</color>
     <color name="green_300">#6dc790</color>
     <color name="green_500">#49bb79</color>
     <color name="green_700">#005d2b</color>
@@ -12,11 +13,13 @@
     <color name="yellow_300">#f8f99f</color>
     <color name="yellow_500">#ffff63</color>
 
-
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorPrimaryLight">#00A74B</color>
-    <color name="colorAccent">#f633f6</color>
+    <!--主题色为50%的紫色-->
+    <color name="colorPrimary">#BF00FF</color>
+    <!--暗主题色为25%的紫色-->
+    <color name="colorPrimaryDark">#600080</color>
+    <!--亮主题色为75%的紫色-->
+    <color name="colorPrimaryLight">#DF80FF</color>
+    <color name="colorAccent">#BF00FF</color>
 
 
     <color name="none_received">#999999</color>

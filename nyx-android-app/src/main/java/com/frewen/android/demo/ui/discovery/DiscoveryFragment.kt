@@ -1,36 +1,33 @@
-package com.frewen.android.demo.ui.notifications
+package com.frewen.android.demo.ui.discovery
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
-import com.frewen.android.demo.databinding.FragmentProfileBinding
+import com.frewen.aura.framework.fragment.BaseFragment
 
 @FragmentDestination(pageUrl = "main/tabs/discovery", asStarter = false)
-class DiscoveryFragment : Fragment() {
+class DiscoveryFragment : BaseFragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var notificationsViewModel: DiscoveryViewModel
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-
+    /**
+     * Fragment子类需要实现的方法。用来生成Fragment需要的View
+     */
+    override fun createView(inflater: LayoutInflater, container: ViewGroup?, b: Boolean): View {
         notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
+                ViewModelProviders.of(this).get(DiscoveryViewModel::class.java)
 
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
+        val root = inflater.inflate(R.layout.fragment_main_discovery, container, false)
+        val textView: TextView = root.findViewById(R.id.text_discovery)
         notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
     }
+
 }

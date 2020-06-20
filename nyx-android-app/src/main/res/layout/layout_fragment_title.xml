@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="3dp"
-        app:srcCompat="@drawable/ic_mine" />
+        app:srcCompat="@drawable/ic_main_profile" />
 
     <TextView
         android:layout_width="match_parent"

@@ -9,6 +9,7 @@ import com.frewen.aura.toolkits.core.AuraToolKits;
 
 import java.util.Map;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.ActivityNavigator;
 import androidx.navigation.NavController;
 import androidx.navigation.NavGraph;
@@ -25,13 +26,16 @@ import androidx.navigation.fragment.FragmentNavigator;
  */
 public class NavGraphBuilder {
 
-    public static void build(NavController controller) {
+    public static void build(NavController controller, FragmentActivity activity, int containerId) {
         NavigatorProvider provider = controller.getNavigatorProvider();
-        FragmentNavigator fragmentNavigator = provider.getNavigator(FragmentNavigator.class);
-        ActivityNavigator activityNavigator = provider.getNavigator(ActivityNavigator.class);
-
 
         NavGraph navGraph = new NavGraph(new NavGraphNavigator(provider));
+
+
+        ActivityNavigator activityNavigator = provider.getNavigator(ActivityNavigator.class);
+//        FragmentNavigator fragmentNavigator = provider.getNavigator(FragmentNavigator.class);
+        AuraFragmentNavigator fragmentNavigator = new AuraFragmentNavigator(activity, activity.getSupportFragmentManager(), containerId);
+        provider.addNavigator(fragmentNavigator);
 
         Map<String, NavigationDestination> destinationMap = AppConfig.getNavigationConfig();
         /// 遍历注入的Navigation对象

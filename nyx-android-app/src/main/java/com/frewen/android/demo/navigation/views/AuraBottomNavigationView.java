@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class AuraBottomNavigationView extends BottomNavigationView {
 
-    private static int[] sIcons = new int[]{R.drawable.ic_dashboard_black_24dp, R.drawable.ic_dashboard_black_24dp, R.drawable.ic_dashboard_black_24dp, R.drawable.ic_dashboard_black_24dp, R.drawable.ic_dashboard_black_24dp};
+    private static int[] sIcons = new int[]{R.drawable.ic_main_home, R.drawable.ic_main_recommend, R.drawable.ic_main_publish, R.drawable.ic_main_discovery, R.drawable.ic_main_profile};
     private BottomNavigationBar config;
 
     public AuraBottomNavigationView(Context context) {

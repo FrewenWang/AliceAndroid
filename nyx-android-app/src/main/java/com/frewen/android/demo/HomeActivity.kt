@@ -42,10 +42,11 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_profile))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        // 使用我们自己的NavGraph
-        NavGraphBuilder.build(navController)
 
         navView.setOnNavigationItemSelectedListener(this)
+
+        // 使用我们自己的NavGraph
+        NavGraphBuilder.build(navController, this, R.id.nav_host_fragment)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

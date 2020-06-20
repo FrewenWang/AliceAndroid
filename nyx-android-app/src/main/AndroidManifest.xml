@@ -41,13 +41,7 @@
         <activity android:name=".samples.dagger2.Dagger2Activity" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppTheme.Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.Splash"></activity>
         <activity android:name=".HomeActivity" />
         <activity android:name=".samples.hook.target.TargetActivity" />
         <activity android:name=".samples.hook.HookDemoActivity" />
@@ -57,7 +51,12 @@
         <activity android:name=".MainBackActivity" />
         <activity android:name=".samples.bluetooth.BlueToothDemoActivity" />
         <activity android:name=".samples.jobscheduler.JobSchedulerDemoActivity" />
-        <activity android:name=".samples.network.WebSocketDemoActivity" />
+        <activity android:name=".samples.network.WebSocketDemoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".samples.keeplive.KeepLiveActivity" />
         <activity android:name=".samples.webview.WebViewActivity" />
         <activity android:name=".samples.view.ViewDemoActivity" />
@@ -77,7 +76,9 @@
         <activity android:name=".samples.bitmap.BitmapDemoActivity" />
         <activity android:name=".samples.eventbus.StickyMsgActivity" />
         <activity android:name=".samples.fragment.FragmentDemoActivity" />
-        <activity android:name=".samples.fragment.FragmentStackActivity" /> <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
+        <activity android:name=".samples.fragment.FragmentStackActivity" />
+
+        <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
         <!-- 因此，android:authorities必须是唯一的，这里建议读者在命名的时候加上包名前缀。 -->
         <!-- 为了演示进程间通信，我们让BookProvider运行在独立的进程中并给它添加了权限， -->
         <!-- 这样外界应用如果想访问BookProvider，就必须声明“com.frewen.content.provider”这个权限。 -->
@@ -100,7 +101,7 @@
             android:exported="true"
             android:process=":aidl_remote" />
         <service
-            android:name=".samples.network.websocket.WebSocketClientService"
+            android:name=".samples.network.websocket.NyxSocketClientService"
             android:enabled="true"
             android:exported="true" /> <!-- Socket通信的服务端，运行在单独的进程中 -->
         <service

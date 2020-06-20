@@ -11,7 +11,19 @@ import com.frewen.network.model.HttpParams;
 import com.frewen.network.request.GetRequest;
 import com.frewen.network.utils.CommonUtils;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -25,10 +37,11 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * @copyright: Copyright ©2018 Frewen.Wong. All Rights Reserved.
  */
 public final class AuraRxHttp {
+    private static String TAG = "AuraRxHttp";
     /**
-     * 默认超时时间：
+     * 默认超时时间：30秒
      */
-    public static final int DEFAULT_MILLISECONDS = 5 * 1000;
+    public static final int DEFAULT_TIMEOUT_MILLISECONDS = 30 * 1000;
     private static Application mContext;
     private static volatile AuraRxHttp mInstance;
     /**
@@ -55,15 +68,72 @@ public final class AuraRxHttp {
     private HttpHeaders mCommonHeaders;
 
     private AuraRxHttp() {
+        // okHttpClient的Builder
         okHttpClientBuilder = new OkHttpClient.Builder();
-        okHttpClientBuilder.connectTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
-        okHttpClientBuilder.readTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
-        okHttpClientBuilder.writeTimeout(DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        okHttpClientBuilder.connectTimeout(DEFAULT_TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        okHttpClientBuilder.readTimeout(DEFAULT_TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        okHttpClientBuilder.writeTimeout(DEFAULT_TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        // 添加日志拦截器
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(TAG);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okHttpClientBuilder.addInterceptor(interceptor);
 
         retrofitBuilder = new Retrofit.Builder();
         //增加RxJava2CallAdapterFactory
         retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
 
+
+        initTrustManager();
+
+    }
+
+    /**
+     * 添加Http的签名证书问题
+     */
+    private void initTrustManager() {
+        TrustManager[] trustManagers = new TrustManager[]{new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+        }};
+        try {
+            SSLContext ssl = SSLContext.getInstance("SSL");
+            ssl.init(null, trustManagers, new SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(ssl.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 对外暴露 OkHttpClient,方便自定义
+     */
+    public static OkHttpClient.Builder getOkHttpClientBuilder() {
+        return getInstance().okHttpClientBuilder;
+    }
+
+    /**
+     * 对外暴露 Retrofit,方便自定义
+     */
+    public static Retrofit.Builder getRetrofitBuilder() {
+        return getInstance().retrofitBuilder;
     }
 
     /**
@@ -78,8 +148,16 @@ public final class AuraRxHttp {
      * 必须在全局Application先调用，获取context上下文，否则缓存无法使用
      */
     public static void init(Application app) {
+        AuraRxHttp.init(app, "AuraRxHttp");
+    }
+
+    /**
+     * 必须在全局Application先调用，获取context上下文，否则缓存无法使用
+     */
+    public static void init(Application app, String customTag) {
         mContext = app;
-        AuraToolKits.init(app, "AuraHttp");
+        AuraRxHttp.TAG = customTag;
+        AuraToolKits.init(app, customTag);
     }
 
     /**
@@ -111,7 +189,7 @@ public final class AuraRxHttp {
      * @param debug
      */
     public AuraRxHttp setDebug(String tag, boolean debug) {
-        String tempTag = TextUtils.isEmpty(tag) ? "FreeRxHttp" : tag;
+        String tempTag = TextUtils.isEmpty(tag) ? "AuraRxHttp" : tag;
         if (debug) {
             HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(tempTag, debug);
             loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

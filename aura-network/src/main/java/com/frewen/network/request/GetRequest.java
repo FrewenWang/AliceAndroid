@@ -1,6 +1,10 @@
 package com.frewen.network.request;
 
+import com.frewen.network.api.BaseApiService;
+import com.frewen.network.response.Response;
+
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 
 /**
  * @filename: GetRequest
@@ -15,7 +19,13 @@ public class GetRequest extends Request<GetRequest> {
         super(url);
     }
 
-    public <T> Observable<T> execute(Class<T> clazz) {
+    public <T> Observable<T> execute(Class<? extends BaseApiService> service) {
         return null;
+
+    }
+
+    @Override
+    protected Observable<ResponseBody> generateRequest() {
+        return apiService.get(url, params.urlParamsMap);
     }
 }

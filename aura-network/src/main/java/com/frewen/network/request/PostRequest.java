@@ -1,6 +1,7 @@
 package com.frewen.network.request;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 
 /**
  * @filename: PostRequest
@@ -13,6 +14,11 @@ public class PostRequest extends Request {
 
     public PostRequest(String url) {
         super(url);
+    }
+
+    @Override
+    protected Observable<ResponseBody> generateRequest() {
+        return null;
     }
 
     public <T> Observable<T> execute(Class<T> clazz) {

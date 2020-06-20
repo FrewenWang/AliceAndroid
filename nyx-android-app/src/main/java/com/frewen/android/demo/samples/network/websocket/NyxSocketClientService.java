@@ -8,9 +8,12 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
+
 import androidx.core.app.NotificationCompat;
+
 import android.util.Log;
 
 import com.frewen.android.demo.MainBackActivity;
@@ -23,23 +26,25 @@ import static android.app.Notification.VISIBILITY_PUBLIC;
 
 /**
  * @filename: WebSocketClientService
- * @introduction:
+ * @introduction: 一般来说即时通讯功能都希望像QQ微信这些App一样能在后台保持运行，当然App保活这个问题本身就是个伪命题，
+ *         我们只能尽可能保活，所以首先就是建一个Service，将webSocket的逻辑放入服务中运行并尽可能保活，让websocket保持连接。
  * @author: Frewen.Wong
  * @time: 2019-06-25 08:45
- * Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
-public class WebSocketClientService extends Service {
+public class NyxSocketClientService extends Service {
     private static final String TAG = "WebSocketClientService";
     /**
      * websocket测试地址
      */
     private static final String WEB_SERVICE_URL = "ws://echo.websocket.org";
-    private MyWebSocketClient client;
+    private NyxWebSocketClient client;
+    private WebSocketClientBinder mBinder = new WebSocketClientBinder();
 
     /**
      * 构造函数
      */
-    public WebSocketClientService() {
+    public NyxSocketClientService() {
 
     }
 
@@ -61,7 +66,7 @@ public class WebSocketClientService extends Service {
 
     private void initSocketClient() {
         URI uri = URI.create(WEB_SERVICE_URL);
-        client = new MyWebSocketClient(uri) {
+        client = new NyxWebSocketClient(uri) {
             @Override
             public void onMessage(String message) {
                 Log.e(TAG, "收到的消息：" + message);
@@ -152,6 +157,13 @@ public class WebSocketClientService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return mBinder;
+    }
+
+    //用于Activity和service通讯
+    class WebSocketClientBinder extends Binder {
+        public NyxSocketClientService getService() {
+            return NyxSocketClientService.this;
+        }
     }
 }

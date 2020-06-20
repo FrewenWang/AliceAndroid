@@ -1,10 +1,9 @@
 package com.frewen.network.api;
 
-import android.database.Observable;
-
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -27,12 +26,18 @@ import retrofit2.http.Url;
  * @introduction: 参考：
  * @author: Frewen.Wong
  * @time: 2019/4/14 21:49
- * Copyright ©2018 Frewen.Wong. All Rights Reserved.
+ * @copyright: Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
-public interface ApiService {
+public interface BaseApiService {
 
+    /**
+     * Get网络请求
+     *
+     * @param url  请求URL
+     * @param maps 参数列表(key,value)
+     */
     @GET()
-    Observable<ResponseBody> get(@Url String url, @QueryMap Map<String, String> maps);
+    Observable<ResponseBody> get(@Url String url, @QueryMap Map<String, Object> maps);
 
     @POST()
     @FormUrlEncoded

@@ -34,13 +34,12 @@ import okhttp3.ResponseBody;
 import okhttp3.internal.http.HttpHeaders;
 import okio.Buffer;
 
-
 /**
- * <p>描述：设置日志拦截器</p>
- * 提供了详细、易懂的日志打印<br>
- * 作者： zhouyou<br>
- * 日期： 2016/12/19 16:35<br>
- * 版本： v2.0<br>
+ * @filename: HttpLoggingInterceptor
+ * @introduction:
+ * @author: Frewen.Wong
+ * @time: 2020/6/20 22:08
+ * @copyright Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class HttpLoggingInterceptor implements Interceptor {
 

@@ -3,12 +3,17 @@ package com.frewen.network.request;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.frewen.network.api.BaseApiService;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.network.model.HttpHeaders;
 import com.frewen.network.model.HttpParams;
 
 
+import io.reactivex.Observable;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
 
 /**
  * @filename: BaseRequest
@@ -30,15 +35,23 @@ public abstract class Request<R extends Request> {
     private HttpUrl httpUrl;
     protected HttpHeaders headers = new HttpHeaders();
     protected HttpParams params = new HttpParams();                        //添加的param
+    /**
+     * OkHttpClient
+     */
+    protected OkHttpClient okHttpClient;
+    private Retrofit retrofit;
+    /**
+     *
+     */
+    protected BaseApiService apiService;
 
     public Request(String url) {
-        ///
         this.url = url;
         mContext = AuraRxHttp.getInstance().getContext();
 
-        AuraRxHttp httpClient = AuraRxHttp.getInstance();
+        AuraRxHttp auraRxHttp = AuraRxHttp.getInstance();
 
-        this.baseUrl = httpClient.getBaseUrl();
+        this.baseUrl = auraRxHttp.getBaseUrl();
 
         if (!TextUtils.isEmpty(this.baseUrl)) {
             httpUrl = HttpUrl.parse(baseUrl);
@@ -50,7 +63,7 @@ public abstract class Request<R extends Request> {
             baseUrl = httpUrl.url().getProtocol() + "://" + httpUrl.url().getHost() + "/";
         }
         //超时重试次数
-        retryCount = httpClient.getRetryCount();
+        retryCount = auraRxHttp.getRetryCount();
 
         //默认添加 Accept-Language
         String acceptLanguage = HttpHeaders.getAcceptLanguage();
@@ -64,13 +77,39 @@ public abstract class Request<R extends Request> {
             addHeader(HttpHeaders.HEAD_KEY_USER_AGENT, userAgent);
         }
         //添加公共请求参数
-        if (httpClient.getCommonParams() != null) {
-            params.put(httpClient.getCommonParams());
+        if (auraRxHttp.getCommonParams() != null) {
+            params.put(auraRxHttp.getCommonParams());
         }
         // 添加公共请求参数头
-        if (httpClient.getCommonHeaders() != null) {
-            headers.put(httpClient.getCommonHeaders());
+        if (auraRxHttp.getCommonHeaders() != null) {
+            headers.put(auraRxHttp.getCommonHeaders());
         }
+    }
+
+    protected R build(Class<? extends BaseApiService> clazz) {
+        OkHttpClient.Builder okHttpClientBuilder = generateOkClient();
+        final Retrofit.Builder retrofitBuilder = generateRetrofit();
+        okHttpClient = okHttpClientBuilder.build();
+        retrofitBuilder.client(okHttpClient);
+        retrofit = retrofitBuilder.build();
+        apiService = retrofit.create(clazz);
+        return (R) this;
+    }
+
+    /**
+     * 构建生成的OkHttpClientBuilder
+     */
+    private OkHttpClient.Builder generateOkClient() {
+        if (readTimeOut <= 0 && writeTimeOut <= 0 && connectTimeout <= 0 && headers.isEmpty()) {
+            OkHttpClient.Builder builder = AuraRxHttp.getOkHttpClientBuilder();
+            return builder;
+        }
+        return null;
+    }
+
+    private Retrofit.Builder generateRetrofit() {
+        Retrofit.Builder builder = AuraRxHttp.getRetrofitBuilder();
+        return builder;
     }
 
 
@@ -109,5 +148,7 @@ public abstract class Request<R extends Request> {
         params.put(key, value);
         return (R) this;
     }
+
+    protected abstract Observable<ResponseBody> generateRequest();
 
 }

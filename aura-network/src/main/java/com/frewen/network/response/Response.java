@@ -5,10 +5,10 @@ package com.frewen.network.response;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/4/14 10:07
- *         Copyright ©2018 Frewen.Wong. All Rights Reserved.
+ * @copyright: Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
-public class Response<T> {
-    public boolean isSuccess;
+public class Response<Data> {
+
     /**
      * 返回码
      */
@@ -20,7 +20,20 @@ public class Response<T> {
     /**
      * 返回数据
      */
-    private T data;
+    private Data data;
+    /**
+     * 请求是否成功
+     */
+    public boolean isSuccess;
+
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    public void setSuccess(boolean success) {
+        isSuccess = success;
+    }
+
 
     public int getCode() {
         return code;
@@ -38,24 +51,20 @@ public class Response<T> {
         this.msg = msg;
     }
 
-    public T getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Data data) {
         this.data = data;
-    }
-
-    public boolean isOk() {
-        return code == 0;
     }
 
     @Override
     public String toString() {
-        return "BaseResponse{" +
+        return "Response {" +
                 "code=" + code +
                 ", msg='" + msg + '\'' +
-                ", data=" + data +
+                ", data=" + data.toString() +
                 '}';
     }
 }

@@ -162,6 +162,7 @@ dependencies {
 
 
     // 添加JavaWebSocket的依赖
+    // https://github.com/TooTallNate/Java-WebSocket
     implementation "org.java-websocket:Java-WebSocket:1.4.0"
 
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'

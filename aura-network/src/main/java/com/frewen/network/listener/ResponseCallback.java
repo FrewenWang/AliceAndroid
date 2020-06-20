@@ -1,20 +1,27 @@
 package com.frewen.network.listener;
 
 import com.frewen.network.response.Response;
+import com.frewen.network.response.exception.AuraException;
 
 /**
  * @filename: ResponseCallback
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2020/6/20 10:45
- *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
+ * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public abstract class ResponseCallback<T> {
 
+    public abstract void onStart();
+
+    public abstract void onCompleted();
+
     public void onSuccess(Response<T> response) {
+
     }
 
-    public void onError(Response<T> response) {
+    public void onError(AuraException exception) {
+
     }
 
     public void onCacheSuccess(Response<T> response) {

@@ -17,9 +17,9 @@ import static com.frewen.android.demo.samples.sqlite.UserColumns.USER_TELEPHONE;
  */
 public class SQLiteConstant {
 
-    public static final String DB_NAME = "aura.db";
+    public static final String DB_NAME = "aura_db.db";
     public static final int DB_VERSION = 2;
-    public static final String DB_TABLE_NAME = "person";
+    public static final String DB_TABLE_NAME = "User";
 
     /**
      * create table 表名(字段名称  数据类型  约束,字段名称  数据类型  约束,字段名称  数据类型  约束,.....)

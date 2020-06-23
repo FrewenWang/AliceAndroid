@@ -25,7 +25,7 @@ import androidx.room.PrimaryKey;
 
         //  , primaryKeys = {"key"}//主键,一些策略逻辑会用到，比如插入一条数据时如果已存在,则更新否则算新的插入,那么怎么判断 ,数据库中是否已存在该条数据呢？就判断提供的主键,在表中是否已存在
 
-        , foreignKeys = {
+        // , foreignKeys = {
         //外键,一般用于多表数据查询.可以配置多个外键
         //ForeignKey用来设置关联表数据更新时所进行的操作，比如可以在@ForeignKey注解中设置onDelete=CASCADE，这样当Cache表中某个对应记录被删除时，ForeignTable表的所有相关记录也会被删除掉。
         //对于@Insert(OnConflict=REPLACE)注解，SQLite是进行REMOVE和REPLACE操作，而不是UPDATE操作，这个可能影响到foreign key的约束。
@@ -40,13 +40,13 @@ import androidx.room.PrimaryKey;
         //                                       CASCADE:本表所有跟parentColumns有关系的数据一同被删除或更新
         //onUpdate:本表中某条记录被更新时,与之关联的表应该怎么做
         //deferred:本表某条记录变更时，与之关联表的数据变更是否要立即执行,还是等待本表事务处理完再来处理关联表。默认是同时处理。
-        @ForeignKey(
-                entity = CacheBean.ForeignTable.class,
-                parentColumns = "id",
-                childColumns = "key",
-                onDelete = 1,
-                onUpdate = 1,
-                deferred = false)}
+//        @ForeignKey(
+//                entity = CacheBean.ForeignTable.class,
+//                parentColumns = "id",
+//                childColumns = "key",
+//                onDelete = 1,
+//                onUpdate = 1,
+//                deferred = false)}
         //本表中 那些字段 不需要 映射到表中
         // , ignoredColumns = {"data"}
 )

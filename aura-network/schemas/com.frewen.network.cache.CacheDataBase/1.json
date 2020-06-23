@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7f2382146be207279e6ef93b46672c89",
+    "identityHash": "db678d8f952744b07ae22a96761af5f8",
     "entities": [
       {
         "tableName": "cache",
@@ -27,14 +27,23 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_cache_key",
+            "unique": false,
+            "columnNames": [
+              "key"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_cache_key` ON `${TABLE_NAME}` (`key`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7f2382146be207279e6ef93b46672c89')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'db678d8f952744b07ae22a96761af5f8')"
     ]
   }
 }

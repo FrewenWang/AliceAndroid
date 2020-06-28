@@ -8,7 +8,7 @@ checkstyle {
     showViolations = true
 }
 
-def configDir = "${project.rootDir}/quality"
+def configDir = "${project.rootDir}/toolkits//quality"
 def reportsDir = "${project.buildDir}/reports"
 
 task checkstyle(type: Checkstyle) {

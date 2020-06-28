@@ -30,15 +30,10 @@ buildscript {
      */
     dependencies {
         // 应用Gradle插件
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.0.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        //官方文档：https://github.com/didi/booster
-        classpath "com.didiglobal.booster:booster-gradle-plugin:$booster_version"
-        if (!debug) {
-            classpath "com.didiglobal.booster:booster-task-analyser:$booster_version"
-        }
 
     }
 }

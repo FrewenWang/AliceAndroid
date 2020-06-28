@@ -25,7 +25,7 @@ class HeadInterceptor : Interceptor {
         val accessToken = getAuthorization()
 
         if (accessToken.isNotEmpty()) {
-            val url = request.url.toString()
+            val url = request.url().toString()
             request = request.newBuilder()
                     .addHeader("Authorization", accessToken)
                     .url(url)

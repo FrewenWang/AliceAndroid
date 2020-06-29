@@ -6008,7 +6008,7 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
             onDescendantInvalidated(child, child);
             return;
         }
-
+        //设置 parent 等于自身
         ViewParent parent = this;
         if (attachInfo != null) {
             // If the child is drawing an animation, we want to copy this flag onto
@@ -6027,7 +6027,7 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
                 mPrivateFlags |= PFLAG_INVALIDATED;
                 mPrivateFlags &= ~PFLAG_DRAWING_CACHE_VALID;
             }
-
+            // 储存子View的mLeft和mTop值
             final int[] location = attachInfo.mInvalidateChildLocation;
             location[CHILD_LEFT_INDEX] = child.mLeft;
             location[CHILD_TOP_INDEX] = child.mTop;
@@ -6079,7 +6079,8 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
                         view.mPrivateFlags = (view.mPrivateFlags & ~PFLAG_DIRTY_MASK) | PFLAG_DIRTY;
                     }
                 }
-
+                //调用ViewGrup的invalidateChildInParent，如果已经达到最顶层view,则调用ViewRootImpl
+                //的invalidateChildInParent。
                 parent = parent.invalidateChildInParent(location, dirty);
                 if (view != null) {
                     // Account for transform on current parent

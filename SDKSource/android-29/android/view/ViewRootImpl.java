@@ -135,7 +135,8 @@ import java.util.concurrent.CountDownLatch;
  * The top of a view hierarchy, implementing the needed protocol between View
  * and the WindowManager.  This is for the most part an internal implementation
  * detail of {@link WindowManagerGlobal}.
- *
+ * ViewRootImpl是视图层次结构的顶部，实现了View和WindowManager之间所需的协议。
+ * 是WindowManagerGlobal内部实现中重要的组成部分
  * {@hide}
  */
 @SuppressWarnings({"EmptyCatchBlock", "PointlessBooleanExpression"})
@@ -1417,11 +1418,24 @@ public final class ViewRootImpl implements ViewParent,
         }
     }
 
+    /**
+     * 当子View调用requestLayout的时候。会通过责任链模式进行层层。
+     * 最终调用到ViewRootImpl中的requestLayout
+     * 所以我们来看看这个方法
+     */
     @Override
     public void requestLayout() {
+        /// 首先进行状态判断，如果没有进行layout请求的话，我们才执行里面的判断
+        // mHandlingLayoutInLayoutRequest会在performLayout方法里面置为true
         if (!mHandlingLayoutInLayoutRequest) {
+            // 进行线程检查，保证对View的操作是在创建他的线程中（UI线程）
             checkThread();
+            // 标志变量
             mLayoutRequested = true;
+            /// 进行遍历调用了scheduleTraversals方法，
+            // 这个方法是一个异步方法，最终会调用到ViewRootImpl#performTraversals方法，
+            // 这也是View工作流程的核心方法，在这个方法内部
+            // 分别调用measure、layout、draw方法来进行View的三大工作流程
             scheduleTraversals();
         }
     }

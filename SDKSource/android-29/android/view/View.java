@@ -1047,6 +1047,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
     /**
      * Mask for use with setFlags indicating bits used for visibility.
+     * 用于指示View的可见性的标志位
      * {@hide}
      */
     static final int VISIBILITY_MASK = 0x0000000C;
@@ -17509,6 +17510,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * will not get drawn and they should not set dirty flags as if they will be drawn
      */
     private boolean skipInvalidate() {
+        // 第一个判断条件是标志VIew的可见性
+        // 请勿使不可见且未运行动画的视图无效
         return (mViewFlags & VISIBILITY_MASK) != VISIBLE && mCurrentAnimation == null &&
                 (!(mParent instanceof ViewGroup) ||
                         !((ViewGroup) mParent).isViewTransitioning(this));
@@ -17573,6 +17576,10 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * <p>
      * This must be called from a UI thread. To call from a non-UI thread, call
      * {@link #postInvalidate()}.
+     * 我们先来看这个方法顾名思义：使无效
+     * 这个方法的作用是使得整个View无效，所以如果这个View还在显示中，该方法的调用会引起View树的重绘，
+     * 常用于内部调用(比如 setVisiblity())或者需要刷新界面的时候,
+     * 需要在主线程(即UI线程)中调用该方法。
      */
     public void invalidate() {
         invalidate(true);
@@ -17603,6 +17610,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             return;
         }
 
+        //这里判断该子View是否可见或者是否处于动画中
         if (skipInvalidate()) {
             return;
         }
@@ -17610,6 +17618,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         // Reset content capture caches
         mCachedContentCaptureSession = null;
 
+        /// 根据View的标记位来判断该子View是否需要重绘，假如View没有任何变化，那么就不需要重绘
         if ((mPrivateFlags & (PFLAG_DRAWN | PFLAG_HAS_BOUNDS)) == (PFLAG_DRAWN | PFLAG_HAS_BOUNDS)
                 || (invalidateCache && (mPrivateFlags & PFLAG_DRAWING_CACHE_VALID) == PFLAG_DRAWING_CACHE_VALID)
                 || (mPrivateFlags & PFLAG_INVALIDATED) != PFLAG_INVALIDATED
@@ -17618,7 +17627,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 mLastIsOpaque = isOpaque();
                 mPrivateFlags &= ~PFLAG_DRAWN;
             }
-
+            // 设置PFLAG_DIRTY标记位
             mPrivateFlags |= PFLAG_DIRTY;
 
             if (invalidateCache) {
@@ -17627,11 +17636,13 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             }
 
             // Propagate the damage rectangle to the parent view.
+            //把需要重绘的区域传递给父容器
             final AttachInfo ai = mAttachInfo;
             final ViewParent p = mParent;
             if (p != null && ai != null && l < r && t < b) {
                 final Rect damage = ai.mTmpInvalRect;
                 damage.set(l, t, r, b);
+                //调用父容器的方法，向上传递事件
                 p.invalidateChild(this, damage);
             }
 
@@ -24499,6 +24510,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      *
      * <p>Subclasses which override this method should call the superclass method to
      * handle possible request-during-layout errors correctly.</p>
+     *
+     * 当某些更改导致View的布局（layout）无效的话需要调用这个方法。这个方法会重新进行View树的布局（layout）
+     * 如果当前View正在进行请求布局的时候，不应该调用这个方法
+     * 如果当前View在请求布局的时候，View树正在进行布局流程的话，
+     * 该请求会延迟到布局流程完成后或者绘制流程完成且下一次布局发现的时候再执行。
      */
     @CallSuper
     public void requestLayout() {
@@ -24520,6 +24536,10 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         mPrivateFlags |= PFLAG_FORCE_LAYOUT;
         mPrivateFlags |= PFLAG_INVALIDATED;
 
+        // 接着调用mParent.requestLayout方法，这个十分重要，
+        // 因为这里是向父容器请求布局，即调用父容器的requestLayout方法，为父容器添加PFLAG_FORCE_LAYOUT标记位，
+        // 而父容器又会调用它的父容器的requestLayout方法，即requestLayout事件层层向上传递，直到DecorView，
+        // 即根View，而根View又会传递给ViewRootImpl，也即是说子View的requestLayout事件，最终会被ViewRootImpl接收并得到处理。
         if (mParent != null && !mParent.isLayoutRequested()) {
             // 这里的 mParent.requestLayout()，最终会调用ViewRootImpl的requestLayout方法。
             // 为什么是ViewRootImpl呢？？
@@ -24559,9 +24579,9 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      *
      *
      * @param widthMeasureSpec Horizontal space requirements as imposed by the
-     *        parent
+     *        parent 由父View施加的水平测量规格
      * @param heightMeasureSpec Vertical space requirements as imposed by the
-     *        parent
+     *        parent    由父View施加的竖直测量规格
      *
      * @see #onMeasure(int, int)
      */

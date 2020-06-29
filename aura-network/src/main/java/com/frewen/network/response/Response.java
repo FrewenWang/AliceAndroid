@@ -30,11 +30,6 @@ public class Response<Data> {
         return isSuccess;
     }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
-    }
-
-
     public int getCode() {
         return code;
     }
@@ -53,10 +48,6 @@ public class Response<Data> {
 
     public Data getData() {
         return data;
-    }
-
-    public void setData(Data data) {
-        this.data = data;
     }
 
     @Override

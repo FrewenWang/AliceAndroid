@@ -52,6 +52,7 @@ public final class AuraRxHttp {
      * OKHttp对象构建
      */
     private final OkHttpClient.Builder okHttpClientBuilder;
+    private final OkHttpClient mOkHttpClient;
     private final Retrofit.Builder retrofitBuilder;
     /**
      * 全局BaseUrl
@@ -77,6 +78,7 @@ public final class AuraRxHttp {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(TAG);
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpClientBuilder.addInterceptor(interceptor);
+        mOkHttpClient = okHttpClientBuilder.build();
 
         retrofitBuilder = new Retrofit.Builder();
         //增加RxJava2CallAdapterFactory
@@ -125,8 +127,8 @@ public final class AuraRxHttp {
     /**
      * 对外暴露 OkHttpClient,方便自定义
      */
-    public static OkHttpClient.Builder getOkHttpClientBuilder() {
-        return getInstance().okHttpClientBuilder;
+    public OkHttpClient.Builder getOkHttpClientBuilder() {
+        return this.okHttpClientBuilder;
     }
 
     /**
@@ -144,15 +146,15 @@ public final class AuraRxHttp {
         return mContext;
     }
 
-    /**
-     * 必须在全局Application先调用，获取context上下文，否则缓存无法使用
-     */
     public static void init(Application app) {
         AuraRxHttp.init(app, "AuraRxHttp");
     }
 
     /**
-     * 必须在全局Application先调用，获取context上下文，否则缓存无法使用
+     * AuraRxHttp的初始化
+     *
+     * @param app       Application
+     * @param customTag 自定义全局TAG
      */
     public static void init(Application app, String customTag) {
         mContext = app;

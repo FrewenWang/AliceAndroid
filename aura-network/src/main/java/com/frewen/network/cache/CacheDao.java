@@ -4,12 +4,12 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
 import androidx.room.Update;
+import retrofit2.http.Query;
 
 /**
  * @filename: CacheDao
- * @introduction:
+ * @introduction: 数据接口层，用来操作数据库的功能类
  * @author: Frewen.Wong
  * @time: 2020/6/21 00:36
  * @version: 1.0.0
@@ -18,6 +18,16 @@ import androidx.room.Update;
 @Dao
 public interface CacheDao {
 
+    /**
+     * OnConflictStrategy 插入冲突的处理策略：
+     * REPLACE：替换旧的数据，直接继续进行事务处理
+     * ROLLBACK：出现冲突，回滚事务。已过时，已经不适用当前的SQLite的绑定.使用ABORT代替
+     * ABORT：终止事务，进行事务回滚
+     * FAIL：事务异常，已过时，还是建议使用ABORT
+     * IGNORE：忽略冲突
+     *
+     * @param cacheBean
+     */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long save(CacheBean cacheBean);
 
@@ -34,7 +44,6 @@ public interface CacheDao {
      *
      * @return CacheBean
      */
-    @Query("select *from cache where `key` = :key")
     CacheBean getCache(String key);
 
     /**

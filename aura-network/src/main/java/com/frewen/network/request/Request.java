@@ -4,16 +4,26 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.frewen.network.api.BaseApiService;
+import com.frewen.network.cache.CacheMode;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.network.model.HttpHeaders;
 import com.frewen.network.model.HttpParams;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
 import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
+
+import static com.frewen.network.core.AuraRxHttp.getRetrofitBuilder;
 
 /**
  * @filename: BaseRequest
@@ -43,7 +53,14 @@ public abstract class Request<R extends Request> {
     /**
      *
      */
-    protected BaseApiService apiService;
+    protected BaseApiService mApiService;
+
+    /**
+     * 单独的请求参数的配置
+     */
+    protected List<Converter.Factory> converterFactories = new ArrayList<>();
+    protected List<CallAdapter.Factory> adapterFactories = new ArrayList<>();
+    protected final List<Interceptor> interceptors = new ArrayList<>();
 
     public Request(String url) {
         this.url = url;
@@ -86,35 +103,32 @@ public abstract class Request<R extends Request> {
         }
     }
 
-    protected R build(Class<? extends BaseApiService> clazz) {
-        OkHttpClient.Builder okHttpClientBuilder = generateOkClient();
-        final Retrofit.Builder retrofitBuilder = generateRetrofit();
-        okHttpClient = okHttpClientBuilder.build();
-        retrofitBuilder.client(okHttpClient);
-        retrofit = retrofitBuilder.build();
-        apiService = retrofit.create(clazz);
-        return (R) this;
-    }
-
     /**
+     * 根据Request请求的参数
      * 构建生成的OkHttpClientBuilder
      */
     private OkHttpClient.Builder generateOkClient() {
+        // 如果Request没有指定自定义的请求配置参数，
+        // 我们就直接属于我们默认初始化OkHttpClient.Builder
         if (readTimeOut <= 0 && writeTimeOut <= 0 && connectTimeout <= 0 && headers.isEmpty()) {
-            OkHttpClient.Builder builder = AuraRxHttp.getOkHttpClientBuilder();
+            OkHttpClient.Builder builder = AuraRxHttp.getInstance().getOkHttpClientBuilder();
             return builder;
         }
         return null;
     }
 
     private Retrofit.Builder generateRetrofit() {
-        Retrofit.Builder builder = AuraRxHttp.getRetrofitBuilder();
+        if (converterFactories.isEmpty() && adapterFactories.isEmpty()) {
+            Retrofit.Builder builder = getRetrofitBuilder();
+            if (!TextUtils.isEmpty(baseUrl)) {
+                builder.baseUrl(baseUrl);
+            }
+            return builder;
+        } else {
+
+        }
+        Retrofit.Builder builder = getRetrofitBuilder();
         return builder;
-    }
-
-
-    private void getOkHttpCall() {
-
     }
 
     /**
@@ -150,5 +164,15 @@ public abstract class Request<R extends Request> {
     }
 
     protected abstract Observable<ResponseBody> generateRequest();
+
+    protected R build() {
+        OkHttpClient.Builder okHttpClientBuilder = generateOkClient();
+        final Retrofit.Builder retrofitBuilder = generateRetrofit();
+        okHttpClient = okHttpClientBuilder.build();
+        retrofitBuilder.client(okHttpClient);
+        retrofit = retrofitBuilder.build();
+        mApiService = retrofit.create(BaseApiService.class);
+        return (R) this;
+    }
 
 }

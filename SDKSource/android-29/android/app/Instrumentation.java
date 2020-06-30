@@ -63,6 +63,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *@see https://developer.android.com/reference/android/app/Instrumentation
+ * https://developer.android.google.cn/guide/topics/manifest/instrumentation-element
+
+ * Instrumentation 顾名思义，仪表盘。他其实就是检测应用程序代码的基类
+ * 实际上当启动一个app的时候都会实例化一个Instrumentation对象，
+ * 且Instrumentation在每个Activity跳转的时候都会用到且其内部类ActivityMonitor会监控activity的。
+ * 从而使您可以监视系统与应用程序之间的所有交互。
  * Base class for implementing application instrumentation code.  When running
  * with instrumentation turned on, this class will be instantiated for you
  * before any of the application code, allowing you to monitor all of the
@@ -1671,11 +1678,13 @@ public class Instrumentation {
     public ActivityResult execStartActivity(
             Context who, IBinder contextThread, IBinder token, Activity target,
             Intent intent, int requestCode, Bundle options) {
+        // 获取ApplicationThread
         IApplicationThread whoThread = (IApplicationThread) contextThread;
         Uri referrer = target != null ? target.onProvideReferrer() : null;
         if (referrer != null) {
             intent.putExtra(Intent.EXTRA_REFERRER, referrer);
         }
+        //Instrumentation的监控机制的相关逻辑，我们忽略
         if (mActivityMonitors != null) {
             synchronized (mSync) {
                 final int N = mActivityMonitors.size();
@@ -1701,8 +1710,11 @@ public class Instrumentation {
         try {
             intent.migrateExtraStreamToClipData();
             intent.prepareToLeaveProcess(who);
-            // 跨进程调用ActivityManagerService启动Activity
-            // 之后就会在AMS中去执行Activity 的启动流程。
+            // 重点在这里：这里是一个IPC的调用，IActivityTaskManager的服务端是ActivityTaskManagerService（ATMS），
+            // 所以ActivityTaskManager.getService().startActivity实际上是
+            /// 跨进程调用ActivityManagerService启动Activity
+            // 之后就会在ActivityTaskManagerService中去执行Activity 的启动流程。
+            // 注意：这个地方和Android之前版本的逻辑已经不一致了。之前都是直接ActivityManager.getService()
             int result = ActivityTaskManager.getService()
                 .startActivity(whoThread, who.getBasePackageName(), intent,
                         intent.resolveTypeIfNeeded(who.getContentResolver()),
@@ -1713,6 +1725,7 @@ public class Instrumentation {
              // 在这个方法内部我们可以看到很多熟悉的异常抛出
             checkStartActivityResult(result, intent);
         } catch (RemoteException e) {
+            // 很显然，我们这个地方是跨进程调用，可能抛出RemoteException
             throw new RuntimeException("Failure from system", e);
         }
         return null;

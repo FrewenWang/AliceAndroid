@@ -1002,6 +1002,20 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
         }
     }
 
+    /**
+     * 方法很简单，直接调用的startActivityAsUser
+     * @param caller
+     * @param callingPackage
+     * @param intent
+     * @param resolvedType
+     * @param resultTo
+     * @param resultWho
+     * @param requestCode
+     * @param startFlags
+     * @param profilerInfo
+     * @param bOptions
+     * @return
+     */
     @Override
     public final int startActivity(IApplicationThread caller, String callingPackage,
             Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode,
@@ -1046,6 +1060,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 Binder.getCallingPid(), Binder.getCallingUid(), "startActivityAsUser");
 
         // TODO: Switch to user app stacks here.
+        // 在这里ActivityStartController获取Activity启动控制类。然后通过obtainStarter来获取ActivityStarter类。
+        // 然后给ActivityStarter设置启动所需的各种参数，最终调用execute()
         return getActivityStartController().obtainStarter(intent, "startActivityAsUser")
                 .setCaller(caller)
                 .setCallingPackage(callingPackage)

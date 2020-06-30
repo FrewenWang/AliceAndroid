@@ -58,6 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Activity的委托控制类
  * Controller for delegating activity launches.
  *
  * This class' main objective is to take external activity start requests and prepare them into

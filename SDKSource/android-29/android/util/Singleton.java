@@ -26,6 +26,9 @@ import android.annotation.UnsupportedAppUsage;
  * @hide
  */
 public abstract class Singleton<T> {
+    /**
+     * 单例模式的真正的单例对象
+     */
     @UnsupportedAppUsage
     private T mInstance;
 

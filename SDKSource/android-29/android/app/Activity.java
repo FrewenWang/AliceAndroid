@@ -5179,6 +5179,8 @@ public class Activity extends ContextThemeWrapper
      * @param intent The intent to start.
      * @param requestCode If >= 0, this code will be returned in
      *                    onActivityResult() when the activity exits.
+     *                    这个方法其实就是比startActivity多了requestCode这个参数，这个参数如果我们设置为>=0.
+     *                    那么这个Activity退出的时候会回调onActivityResult。这里我们先不重点关注
      * @param options Additional options for how the Activity should be started.
      * See {@link android.content.Context#startActivity(Intent, Bundle)}
      * Context.startActivity(Intent, Bundle)} for more details.
@@ -5189,6 +5191,7 @@ public class Activity extends ContextThemeWrapper
      */
     public void startActivityForResult(@RequiresPermission Intent intent, int requestCode,
             @Nullable Bundle options) {
+        // 如果是第一次启动，那么mParent == null 我们先默认第一次，看下面的代码
         if (mParent == null) {
             // 
             options = transferSpringboardActivityOptions(options);
@@ -5509,7 +5512,9 @@ public class Activity extends ContextThemeWrapper
      * if there was no Activity found to run the given Intent.
      *
      * @param intent The intent to start.
+     *               启动Activity的意图
      * @param options Additional options for how the Activity should be started.
+     *                启动Activity的选项参数
      * See {@link android.content.Context#startActivity(Intent, Bundle)}
      * Context.startActivity(Intent, Bundle)} for more details.
      *
@@ -5520,6 +5525,7 @@ public class Activity extends ContextThemeWrapper
      */
     @Override
     public void startActivity(Intent intent, @Nullable Bundle options) {
+
         //第二个参数为-1表示不需要知道Activity的启动结果
         if (options != null) {
             startActivityForResult(intent, -1, options);

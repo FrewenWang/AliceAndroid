@@ -504,6 +504,7 @@ class ActivityStarter {
 
     /**
      * Starts an activity based on the request parameters provided earlier.
+     * 这个方法主要就是mRequest.mayWait来判断是调用startActivityMayWait还是调用startActivity
      * @return The starter result.
      */
     int execute() {
@@ -1165,6 +1166,7 @@ class ActivityStarter {
         }
 
         // Save a copy in case ephemeral needs it
+        // 保存Intent临时副本信息，以防临时使用
         final Intent ephemeralIntent = new Intent(intent);
         // Don't modify the client's object!
         intent = new Intent(intent);
@@ -1285,6 +1287,7 @@ class ActivityStarter {
             }
 
             final ActivityRecord[] outRecord = new ActivityRecord[1];
+            // startActivityMayWait中还是会调用startActivity,调用startActivity
             int res = startActivity(caller, intent, ephemeralIntent, resolvedType, aInfo, rInfo,
                     voiceSession, voiceInteractor, resultTo, resultWho, requestCode, callingPid,
                     callingUid, callingPackage, realCallingPid, realCallingUid, startFlags, options,

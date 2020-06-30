@@ -1,5 +1,6 @@
 package com.frewen.android.demo.network
 
+import com.frewen.aura.framework.net.HeadersInterceptor
 import com.frewen.aura.framework.net.LoggerInterceptor
 import com.frewen.github.library.common.Config
 import okhttp3.Interceptor
@@ -86,7 +87,6 @@ class RetrofitFactory private constructor() {
      */
     private fun getHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-                .addInterceptor(initHeaderInterceptor())
                 .addInterceptor(initLoggerInterceptor())
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -121,17 +121,6 @@ class RetrofitFactory private constructor() {
         } catch (e: KeyManagementException) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 实例化HeaderInterceptor
-     */
-    private fun initHeaderInterceptor(): Interceptor {
-        // 可以使用我们上面实例化的interceptor
-        // return interceptor
-        // 也可以可以直接使用FreeFrame里面的的LoggerInterceptor
-        //return HeadersInterceptor()
-        return com.frewen.github.library.network.HeadInterceptor()
     }
 
     private fun initLoggerInterceptor(): Interceptor {

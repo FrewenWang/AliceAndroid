@@ -86,11 +86,12 @@ android {
     }
 
     //使用Java8
-    // Butterknife 也需要 requires Java 8.
+    // Butterknife requires Java 8.
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 
     dexOptions {
         preDexLibraries = false
@@ -154,8 +155,8 @@ dependencies {
     //    annotationProcessor 'org.projectlombok:lombok:1.16.22'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.0.0'
-    // ButterKnife依赖
-    annotationProcessor dep.butterknifeCompiler
+    //=========================ButterKnife框架引入===================================================
+    kapt dep.butterknifeCompiler
 
 
     // 添加JavaWebSocket的依赖
@@ -189,6 +190,8 @@ dependencies {
     // 引入fastjson的依赖：https://github.com/alibaba/fastjson
     implementation 'com.alibaba:fastjson:1.2.70'
     implementation 'com.alibaba:fastjson:1.1.71.android'
+    // https://github.com/guolindev/PermissionX
+    implementation 'com.permissionx.guolindev:permission-support:1.2.2'
 }
 
 

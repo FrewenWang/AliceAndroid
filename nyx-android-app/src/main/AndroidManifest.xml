@@ -40,7 +40,7 @@
         <activity android:name=".ui.publish.PublishActivity" />
         <activity android:name=".samples.dagger2.Dagger2Activity" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

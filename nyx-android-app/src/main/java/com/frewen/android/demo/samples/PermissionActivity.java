@@ -1,12 +1,11 @@
 package com.frewen.android.demo.samples;
 
-import android.Manifest;
 import android.graphics.Camera;
 import android.os.Bundle;
 import android.view.SurfaceView;
 
 import com.frewen.android.demo.R;
-import com.frewen.permission.FreeRxPermissions;
+import com.frewen.permissions.core.AuraPermissions;
 
 import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.disposables.Disposable;
@@ -25,7 +24,7 @@ public class PermissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FreeRxPermissions rxPermissions = new FreeRxPermissions(this);
+        AuraPermissions rxPermissions = new AuraPermissions(this);
         rxPermissions.setLogging(true);
 
         setContentView(R.layout.activity_permission);

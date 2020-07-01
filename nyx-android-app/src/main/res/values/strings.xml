@@ -84,7 +84,13 @@
     <string name="title_profile">我的</string>
 
     <!--SplashActivity 应用启动的闪屏相关逻辑 -->
-    <string name="splash_icon_description">闪屏页Logo</string>
+    <string name="request_permission_storage">应用需要申请存储权限</string>
+    <string name="request_permission_access_phone_info">应用需要访问手机识别码等信息</string>
+    <string name="ok">好的</string>
+    <string name="cancel">取消</string>
+    <string name="settings">设置</string>
+    <string name="splash_description_title">Hello Frewen.Wang</string>
+    <string name="splash_description_content">欢迎来到Android世界</string>
 
 
 </resources>

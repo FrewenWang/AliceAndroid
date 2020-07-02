@@ -38,9 +38,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         // 配置AppBar的配置
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_profile))
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //val appBarConfiguration = AppBarConfiguration(setOf(
+        //       R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_profile))
+        // setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
         navView.setOnNavigationItemSelectedListener(this)

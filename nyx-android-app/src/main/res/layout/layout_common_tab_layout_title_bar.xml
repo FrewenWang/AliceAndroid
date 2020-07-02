@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/actionBarSizeSecondary"
-    android:background="@color/color_common_black_alpha80"
+    android:background="@color/color_common_purple"
     android:orientation="horizontal">
 
     <!-- 页面通用的带有com.google.android.material.tabs.TabLayout顶部的TitleBar-->

@@ -13,7 +13,7 @@
         <item name="android:colorBackground">@color/gray_50</item>
     </style>
     <!-- 定义全屏的AppTheme -->
-    <style name="AppTheme.FullScreen" parent="AppTheme">
+    <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
 

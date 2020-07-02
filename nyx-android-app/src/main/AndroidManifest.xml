@@ -47,7 +47,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.HomeActivity" />
+        <activity
+            android:name=".ui.HomeActivity"
+            android:theme="@style/AppTheme.FullScreen" />
         <activity android:name=".samples.hook.target.TargetActivity" />
         <activity android:name=".samples.hook.HookDemoActivity" />
         <activity android:name=".samples.unitest.AndroidUnitTestActivity" />
@@ -56,8 +58,7 @@
         <activity android:name=".samples.SampleDemoActivity" />
         <activity android:name=".samples.bluetooth.BlueToothDemoActivity" />
         <activity android:name=".samples.jobscheduler.JobSchedulerDemoActivity" />
-        <activity android:name=".samples.network.WebSocketDemoActivity">
-        </activity>
+        <activity android:name=".samples.network.WebSocketDemoActivity"></activity>
         <activity android:name=".samples.keeplive.KeepLiveActivity" />
         <activity android:name=".samples.webview.WebViewActivity" />
         <activity android:name=".samples.view.ViewDemoActivity" />

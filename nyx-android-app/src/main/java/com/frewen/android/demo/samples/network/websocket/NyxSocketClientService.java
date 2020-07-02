@@ -16,7 +16,7 @@ import androidx.core.app.NotificationCompat;
 
 import android.util.Log;
 
-import com.frewen.android.demo.MainBackActivity;
+import com.frewen.android.demo.samples.SampleDemoActivity;
 
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -115,7 +115,7 @@ public class NyxSocketClientService extends Service {
      */
     private void sendNotification(String content) {
         Intent intent = new Intent();
-        intent.setClass(this, MainBackActivity.class);
+        intent.setClass(this, SampleDemoActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

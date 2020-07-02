@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/actionBarSizeSecondary"
+    android:background="@color/color_common_black_alpha80"
+    android:orientation="horizontal">
+
+    <!-- 页面通用的带有com.google.android.material.tabs.TabLayout顶部的TitleBar-->
+    <!--页面基础布局为左边一个图片按钮、右边一个图片按钮、中间一个TabLayout-->
+
+    <ImageView
+        android:id="@+id/ivLeftImgBtn"
+        android:layout_width="38.5dp"
+        android:layout_height="38.5dp"
+        android:layout_gravity="start"
+        android:padding="10dp"
+        android:visibility="invisible"
+        tools:src="@drawable/ic_title_bar_menu_white_19dp" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="38.5dp"
+        android:layout_marginRight="38.5dp"
+        android:background="@color/transparent"
+        app:tabIndicatorColor="#ffffff"
+        app:tabSelectedTextColor="@android:color/white"
+        app:tabTextColor="@android:color/darker_gray" />
+
+
+    <ImageView
+        android:id="@+id/ivRightImgBtn"
+        android:layout_width="38.5dp"
+        android:layout_height="38.5dp"
+        android:layout_gravity="start"
+        android:padding="10dp"
+        android:visibility="invisible"
+        tools:contentDescription="右侧按钮图片"
+        tools:src="@drawable/ic_title_bar_search_black_17dp" />
+
+</FrameLayout>

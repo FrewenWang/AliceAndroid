@@ -47,13 +47,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity" />
+        <activity android:name=".ui.HomeActivity" />
         <activity android:name=".samples.hook.target.TargetActivity" />
         <activity android:name=".samples.hook.HookDemoActivity" />
         <activity android:name=".samples.unitest.AndroidUnitTestActivity" />
         <activity android:name=".samples.view.ViewTouchConflictActivity" />
         <activity android:name=".samples.retrofit.RetrofitActivity" />
-        <activity android:name=".MainBackActivity" />
+        <activity android:name=".samples.SampleDemoActivity" />
         <activity android:name=".samples.bluetooth.BlueToothDemoActivity" />
         <activity android:name=".samples.jobscheduler.JobSchedulerDemoActivity" />
         <activity android:name=".samples.network.WebSocketDemoActivity">

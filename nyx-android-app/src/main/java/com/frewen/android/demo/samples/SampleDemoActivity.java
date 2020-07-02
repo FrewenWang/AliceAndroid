@@ -1,4 +1,4 @@
-package com.frewen.android.demo;
+package com.frewen.android.demo.samples;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,9 @@ import android.widget.ListView;
 
 import com.frewen.adapter.core.abslistview.BaseAdapter;
 import com.frewen.adapter.core.abslistview.ViewHolder;
+import com.frewen.android.demo.R;
 import com.frewen.android.demo.concurrent.HandlerThreadActivity;
 import com.frewen.android.demo.data.ContentData;
-import com.frewen.android.demo.samples.AgoraDemoActivity;
 import com.frewen.android.demo.samples.bitmap.BitmapDemoActivity;
 import com.frewen.android.demo.samples.bluetooth.BlueToothDemoActivity;
 import com.frewen.android.demo.samples.eventbus.EventBusActivity;
@@ -33,7 +33,7 @@ import androidx.appcompat.app.AppCompatActivity;
 /**
  * MainActivity
  */
-public class MainBackActivity extends AppCompatActivity {
+public class SampleDemoActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private ListView contentList;
     private List<ContentData> mDatas;
@@ -58,7 +58,7 @@ public class MainBackActivity extends AppCompatActivity {
         contentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MainBackActivity.this, mDatas.get(position).getClazz()));
+                startActivity(new Intent(SampleDemoActivity.this, mDatas.get(position).getClazz()));
             }
         });
     }

@@ -30,6 +30,8 @@
 
     <!-- 视频详情页，播放器高度 -->
     <dimen name="videoPlayerSize">202dp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 
 
 </resources>

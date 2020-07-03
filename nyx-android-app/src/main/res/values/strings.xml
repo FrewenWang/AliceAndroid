@@ -91,6 +91,7 @@
     <string name="settings">设置</string>
     <string name="splash_description_title">Hello Frewen.Wang</string>
     <string name="splash_description_content">欢迎来到Android世界</string>
+    <string name="title_activity_animation_demo">AnimationDemoActivity</string>
 
 
 </resources>

@@ -22,6 +22,8 @@ buildscript {
             jcenter()
             maven { url 'https://oss.sonatype.org/content/repositories/public' }
         }
+        // 设置仓库
+        maven { url "https://chaquo.com/maven" }
     }
     /**
      * 该闭包使用classpath声明了一个Gradle插件，
@@ -34,6 +36,8 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // 导入Chaquopy框架的包
+        classpath 'com.chaquo.python:gradle:8.0.0'
 
     }
 }

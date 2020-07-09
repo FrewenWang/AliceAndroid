@@ -6,6 +6,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.chaquo.python'
 
 
 android {
@@ -46,6 +47,16 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        python {
+            // ......
+            pip {
+                install "httpstat"
+            }
+        }
+        // 指定abi，如需在模拟器调试，增加"x86"，否则指定"armeabi-v7a"即可
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
     }
     // 这个闭包主要指定生成安装文件的主要配置，一般包含两个子闭包，一个是debug闭包，用于指定生成测试版安装文件的配置，可以忽略不写；
     // 另一个是release闭包，用于指定生成正式版安装文件的配置。

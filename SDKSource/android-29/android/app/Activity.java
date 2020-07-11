@@ -7722,6 +7722,10 @@ public class Activity extends ContextThemeWrapper
         mParent = parent;
     }
 
+    /**
+     * 在Activity 启动过程中会调用ActivityThread的performLaunchActivity 方法，
+     * performLaunchActivity方法中又会调用Activity的attach方法，PhoneWindow就是在Activity的attach方法中创建的
+     */
     @UnsupportedAppUsage
     final void attach(Context context, ActivityThread aThread,
             Instrumentation instr, IBinder token, int ident,
@@ -7733,7 +7737,9 @@ public class Activity extends ContextThemeWrapper
         attachBaseContext(context);
 
         mFragments.attachHost(null /*parent*/);
-
+        // PhoneWindow是何时创建的呢？在Activity 启动过程中会调用ActivityThread的performLaunchActivity方法
+        // ActivityThread的performLaunchActivity方法中会调用activity的attach方法。
+        //
         mWindow = new PhoneWindow(this, window, activityConfigCallback);
         mWindow.setWindowControllerCallback(this);
         mWindow.setCallback(this);
@@ -7770,6 +7776,9 @@ public class Activity extends ContextThemeWrapper
             }
         }
 
+        /// 然后在这个方法，我们给这个PhoneWindow来设置WindowManager
+        // 那么WindowManager的实例是怎么得到的呢？
+        //  (WindowManager)context.getSystemService(Context.WINDOW_SERVICE)
         mWindow.setWindowManager(
                 (WindowManager)context.getSystemService(Context.WINDOW_SERVICE),
                 mToken, mComponent.flattenToString(),

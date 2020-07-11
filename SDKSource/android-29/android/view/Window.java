@@ -52,6 +52,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Window是一个抽象类，具体的实现类为PhoneWindow，它对View进行管理。
  * Abstract base class for a top-level window look and behavior policy.  An
  * instance of this class should be used as the top-level view added to the
  * window manager. It provides standard UI policies such as a background, title
@@ -772,9 +773,13 @@ public abstract class Window {
         mAppToken = appToken;
         mAppName = appName;
         mHardwareAccelerated = hardwareAccelerated;
+        // 如果传入的WindowManager为null，就会在注释1处调用Context的getSystemService方法，
+        // 并传入服务的名称Context.WINDOW_SERVICE（值为window），具体在ContextImpl中实现
         if (wm == null) {
             wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
         }
+        // 得到WindowManagerImpl 实例后转为WindowManager 类型，
+        // 调用了WindowManagerImpl的createLocalWindowManager方法
         mWindowManager = ((WindowManagerImpl)wm).createLocalWindowManager(this);
     }
 

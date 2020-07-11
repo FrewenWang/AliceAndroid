@@ -1801,6 +1801,11 @@ class ContextImpl extends Context {
         }
     }
 
+    /**
+     * getSystemService方法中会调用SystemServiceRegistry的getSystemServiceName方法：
+     * @param name
+     * @return
+     */
     @Override
     public Object getSystemService(String name) {
         return SystemServiceRegistry.getSystemService(this, name);

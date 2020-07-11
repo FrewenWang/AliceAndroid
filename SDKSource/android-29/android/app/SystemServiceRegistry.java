@@ -217,6 +217,9 @@ final class SystemServiceRegistry {
     // Not instantiable.
     private SystemServiceRegistry() { }
 
+    /**
+     * 我们的静态代码里面来进行系统服务的注册
+     */
     static {
         //CHECKSTYLE:OFF IndentationCheck
         registerService(Context.ACCESSIBILITY_SERVICE, AccessibilityManager.class,
@@ -785,7 +788,13 @@ final class SystemServiceRegistry {
                 IEthernetManager service = IEthernetManager.Stub.asInterface(b);
                 return new EthernetManager(ctx.getOuterContext(), service);
             }});
-
+        /**
+         * registerService 方法内部会将传入的服务的名称存入到SYSTEM_SERVICE_NAMES中。
+         * SYSTEM_SERVICE_NAMES是一个HashMap类型的数据，它用来存储服务的名称
+         * 当我们调用context.getSystemService(Context.WINDOW_SERVICE)的时候，
+         *从注释1处可以看出，传入的Context.WINDOW_SERVICE对应的就是WindowManagerImpl实例，
+         * 因此得出结论，Context的getSystemService方法得到的是WindowManagerImpl实例
+         */
         registerService(Context.WINDOW_SERVICE, WindowManager.class,
                 new CachedServiceFetcher<WindowManager>() {
             @Override

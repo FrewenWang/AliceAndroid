@@ -72,6 +72,14 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * WindowManager是一个接口类，继承自接口ViewManager，从名称就知道它是用来管理Window的，它的实现类为WindowManagerImpl。
+ * 如果我们想要对Window（View）进行添加、更新和删除操作就可以使用WindowManager，
+ * WindowManager会将具体的工作交由WMS来处理，
+ * WindowManager和WMS通过Binder来进行跨进程通信，WMS作为系统服务有很多API是不会暴露给WindowManager的，
+ *
+ * WindowManager 也继承了这些方法，而这些方法传入的参数都是View 类型，说明Window是以View的形式存在的。
+ * WindowManager在继承ViewManager的同时，又加入很多功能，包括Window 的类型和层级相关的常量、内部类以及一些方法
+ *
  * The interface that apps use to talk to the window manager.
  * </p><p>
  * Each window manager instance is bound to a particular {@link Display}.
@@ -381,6 +389,8 @@ public interface WindowManager extends ViewManager {
     /**
      * Returns the {@link Display} upon which this {@link WindowManager} instance
      * will create new windows.
+     * getDefaultDisplay方法能够得知这个WindowManager实例将Window添加到哪个屏幕上了，
+     * 换句话说，就是得到WindowManager所管理的屏幕（Display）。
      * <p>
      * Despite the name of this method, the display that is returned is not
      * necessarily the primary display of the system (see {@link Display#DEFAULT_DISPLAY}).
@@ -398,6 +408,8 @@ public interface WindowManager extends ViewManager {
     public Display getDefaultDisplay();
 
     /**
+     * removeViewImmediate方法则规定在这个方法返回前要立即执行View.onDetachedFromWindow（）
+     * 来完成传入的View相关的销毁工作。
      * Special variation of {@link #removeView} that immediately invokes
      * the given view hierarchy's {@link View#onDetachedFromWindow()
      * View.onDetachedFromWindow()} methods before returning.  This is not

@@ -55,9 +55,15 @@ import java.util.List;
  * @hide
  */
 public final class WindowManagerImpl implements WindowManager {
+    /**
+     * WindowManagerGlobal是一个单例，说明在一个进程中只有一个WindowManagerGlobal实例
+     */
     @UnsupportedAppUsage
     private final WindowManagerGlobal mGlobal = WindowManagerGlobal.getInstance();
     private final Context mContext;
+    /**
+     * WindowManagerImpl实例会作为哪个Window的子Window，这也就说明在一个进程中WindowManagerImpl可能会有多个实例。
+     */
     private final Window mParentWindow;
 
     private IBinder mDefaultToken;
@@ -71,6 +77,13 @@ public final class WindowManagerImpl implements WindowManager {
         mParentWindow = parentWindow;
     }
 
+    /**
+     * createLocalWindowManager方法同样也是创建WindowManagerImpl，
+     * 不同的是这次创建WindowManagerImpl 时将创建它的Window 作为参数传了进来，
+     * 这样WindowManagerImpl就持有了Window的引用，可以对Window进行操作，比如在Window中添加View，会调用WindowManagerImpl的addView方法
+     * @param parentWindow
+     * @return
+     */
     public WindowManagerImpl createLocalWindowManager(Window parentWindow) {
         return new WindowManagerImpl(mContext, parentWindow);
     }
@@ -89,6 +102,15 @@ public final class WindowManagerImpl implements WindowManager {
         mDefaultToken = token;
     }
 
+    /**
+     * 比如在Window中添加View，会调用WindowManagerImpl的addView方法
+     * 这个方法内部回调用WindowManagerGlobal的addView方法，
+     *  其中最后一个参数mParentWindow就是上面提到的Window
+     *  WindowManagerImpl虽然是WindowManager的实现类，但是没有实现什么功能，
+     *  而是将功能实现委托给了WindowManagerGlobal
+     * @param view
+     * @param params
+     */
     @Override
     public void addView(@NonNull View view, @NonNull ViewGroup.LayoutParams params) {
         applyDefaultToken(params);

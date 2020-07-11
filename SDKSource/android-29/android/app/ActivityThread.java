@@ -3236,6 +3236,8 @@ public final class ActivityThread extends ClientTransactionHandler {
                 }
                 appContext.setOuterContext(activity);
                 //6: 将Application/ContextImpl都attach到Activity对象
+                // 注意就是在这个地方，我们调用activity.attach方法，
+                // 我们PhoneWindow就是在这个方法里面创建
                 activity.attach(appContext, this, getInstrumentation(), r.token,
                         r.ident, app, r.intent, r.activityInfo, title, r.parent,
                         r.embeddedID, r.lastNonConfigurationInstances, config,

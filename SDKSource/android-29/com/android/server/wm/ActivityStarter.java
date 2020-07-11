@@ -133,9 +133,11 @@ import java.util.Date;
 
 /**
  * Controller for interpreting how and then launching an activity.
- *
+ * 这里面的代码逻辑也是运行在SystemServer进程
  * This class collects all the logic for determining how an intent and flags should be turned into
  * an activity and associated task and stack.
+ * ActivityStarter是Android 7.0中新加入的类，它是加载Activity的控制类，
+ * 会收集所有的逻辑来决定如何将Intent和Flags转换为Activity，并将Activity和Task以及Stack相关联。
  */
 class ActivityStarter {
     private static final String TAG = TAG_WITH_CLASS_NAME ? "ActivityStarter" : TAG_ATM;
@@ -503,6 +505,8 @@ class ActivityStarter {
     }
 
     /**
+     * ActivityStarter是Android 7.0中新加入的类，它是加载Activity的控制类，
+     * 会收集所有的逻辑来决定如何将Intent和Flags转换为Activity，并将Activity和Task以及Stack相关联。
      * Starts an activity based on the request parameters provided earlier.
      * 这个方法主要就是mRequest.mayWait来判断是调用startActivityMayWait还是调用startActivity
      * @return The starter result.
@@ -573,14 +577,14 @@ class ActivityStarter {
             ActivityRecord[] outActivity, TaskRecord inTask, String reason,
             boolean allowPendingRemoteAnimationRegistryLookup,
             PendingIntentRecord originatingPendingIntent, boolean allowBackgroundActivityStart) {
-
+        // 判断启动的理由不为空
         if (TextUtils.isEmpty(reason)) {
             throw new IllegalArgumentException("Need to specify a reason.");
         }
         mLastStartReason = reason;
         mLastStartActivityTimeMs = System.currentTimeMillis();
         mLastStartActivityRecord[0] = null;
-
+        // 紧接着还是调用startActivity的方法
         mLastStartActivityResult = startActivity(caller, intent, ephemeralIntent, resolvedType,
                 aInfo, rInfo, voiceSession, voiceInteractor, resultTo, resultWho, requestCode,
                 callingPid, callingUid, callingPackage, realCallingPid, realCallingUid, startFlags,
@@ -626,8 +630,12 @@ class ActivityStarter {
 
         WindowProcessController callerApp = null;
         if (caller != null) {
+            // 得到启动Activity的进程
+            // 这个caller对象是一路传递过来，如果我们是从Lancher进程启动Actvity.
+            // 那么这个对象指向的就是Launcher所在的应用程序进程的ApplicationThread对象
             callerApp = mService.getProcessController(caller);
             if (callerApp != null) {
+                // 获取启动进程的Pid和Uid
                 callingPid = callerApp.getPid();
                 callingUid = callerApp.mInfo.uid;
             } else {
@@ -645,7 +653,9 @@ class ActivityStarter {
             Slog.i(TAG, "START u" + userId + " {" + intent.toShortString(true, true, true, false)
                     + "} from uid " + callingUid);
         }
-
+        /// 创建即将要启动的Activity的描述类ActivityRecord
+        // ProcessRecord用于描述一个应用程序进程。
+        // 同样地，ActivityRecord用于描述一个Activity，用来记录一个Activity 的所有信息。
         ActivityRecord sourceRecord = null;
         ActivityRecord resultRecord = null;
         if (resultTo != null) {
@@ -896,11 +906,15 @@ class ActivityStarter {
 
             aInfo = mSupervisor.resolveActivity(intent, rInfo, startFlags, null /*profilerInfo*/);
         }
-
+        // ProcessRecord用于描述一个应用程序进程。
+        // 同样地，ActivityRecord用于描述一个Activity，用来记录一个Activity 的所有信息。
+        // 接下来创建ActivityRecord，用于描述将要启动的Activity
         ActivityRecord r = new ActivityRecord(mService, callerApp, callingPid, callingUid,
                 callingPackage, intent, resolvedType, aInfo, mService.getGlobalConfiguration(),
                 resultRecord, resultWho, requestCode, componentSpecified, voiceSession != null,
                 mSupervisor, checkedOptions, sourceRecord);
+        // 将创建的ActivityRecord赋值给ActivityRecord[]类型的outActivity，
+        // 这个outActivity会作为startActivity方法的参数传递下去。
         if (outActivity != null) {
             outActivity[0] = r;
         }
@@ -1132,6 +1146,34 @@ class ActivityStarter {
         }
     }
 
+    /**
+     * 这个方法的代码逻辑很多，我们挑重点的看
+     * @param caller
+     * @param callingUid
+     * @param callingPackage
+     * @param requestRealCallingPid
+     * @param requestRealCallingUid
+     * @param intent
+     * @param resolvedType
+     * @param voiceSession
+     * @param voiceInteractor
+     * @param resultTo
+     * @param resultWho
+     * @param requestCode
+     * @param startFlags
+     * @param profilerInfo
+     * @param outResult
+     * @param globalConfig
+     * @param options
+     * @param ignoreTargetSecurity
+     * @param userId
+     * @param inTask
+     * @param reason
+     * @param allowPendingRemoteAnimationRegistryLookup
+     * @param originatingPendingIntent
+     * @param allowBackgroundActivityStart
+     * @return
+     */
     private int startActivityMayWait(IApplicationThread caller, int callingUid,
             String callingPackage, int requestRealCallingPid, int requestRealCallingUid,
             Intent intent, String resolvedType, IVoiceInteractionSession voiceSession,
@@ -1394,6 +1436,7 @@ class ActivityStarter {
         final ActivityStack startedActivityStack;
         try {
             mService.mWindowManager.deferSurfaceLayout();
+            // startActivity方法紧接着调用了startActivityUnchecked方法：
             result = startActivityUnchecked(r, sourceRecord, voiceSession, voiceInteractor,
                     startFlags, doResume, options, inTask, outActivity, restrictedBgActivity);
         } finally {
@@ -1468,6 +1511,7 @@ class ActivityStarter {
             IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
             int startFlags, boolean doResume, ActivityOptions options, TaskRecord inTask,
             ActivityRecord[] outActivity, boolean restrictedBgActivity) {
+        // 启动Activity的时候来设置初始化状态
         setInitialState(r, options, inTask, doResume, startFlags, sourceRecord, voiceSession,
                 voiceInteractor, restrictedBgActivity);
 

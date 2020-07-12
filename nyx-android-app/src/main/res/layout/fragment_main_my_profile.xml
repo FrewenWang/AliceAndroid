@@ -1,75 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 我们将鼠标停留在根布局中，右键转化成为Databinding布局-->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name="loginViewModel"
+            name="myProfileViewModel"
             type="com.frewen.android.demo.ui.profile.MyProfileViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
-        tools:context=".ui.profile.MyProfileFragment">
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".ui.HomeActivity">
 
+        <ImageView
+            android:id="@+id/ivMore"
+            android:layout_width="@dimen/actionBarSize"
+            android:layout_height="@dimen/actionBarSize"
+            android:layout_gravity="end"
+            android:padding="14dp"
+            android:src="@drawable/ic_more_black_19dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/id_content_title_login"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_logo_black_76dp"
+            app:civ_border_color="#cdcdcd"
+            app:civ_border_width="1dp"
+            app:civ_circle_background_color="@color/color_common_gray" />
+
+        <com.frewen.aura.ui.textview.TypefaceTextView
+            android:id="@+id/tvLoginTips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="账号："
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="账号：" />
-        <!-- "@={}" 是指的双向绑定-->
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_account_login"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@={loginViewModel.loginName}"
-            app:layout_constraintBaseline_toBaselineOf="@id/id_content_title_login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/id_content_title_login"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:hint="输入账号" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="18dp"
+            android:text="@string/guide_login_tips"
+            android:textSize="12sp"
+            app:typeface="fzlLTypeface" />
 
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/id_content_title_pwd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="密码："
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/id_content_title_login"
-            tools:text="密码：" />
-
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_pwd_login"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@={loginViewModel.password}"
-            app:layout_constraintBaseline_toBaselineOf="@id/id_content_title_pwd"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/id_content_title_pwd"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:hint="输入密码" />
-
-
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:onClick="@{()-> loginViewModel.login()}"
-            android:text="登录"
-            app:layout_constraintTop_toBottomOf="@id/id_content_title_pwd"
-            tools:text="登录" />
+            android:layout_height="wrap_content">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/viewVerticalLine"
+                android:layout_width="1px"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                android:background="@color/color_gray_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.frewen.aura.ui.textview.TypefaceTextView
+                android:id="@+id/tvFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_favorite_border_black_20dp"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="@string/favorites"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/viewVerticalLine"
+                app:layout_constraintEnd_toStartOf="@+id/viewVerticalLine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/viewVerticalLine"
+                app:typeface="fzlLTypeface" />
+
+            <com.frewen.aura.ui.textview.TypefaceTextView
+                android:id="@+id/tvCache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_cache_black_16dp"
+                android:drawablePadding="8dp"
+                android:gravity="center_horizontal"
+                android:text="@string/cache"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/viewVerticalLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/viewVerticalLine"
+                app:layout_constraintTop_toTopOf="@+id/viewVerticalLine"
+                app:typeface="fzlLTypeface" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/viewHorizontalLine"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="19dp"
+            android:background="@color/color_gray_dark" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/llScrollViewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.frewen.aura.ui.textview.TypefaceTextView
+                    android:id="@+id/tvFollow"
+                    style="@style/NyxAppTheme.MineTextView"
+                    android:paddingStart="13dp"
+                    android:paddingEnd="13dp"
+                    android:text="@string/my_follow" />
+
+                <com.frewen.aura.ui.textview.TypefaceTextView
+                    android:id="@+id/tvWatchRecord"
+                    style="@style/NyxAppTheme.MineTextView"
+                    android:text="@string/watch_record" />
+
+                <com.frewen.aura.ui.textview.TypefaceTextView
+                    android:id="@+id/tvNotificationToggle"
+                    style="@style/NyxAppTheme.MineTextView"
+                    android:text="@string/notification_toggle" />
+
+                <com.frewen.aura.ui.textview.TypefaceTextView
+                    android:id="@+id/tvMyBadge"
+                    style="@style/NyxAppTheme.MineTextView"
+                    android:text="@string/my_badge" />
+
+                <com.frewen.aura.ui.textview.TypefaceTextView
+                    android:id="@+id/tvFeedback"
+                    style="@style/NyxAppTheme.MineTextView"
+                    android:text="@string/feedback" />
+
+                <com.frewen.aura.ui.textview.TypefaceTextView
+                    android:id="@+id/tvContribute"
+                    style="@style/NyxAppTheme.MineTextView"
+                    android:text="@string/want_contribute" />
+
+                <com.frewen.aura.ui.textview.TypefaceTextView
+                    android:id="@+id/tvVersionNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:textColor="@color/color_gray_dark"
+                    android:textSize="11sp"
+                    app:typeface="fzlLTypeface"
+                    tools:text="Version 6.3.0" />
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 </layout>

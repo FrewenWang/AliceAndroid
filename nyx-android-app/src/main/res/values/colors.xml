@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <!-- 我们应用的主题色为紫色-->
     <color name="black">#de000000</color>
     <color name="gray_50">#fafafa</color>
@@ -21,10 +21,18 @@
     <color name="colorPrimaryLight">#DF80FF</color>
     <color name="colorAccent">#BF00FF</color>
 
+    <color name="colorAccentAlpha60">#6661f2d4</color>
+    <color name="colorTextPrimary">#444444</color>
+    <color name="colorTextPrimaryDark">#333333</color>
+    <color name="colorTextSecondary">#888888</color>
+
 
     <color name="none_received">#999999</color>
     <color name="start_received">#00FF00</color>
     <color name="stop_received">#FF0000</color>
 
     <color name="subTextColor">#959595</color>
+
+
+    <color name="color_gray_dark">#adadad</color>
 </resources>

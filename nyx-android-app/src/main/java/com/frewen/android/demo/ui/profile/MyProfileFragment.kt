@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.databinding.FragmentMainMyProfileBinding
@@ -29,7 +28,7 @@ class MyProfileFragment : BaseFragment() {
         // val root = inflater.inflate(R.layout.fragment_main_my_profile, container, false)
 
         // 这个通过给FragmentProfileBinding的对象进行赋值
-        binding.loginViewModel = myProfileViewModel
+        binding.myProfileViewModel = myProfileViewModel
 
         return binding.root
     }

@@ -24,3 +24,5 @@ captures/
 
 # IntelliJ
 *.iml
+
+/.cxx/

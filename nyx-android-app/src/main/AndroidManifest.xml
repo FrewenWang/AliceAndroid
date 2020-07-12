@@ -33,24 +33,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".samples.jni.HelloJNIActivity">
+        <activity android:name=".samples.jni.HelloJNIActivity"></activity>
+        <activity
+            android:name=".samples.animation.AnimationDemoActivity"
+            android:label="@string/title_activity_animation_demo"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".samples.sqlite.SQLiteDemoActivity" />
+        <activity android:name=".ui.publish.PublishActivity" />
+        <activity android:name=".samples.dagger2.Dagger2Activity" />
+        <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".samples.animation.AnimationDemoActivity"
-            android:label="@string/title_activity_animation_demo"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".samples.sqlite.SQLiteDemoActivity" />
-        <activity android:name=".ui.publish.PublishActivity" />
-        <activity android:name=".samples.dagger2.Dagger2Activity" />
-        <activity
-            android:name=".ui.SplashActivity"
-            android:theme="@style/AppTheme.Splash" />
         <activity
             android:name=".ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />

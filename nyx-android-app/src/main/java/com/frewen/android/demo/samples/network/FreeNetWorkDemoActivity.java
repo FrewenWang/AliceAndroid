@@ -38,7 +38,7 @@ public class FreeNetWorkDemoActivity extends AppCompatActivity {
      */
     public void onLogin(View view) {
         Python py = Python.getInstance();
-        py.getBuiltins()
+//        py.getBuiltins()
         py.getModule("httpstat").callAttr("main", "www.baidu.com");
         //py.getModule("hello").callAttr("print_numpy");
     }

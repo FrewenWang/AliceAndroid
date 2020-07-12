@@ -33,22 +33,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".samples.animation.AnimationDemoActivity"
-            android:label="@string/title_activity_animation_demo"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".samples.jni.HelloJNIActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".samples.animation.AnimationDemoActivity"
+            android:label="@string/title_activity_animation_demo"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".samples.sqlite.SQLiteDemoActivity" />
         <activity android:name=".ui.publish.PublishActivity" />
         <activity android:name=".samples.dagger2.Dagger2Activity" />
         <activity
             android:name=".ui.SplashActivity"
-            android:theme="@style/AppTheme.Splash"></activity>
+            android:theme="@style/AppTheme.Splash" />
         <activity
             android:name=".ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />
@@ -60,8 +62,7 @@
         <activity android:name=".samples.SampleDemoActivity" />
         <activity android:name=".samples.bluetooth.BlueToothDemoActivity" />
         <activity android:name=".samples.jobscheduler.JobSchedulerDemoActivity" />
-        <activity android:name=".samples.network.WebSocketDemoActivity">
-        </activity>
+        <activity android:name=".samples.network.WebSocketDemoActivity"></activity>
         <activity android:name=".samples.keeplive.KeepLiveActivity" />
         <activity android:name=".samples.webview.WebViewActivity" />
         <activity android:name=".samples.view.ViewDemoActivity" />
@@ -69,6 +70,7 @@
         <activity android:name=".samples.network.FreeNetWorkDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

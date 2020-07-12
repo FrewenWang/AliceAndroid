@@ -57,6 +57,12 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
+        // 导入CMake构建
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+            }
+        }
     }
     // 这个闭包主要指定生成安装文件的主要配置，一般包含两个子闭包，一个是debug闭包，用于指定生成测试版安装文件的配置，可以忽略不写；
     // 另一个是release闭包，用于指定生成正式版安装文件的配置。
@@ -81,6 +87,13 @@ android {
             pseudoLocalesEnabled false//是否在APK中生成伪语言环境，帮助国际化的东西，一般使用的不多
             applicationIdSuffix 'debug'//在applicationId 中添加了一个后缀，一般使用的不多
             versionNameSuffix '-debug'//versionName 中添加了一个后缀，一般使用的不多
+        }
+
+        externalNativeBuild {
+            cmake {
+                path "src/main/cpp/CMakeLists.txt"  //构建脚本的路径
+                version "3.10.2"                    //CMake的版本
+            }
         }
     }
 

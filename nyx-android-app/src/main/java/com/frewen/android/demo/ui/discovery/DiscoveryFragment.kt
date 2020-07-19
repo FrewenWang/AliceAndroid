@@ -1,28 +1,29 @@
 package com.frewen.android.demo.ui.discovery
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.flyco.tablayout.listener.CustomTabEntity
 import com.frewen.android.aura.annotations.FragmentDestination
-import com.frewen.android.demo.R
-import com.frewen.aura.framework.fragment.BaseFragment
-import com.google.android.material.tabs.TabLayout
+import com.frewen.android.demo.ui.profile.MyProfileFragment
+import com.frewen.github.library.ui.fragment.BaseViewPager2Fragment
+import com.frewen.github.library.widgets.CustomTabEntityImpl
 
 @FragmentDestination(pageUrl = "main/tabs/discovery", asStarter = false)
-class DiscoveryFragment : BaseFragment() {
-
-    private val tabLayout: TabLayout? = null
-
-
-
+class DiscoveryFragment : BaseViewPager2Fragment() {
     /**
-     * Fragment子类需要实现的方法。用来生成Fragment需要的View
+     * DiscoveryFragment 类中的伴生对象
      */
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, b: Boolean): View {
-
-        val root = inflater.inflate(R.layout.fragment_main_discovery, container, false)
-
-        return root
+    companion object {
+        fun newInstance() = DiscoveryFragment()
     }
+
+    override val createTitles: ArrayList<CustomTabEntity>
+        get() = ArrayList<CustomTabEntity>().apply {
+            add(CustomTabEntityImpl("Tab1"))
+            add(CustomTabEntityImpl("Tab2"))
+            add(CustomTabEntityImpl("Tab3"))
+        }
+    override val createFragments: Array<Fragment>
+        get() = arrayOf(MyProfileFragment(), MyProfileFragment(), MyProfileFragment())
+
 
 }

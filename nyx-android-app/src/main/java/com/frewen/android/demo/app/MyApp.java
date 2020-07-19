@@ -11,6 +11,7 @@ import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.aura.framework.app.BaseApp;
+import com.frewen.aura.framework.app.BaseMVPApp;
 import com.frewen.aura.toolkits.common.AppInfoUtils;
 import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.github.library.network.core.NetworkApi;
@@ -27,7 +28,7 @@ import dagger.android.HasActivityInjector;
 /**
  * MyApp
  */
-public class MyApp extends BaseApp implements HasActivityInjector {
+public class MyApp extends BaseMVPApp implements HasActivityInjector {
 
     private static final String TAG = "T:MyApp";
     /**

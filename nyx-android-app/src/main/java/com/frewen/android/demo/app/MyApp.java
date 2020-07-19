@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.frewen.android.demo.BuildConfig;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.aura.framework.app.BaseApp;
+import com.frewen.aura.toolkits.common.AppInfoUtils;
 import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.github.library.network.core.NetworkApi;
 import com.frewen.keepservice.KeepLiveService;
@@ -55,11 +57,33 @@ public class MyApp extends BaseApp implements HasActivityInjector {
 
         AuraToolKits.init(null, "AndroidSamples");
 
+        // 初始化Bugly
+        initBugly();
+
+
         initFreeHttp();
 
         initNetworkApi();
         //Application级别注入
         AppInjector.INSTANCE.inject(this);
+    }
+
+    /**
+     * https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20200203205953
+     */
+    private void initBugly() {
+        Context context = getApplicationContext();
+        // 获取当前包名
+        String packageName = context.getPackageName();
+        // 获取当前进程名
+        String processName = ProcessInfoUtils.getProcessName(this);
+        // 设置是否为上报进程
+        UserStrategy strategy = new UserStrategy(context);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        // 初始化Bugly
+        CrashReport.initCrashReport(context, "注册时申请的APPID", BuildConfig.DEBUG, strategy);
+        // 如果通过“AndroidManifest.xml”来配置APP信息，初始化方法如下
+        // CrashReport.initCrashReport(context, strategy);
     }
 
     private void initNetworkApi() {

@@ -13,15 +13,15 @@ buildscript {
      */
     repositories {
         String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
-        if (gitBranch == "dev") {
-            // 这个闭包里面传入的插件依赖的仓库。注意：使用本地依赖库，首先要启动artifactory
-            // 具体见：/tool_kits/artifactory-start.sh
-            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
-        } else {
-            google()
-            jcenter()
-            maven { url 'https://oss.sonatype.org/content/repositories/public' }
-        }
+//        if (gitBranch == "dev") {
+//            // 这个闭包里面传入的插件依赖的仓库。注意：使用本地依赖库，首先要启动artifactory
+//            // 具体见：/tool_kits/artifactory-start.sh
+//            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
+//        } else {
+        google()
+        jcenter()
+        maven { url 'https://oss.sonatype.org/content/repositories/public' }
+//        }
         // 设置仓库
         maven { url "https://chaquo.com/maven" }
     }
@@ -46,12 +46,12 @@ allprojects {
     repositories {
         String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
         println("allprojects repositories gitBranch = " + gitBranch)
-        if (gitBranch == "dev") {
-            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
-        } else {
-            google()
-            jcenter()
-        }
+//        if (gitBranch == "dev") {
+//            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
+//        } else {
+        google()
+        jcenter()
+//        }
         maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
         maven { url 'https://jitpack.io' }
     }

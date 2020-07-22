@@ -3,7 +3,7 @@ package com.frewen.android.demo.di.components
 import android.app.Application
 import com.frewen.android.demo.app.MyApp
 import com.frewen.android.demo.di.modules.MyAppModule
-import com.frewen.aura.framework.kotlin.di.scope.AppScope
+import com.frewen.aura.framework.di.scope.AppScope
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.support.AndroidSupportInjectionModule

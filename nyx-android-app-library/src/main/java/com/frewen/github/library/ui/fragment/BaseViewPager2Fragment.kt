@@ -55,8 +55,8 @@ abstract class BaseViewPager2Fragment : BaseFragment() {
     }
 
     private fun initViewPager() {
-        viewPager = rootView?.findViewById(R.id.viewPager)
-        tabLayout = rootView?.findViewById(R.id.tabLayout)
+//        viewPager = rootView?.findViewById(R.id.viewPager)
+//        tabLayout = rootView?.findViewById(R.id.tabLayout)
         viewPager?.offscreenPageLimit = offscreenPageLimit
 
 

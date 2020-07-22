@@ -1,7 +1,7 @@
 package com.frewen.android.demo.di.modules
 
 import com.frewen.android.demo.network.RetrofitFactory
-import com.frewen.aura.framework.di.scope.AppScope
+import com.frewen.aura.framework.kotlin.di.scope.AppScope
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

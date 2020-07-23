@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.HomeActivity">
-    <!-- 顶部CommonTitleBar-->
-    <include layout="@layout/layout_common_tab_layout_title_bar" />
 
-    <View
-        android:id="@+id/viewHorizontalLine"
+<!--AuraFrameLayout 可以进行改变透明度的AuraFrameLayout-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.frewen.aura.ui.view.AuraFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/color_gray_dark" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.HomeActivity">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-</LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+    </com.frewen.aura.ui.view.AuraFrameLayout>
+</layout>

@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+// Kotlin注解的一些功能会用到这个插件
+apply plugin: 'kotlin-kapt'
 
 
 String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()

@@ -15,7 +15,7 @@ import retrofit2.Retrofit
  * @time: 2020/4/7 12:54
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-@Module
+@Module(includes = [ViewModelModule::class])
 class MyAppModule {
     @AppScope
     @Provides

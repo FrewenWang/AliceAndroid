@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,8 +16,20 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.ActivityHomeBinding
 import com.frewen.android.demo.navigation.NavGraphBuilder
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
-class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+/**
+ * HomeActivity作为几个Fragment的Tab页面。一定要去实现HasSupportFragmentInjector这个接口
+ * 否则，几个Fragment无法进行注入操作
+ * 会报：
+ * *Process: com.frewen.android.demo.debug, PID: 2570
+ *   java.lang.IllegalArgumentException: No injector was found for com.frewen.android.demo.ui.discovery.DiscoveryFragment
+ *   没有对应注入器
+ */
+class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavigationView.OnNavigationItemSelectedListener {
 
     companion object {
         private const val TAG = "HomeActivity"
@@ -54,4 +67,9 @@ class HomeActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         navController.navigate(item.itemId)
         return !TextUtils.isEmpty(item.title)
     }
+
+
+    @Inject
+    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
+    override fun supportFragmentInjector() = dispatchingAndroidInjector
 }

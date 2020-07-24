@@ -39,6 +39,9 @@ abstract class ViewModelModule {
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
 
+    /**
+     * 
+     */
     @Binds
     @IntoMap
     @ViewModelKey(DiscoveryViewModel::class)

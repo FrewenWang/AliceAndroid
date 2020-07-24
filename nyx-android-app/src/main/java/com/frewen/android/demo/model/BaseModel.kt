@@ -8,3 +8,4 @@ package com.frewen.android.demo.model
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
+abstract class BaseModel

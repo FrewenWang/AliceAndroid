@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
-import com.frewen.github.library.di.injector.Injectable
-import com.frewen.github.library.ui.fragment.BaseDataBindingFragment
+import com.frewen.demo.library.di.injector.Injectable
+import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import kotlinx.android.synthetic.main.fragment_main_discovery.*
 import javax.inject.Inject
 

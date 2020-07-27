@@ -4,15 +4,15 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.frewen.network.api.BaseApiService;
-import com.frewen.network.cache.CacheMode;
 import com.frewen.network.core.AuraRxHttp;
+import com.frewen.network.interceptor.HeadersInterceptor;
+import com.frewen.network.listener.ResponseCallback;
 import com.frewen.network.model.HttpHeaders;
 import com.frewen.network.model.HttpParams;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import okhttp3.HttpUrl;
@@ -61,6 +61,7 @@ public abstract class Request<R extends Request> {
     protected List<Converter.Factory> converterFactories = new ArrayList<>();
     protected List<CallAdapter.Factory> adapterFactories = new ArrayList<>();
     protected final List<Interceptor> interceptors = new ArrayList<>();
+    private String cacheKey;
 
     public Request(String url) {
         this.url = url;
@@ -107,14 +108,18 @@ public abstract class Request<R extends Request> {
      * 根据Request请求的参数
      * 构建生成的OkHttpClientBuilder
      */
-    private OkHttpClient.Builder generateOkClient() {
+    private OkHttpClient.Builder createOkHttpClientBuilder() {
         // 如果Request没有指定自定义的请求配置参数，
         // 我们就直接属于我们默认初始化OkHttpClient.Builder
         if (readTimeOut <= 0 && writeTimeOut <= 0 && connectTimeout <= 0 && headers.isEmpty()) {
             OkHttpClient.Builder builder = AuraRxHttp.getInstance().getOkHttpClientBuilder();
             return builder;
+        } else {
+            final OkHttpClient.Builder newClientBuilder = AuraRxHttp.getInstance().getOkHttpClientBuilder().build().newBuilder();
+            //添加头  头添加放在最前面方便其他拦截器可能会用到
+            newClientBuilder.addInterceptor(new HeadersInterceptor(headers));
+            return newClientBuilder;
         }
-        return null;
     }
 
     private Retrofit.Builder generateRetrofit() {
@@ -163,16 +168,35 @@ public abstract class Request<R extends Request> {
         return (R) this;
     }
 
+    /**
+     * 添加缓存读取的Key标记
+     *
+     * @param key
+     */
+    public R addCacheKey(String key) {
+        this.cacheKey = key;
+        return (R) this;
+    }
+
     protected abstract Observable<ResponseBody> generateRequest();
 
     protected R build() {
-        OkHttpClient.Builder okHttpClientBuilder = generateOkClient();
+        OkHttpClient.Builder okHttpClientBuilder = createOkHttpClientBuilder();
         final Retrofit.Builder retrofitBuilder = generateRetrofit();
         okHttpClient = okHttpClientBuilder.build();
         retrofitBuilder.client(okHttpClient);
         retrofit = retrofitBuilder.build();
         mApiService = retrofit.create(BaseApiService.class);
         return (R) this;
+    }
+
+    // ==============Request的执行的两个请求=========================
+    public <Data> void execute(ResponseCallback<Data> callbackListener) {
+
+    }
+
+    public <Data> void execute() {
+
     }
 
 }

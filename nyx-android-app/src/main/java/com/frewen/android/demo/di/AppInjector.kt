@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.frewen.android.demo.app.MyApp
 import com.frewen.android.demo.di.components.DaggerMyAppComponent
-import com.frewen.github.library.di.injector.Injectable
+import com.frewen.demo.library.di.injector.Injectable
 import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector

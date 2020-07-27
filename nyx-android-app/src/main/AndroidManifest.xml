@@ -28,6 +28,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!--network_security_config 允许明文请求 -->
     <application
         android:name=".app.MyApp"
         android:allowBackup="true"

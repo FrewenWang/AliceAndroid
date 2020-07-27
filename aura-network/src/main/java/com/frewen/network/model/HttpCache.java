@@ -12,7 +12,7 @@ public enum HttpCache {
     CACHE_ONLY,
     // 先访问缓存，同时发起网络请求，成功后缓存到本地
     CACHE_FIRST,
-    //只访问网络，不进行任何存储
+    //只访问网络，不进行任何缓存存储
     NET_ONLY,
     // 先访问网络。再缓存到本地
     NET_CACHE

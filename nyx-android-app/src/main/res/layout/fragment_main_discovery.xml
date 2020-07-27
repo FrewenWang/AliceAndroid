@@ -1,25 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--AuraFrameLayout 可以进行改变透明度的AuraFrameLayout-->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </TextView>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </Button>
-
+    <!--AuraFrameLayout 可以进行改变透明度的AuraFrameLayout-->
     <com.frewen.aura.ui.view.AuraFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -69,7 +69,7 @@ public class HttpHeaders implements Serializable {
     public static final String HEAD_KEY_SET_COOKIE = "Set-Cookie";
     public static final String HEAD_KEY_SET_COOKIE2 = "Set-Cookie2";
 
-    public LinkedHashMap<String, String> headersMap;
+    private LinkedHashMap<String, String> headersMap;
     private static String acceptLanguage;
     private static String userAgent;
 
@@ -95,14 +95,14 @@ public class HttpHeaders implements Serializable {
 
     public void put(HttpHeaders headers) {
         if (headers != null) {
-            if (headers.headersMap != null && !headers.headersMap.isEmpty()){
-               Set<Map.Entry<String, String>> set = headers.headersMap.entrySet();
+            if (headers.headersMap != null && !headers.headersMap.isEmpty()) {
+                Set<Map.Entry<String, String>> set = headers.headersMap.entrySet();
                 for (Map.Entry<String, String> map : set) {
                     headersMap.remove(map.getKey());
-                    headersMap.put(map.getKey(),map.getValue());
+                    headersMap.put(map.getKey(), map.getValue());
                 }
             }
-                
+
         }
     }
 
@@ -122,8 +122,15 @@ public class HttpHeaders implements Serializable {
         headersMap.clear();
     }
 
-    public Set<String> getNames() {
+    public Set<String> getHeaderNames() {
         return headersMap.keySet();
+    }
+
+    /**
+     * 获取Headers对象的KV映射表
+     */
+    public Map<String, String> getHeadersMap() {
+        return this.headersMap;
     }
 
     public final String toJSONString() {

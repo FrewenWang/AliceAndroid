@@ -91,6 +91,7 @@ public final class AuraRxHttp {
 
     /**
      * 添加Http的签名证书问题
+     * Http
      */
     private void initTrustManager() {
         TrustManager[] trustManagers = new TrustManager[]{new X509TrustManager() {

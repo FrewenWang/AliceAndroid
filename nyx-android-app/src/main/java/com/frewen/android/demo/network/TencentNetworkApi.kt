@@ -1,8 +1,8 @@
 package com.frewen.android.demo.network
 
-import com.frewen.github.library.network.core.NetworkApi
-import com.frewen.github.library.utils.TencentUtils.getAuthorization
-import com.frewen.github.library.utils.TencentUtils.timeStr
+import com.frewen.demo.library.network.core.NetworkApi
+import com.frewen.demo.library.utils.TencentUtils.getAuthorization
+import com.frewen.demo.library.utils.TencentUtils.timeStr
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException

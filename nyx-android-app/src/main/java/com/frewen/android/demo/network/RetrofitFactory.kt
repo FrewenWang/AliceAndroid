@@ -1,8 +1,7 @@
 package com.frewen.android.demo.network
 
-import com.frewen.aura.framework.net.HeadersInterceptor
 import com.frewen.aura.framework.net.LoggerInterceptor
-import com.frewen.github.library.common.Config
+import com.frewen.demo.library.common.Config
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

@@ -5,16 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.frewen.android.demo.BuildConfig;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
-import com.frewen.aura.framework.app.BaseApp;
 import com.frewen.aura.framework.app.BaseMVPApp;
-import com.frewen.aura.toolkits.common.AppInfoUtils;
 import com.frewen.aura.toolkits.core.AuraToolKits;
-import com.frewen.github.library.network.core.NetworkApi;
+import com.frewen.demo.library.network.core.NetworkApi;
 import com.frewen.keepservice.KeepLiveService;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.aura.toolkits.utils.ProcessInfoUtils;

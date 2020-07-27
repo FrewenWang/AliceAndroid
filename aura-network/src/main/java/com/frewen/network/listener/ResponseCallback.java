@@ -10,13 +10,13 @@ import com.frewen.network.response.exception.AuraException;
  * @time: 2020/6/20 10:45
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public abstract class ResponseCallback<T> {
+public abstract class ResponseCallback<Data> {
 
     public abstract void onStart();
 
     public abstract void onCompleted();
 
-    public void onSuccess(Response<T> response) {
+    public void onSuccess(Response<Data> response) {
 
     }
 
@@ -24,6 +24,6 @@ public abstract class ResponseCallback<T> {
 
     }
 
-    public void onCacheSuccess(Response<T> response) {
+    public void onCacheSuccess(Response<Data> response) {
     }
 }

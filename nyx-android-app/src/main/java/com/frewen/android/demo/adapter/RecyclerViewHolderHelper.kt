@@ -6,9 +6,9 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.adapter.ItemViewType.Companion.TEXT_CARD_HEADER4
 import com.frewen.android.demo.adapter.ItemViewType.Companion.UNKNOWN
 import com.frewen.android.demo.model.Discovery
-import com.frewen.github.library.extention.inflate
-import com.frewen.github.library.ui.holder.EmptyViewHolder
-import com.frewen.github.library.ui.holder.TextCardViewHeader4ViewHolder
+import com.frewen.demo.library.extention.inflate
+import com.frewen.demo.library.ui.holder.EmptyViewHolder
+import com.frewen.demo.library.ui.holder.TextCardViewHeader4ViewHolder
 
 /**
  * @filename: RecyclerViewHolderHelper

@@ -81,8 +81,10 @@ public class HttpParams implements Serializable {
 
     public void put(String key, Object value) {
         try {
+            // 通过反射的获取integer.java中的TYPE的属性
             Field field = value.getClass().getField("TYPE");
             Class clazz = (Class) field.get(null);
+            /// 判断是基本数据类型
             if (clazz.isPrimitive()) {
                 urlParamsMap.put(key, value);
             }

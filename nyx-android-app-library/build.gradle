@@ -60,8 +60,13 @@ dependencies {
     }
     //===================添加Aura整体开源框架依赖===============================
 
+    //===================添加OKHttp网络请求框架===============================
     //OKHttp内置拦截器 https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
-    api dep.okhttp3Log
+    implementation("com.squareup.okhttp3:logging-interceptor:4.8.0")
+    //OKHttp请求的依赖框架：https://github.com/square/okhttp/
+    implementation("com.squareup.okhttp3:okhttp:4.8.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.8.0")
+    //===================添加OKHttp网络请求框架===============================
 
     //===================JetPack的Room框架依赖===============================
     // JetPack的Room框架：Room持久性库在 SQLite 的基础上提供了一个抽象层，

@@ -3,8 +3,8 @@ package com.frewen.android.demo.network;
 import android.app.Application;
 
 import com.frewen.android.demo.BuildConfig;
-import com.frewen.github.library.network.env.Env;
-import com.frewen.github.library.network.core.AbsNetworkConfig;
+import com.frewen.demo.library.network.env.Env;
+import com.frewen.demo.library.network.core.AbsNetworkConfig;
 
 import org.jetbrains.annotations.NotNull;
 

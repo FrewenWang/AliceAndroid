@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.frewen.github.library.ui.fragment.BaseViewPager2Fragment">
+    tools:context="com.frewen.demo.library.ui.fragment.BaseViewPager2Fragment">
 
     <include layout="@layout/layout_main_page_title_bar" />
 

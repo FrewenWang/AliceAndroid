@@ -17,18 +17,15 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读写外部存储 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读写外部存储 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <!-- 使用permission验证。使用这种验证方式，我们要先在AndroidMenifest中声明所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 使用permission验证。使用这种验证方式，我们要先在AndroidMenifest中声明所需的权限 -->
     <uses-permission
         android:name="android.permission.BLUETOOTH_PRIVILEGED"
-        tools:ignore="ProtectedPermissions" />
-    <!-- AIDL的学习：在这个地方声明绑定购票服务的权限 -->
+        tools:ignore="ProtectedPermissions" /> <!-- AIDL的学习：在这个地方声明绑定购票服务的权限 -->
     <!-- 这个权限的声明是在服务端来进行的。所以需要绑定到我们的服务的都需要声明这个权限 -->
     <!-- 所以这个权限不要随便泄漏啊 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!--network_security_config 允许明文请求 -->
     <application
         android:name=".app.MyApp"
         android:allowBackup="true"
@@ -38,11 +35,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".samples.jni.HelloJNIActivity"></activity>
+        <activity android:name=".samples.androidapi.SecondActivity"></activity>
+        <activity android:name=".samples.androidapi.ActivityDemoActivity" />
+        <activity android:name=".samples.view.ConstraintLayoutDemoActivity" />
+        <activity android:name=".samples.view.RecyclerViewDemoActivity" />
+        <activity android:name=".samples.jni.HelloJNIActivity" />
         <activity
             android:name=".samples.animation.AnimationDemoActivity"
             android:label="@string/title_activity_animation_demo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".samples.sqlite.SQLiteDemoActivity" />
         <activity android:name=".ui.publish.PublishActivity" />
         <activity android:name=".samples.dagger2.Dagger2Activity" />
@@ -66,7 +67,7 @@
         <activity android:name=".samples.SampleDemoActivity" />
         <activity android:name=".samples.bluetooth.BlueToothDemoActivity" />
         <activity android:name=".samples.jobscheduler.JobSchedulerDemoActivity" />
-        <activity android:name=".samples.network.WebSocketDemoActivity"></activity>
+        <activity android:name=".samples.network.WebSocketDemoActivity" />
         <activity android:name=".samples.keeplive.KeepLiveActivity" />
         <activity android:name=".samples.webview.WebViewActivity" />
         <activity android:name=".samples.view.ViewDemoActivity" />
@@ -121,7 +122,6 @@
         <service
             android:name=".samples.ipc.remote.socket.RemoteTCPService"
             android:process=":socket_server" />
-
     </application>
 
 </manifest>

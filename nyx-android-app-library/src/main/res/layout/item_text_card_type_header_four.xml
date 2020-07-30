@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="6dp"
-        android:textColor="@color/white"
+        android:textColor="@color/color_common_black"
         android:textSize="14sp"
         app:typeface="fzdb1Typeface"
         tools:text="相关推荐" />

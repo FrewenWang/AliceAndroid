@@ -1,9 +1,13 @@
 package com.frewen.android.demo.samples.view.recyclerview;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.frewen.android.demo.R;
 import com.frewen.android.demo.samples.view.RecyclerViewDemoActivity;
 
 import androidx.annotation.NonNull;
@@ -19,8 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
  */
 public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerViewAdapter.MainRecyclerViewHolder> {
 
+    private final Context context;
+
     public MainRecyclerViewAdapter(Context context) {
-        
+        this.context = context;
     }
 
     /**
@@ -33,7 +39,8 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     @NonNull
     @Override
     public MainRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(this.context).inflate(R.layout.item_recycler_view_demo, parent, false);
+        return new MainRecyclerViewHolder(view);
     }
 
     /**
@@ -45,7 +52,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
      */
     @Override
     public void onBindViewHolder(@NonNull MainRecyclerViewHolder holder, int position) {
-
+        holder.mImageView.setImageResource(R.drawable.test_avatar);
     }
 
     @Override
@@ -54,9 +61,16 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
     }
 
     public static class MainRecyclerViewHolder extends RecyclerView.ViewHolder {
+        ImageView mImageView;
+        TextView mTVTitle;
+        TextView mTVContent;
 
         public MainRecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            mImageView = itemView.findViewById(R.id.imageView);
+            mTVTitle = itemView.findViewById(R.id.textView5);
+            mTVContent = itemView.findViewById(R.id.tvContent);
         }
     }
 }

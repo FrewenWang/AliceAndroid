@@ -35,5 +35,8 @@ public class RecyclerViewDemoActivity extends AppCompatActivity {
         // 自定义
         MainRecyclerViewAdapter adapter = new MainRecyclerViewAdapter(this);
 
+
+
+
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.text.TextUtils;
 
 import com.frewen.aura.toolkits.core.AuraToolKits;
+import com.frewen.network.api.BaseApiService;
 import com.frewen.network.interceptor.HttpLoggingInterceptor;
 import com.frewen.network.logger.Logger;
 import com.frewen.network.model.HttpHeaders;
@@ -30,7 +31,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
- * @filename: FreeRxHttp
+ * @filename: AuraRxHttp
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/4/14 23:03
@@ -59,6 +60,7 @@ public final class AuraRxHttp {
      */
     private String mBaseUrl;
     private int mRetryCount = DEFAULT_RETRY_COUNT;
+    private long mCacheMaxSize;                                       //缓存大小
     /**
      * 全局公共请求参数
      */
@@ -67,6 +69,7 @@ public final class AuraRxHttp {
      * 全局公共请求头
      */
     private HttpHeaders mCommonHeaders;
+    private Class<? extends BaseApiService> mApiService;
 
     private AuraRxHttp() {
         // okHttpClient的Builder
@@ -158,16 +161,16 @@ public final class AuraRxHttp {
      * @param customTag 自定义全局TAG
      */
     public static void init(Application app, String customTag) {
+        AuraToolKits.init(app, customTag);
         mContext = app;
         AuraRxHttp.TAG = customTag;
-        AuraToolKits.init(app, customTag);
     }
 
     /**
      * 获取单例对象的方法
      */
     public static AuraRxHttp getInstance() {
-        CommonUtils.checkNotNull(mContext, "you should init FreeRxHttp First");
+        CommonUtils.checkNotNull(mContext, "you should init AuraRxHttp First");
         if (mInstance == null) {
             synchronized (AuraRxHttp.class) {
                 if (mInstance == null) {
@@ -334,5 +337,22 @@ public final class AuraRxHttp {
      */
     public static GetRequest get(String url) {
         return new GetRequest(url);
+    }
+
+    public AuraRxHttp setCacheMaxSize(long maxCacheSize) {
+        mCacheMaxSize = maxCacheSize;
+        return this;
+    }
+
+    public AuraRxHttp setApiService(Class<? extends BaseApiService> apiService) {
+        this.mApiService = apiService;
+        return this;
+    }
+
+    /**
+     * 获取传入的ApiService
+     */
+    public Class<? extends BaseApiService> getApiService() {
+        return mApiService;
     }
 }

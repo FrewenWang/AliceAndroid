@@ -51,7 +51,7 @@ public abstract class Request<R extends Request> {
     protected OkHttpClient okHttpClient;
     private Retrofit retrofit;
     /**
-     *
+     * Retrol
      */
     protected BaseApiService mApiService;
 
@@ -178,17 +178,20 @@ public abstract class Request<R extends Request> {
         return (R) this;
     }
 
-    protected abstract Observable<ResponseBody> generateRequest();
-
     protected R build() {
         OkHttpClient.Builder okHttpClientBuilder = createOkHttpClientBuilder();
         final Retrofit.Builder retrofitBuilder = generateRetrofit();
         okHttpClient = okHttpClientBuilder.build();
         retrofitBuilder.client(okHttpClient);
         retrofit = retrofitBuilder.build();
-        mApiService = retrofit.create(BaseApiService.class);
+        mApiService = retrofit.create(AuraRxHttp.getInstance().getApiService());
         return (R) this;
     }
+
+    /**
+     * 创建Request。不同的Request对应各自实现他们的generateRequest方法
+     */
+    protected abstract Observable<ResponseBody> generateRequest();
 
     // ==============Request的执行的两个请求=========================
     public <Data> void execute(ResponseCallback<Data> callbackListener) {

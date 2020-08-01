@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.network.MyNetworkConfig;
+import com.frewen.android.demo.network.VideoApiService;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.aura.framework.app.BaseMVPApp;
@@ -59,7 +60,7 @@ public class MyApp extends BaseMVPApp implements HasActivityInjector {
         initBugly();
 
 
-        initFreeHttp();
+        initAuraHttp();
 
         initNetworkApi();
         //Application级别注入
@@ -88,14 +89,16 @@ public class MyApp extends BaseMVPApp implements HasActivityInjector {
         NetworkApi.init(new MyNetworkConfig(this));
     }
 
-    private void initFreeHttp() {
+    private void initAuraHttp() {
         AuraRxHttp.init(this);
         AuraRxHttp.getInstance()
                 .setBaseUrl(Constant.BASE_URL)
-                .setDebug("FreeRxHttp", true)
+                .setDebug("AuraRxHttp", true)
                 .setReadTimeOut(5 * 1000)
                 .setWriteTimeOut(10 * 1000)
+                .setCacheMaxSize(100 * 1024 * 1024)//设置缓存大小为100M
                 .setConnectTimeout(5 * 1000)
+                .setApiService(VideoApiService.class)
                 //默认网络不好自动重试3次
                 .setRetryCount(3);
     }

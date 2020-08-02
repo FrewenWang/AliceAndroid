@@ -35,7 +35,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".samples.androidapi.SecondActivity"></activity>
+        <activity android:name=".samples.gson.GsonDemoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".samples.androidapi.SecondActivity" />
         <activity android:name=".samples.androidapi.ActivityDemoActivity" />
         <activity android:name=".samples.view.ConstraintLayoutDemoActivity" />
         <activity android:name=".samples.view.RecyclerViewDemoActivity" />
@@ -50,11 +57,6 @@
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@style/AppTheme.Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.HomeActivity"
@@ -73,11 +75,6 @@
         <activity android:name=".samples.view.ViewDemoActivity" />
         <activity android:name=".samples.glide.Glide4Activity" />
         <activity android:name=".samples.network.FreeNetWorkDemoActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".samples.OptimusNetWorkActivity" />
         <activity android:name=".samples.rxjava2.OperatorActivity" />

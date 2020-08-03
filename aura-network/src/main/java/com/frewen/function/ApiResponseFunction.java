@@ -44,7 +44,7 @@ class ApiResponseFunction<Data> implements Function<ResponseBody, Response<Data>
             if (Response.class.isAssignableFrom(cls)) {
                 final Type[] params = ((ParameterizedType) type).getActualTypeArguments();
                 final Class clazz = CommonUtils.getClass(params[0], 0);
-                final Class rawType = Utils.getClass(type, 0);
+//                final Class rawType = Utils.getClass(type, 0);
             }
         }
 

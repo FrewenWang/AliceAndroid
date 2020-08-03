@@ -1,6 +1,6 @@
 package com.frewen.network.request;
 
-import com.frewen.network.listener.ResponseCallback;
+import com.frewen.callback.CallClazzProxy;
 import com.frewen.network.response.Response;
 
 import io.reactivex.Observable;
@@ -19,10 +19,15 @@ public class GetRequest extends Request<GetRequest> {
         super(url);
     }
 
-//    public <Data> Observable<Data> execute(Class<Data> clazz) {
-//        return execute(new CallClazzProxy<Response<Data>, Data>(clazz) {
-//        });
-//    }
+    public <Data> Observable<Data> execute(Class<Data> clazz) {
+        return execute(new CallClazzProxy<Response<Data>, Data>(clazz) {
+        });
+    }
+
+    public <Data> Observable<Data> execute(CallClazzProxy<? extends Response<Data>, Data> proxy) {
+        return build().generateRequest()
+                .map( )
+    }
 
     /**
      * 调用Get网络请求.传入的

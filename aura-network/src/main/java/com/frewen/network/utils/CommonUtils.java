@@ -77,4 +77,8 @@ public class CommonUtils {
             return (Class) type;
         }
     }
+
+    private static Class getGenericClass(ParameterizedType type, int i) {
+        return null;
+    }
 }

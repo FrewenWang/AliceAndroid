@@ -35,13 +35,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".samples.gson.GsonDemoActivity">
+        <activity android:name=".samples.view.CollapsingToolbarLayoutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".samples.view.CoordinatorLayoutActivity">
+
+        </activity>
+        <activity android:name=".samples.gson.GsonDemoActivity"></activity>
         <activity android:name=".samples.androidapi.SecondActivity" />
         <activity android:name=".samples.androidapi.ActivityDemoActivity" />
         <activity android:name=".samples.view.ConstraintLayoutDemoActivity" />
@@ -56,8 +60,7 @@
         <activity android:name=".samples.dagger2.Dagger2Activity" />
         <activity
             android:name=".ui.SplashActivity"
-            android:theme="@style/AppTheme.Splash">
-        </activity>
+            android:theme="@style/AppTheme.Splash" />
         <activity
             android:name=".ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />
@@ -74,8 +77,7 @@
         <activity android:name=".samples.webview.WebViewActivity" />
         <activity android:name=".samples.view.ViewDemoActivity" />
         <activity android:name=".samples.glide.Glide4Activity" />
-        <activity android:name=".samples.network.FreeNetWorkDemoActivity">
-        </activity>
+        <activity android:name=".samples.network.FreeNetWorkDemoActivity" />
         <activity android:name=".samples.OptimusNetWorkActivity" />
         <activity android:name=".samples.rxjava2.OperatorActivity" />
         <activity android:name=".samples.PermissionActivity" />

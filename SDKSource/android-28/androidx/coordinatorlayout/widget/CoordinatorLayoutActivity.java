@@ -20,7 +20,13 @@ import android.widget.FrameLayout;
 
 import androidx.coordinatorlayout.BaseTestActivity;
 import androidx.coordinatorlayout.test.R;
-
+/**
+ * @filename: CoordinatorLayoutActivity
+ * @introduction:
+ * @author: Frewen.Wong
+ * @time: 2020/8/3 19:47
+ * Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ */
 public class CoordinatorLayoutActivity extends BaseTestActivity {
 
     FrameLayout mContainer;

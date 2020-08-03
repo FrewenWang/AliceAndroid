@@ -107,4 +107,8 @@
     <string name="version_show">Version %1$s</string>
 
 
+    <string name="fab_hide_sheet_behavior" translatable="false">com.frewen.android.demo.samples.view.behavior
+        .FloatingActionBtnBehavior</string>
+
+
 </resources>

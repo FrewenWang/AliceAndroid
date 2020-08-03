@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+    <!--CoordinatorLayout + FloatingActionButton使用-->
+    <!--
+        市面上众多 APP 首页都会使用 CoordinatorLayout 结合 FloatingActionButton 的效果，
+        当列表垂直方向滑动时，FloatingActionButton 随之显示与隐藏。
+    -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingTop="?attr/actionBarSize" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:titleTextColor="@color/white"
+        tools:ignore="MissingConstraints" />
+
+
+    <!--使用android:layout_gravity="end|bottom"属性设置 FloatingActionButton 显示在右下角位置。-->
+    <!--FloatingActionButton 设置app:layout_behavior属性，这里的".coordinatorLayout.behavior.FabBehavior"是自定义 Behavior 实现。 -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="20dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="fabClick"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="auto"
+        app:layout_behavior=".samples.view.behavior.FloatingActionBtnBehavior"
+        app:rippleColor="@color/colorPrimaryDark" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

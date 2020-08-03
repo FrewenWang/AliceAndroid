@@ -35,4 +35,9 @@
 
 
     <color name="color_gray_dark">#adadad</color>
+
+
+    <!-- ListView、RecyclerView、GridView的分割线-->
+    <color name="colorDividerListViewDark">#adadad</color>
+
 </resources>

@@ -1,16 +1,24 @@
 <resources>
-    <string name="app_name">AndroidSamples</string>
+    <plurals name="watering_needs_suffix">
+        <item quantity="one" translation_description="Suffix for the text describing how often a plant should be watered, singular. Used in combination with watering_needs_prefix: 'Watering needs: every day'.">every day</item>
+        <item quantity="other" translation_description="Suffix for the text describing how often a plant should be watered, plural. Used in combination with watering_needs_prefix: 'Watering needs: every 8 days'.">every %d days</item>
+    </plurals>
 
-    <string name="agora_app_id">9d396b2200cf40eda79a6d734da20c4a</string>
+    <plurals name="watering_next">
+        <item quantity="one" translation_description="Text indicating when the the plant should next be watered, singular. Used in conjunction with last watered date. 'May 24, 2018 - water tomorrow.'.">water tomorrow.</item>
+        <item quantity="other" translation_description="Text indicating when the the plant should next be watered, plural. Used in conjunction with last watered date. 'May 24, 2018 - water in 8 days.'.">water in %d days.</item>
+    </plurals>
 
     <!-- PLEASE KEEP THIS App ID IN SAFE PLACE -->
     <!-- Get your own App ID at https://dashboard.agora.io/ -->
     <!-- After you entered the App ID, remove <##> outside of Your App ID -->
     <!-- For formal released project, please use Security Keys/Token
         https://docs.agora.io/en/2.3.1/product/Video/Agora%20Platform/key_native?platform=Android -->
+    <string name="app_name">AndroidSamples</string>
+    <string name="agora_app_id">9d396b2200cf40eda79a6d734da20c4a</string>
+
     <string name="enable_camera">Enable Camera</string>
     <string name="shower_str11">其他方式绑定</string>
-
     <string name="shower_str12">停止搜索</string>
     <string name="shower_str4">搜索中</string>
     <string name="shower_str5">未绑定</string>
@@ -35,9 +43,9 @@
     <string name="cancelled_job">Cancelled job %d</string>
     <string name="no_jobs_to_cancel">No jobs to cancel</string>
     <string name="all_jobs_cancelled">All jobs cancelled</string>
+    <!-- Translatable resources -->
     <string name="title_activity_jet_pack">JetPackActivity</string>
     <string name="flower_details_title">花朵详情</string>
-    <!-- Translatable resources -->
     <string name="menu_filter_by_grow_zone" translation_description="The label for the menu item to filter the displayed plants by grow zone.">Filter by grow zone</string>
     <string name="plant_detail_image_content_description" translation_description="Content description for the header / hero image that is show at the top of the plant detail screen.">Image of plant</string>
     <string name="my_garden_title" translation_description="Title for the 'My garden' screen where the user can see the list of plants that have been added to their garden.">My garden</string>
@@ -50,41 +58,26 @@
     <string name="plant_date_header" translation_description="Text that is shown on each plant on the 'My Garden' screen which says the word Planted to show date of planting below">Planted</string>
     <string name="watered_date_header" translation_description="Text that is shown on each plant on the 'My Garden' screen which says the word Last Watered to show date of last watering below">Last Watered</string>
     <string name="menu_item_share_plant" translation_description="The label for the Share menu item">Share</string>
+
+    <!-- String plurals and their related prefix / suffix strings -->
     <string name="share_text_plant" translation_description="The default messaged used when sharing a plant on SNS, etc.">Check out the %s plant in the Android Sunflower app</string>
     <string name="hello_blank_fragment">空白页面</string>
 
-    <!-- String plurals and their related prefix / suffix strings -->
     <string name="watering_needs_prefix" translation_description="Prefix for the text describing how often a plant should be watered. Used in combination with watering_needs_suffix.">Watering needs</string>
-    <plurals name="watering_needs_suffix">
-        <item quantity="one" translation_description="Suffix for the text describing how often a plant should be watered, singular. Used in combination with watering_needs_prefix: 'Watering needs: every day'.">every day</item>
-        <item quantity="other" translation_description="Suffix for the text describing how often a plant should be watered, plural. Used in combination with watering_needs_prefix: 'Watering needs: every 8 days'.">every %d days</item>
-    </plurals>
-
-    <plurals name="watering_next">
-        <item quantity="one" translation_description="Text indicating when the the plant should next be watered, singular. Used in conjunction with last watered date. 'May 24, 2018 - water tomorrow.'.">water tomorrow.</item>
-        <item quantity="other" translation_description="Text indicating when the the plant should next be watered, plural. Used in conjunction with last watered date. 'May 24, 2018 - water in 8 days.'.">water in %d days.</item>
-    </plurals>
 
     <!-- Accessibility -->
     <string name="a11y_plant_item_image" translation_description="Accessibility text for each of the plant images shown in the 'My garden' and 'Plant list' screens.">Picture of plant</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string-array name="responseStrArray">
-        <item> 你好啊，哈哈！ </item>
-        <item> 请问你叫什么名字呀？？ </item>
-        <item> 今天北京的天气貌似不错呀！！！</item>
-        <item> 你知道吗？？ 我可以同时和多个人聊天哦！！</item>
-        <item> 给你讲个笑话吧,据说爱笑的人运气并不会太差啊！！！</item>
-    </string-array>
-
     <string name="title_home">首页</string>
+
     <string name="title_recommend">推荐</string>
     <string name="title_discovery">发现</string>
     <string name="title_profile">我的</string>
+    <string name="request_permission_storage">应用需要申请存储权限</string>
 
     <!--SplashActivity 应用启动的闪屏相关逻辑 -->
-    <string name="request_permission_storage">应用需要申请存储权限</string>
     <string name="request_permission_access_phone_info">应用需要访问手机识别码等信息</string>
     <string name="ok">好的</string>
     <string name="cancel">取消</string>
@@ -92,10 +85,10 @@
     <string name="splash_description_title">Hello Frewen.Wang</string>
     <string name="splash_description_content">欢迎来到Android世界</string>
     <string name="title_activity_animation_demo">AnimationDemoActivity</string>
+    <string name="guide_login_tips">点击登录即可评论及发布内容</string>
 
 
     <!-- 我的 -->
-    <string name="guide_login_tips">点击登录即可评论及发布内容</string>
     <string name="favorites">收藏</string>
     <string name="cache">缓存</string>
     <string name="my_follow">我的关注</string>
@@ -106,9 +99,15 @@
     <string name="want_contribute">我要投稿</string>
     <string name="version_show">Version %1$s</string>
 
+    <string name="fab_hide_sheet_behavior" translatable="false">com.frewen.android.demo.samples.view.behavior.FloatingActionBtnBehavior</string>
 
-    <string name="fab_hide_sheet_behavior" translatable="false">com.frewen.android.demo.samples.view.behavior
-        .FloatingActionBtnBehavior</string>
+    <string-array name="responseStrArray">
+        <item> 你好啊，哈哈！ </item>
+        <item> 请问你叫什么名字呀？？ </item>
+        <item> 今天北京的天气貌似不错呀！！！</item>
+        <item> 你知道吗？？ 我可以同时和多个人聊天哦！！</item>
+        <item> 给你讲个笑话吧,据说爱笑的人运气并不会太差啊！！！</item>
+    </string-array>
 
 
 </resources>

@@ -25,8 +25,7 @@ public class GetRequest extends Request<GetRequest> {
     }
 
     public <Data> Observable<Data> execute(CallClazzProxy<? extends Response<Data>, Data> proxy) {
-        return build().generateRequest()
-                .map( )
+        return null;
     }
 
     /**

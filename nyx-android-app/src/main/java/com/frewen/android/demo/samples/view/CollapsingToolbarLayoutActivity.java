@@ -1,9 +1,13 @@
 package com.frewen.android.demo.samples.view;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.frewen.android.demo.R;
+import com.frewen.android.demo.adapter.FragmentPagerViewAdapter;
 import com.frewen.android.demo.fragments.CardImageFragment;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +15,9 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
+
+import org.jetbrains.annotations.Nullable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -18,12 +25,22 @@ import butterknife.ButterKnife;
  * https://github.com/JaynmBo/MaterialDesign-master
  */
 public class CollapsingToolbarLayoutActivity extends AppCompatActivity {
+    private static final String TAG = "CollapsingToolbarLayout";
+    private String mTitles[] = {"动态", "专栏", "沸点", "分享", "更多"};
 
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
     /**
      * ViewPager
      */
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
+    /**
+     * appBarLayout
+     */
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
 
 
     private List<Fragment> fragments = new ArrayList<>();
@@ -38,6 +55,32 @@ public class CollapsingToolbarLayoutActivity extends AppCompatActivity {
 
 
         initViewPager();
+
+        initAppBarLayout();
+
+        initTabLayout();
+    }
+
+    private void initTabLayout() {
+        // 设置TabLayout和ViewPager绑定
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener
+                (tabLayout));
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener
+                (viewPager));
+
+        for (int i = 0; i < mTitles.length; i++) {
+            tabLayout.addTab(tabLayout.newTab().setText(mTitles[i]));
+        }
+    }
+
+    private void initAppBarLayout() {
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                Log.d(TAG, "FMsg:onOffsetChanged() called verticalOffset = [" + verticalOffset + "]");
+            }
+        });
     }
 
     private void initViewPager() {
@@ -46,5 +89,14 @@ public class CollapsingToolbarLayoutActivity extends AppCompatActivity {
         fragments.add(CardImageFragment.newInstance());
         fragments.add(CardImageFragment.newInstance());
         fragments.add(CardImageFragment.newInstance());
+
+
+        viewPager.setAdapter(new FragmentPagerViewAdapter(fragments, getSupportFragmentManager(), fragments.size()) {
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mTitles[position];
+            }
+        });
     }
 }

@@ -19,7 +19,7 @@
         app:navigationContentDescription="返回"
         app:navigationIcon="@drawable/icon_back"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ToolbarStyle">
+        app:theme="@style/AppTheme.ToolbarStyle">
 
         <TextView
             android:id="@+id/tv_gun_title"

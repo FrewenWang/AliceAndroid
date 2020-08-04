@@ -2,12 +2,12 @@ package com.frewen.android.demo.samples.webview;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.frewen.android.demo.R;
 import com.frewen.aura.framework.kotlin.activity.BaseActivity;
-import com.frewen.aura.framework.widget.AppBar;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -16,11 +16,12 @@ import androidx.appcompat.widget.Toolbar;
  * @introduction: 这个Demo参考：https://github.com/youlookwhat/WebViewStudy
  * @author: Frewen.Wong
  * @time: 2019-05-15 08:18
- * Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
 public class WebViewActivity extends BaseActivity {
 
     private WebView mWebView;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +37,38 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
+        initToolBar();
         initWebView();
         openWebPage();
+    }
+
+    /**
+     * 我们如果要使用Toolbar的时候。
+     * 在Android 5.x时代，ActionBar已经被Toolbar所替代，
+     * 相比于ActionBar独立于布局之外，一直固定出现在顶端，
+     * Toolbar可以有更好的个性化定制，不仅可以出现在Layout
+     *
+     * 不同的层级上，还可以进行自由定制导航栏的布局。如果你想把 Toolbar 当成 ActionBar，
+     * 依然沿用Actionbar的方法，可以使用：setSupportActionBar() 方法来实现（不推荐）。
+     */
+    private void initToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("WebView测试");
+        toolbar.setSubtitle("点击左侧返回按钮退出");
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     /**
      * 初始化WebView
      */
     private void initWebView() {
-        mWebView = findViewById(R.id.web_view);
+         mWebView = findViewById(R.id.web_view);
         // 获取WebView的设置对象
         WebSettings webSettings = mWebView.getSettings();
         // 网页内容的宽度是否可大于WebView控件的宽度

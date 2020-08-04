@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,36 +7,26 @@
     tools:context=".samples.webview.WebViewActivity">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/title_tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        app:contentInsetStartWithNavigation="0dp"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_tool_bar_common"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationContentDescription="返回"
-        app:navigationIcon="@drawable/icon_back"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/AppTheme.ToolbarStyle">
+        app:navigationContentDescription="返回" />
 
-        <TextView
-            android:id="@+id/tv_gun_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="marquee"
-            android:singleLine="true"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:visibility="visible" />
 
-    </android.support.v7.widget.Toolbar>
-
+    <!--
+    TODO 这个地方设置layout_constraintTop_toBottomOf不能正常显示，
+    必须要设置layout_marginTop。不知道为什么？
+    -->
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-</androidx.constraintlayout.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

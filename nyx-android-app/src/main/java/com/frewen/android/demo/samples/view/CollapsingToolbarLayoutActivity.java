@@ -65,10 +65,10 @@ public class CollapsingToolbarLayoutActivity extends AppCompatActivity {
         // 设置TabLayout和ViewPager绑定
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener
                 (tabLayout));
-
+        // 当我们进行TabLayout的切换的时候，进行View
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener
                 (viewPager));
-
+        //// 添加TabLayout的Tab
         for (int i = 0; i < mTitles.length; i++) {
             tabLayout.addTab(tabLayout.newTab().setText(mTitles[i]));
         }

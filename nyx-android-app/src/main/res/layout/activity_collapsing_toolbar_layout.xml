@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <!--页面顶部的AppBarLayout -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     <!--全屏的ViewPager-->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -20,6 +22,71 @@
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
+        <!-- 这个内嵌到的AppBarLayout中CollapsingToolbarLayout -->
+        <!-- CollapsingToolbarLayout：顾名思义就是可折叠的toolbar布局。 -->
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@android:color/transparent">
+
+            <!--ConstraintLayout中间是约束布局 -->
+            <!-- CollapsingToolbarLayout的子元素可以添加layout_collapseMode标志位进而产生不同的行为-->
+            <!--  pin：有该标志位的View在页面滚动的过程中会一直停留在顶部，比如Toolbar被固定在顶部  -->
+            <!--  parallax：有该标志位的View表示能和页面同时滚动。 -->
+            <!--  该标志位相关联的一个属性是：layout_collapseParallaxMultiplier，该属性是视差因子，-->
+            <!--  表示该View与页面的滚动速度存在差值，造成一种相对滚动的效果。 &ndash;&gt;-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
+                android:paddingBottom="12dp"
+                app:layout_collapseMode="pin"
+                app:layout_collapseParallaxMultiplier="0.7">
+
+                <ImageView
+                    android:id="@+id/topImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="#40000000"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/headImage"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="110dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/shape_icon_round_common"
+                    android:padding="3dp"
+                    android:src="@drawable/test_avatar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+        <!--顶部的TabLayout -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
@@ -34,9 +101,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!--TODO  layout_behavior 暂时不能用，需要排查   -->
-    <!-- app:layout_behavior="@string/fab_hide_sheet_behavior"-->
 
+    <!--layout_behavior需要在String.xml里面进行定义类的位置 app:layout_behavior="@string/fab_hide_sheet_behavior"-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

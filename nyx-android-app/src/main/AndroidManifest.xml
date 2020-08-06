@@ -38,15 +38,14 @@
 
 
         <activity android:name=".samples.webview.WebViewActivity">
+        </activity>
+        <activity android:name=".samples.view.CollapsingToolbarLayoutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity android:name=".samples.view.CollapsingToolbarLayoutActivity" />
         <activity android:name=".samples.view.CoordinatorLayoutActivity" />
         <activity android:name=".samples.gson.GsonDemoActivity"></activity>
         <activity android:name=".samples.androidapi.SecondActivity" />

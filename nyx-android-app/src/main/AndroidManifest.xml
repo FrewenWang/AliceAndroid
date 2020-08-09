@@ -7,6 +7,11 @@
         android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE"
         android:protectionLevel="normal" />
 
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /><!-- 网络请求权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络请求权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 声明蓝牙权限 -->
@@ -27,7 +32,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".app.MyApp"
+        android:name=".app.NyxAndroidApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

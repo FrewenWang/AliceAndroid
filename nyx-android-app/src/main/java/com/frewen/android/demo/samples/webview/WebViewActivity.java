@@ -13,7 +13,11 @@ import androidx.appcompat.widget.Toolbar;
 
 /**
  * @filename: WebViewActivity
- * @introduction: 这个Demo参考：https://github.com/youlookwhat/WebViewStudy
+ * @introduction:
+ *
+ * 这个Demo参考：https://github.com/youlookwhat/WebViewStudy
+ *
+ * X5浏览器的接入指南：https://x5.tencent.com/docs/access.html
  * @author: Frewen.Wong
  * @time: 2019-05-15 08:18
  *         Copyright ©2019 Frewen.Wong. All Rights Reserved.

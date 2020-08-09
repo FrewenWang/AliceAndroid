@@ -91,4 +91,9 @@ dependencies {
     // https://github.com/H07000223/FlycoTabLayout
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
+    /////////////////////////////////////////////////////////////////////////////////
+    // 文章参考：https://x5.tencent.com/docs/access.html
+    // 第一步：集成X5内核浏览器的依赖
+    api 'com.tencent.tbs.tbssdk:sdk:43903'
+
 }

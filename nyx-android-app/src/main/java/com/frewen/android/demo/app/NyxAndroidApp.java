@@ -25,11 +25,11 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
 /**
- * MyApp
+ * NyxAndroidApp
  */
-public class MyApp extends BaseMVPApp implements HasActivityInjector {
+public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
 
-    private static final String TAG = "T:MyApp";
+    private static final String TAG = "T:NyxAndroidApp";
     /**
      * 分发Activity的注入
      * <p>
@@ -61,6 +61,8 @@ public class MyApp extends BaseMVPApp implements HasActivityInjector {
         initBugly();
 
 
+        initX5Browser();
+
         initAuraHttp();
 
         initNetworkApi();
@@ -69,14 +71,22 @@ public class MyApp extends BaseMVPApp implements HasActivityInjector {
     }
 
     /**
+     * 初始化X5内核的浏览器
+     * 1、Gradle方式集成 您可以在使用SDK的模块的dependencies中添加引用进行集成：
+     */
+    private void initX5Browser() {
+
+    }
+
+    /**
      * https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20200203205953
      */
     private void initBugly() {
         Context context = getApplicationContext();
         // 获取当前包名
-        String packageName = context.getPackageName();
+//        String packageName = context.getPackageName();
         // 获取当前进程名
-        String processName = ProcessInfoUtils.getProcessName(this);
+//        String processName = ProcessInfoUtils.getProcessName(this);
         // 设置是否为上报进程
 //        UserStrategy strategy = new UserStrategy(context);
 //        strategy.setUploadProcess(processName == null || processName.equals(packageName));

@@ -27,6 +27,7 @@ public class Response<Data> {
     public boolean isSuccess;
 
     public boolean isSuccess() {
+        this.isSuccess = code == 0 && data != null;
         return isSuccess;
     }
 
@@ -57,5 +58,9 @@ public class Response<Data> {
                 ", msg='" + msg + '\'' +
                 ", data=" + data.toString() +
                 '}';
+    }
+
+    public void setData(Data data) {
+        this.data = data;
     }
 }

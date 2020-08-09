@@ -10,18 +10,20 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 /**
+ * 缓存的数据库。他必须继承自RoomDatabase。我们童工
+ *
  * @filename: CacheDataBase
  * @introduction: 这个就是我们进行创建数据库的实体类
- *         必须要有的一个注解：Database 里面有三个参数：entities这个就是我们创建我们的数据库表
- *         version是数据库的版本，也是后续数据库升级的重要依据
- *         exportSchema 数据在升级或者执行的操作，帮我们生成Json文件
- *         我们需要在gradle.build文件添加Json文件的存储路径
- *         javaCompileOptions {
- *         // 这个是设置注解执行器的选项参数，我们来设置room里面schemas的存储路径
- *         annotationProcessorOptions {
- *         arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
- *         }
- *         }
+ * 必须要有的一个注解：Database 里面有三个参数：entities这个就是我们创建我们的数据库表
+ * version是数据库的版本，也是后续数据库升级的重要依据
+ * exportSchema 数据在升级或者执行的操作，帮我们生成Json文件
+ * 我们需要在gradle.build文件添加Json文件的存储路径
+ * javaCompileOptions {
+ * // 这个是设置注解执行器的选项参数，我们来设置room里面schemas的存储路径
+ * annotationProcessorOptions {
+ * arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+ * }
+ * }
  * @author: Frewen.Wong
  * @time: 2020/6/21 00:25
  * @version: 1.0.0
@@ -32,12 +34,12 @@ public abstract class CacheDataBase extends RoomDatabase {
 
     private static CacheDataBase mCacheDataBase;
     /**
-     *
+     * 数据库的升级
      */
     private static Migration sMigration = new Migration(1, 3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            // database.execSQL("alter table user rename ");
+            // database.execSQL("alter table user rename to uname");
         }
     };
 
@@ -76,8 +78,14 @@ public abstract class CacheDataBase extends RoomDatabase {
                 .fallbackToDestructiveMigration()
                 // 数据库升级异常之后,来根据指定版本回滚
                 //.fallbackToDestructiveMigrationFrom()
+                // 数据库的升级的相关的操作
                 .addMigrations(sMigration)
                 .build();
 
+    }
+
+
+    public static CacheDataBase get() {
+        return mCacheDataBase;
     }
 }

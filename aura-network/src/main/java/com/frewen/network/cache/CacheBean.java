@@ -1,6 +1,7 @@
 package com.frewen.network.cache;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -8,11 +9,14 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.frewen.network.converters.DateConverter;
 
 /**
  * @filename: CacheBean
  * @introduction: 执行数据库表的名称：@Entity(tableName = "cache")
- *         指定数据库表的foreignKeys是数组
+ * 指定数据库表的foreignKeys是数组
  * @author: Frewen.Wong
  * @time: 2020/6/21 00:18
  * @copyright Copyright ©2020 Frewen.Wong. All Rights Reserved.
@@ -20,7 +24,7 @@ import androidx.room.PrimaryKey;
 @Entity(
         // 数据库表的实体类，tableName是表名
         tableName = "cache"
-        , indices = {@Index(value = "key", unique = false)}//本表索引，用于大量数据的查询优化，unique有时候需要保证数据表的某个或者某些字段只有唯一的记录，可以通过设置@Index注解的unique属性实现。以下实例代码实现了避免有两条记录包含一样的key值。
+//        , indices = {@Index(value = "key", unique = false)}//本表索引，用于大量数据的查询优化，unique有时候需要保证数据表的某个或者某些字段只有唯一的记录，可以通过设置@Index注解的unique属性实现。以下实例代码实现了避免有两条记录包含一样的key值。
 
         //  , inheritSuperIndices = false//如果 该值为true,那么父类中标记的indices{}索引也会算作该表的索引
 
@@ -57,9 +61,9 @@ import androidx.room.PrimaryKey;
 public class CacheBean implements Serializable {
 
     //PrimaryKey 必须要有,且不为空,autoGenerate 主键的值是否由Room自动生成,默认false
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     @NonNull
-    public String key;
+    public int key;
 
     // 网络请求每个接口返回的数据格式都不一样，我们不进行解析，直接以二进制存储到数据库中
     @ColumnInfo(name = "_data")  // 指定该字段在表中的列的名字为_data
@@ -68,24 +72,31 @@ public class CacheBean implements Serializable {
     /**
      * 本表中 那些字段 不需要 映射到表中
      */
-    @Ignore
-    public String extend;   //扩展字段，我们可以暂时忽略，不将其存储到数据库表中,使用@Ignore
+//    @Ignore
+//    public String extend;   //扩展字段，我们可以暂时忽略，不将其存储到数据库表中,使用@Ignore
 
     // @Embedded 如果我们所要存储的数据库实体中存在其他的对象，
     // 我们又想让这个对象的属性出现在数据库表中的每个字段，所以我们需要加上@Embedded
     // public User user;
 
 
-    /**
-     * 我们定义外键的表对象
-     */
-    public static class ForeignTable implements Serializable {
-        @PrimaryKey
-        @NonNull
-        public String foreign_key;
+    @TypeConverters(value = {DateConverter.class})
+    public Date createTime;
 
-        public byte[] foreign_data;
-    }
+    @TypeConverters(value = {DateConverter.class})
+    public Date updateTime;
+
+
+//    /**
+//     * 我们定义外键的表对象
+//     */
+//    public static class ForeignTable implements Serializable {
+//        @PrimaryKey
+//        @NonNull
+//        public String foreign_key;
+//
+//        public byte[] foreign_data;
+//    }
 }
 
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.frewen.network.api.BaseApiService;
+import com.frewen.network.cache.CacheStrategy;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.network.interceptor.HeadersInterceptor;
 import com.frewen.network.listener.ResponseCallback;
@@ -30,7 +31,7 @@ import static com.frewen.network.core.AuraRxHttp.getRetrofitBuilder;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/4/15 0015 下午4:39
- *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ * Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
 public abstract class Request<R extends Request> {
 
@@ -62,6 +63,8 @@ public abstract class Request<R extends Request> {
     protected List<CallAdapter.Factory> adapterFactories = new ArrayList<>();
     protected final List<Interceptor> interceptors = new ArrayList<>();
     private String cacheKey;
+    private CacheStrategy cacheStrategy;
+    private boolean isSyncRequest;
 
     public Request(String url) {
         this.url = url;
@@ -169,6 +172,27 @@ public abstract class Request<R extends Request> {
     }
 
     /**
+     * 设置是否是同步请求
+     *
+     * @param syncRequest
+     * @return
+     */
+    public R syncRequest(boolean syncRequest) {
+        this.isSyncRequest = syncRequest;
+        return (R) this;
+    }
+
+    /**
+     * 设置缓存策略
+     *
+     * @param cacheStrategy
+     */
+    public R setCacheStrategy(CacheStrategy cacheStrategy) {
+        this.cacheStrategy = cacheStrategy;
+        return (R) this;
+    }
+
+    /**
      * 添加缓存读取的Key标记
      *
      * @param key
@@ -188,6 +212,7 @@ public abstract class Request<R extends Request> {
         return (R) this;
     }
 
+
     /**
      * 创建Request。不同的Request对应各自实现他们的generateRequest方法
      */
@@ -202,4 +227,7 @@ public abstract class Request<R extends Request> {
 
     }
 
+    public boolean isSyncRequest() {
+        return isSyncRequest;
+    }
 }

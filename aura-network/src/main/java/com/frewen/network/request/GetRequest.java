@@ -1,7 +1,9 @@
 package com.frewen.network.request;
 
 import com.frewen.callback.CallClazzProxy;
+import com.frewen.function.ApiResponseFunction;
 import com.frewen.network.response.Response;
+import com.frewen.network.utils.RxIOUtils;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -26,6 +28,7 @@ public class GetRequest extends Request<GetRequest> {
 
     public <Data> Observable<Data> execute(CallClazzProxy<? extends Response<Data>, Data> proxy) {
         return null;
+//        return build().generateRequest().map(new ApiResponseFunction<>(proxy.getType())).compose(isSyncRequest() ? RxIOUtils._main() : RxIOUtils._io_main());
     }
 
     /**

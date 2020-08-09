@@ -4,8 +4,8 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 import androidx.room.Update;
-import retrofit2.http.Query;
 
 /**
  * @filename: CacheDao
@@ -28,12 +28,12 @@ public interface CacheDao {
      *
      * @param cacheBean
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     long save(CacheBean cacheBean);
 
     /**
      * 注意，冒号后面必须紧跟参数名，中间不能有空格。大于小于号和冒号中间是有空格的。
-     * select *from cache where【表中列名】 =:【参数名】------>等于
+     * select *from cache where【表中列名】 = :参数名】------>等于
      * where 【表中列名】 < :【参数名】 小于
      * where 【表中列名】 between :【参数名1】 and :【参数2】------->这个区间
      * where 【表中列名】like :参数名----->模糊查询
@@ -41,25 +41,25 @@ public interface CacheDao {
      * 如果是一对多,这里可以写List<Cache>
      *
      * @param key
-     *
      * @return CacheBean
      */
-    CacheBean getCache(String key);
+//    @Query("select * from cache where `key` = :key")
+//    CacheBean getCache(String key);
 
     /**
      * 只能传递对象昂,删除时根据Cache中的主键 来比对的
      *
      * @param cacheBean
      */
-    @Delete
-    int delete(CacheBean cacheBean);
+//    @Delete
+//    int delete(CacheBean cacheBean);
 
     /**
      * 只能传递对象昂,更新时根据Cache中的主键 来比对的
      *
      * @param cacheBean
      */
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    int update(CacheBean cacheBean);
+//    @Update(onConflict = OnConflictStrategy.REPLACE)
+//    int update(CacheBean cacheBean);
 
 }

@@ -23,7 +23,7 @@ package com.frewen.network.cache;
  * @time: 2019/4/14 23:03
  * Copyright ©2018 Frewen.Wong. All Rights Reserved.
  */
-public enum CacheMode {
+public enum CacheStrategy {
     /**
      * 不使用缓存,该模式下,cacheKey,cacheMaxAge 参数均无效
      **/
@@ -65,7 +65,7 @@ public enum CacheMode {
 
     private final String className;
 
-    CacheMode(String className) {
+    CacheStrategy(String className) {
         this.className = className;
     }
 

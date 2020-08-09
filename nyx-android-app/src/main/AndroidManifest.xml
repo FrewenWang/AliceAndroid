@@ -40,11 +40,6 @@
         <activity android:name=".samples.webview.WebViewActivity">
         </activity>
         <activity android:name=".samples.view.CollapsingToolbarLayoutActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".samples.view.CoordinatorLayoutActivity" />
         <activity android:name=".samples.gson.GsonDemoActivity"></activity>
@@ -88,7 +83,13 @@
         <activity android:name=".samples.ipc.IPCDemoActivity" />
         <activity android:name=".samples.ipc.client.ContentProviderActivity" />
         <activity android:name=".samples.ipc.socket.SocketActivity" />
-        <activity android:name=".samples.rxjava2.RxJava2Activity" />
+        <activity android:name=".samples.rxjava2.RxJava2Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".samples.ipc.client.AIDLDemoActivity" />
         <activity android:name=".samples.bitmap.BitmapDemoActivity" />
         <activity android:name=".samples.eventbus.StickyMsgActivity" />

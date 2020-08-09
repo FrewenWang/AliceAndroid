@@ -79,7 +79,7 @@
     </style>
 
 
-    <style name="AppTheme.TabLayoutTextStyle">
+    <style name="NyxAppTheme.TabLayoutTextStyle">
         <item name="android:textSize">16dp</item>
     </style>
 

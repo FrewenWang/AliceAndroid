@@ -99,7 +99,10 @@
     <string name="want_contribute">我要投稿</string>
     <string name="version_show">Version %1$s</string>
 
+
+    <!-- behavior-->
     <string name="fab_hide_sheet_behavior" translatable="false">com.frewen.android.demo.samples.view.behavior.FloatingActionBtnBehavior</string>
+    <string name="simple_view_behavior">com.frewen.android.demo.views.behavior.SimpleViewBehavior</string>
 
     <string-array name="responseStrArray">
         <item> 你好啊，哈哈！ </item>

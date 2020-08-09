@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.androidnetworking.AndroidNetworking;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.network.VideoApiService;
@@ -31,7 +32,7 @@ public class MyApp extends BaseMVPApp implements HasActivityInjector {
     private static final String TAG = "T:MyApp";
     /**
      * 分发Activity的注入
-     *
+     * <p>
      * 在Activity调用AndroidInjection.inject(this)时
      * 从Application获取一个DispatchingAndroidInjector<Activity>，并将activity传递给inject(activity)
      * DispatchingAndroidInjector通过AndroidInjector.Factory创建AndroidInjector
@@ -87,6 +88,10 @@ public class MyApp extends BaseMVPApp implements HasActivityInjector {
 
     private void initNetworkApi() {
         NetworkApi.init(new MyNetworkConfig(this));
+
+        // 初始化AndroidNetworking网络请求框架
+        // https://github.com/amitshekhariitbhu/Fast-Android-Networking
+        AndroidNetworking.initialize(getApplicationContext());
     }
 
     private void initAuraHttp() {

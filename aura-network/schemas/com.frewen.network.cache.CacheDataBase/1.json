@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "dd6d651e671498537dbfa714291f5edb",
+    "identityHash": "59176387ce4b5590ad0df9a80afdacc3",
     "entities": [
       {
         "tableName": "cache",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`key` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_data` BLOB)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`key` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `_data` BLOB, `createTime` INTEGER, `updateTime` INTEGER)",
         "fields": [
           {
             "fieldPath": "key",
@@ -18,6 +18,18 @@
             "fieldPath": "data",
             "columnName": "_data",
             "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "createTime",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updateTime",
+            "columnName": "updateTime",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -34,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'dd6d651e671498537dbfa714291f5edb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '59176387ce4b5590ad0df9a80afdacc3')"
     ]
   }
 }

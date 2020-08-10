@@ -39,6 +39,10 @@ buildscript {
         // 导入Chaquopy框架的包
         classpath 'com.chaquo.python:gradle:8.0.0'
 
+        // 添加hilt的插件依赖
+        // https://developer.android.com/training/dependency-injection/hilt-android?hl=zh-cn
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
+
     }
 }
 

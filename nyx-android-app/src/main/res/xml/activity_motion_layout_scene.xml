@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:defaultDuration="@android:integer/config_mediumAnimTime">
+
+    <!--    根标签MotionScene有一个defaultDuration属性，表示所有未指定时间的动画的默认时间，默认为300毫秒。-->
+    <!--    当然，我们可以自己指定-->
+
+    <!-- MotionScene标签可以包含TransitionSet标签，这是可选的。-->
+    <ConstraintSet android:id="@+id/start">
+        <!--Constraint标签的id值我们需要设置的View的ID -->
+        <!--然后我们可以设置初始View的其他约束属性-->
+        <Constraint
+            android:id="@id/startView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <!--TransitionSet标签主要为Transition标签提供起始和结束状态的位置和属性。而TransitionSet标签必须包含一个或多个Constraint子标签。-->
+    <!--Constraint标签用来定义布局中某个View在动画中某个状态下位置（通过ConstraintLayout的相关属性来约束）-->
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@id/startView"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </ConstraintSet>
+    <!--设置Constraint标签时记得设置layout_width与layout_height，不然是看不到正方形的。-->
+    <!--上面这些，我们就已经设置完我们这个View的初始和结束状态，下面我们需要设置Transition属性。-->
+
+    <!--MotionScene根标签 必须包含Transition标签，可以有多个Transition标签。-->
+    <!--Transition标签是用来指定动画的开始和结束状态、任何中间状态以及触发动画的动作，可以理解为一个Transition标签对应一个动画。-->
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@id/start">
+        <OnClick
+            app:clickAction="toggle"
+            app:targetId="@id/startView" />
+    </Transition>
+
+    <!--我们来重点学习一下 -->
+</MotionScene>

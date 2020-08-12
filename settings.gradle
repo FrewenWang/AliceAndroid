@@ -1,3 +1,4 @@
+include ':nyx-demo-hilt'
 include ':aura-navigation-compiler'
 include ':aura-navigation-annotations'
 include ':nyx-android-app', ':optimusnetwork', ':aura-network', ':router-annotation', ':router-api', ':router-stub', ':router-compiler'

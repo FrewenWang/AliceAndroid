@@ -48,7 +48,6 @@
         </activity>
         <activity android:name=".samples.webview.WebViewActivity"></activity>
         <activity android:name=".samples.view.CollapsingToolbarLayoutActivity"></activity>
-        <activity android:name=".samples.dagger2.HiltDemoActivity"></activity>
         <activity android:name=".samples.view.CoordinatorLayoutActivity" />
         <activity android:name=".samples.gson.GsonDemoActivity" />
         <activity android:name=".samples.androidapi.SecondActivity" />

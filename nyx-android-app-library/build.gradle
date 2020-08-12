@@ -73,8 +73,9 @@ dependencies {
     // 让用户能够在充分利用 SQLite 的强大功能的同时，获享更强健的数据库访问机制。
     // https://developer.android.com/jetpack/androidx/releases/room
     def room_version = "2.2.5"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    api "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // 正常情况，我们就只需要依赖上面的两个依赖
     // For Kotlin use kapt instead of annotationProcessor
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import androidx.room.Room
 import com.frewen.nyx.hilt.demo.db.AppDataBase
-import com.frewen.nyx.hilt.demo.data.LoggerLocalDataSource
+import com.frewen.nyx.hilt.demo.data.LoggerDBDataSource
 import com.frewen.nyx.hilt.demo.navigation.DemoNavigator
 import com.frewen.nyx.hilt.demo.navigation.DemoNavigatorImpl
 
@@ -22,7 +22,7 @@ class RoomServiceProvider(applicationContext: Context) {
     /**
      *  实例化请求Logs数据库的资源数据
      */
-    val loggerLocalDataSource = LoggerLocalDataSource(appDataBase.logDao())
+    val loggerLocalDataSource = LoggerDBDataSource(appDataBase.logDao())
 
 
     fun provideNavigator(activity: FragmentActivity): DemoNavigator {

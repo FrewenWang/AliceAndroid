@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.frewen.nyx.hilt.demo.NyxHiltApp
 import com.frewen.nyx.hilt.demo.R
-import com.frewen.nyx.hilt.demo.data.LoggerLocalDataSource
+import com.frewen.nyx.hilt.demo.data.LoggerDBDataSource
 import com.frewen.nyx.hilt.demo.db.entity.Log
 
 class SecondFragment : Fragment() {
 
-    private lateinit var logger: LoggerLocalDataSource
+    private lateinit var logger: LoggerDBDataSource
 
     private lateinit var recyclerView: RecyclerView
 

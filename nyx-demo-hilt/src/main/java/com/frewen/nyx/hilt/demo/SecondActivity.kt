@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.frewen.nyx.hilt.demo.data.DataSource
 import com.frewen.nyx.hilt.demo.data.UserInfo
+import com.frewen.nyx.hilt.demo.module.DatabaseLogger
 import com.frewen.nyx.hilt.demo.module.InMemoryLogger
 import com.frewen.nyx.hilt.demo.navigation.DemoNavigator
 import com.frewen.nyx.hilt.demo.navigation.Screens
@@ -52,7 +53,7 @@ import javax.inject.Inject
  *  如果这些类是抽象类，则它们不需要 @AndroidEntryPoint 注释。
  */
 @AndroidEntryPoint
-class HiltDemoActivity : AppCompatActivity() {
+class SecondActivity : AppCompatActivity() {
     /**
      *   java.lang.RuntimeException: Unable to start activity
      *   ComponentInfo{com.frewen.nyx.hilt.demo/com.frewen.nyx.hilt.demo.HiltDemoActivity}:
@@ -89,7 +90,7 @@ class HiltDemoActivity : AppCompatActivity() {
      *  错误: [Dagger/MissingBinding] com.frewen.nyx.hilt.demo.data.DataSource
      *  cannot be provided without an @Provides-annotated method.
      */
-    @InMemoryLogger
+    @DatabaseLogger
     @Inject
     lateinit var logger: DataSource
 

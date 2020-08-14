@@ -4,6 +4,9 @@ import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 /**
+ * 文章参考：https://developer.android.com/training/dependency-injection
+ *
+ *
  * 我们先来学习一下，什么是依赖注入：
  * 依赖项注入 (DI) 是一种广泛用于编程的技术，非常适用于 Android 开发。遵循 DI 的原则可以为良好的应用架构奠定基础。
  * 实现依赖项注入可为您带来以下优势：

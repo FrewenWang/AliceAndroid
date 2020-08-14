@@ -1,6 +1,7 @@
 package com.frewen.nyx.hilt.demo.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +9,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.frewen.nyx.hilt.demo.R
+import com.frewen.nyx.hilt.demo.SecondActivity
 import com.frewen.nyx.hilt.demo.data.DataSource
 import com.frewen.nyx.hilt.demo.data.LoggerDBDataSource
+import com.frewen.nyx.hilt.demo.module.DatabaseLogger
 import com.frewen.nyx.hilt.demo.module.InMemoryLogger
 import com.frewen.nyx.hilt.demo.navigation.DemoNavigator
 import com.frewen.nyx.hilt.demo.navigation.Screens
@@ -32,7 +35,7 @@ class FirstFragment : Fragment() {
      * 一看这个是一个接口，好的，我们轻车熟路。
      * 创建一个DataSourceModule
      */
-    @InMemoryLogger
+    @DatabaseLogger
     @Inject
     lateinit var logger: DataSource
 
@@ -58,6 +61,7 @@ class FirstFragment : Fragment() {
 
 
         view.findViewById<Button>(R.id.button1).setOnClickListener {
+            android.util.Log.i("logger", "logger111111111:${logger}")
             logger.insertLog("插入日志，时间戳：${System.currentTimeMillis()}")
         }
 
@@ -67,6 +71,14 @@ class FirstFragment : Fragment() {
 
         view.findViewById<Button>(R.id.delete_logs).setOnClickListener {
             logger.removeLogs()
+        }
+
+
+        /**
+         *
+         */
+        view.findViewById<Button>(R.id.enter_activity).setOnClickListener {
+            context?.startActivity(Intent(activity!!, SecondActivity::class.java))
         }
     }
 }

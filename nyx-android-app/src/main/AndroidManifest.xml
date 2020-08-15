@@ -3,33 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.frewen.android.demo">
     <!-- 这个权限的声明是在客户端来进行的。所以需要绑定到我们的服务的都需要声明这个权限 -->
-    <permission
-        android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE"
-        android:protectionLevel="normal" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 网络请求权限 -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE" />
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络请求权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 声明蓝牙权限 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读写外部存储 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 读写外部存储 -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 使用permission验证。使用这种验证方式，我们要先在AndroidMenifest中声明所需的权限 -->
-    <uses-permission
-        android:name="android.permission.BLUETOOTH_PRIVILEGED"
-        tools:ignore="ProtectedPermissions" /> <!-- AIDL的学习：在这个地方声明绑定购票服务的权限 -->
-    <!-- 这个权限的声明是在服务端来进行的。所以需要绑定到我们的服务的都需要声明这个权限 -->
-    <!-- 所以这个权限不要随便泄漏啊 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <application
         android:name=".app.NyxAndroidApp"
         android:allowBackup="true"
@@ -39,15 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NyxAppTheme">
+        <activity
+            android:name=".ui.login.ui.login.LoginActivity"
+            android:label="@string/title_activity_login"></activity>
         <activity android:name=".samples.view.MotionLayoutActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".samples.webview.WebViewActivity"></activity>
-        <activity android:name=".samples.view.CollapsingToolbarLayoutActivity"></activity>
+        <activity android:name=".samples.webview.WebViewActivity" />
+        <activity android:name=".samples.view.CollapsingToolbarLayoutActivity" />
         <activity android:name=".samples.view.CoordinatorLayoutActivity" />
         <activity android:name=".samples.gson.GsonDemoActivity" />
         <activity android:name=".samples.androidapi.SecondActivity" />
@@ -67,7 +38,12 @@
             android:theme="@style/AppTheme.Splash" />
         <activity
             android:name=".ui.HomeActivity"
-            android:theme="@style/AppTheme.FullScreen" />
+            android:theme="@style/AppTheme.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".samples.hook.target.TargetActivity" />
         <activity android:name=".samples.hook.HookDemoActivity" />
         <activity android:name=".samples.unitest.AndroidUnitTestActivity" />
@@ -90,8 +66,7 @@
         <activity android:name=".samples.ipc.IPCDemoActivity" />
         <activity android:name=".samples.ipc.client.ContentProviderActivity" />
         <activity android:name=".samples.ipc.socket.SocketActivity" />
-        <activity android:name=".samples.rxjava2.RxJava2Activity">
-        </activity>
+        <activity android:name=".samples.rxjava2.RxJava2Activity"></activity>
         <activity android:name=".samples.ipc.client.AIDLDemoActivity" />
         <activity android:name=".samples.bitmap.BitmapDemoActivity" />
         <activity android:name=".samples.eventbus.StickyMsgActivity" />
@@ -130,23 +105,50 @@
     <permission
         android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE"
         android:protectionLevel="normal" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 网络请求权限 -->
+    <permission
+        android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE"
+        android:protectionLevel="normal" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 网络请求权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE" /> <!-- 网络请求权限 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 声明蓝牙权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 网络请求权限 -->
+    <uses-permission android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE" /> <!-- 声明蓝牙权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 读写外部存储 -->
     <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 读写外部存储 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 读写外部存储 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 使用permission验证。使用这种验证方式，我们要先在AndroidMenifest中声明所需的权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- AIDL的学习：在这个地方声明绑定购票服务的权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 使用permission验证。使用这种验证方式，我们要先在AndroidMenifest中声明所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- AIDL的学习：在这个地方声明绑定购票服务的权限 -->
     <!-- 这个权限的声明是在服务端来进行的。所以需要绑定到我们的服务的都需要声明这个权限 -->
     <!-- 所以这个权限不要随便泄漏啊 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_PRIVILEGED"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 网络请求权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 网络请求权限 -->
+    <uses-permission android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE" /> <!-- 声明蓝牙权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 读写外部存储 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 读写外部存储 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 使用permission验证。使用这种验证方式，我们要先在AndroidMenifest中声明所需的权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- AIDL的学习：在这个地方声明绑定购票服务的权限 -->
+    <!-- 这个权限的声明是在服务端来进行的。所以需要绑定到我们的服务的都需要声明这个权限 -->
+    <!-- 所以这个权限不要随便泄漏啊 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission
         android:name="android.permission.BLUETOOTH_PRIVILEGED"
         tools:ignore="ProtectedPermissions" />

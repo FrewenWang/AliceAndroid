@@ -9,7 +9,6 @@ import com.androidnetworking.AndroidNetworking;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.network.VideoApiService;
-import com.frewen.nyx.hilt.demo.hilt.RoomServiceProvider;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.aura.framework.app.BaseMVPApp;
@@ -24,18 +23,10 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
-import dagger.hilt.android.HiltAndroidApp;
 
 /**
  * NyxAndroidApp
- * <p>
- * 所有使用 Hilt 的应用都必须包含一个带有 @HiltAndroidApp 注释的 Application 类。
- *
- * @HiltAndroidApp 会触发Hilt的代码生成操作，生成的代码包括应用的一个基类，该基类充当应用级依赖项容器。
- * 生成的这一 Hilt 组件会附加到 Application 对象的生命周期，并为其提供依赖项。
- * 此外，它也是应用的父组件，这意味着，其他组件可以访问它提供的依赖项。
  */
-@HiltAndroidApp
 public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
 
     private static final String TAG = "T:NyxAndroidApp";
@@ -50,11 +41,6 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
     private String processName;
-    /**
-     * Room的本地数据库的提供器
-     */
-    public RoomServiceProvider roomServiceProvider;
-
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -81,13 +67,6 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
         initNetworkApi();
         //Application级别注入
         AppInjector.INSTANCE.inject(this);
-
-
-        initRoomDataProvider();
-    }
-
-    private void initRoomDataProvider() {
-        roomServiceProvider = new RoomServiceProvider(this);
     }
 
     /**

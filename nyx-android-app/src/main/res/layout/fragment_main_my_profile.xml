@@ -3,13 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="myProfileViewModel"
-            type="com.frewen.android.demo.ui.profile.MyProfileViewModel" />
-    </data>
-
+    <!-- DataBinding我们需要将最外围的布局修改成layout-->
+    <!-- 需要在里面增加一个data-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,82 +19,6 @@
             android:layout_gravity="end"
             android:padding="14dp"
             android:src="@drawable/ic_more_black_19dp" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_logo_black_76dp"
-            app:civ_border_color="#cdcdcd"
-            app:civ_border_width="1dp"
-            app:civ_circle_background_color="@color/color_common_gray" />
-
-        <com.frewen.aura.ui.textview.TypefaceTextView
-            android:id="@+id/tvLoginTips"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="18dp"
-            android:text="@string/guide_login_tips"
-            android:textSize="12sp"
-            app:typeface="fzlLTypeface" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/viewVerticalLine"
-                android:layout_width="1px"
-                android:layout_height="26dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="32dp"
-                android:background="@color/color_gray_dark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.frewen.aura.ui.textview.TypefaceTextView
-                android:id="@+id/tvFavorites"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_favorite_border_black_20dp"
-                android:drawablePadding="8dp"
-                android:gravity="center"
-                android:text="@string/favorites"
-                android:textColor="@color/colorTextSecondary"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/viewVerticalLine"
-                app:layout_constraintEnd_toStartOf="@+id/viewVerticalLine"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/viewVerticalLine"
-                app:typeface="fzlLTypeface" />
-
-            <com.frewen.aura.ui.textview.TypefaceTextView
-                android:id="@+id/tvCache"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_cache_black_16dp"
-                android:drawablePadding="8dp"
-                android:gravity="center_horizontal"
-                android:text="@string/cache"
-                android:textColor="@color/colorTextSecondary"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/viewVerticalLine"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/viewVerticalLine"
-                app:layout_constraintTop_toTopOf="@+id/viewVerticalLine"
-                app:typeface="fzlLTypeface" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/viewHorizontalLine"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginTop="19dp"
-            android:background="@color/color_gray_dark" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -162,5 +81,90 @@
 
         </ScrollView>
 
+        <View
+            android:id="@+id/viewHorizontalLine"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="19dp"
+            android:background="@color/color_gray_dark" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/viewVerticalLine"
+                android:layout_width="1px"
+                android:layout_height="26dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="32dp"
+                android:background="@color/color_gray_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.frewen.aura.ui.textview.TypefaceTextView
+                android:id="@+id/tvFavorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_favorite_border_black_20dp"
+                android:drawablePadding="8dp"
+                android:gravity="center"
+                android:text="@string/favorites"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/viewVerticalLine"
+                app:layout_constraintEnd_toStartOf="@+id/viewVerticalLine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/viewVerticalLine"
+                app:typeface="fzlLTypeface" />
+
+            <com.frewen.aura.ui.textview.TypefaceTextView
+                android:id="@+id/tvCache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_cache_black_16dp"
+                android:drawablePadding="8dp"
+                android:gravity="center_horizontal"
+                android:text="@string/cache"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/viewVerticalLine"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/viewVerticalLine"
+                app:layout_constraintTop_toTopOf="@+id/viewVerticalLine"
+                app:typeface="fzlLTypeface" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.frewen.aura.ui.textview.TypefaceTextView
+            android:id="@+id/tvLoginTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="18dp"
+            android:text="@string/guide_login_tips"
+            android:textSize="12sp"
+            app:typeface="fzlLTypeface" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:onClick="@{() -> myProfileViewModel.login()}"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/ic_logo_black_76dp"
+            app:civ_border_color="#cdcdcd"
+            app:civ_border_width="1dp"
+            app:civ_circle_background_color="@color/color_common_gray" />
+
     </LinearLayout>
+
+    <data>
+
+        <variable
+            name="myProfileViewModel"
+            type="com.frewen.android.demo.ui.profile.MyProfileViewModel" />
+    </data>
+
 </layout>

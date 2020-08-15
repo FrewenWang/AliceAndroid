@@ -9,17 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.ActivityHomeBinding
 import com.frewen.android.demo.navigation.NavGraphBuilder
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
-import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
@@ -30,10 +26,7 @@ import javax.inject.Inject
  *   java.lang.IllegalArgumentException: No injector was found for com.frewen.android.demo.ui.discovery.DiscoveryFragment
  *   没有对应注入器
  *
- *
- * Hilt:在 Application 类中设置了 Hilt 且有了应用级组件后，Hilt 可以为带有 @AndroidEntryPoint 注释的其他 Android 类提供依赖项：
  */
-@AndroidEntryPoint
 class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavigationView.OnNavigationItemSelectedListener {
 
     companion object {

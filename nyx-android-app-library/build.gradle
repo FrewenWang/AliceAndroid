@@ -97,4 +97,13 @@ dependencies {
     // 第一步：集成X5内核浏览器的依赖
     api 'com.tencent.tbs.tbssdk:sdk:43903'
 
+
+    //=================<editor-folder desc = "Dependence:腾讯崩溃收集库Bugly">========================
+    // Bugly的依赖库添加：https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20200203205953
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    api 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    api 'com.tencent.bugly:nativecrashreport:latest.release'
+    //=================</editor-folder desc = "Dependence:腾讯崩溃收集库Bugly">=======================
+
 }

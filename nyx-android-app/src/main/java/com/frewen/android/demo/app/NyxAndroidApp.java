@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
+import com.frewen.android.demo.BuildConfig;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.network.VideoApiService;
@@ -17,12 +18,15 @@ import com.frewen.demo.library.network.core.NetworkApi;
 import com.frewen.keepservice.KeepLiveService;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.aura.toolkits.utils.ProcessInfoUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+
+import static com.frewen.android.demo.constant.AppKeyConstants.APP_ID_BUGLY;
 
 /**
  * NyxAndroidApp
@@ -79,18 +83,21 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
 
     /**
      * https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20200203205953
+     * 为了保证运营数据的准确性，建议不要在异步线程初始化Bugly。
      */
     private void initBugly() {
         Context context = getApplicationContext();
         // 获取当前包名
-//        String packageName = context.getPackageName();
+        String packageName = context.getPackageName();
         // 获取当前进程名
-//        String processName = ProcessInfoUtils.getProcessName(this);
-        // 设置是否为上报进程
-//        UserStrategy strategy = new UserStrategy(context);
-//        strategy.setUploadProcess(processName == null || processName.equals(packageName));
-//        // 初始化Bugly
-//        CrashReport.initCrashReport(context, "注册时申请的APPID", BuildConfig.DEBUG, strategy);
+        String processName = ProcessInfoUtils.getProcessName(this);
+        Log.d(TAG, "FMsg:initBugly() processName:" + processName);
+        Log.d(TAG, "FMsg:initBugly() packageName:" + packageName);
+        // 设置是否为上报进程的策略
+        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+        // 初始化Bugly:
+        CrashReport.initCrashReport(context, APP_ID_BUGLY, BuildConfig.DEBUG, strategy);
         // 如果通过“AndroidManifest.xml”来配置APP信息，初始化方法如下
         // CrashReport.initCrashReport(context, strategy);
     }

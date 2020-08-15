@@ -36,6 +36,7 @@
                     android:id="@+id/tvFollow"
                     style="@style/NyxAppTheme.MineTextView"
                     android:paddingStart="13dp"
+                    android:onClick="@{() -> myProfileViewModel.login()}"
                     android:paddingEnd="13dp"
                     android:text="@string/my_follow" />
 

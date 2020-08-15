@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.frewen.aura.toolkits.utils.ToastUtils
+import com.tencent.bugly.crashreport.CrashReport
 
 /**
  * 这个是ViewModel的实现，我们来简单看一下这个类的实现：
@@ -23,5 +24,8 @@ class MyProfileViewModel(application: Application) : AndroidViewModel(applicatio
     fun login() {
         Log.i("MyProfileViewModel", "========login=============")
         Toast.makeText(context, "登录 ${loginName.get()},${password.get()}", Toast.LENGTH_LONG).show()
+
+        // TODO  测试Bugly的上报
+        CrashReport.testJavaCrash();
     }
 }

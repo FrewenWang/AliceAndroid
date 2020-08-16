@@ -39,11 +39,68 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //=================<editor-folder desc = "Dependence:ViewPager2的依赖">=========================
+    // https://developer.android.google.cn/jetpack/androidx/releases/viewpager2?hl=zh_cn
+    api "androidx.viewpager2:viewpager2:1.0.0"
+    //=================</editor-folder desc = "Dependence:ViewPager2的依赖">=========================
+
+    //=================<editor-folder desc = "Dependence:JetPack开源框架依赖">========================
+    //JetPack组件的依赖： https://developer.android.google.cn/jetpack
+
+    //=================<editor-folder desc = "Dependence:Android KTX依赖">==========================
+    // 添加依赖：https://developer.android.google.cn/kotlin/ktx
+    // Android KTX 包含一个核心模块，该模块可为通用框架 API 提供 Kotlin 扩展程序，而且还能提供一些领域专用的扩展程序。
+    api "androidx.core:core-ktx:1.3.1"
+    //Collection KTX: Collection 扩展程序包含在 Android 的节省内存的集合库中使用的效用函数，包括 ArrayMap、LongParseArray、LruCache 等等。
+    api "androidx.collection:collection-ktx:1.1.0"
+    // Fragment KTX:Fragment KTX 模块提供了一系列扩展程序以简化 Fragment API。
+    api "androidx.fragment:fragment-ktx:1.2.5"
+    // Lifecycle KTX:Lifecycle KTX 为每个 Lifecycle 对象定义一个 LifecycleScope。在此范围内启动的协程会在 Lifecycle 被销毁时取消。
+    // 您可以使用 lifecycle.coroutineScope 或 lifecycleOwner.lifecycleScope 属性访问 Lifecycle 的 CoroutineScope。
+    api "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    // LiveData KTX:使用 LiveData 时，您可能需要异步计算值。例如，您可能需要检索用户的偏好设置并将其传送给界面。
+    // 在这些情况下，LiveData KTX 可提供一个 liveData 构建器函数，该函数会调用 suspend 函数，并将结果作为 LiveData 对象传送。
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    // Navigation KTX:Navigation 库的每个组件都有自己的 KTX 版本，用于调整 API 以使其更简洁且更符合 Kotlin 的语言习惯。
+    api "androidx.navigation:navigation-runtime-ktx:2.3.0"
+    api "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    api "androidx.navigation:navigation-ui-ktx:2.3.0"
+    //=================</editor-folder desc = "Dependence:Android KTX依赖">==========================
+
+
+    //=================<editor-folder desc = "Dependence:Paging分页库依赖">==========================
+    def paging_version = "2.1.2"
+    api "androidx.paging:paging-runtime:$paging_version" // For Kotlin use paging-runtime-ktx
+    // alternatively - without Android dependencies for testing
+    testApi "androidx.paging:paging-common:$paging_version" // For Kotlin use paging-common-ktx
+    // optional - RxJava support
+    api "androidx.paging:paging-rxjava2:$paging_version" // For Kotlin use paging-rxjava2-ktx
+    //=================</editor-folder desc = "Dependence:Paging分页库依赖">=========================
+
+    //=================<editor-folder desc = "Dependence:JetPack的Room框架依赖">======================
+    // JetPack的Room框架：Room持久性库在 SQLite 的基础上提供了一个抽象层，
+    // 让用户能够在充分利用 SQLite 的强大功能的同时，获享更强健的数据库访问机制。
+    // https://developer.android.com/jetpack/androidx/releases/room
+    def room_version = "2.2.5"
+    api "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // 正常情况，我们就只需要依赖上面的两个依赖
+    // For Kotlin use kapt instead of annotationProcessor
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$room_version"
+    // Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+    //=================</editor-folder desc = "Dependence:JetPack的Room框架依赖">=====================
+
+    //=================</editor-folder desc = "Dependence:JetPack开源框架依赖">=======================
 
 
     //===================添加Aura整体开源框架依赖===============================
@@ -67,25 +124,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.8.0")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.8.0")
     //===================添加OKHttp网络请求框架===============================
-
-    //===================JetPack的Room框架依赖===============================
-    // JetPack的Room框架：Room持久性库在 SQLite 的基础上提供了一个抽象层，
-    // 让用户能够在充分利用 SQLite 的强大功能的同时，获享更强健的数据库访问机制。
-    // https://developer.android.com/jetpack/androidx/releases/room
-    def room_version = "2.2.5"
-    api "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    // 正常情况，我们就只需要依赖上面的两个依赖
-    // For Kotlin use kapt instead of annotationProcessor
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:$room_version"
-    // optional - RxJava support for Room
-    implementation "androidx.room:room-rxjava2:$room_version"
-    // optional - Guava support for Room, including Optional and ListenableFuture
-    implementation "androidx.room:room-guava:$room_version"
-    // Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
-    //===================JetPack的Room框架依赖===============================
 
 
     api 'com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler-Kotlin:v4.0.6'

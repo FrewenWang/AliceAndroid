@@ -8,5 +8,5 @@ package com.frewen.android.demo.samples.network;
  * Copyright ©2018 Frewen.Wong. All Rights Reserved.
  */
 public class Constant {
-    public static final String BASE_URL = "http://dljy.ibdbots.com:10001/Cvideo";
+    public static final String BASE_URL = "http://123.56.232.18:8080/serverdemo";
 }

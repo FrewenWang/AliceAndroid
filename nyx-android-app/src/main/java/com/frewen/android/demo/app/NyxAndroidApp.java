@@ -72,10 +72,6 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
 
         AuraToolKits.init(null, "AndroidSamples");
 
-        // 初始化Bugly
-        initBugly();
-
-
         initX5Browser();
 
         initAuraHttp();
@@ -91,9 +87,11 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
      * 初始化性能监控的相关逻辑检测器
      */
     private void initPerformanceDetector() {
-        initBlockCanary();
-        initAnrWatchDog();
+        //initBlockCanary();
+        //initAnrWatchDog();
         initStrictMode();
+        // 初始化Bugly
+        initBugly();
     }
 
     private void initAnrWatchDog() {

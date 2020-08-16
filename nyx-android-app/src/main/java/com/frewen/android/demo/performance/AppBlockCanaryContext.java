@@ -65,7 +65,7 @@ public class AppBlockCanaryContext extends BlockCanaryContext {
      * @return threshold in mills
      */
     public int provideBlockThreshold() {
-        return 1000;
+        return 5000;
     }
 
     /**

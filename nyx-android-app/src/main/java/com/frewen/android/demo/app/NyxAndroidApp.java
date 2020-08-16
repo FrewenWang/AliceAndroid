@@ -3,6 +3,8 @@ package com.frewen.android.demo.app;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Debug;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
@@ -10,6 +12,7 @@ import com.frewen.android.demo.BuildConfig;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.network.VideoApiService;
+import com.frewen.android.demo.performance.AppBlockCanaryContext;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.aura.framework.app.BaseMVPApp;
@@ -18,6 +21,9 @@ import com.frewen.demo.library.network.core.NetworkApi;
 import com.frewen.keepservice.KeepLiveService;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.aura.toolkits.utils.ProcessInfoUtils;
+import com.github.anrwatchdog.ANRError;
+import com.github.anrwatchdog.ANRWatchDog;
+import com.github.moduth.blockcanary.BlockCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import javax.inject.Inject;
@@ -58,6 +64,12 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
 
+        Debug.startMethodTracing("Application OnCreate Start Begin");
+
+
+        initPerformanceDetector();
+
+
         AuraToolKits.init(null, "AndroidSamples");
 
         // 初始化Bugly
@@ -71,6 +83,65 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
         initNetworkApi();
         //Application级别注入
         AppInjector.INSTANCE.inject(this);
+
+        Debug.startMethodTracing("Application OnCreate Start End");
+    }
+
+    /**
+     * 初始化性能监控的相关逻辑检测器
+     */
+    private void initPerformanceDetector() {
+        initBlockCanary();
+        initAnrWatchDog();
+        initStrictMode();
+    }
+
+    private void initAnrWatchDog() {
+        int timeoutMillis = BuildConfig.DEBUG ? 5000 : 10000;
+        ANRWatchDog anrWatchDog = new ANRWatchDog(timeoutMillis /*timeout*/).setIgnoreDebugger(true);
+        anrWatchDog.setANRListener(new ANRWatchDog.ANRListener() {
+            @Override
+            public void onAppNotResponding(ANRError error) {
+                // TODO 异常的上报和恢复
+                throw error;
+            }
+        });
+        anrWatchDog.start();
+    }
+
+    private void initBlockCanary() {
+        // 在主进程初始化调用
+        BlockCanary.install(this, new AppBlockCanaryContext()).start();
+    }
+
+    /**
+     * 初始化严格模式
+     * TODO 待学习，提升APP卡顿的性能
+     */
+    private void initStrictMode() {
+
+        if (BuildConfig.DEBUG) {
+            StrictMode
+                    .setThreadPolicy(new StrictMode.ThreadPolicy
+                            .Builder()
+                            .detectCustomSlowCalls()
+                            .detectDiskReads()
+                            .detectDiskWrites()
+                            .detectNetwork()
+                            .penaltyLog()
+                            .penaltyDialog()
+                            .build());
+            StrictMode
+                    .setVmPolicy(new StrictMode.VmPolicy
+                            .Builder()
+                            .detectLeakedClosableObjects()
+                            .detectActivityLeaks()
+                            .detectLeakedRegistrationObjects()
+                            .detectAll()
+                            .penaltyLog()
+                            .build());
+        }
+
     }
 
     /**

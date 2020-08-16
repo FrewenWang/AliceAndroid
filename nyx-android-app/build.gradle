@@ -151,6 +151,19 @@ dependencies {
     //========================添加单元测试相关的依赖===================================================
 
 
+    //======<editor-folder desc = "Dependence:Android Performance Monitor依赖">======================
+    //BlockCanary是一个Android平台的一个非侵入式的性能监控组件，应用只需要实现一个抽象类，提供一些该组件需要的上下文环境，
+    // 就可以在平时使用应用的时候检测主线程上的各种卡慢问题，并通过组件提供的各种信息分析出原因并进行修复。
+    // 仅在debug包启用BlockCanary进行卡顿监控和提示的话，可以这么用
+    debugImplementation 'com.github.markzhai:blockcanary-android:1.5.0'
+    releaseImplementation 'com.github.markzhai:blockcanary-no-op:1.5.0'
+    //======</editor-folder desc = "Dependence:Android Performance Monitor依赖">=====================
+
+    //======<editor-folder desc = "Dependence:ANR-WatchDog依赖">====================================
+    // A simple watchdog that detects Android ANRs (Application Not Responding).
+    implementation 'com.github.anrwatchdog:anrwatchdog:1.4.0'
+    //======</editor-folder desc = "Dependence:ANR-WatchDog依赖">===================================
+
     //========================添加constraintlayout相关的依赖==========================================
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     //========================添加constraintlayout相关的依赖==========================================

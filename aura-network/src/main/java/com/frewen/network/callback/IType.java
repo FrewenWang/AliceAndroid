@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.frewen.callback;
+package com.frewen.network.callback;
 import java.lang.reflect.Type;
 
 public interface IType<T> {

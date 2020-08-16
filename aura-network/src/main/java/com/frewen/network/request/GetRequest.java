@@ -1,9 +1,7 @@
 package com.frewen.network.request;
 
-import com.frewen.callback.CallClazzProxy;
-import com.frewen.function.ApiResponseFunction;
+import com.frewen.network.callback.CallClazzProxy;
 import com.frewen.network.response.Response;
-import com.frewen.network.utils.RxIOUtils;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;

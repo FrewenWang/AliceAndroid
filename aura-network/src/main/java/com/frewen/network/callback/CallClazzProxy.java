@@ -1,6 +1,5 @@
-package com.frewen.callback;
+package com.frewen.network.callback;
 
-import com.frewen.network.R;
 import com.frewen.network.response.Response;
 import com.frewen.network.utils.CommonUtils;
 import com.google.gson.internal.$Gson$Types;

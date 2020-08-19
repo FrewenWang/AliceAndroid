@@ -63,6 +63,9 @@ import java.lang.reflect.Modifier;
  * the same <em>post</em> or <em>sendMessage</em> methods as before, but from
  * your new thread.  The given Runnable or Message will then be scheduled
  * in the Handler's message queue and processed when appropriate.
+ * 使用Handler之前，我们都是初始化一个实例，比如用于更新UI线程，我们会在声明的时候直接初始化，
+ * 或者在onCreate中初始化Handler实例。所以我们首先看Handler的构造方法，
+ * 看其如何与MessageQueue联系上的，它在子线程中发送的消息（一般发送消息都在非UI线程）怎么发送到MessageQueue中的。
  */
 public class Handler {
     /*
@@ -243,6 +246,7 @@ public class Handler {
      */
     @UnsupportedAppUsage
     public Handler(@NonNull Looper looper, @Nullable Callback callback, boolean async) {
+        // 获取当前线程的looper对象
         mLooper = looper;
         mQueue = looper.mQueue;
         mCallback = callback;
@@ -763,13 +767,23 @@ public class Handler {
         return sendMessage(msg);
     }
 
+    /**
+     * 进行Handler消息的入队列处理
+     * @param queue
+     * @param msg
+     * @param uptimeMillis
+     * @return
+     */
     private boolean enqueueMessage(@NonNull MessageQueue queue, @NonNull Message msg,
-            long uptimeMillis) {
+                                   long uptimeMillis) {
         // 为当前消息msg添加target。 这个target其实就是这个handler对象
         // 所以我们想到之前在Looper的对象在loop()方法里面调用
+
+        // 哪个Handler发送的消息，最终这个消息的target就是这个Handler对象
         msg.target = this;
         msg.workSourceUid = ThreadLocalWorkSource.getUid();
 
+        // 设置这个消息是异步的，这个变量的实例化是在Handler实例化的时候
         if (mAsynchronous) {
             msg.setAsynchronous(true);
         }

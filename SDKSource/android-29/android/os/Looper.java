@@ -98,15 +98,27 @@ public final class Looper {
       * this looper, before actually starting the loop. Be sure to call
       * {@link #loop()} after calling this method, and end it by calling
       * {@link #quit()}.
-      */
+     *  就是这个地方调用的prepare(true)；也就是默认允许quit
+     *
+     */
     public static void prepare() {
         prepare(true);
     }
 
+    /**
+     * 我们重点来分析prepare的方法
+     * @param quitAllowed
+     */
     private static void prepare(boolean quitAllowed) {
+        /**
+         * 首先通过sThreadLocal来查看当前线程是否有lopper对象
+         *  一个线程内只有一个lopper对象。也允许调用一次prepare方法。所以多次调用会报错
+         *  TODO 为什么一个线程只能有一个Looper对象
+         */
         if (sThreadLocal.get() != null) {
             throw new RuntimeException("Only one Looper may be created per thread");
         }
+        // 正常情况下，将Lopper对象存储到sThreadLocal
         sThreadLocal.set(new Looper(quitAllowed));
     }
 
@@ -148,12 +160,17 @@ public final class Looper {
     /**
      * Run the message queue in this thread. Be sure to call
      * {@link #quit()} to end the loop.
+     * 这个方法主要是进行当前线程里面的message queue队列的遍历，来遍历消息，进行消息的分发
      */
     public static void loop() {
+        // 这个方法就是从TreadLocal里面取得当前的Looper对象。
+        // 也就是我们每个线程实例化的ThreadLocal对象
         final Looper me = myLooper();
+        // 毫无疑问，me为null 表示这个线程里面没有进行Looper对象的Looper.prepare()初始化。
         if (me == null) {
             throw new RuntimeException("No Looper; Looper.prepare() wasn't called on this thread.");
         }
+        // 这个queue就是构造函数中实例化的mQueue
         final MessageQueue queue = me.mQueue;
 
         // Make sure the identity of this thread is that of the local process,
@@ -171,9 +188,13 @@ public final class Looper {
 
         boolean slowDeliveryDetected = false;
         // Looper的loop方法执行死循环。
+        // 我们可以看到这个地方，是执行了一个死循环，在这个死循环中依次遍历queue里面的所有消息
         for (;;) {
             // 从Looper的queue中依次取出消息实体
+            // 拿到下一个Message.如果没有消息这个地方就会阻塞掉
             Message msg = queue.next(); // might block
+
+            // 如果为null,表明这个额消息队列正在停止，这个时候就跳出循环。
             if (msg == null) {
                 // No message indicates that the message queue is quitting.
                 return;
@@ -299,8 +320,14 @@ public final class Looper {
         return myLooper().mQueue;
     }
 
+    /**
+     * 我们看一下Looper的构造函数，也证明Looper只能通过prepare来进行实例化
+     * @param quitAllowed
+     */
     private Looper(boolean quitAllowed) {
+        // Lopper其实就是创建了一个MessageQueue。也就是一个消息队列对象
         mQueue = new MessageQueue(quitAllowed);
+        // 获取当前的线程，是不是很简单
         mThread = Thread.currentThread();
     }
 

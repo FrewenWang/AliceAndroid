@@ -533,7 +533,20 @@ public final class MessageQueue {
         }
     }
 
+    /**
+     * Handler进行发送消息之后，最终消息会添加到这个消息队列中。
+     * enqueueMessage中首先为msg.target赋值为this，
+     * Looper的loop方法会取出每个msg然后交给msg,target.dispatchMessage(msg)去处理消息
+     * 也就是把当前的handler作为msg的target属性。最终会调用queue的enqueueMessage的方法，
+     * 也就是说handler发出的消息，最终会保存到消息队列中去。在一定的异步事件之内在交还给这个Handler处理
+     * @param msg  Handler进行sendMsg的时候传入的消息实体
+     * @param when  消息的执行时机
+     * @return
+     */
     boolean enqueueMessage(Message msg, long when) {
+
+        // 标记Handler发送的消息的Handler。这个直接影响着将来消息要交给谁执行
+        // 所以不能为空
         if (msg.target == null) {
             throw new IllegalArgumentException("Message must have a target.");
         }
@@ -542,6 +555,7 @@ public final class MessageQueue {
         }
 
         synchronized (this) {
+            // 这个一个消息队列正在退出的保护逻辑
             if (mQuitting) {
                 IllegalStateException e = new IllegalStateException(
                         msg.target + " sending message to a Handler on a dead thread");
@@ -549,11 +563,17 @@ public final class MessageQueue {
                 msg.recycle();
                 return false;
             }
-
+            // 这个就是标记消息正在使用中
             msg.markInUse();
+            // 标记消息的处理事件（是一个消息发送事件+延迟时间）
             msg.when = when;
+
+            /// 获取当前的消息队列里面的所有消息
             Message p = mMessages;
+            // 判断是否触发唤醒
             boolean needWake;
+            // 如果消息队列为空，并且是立即执行。获取队列的第一个消息事件也比当前的msg要迟
+            // 则这个时候这个消息就要入队列。
             if (p == null || when == 0 || when < p.when) {
                 // New head, wake up the event queue if blocked.
                 msg.next = p;
@@ -565,6 +585,7 @@ public final class MessageQueue {
                 // and the message is the earliest asynchronous message in the queue.
                 needWake = mBlocked && p.target == null && msg.isAsynchronous();
                 Message prev;
+                // 又是一个死循环，这个死循环是进行遍历这个消息队列。然后看这个消息插入哪里比较合适
                 for (;;) {
                     prev = p;
                     p = p.next;

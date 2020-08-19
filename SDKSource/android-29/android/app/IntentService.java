@@ -57,7 +57,9 @@ import android.os.Message;
  * <a href="{@docRoot}guide/components/services.html">Services</a> developer
  * guide.</p>
  * </div>
- *
+ * IntentService是一种特殊的Service，它继承了Service并且它是一个抽象类，因此必须创建它的子类才能使用IntentService。
+ * IntentService可用于执行后台耗时的任务，当任务执行后它会自动停止，同时由于IntentService是服务的原因，
+ * 这导致它的优先级比单纯的线程要高很多，所以IntentService比较适合执行一些高优先级的后台任务，因为它优先级高不容易被系统杀死。
  * @see android.support.v4.app.JobIntentService
  * @see android.os.AsyncTask
  */
@@ -68,6 +70,10 @@ public abstract class IntentService extends Service {
     private String mName;
     private boolean mRedelivery;
 
+    /**
+     * ServiceHandler其实就是一个Handler.
+     *  他是使用HandlerThread的线程里面的Lopper来作为消息遍历引擎
+     */
     private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {
             super(looper);
@@ -82,6 +88,10 @@ public abstract class IntentService extends Service {
             // 之所以采用stopSelf(int startId)而不是stopSelf()来停止服务，
             // 那是因为stopSelf()会立刻停止服务，而这个时候可能还有其他消息未处理，
             // stopSelf(int startId)则会等待所有的消息都处理完毕后才终止服务。
+
+            // 一般来说，stopSelf(int startId)在尝试停止服务之前会判断最近启动服务的次数是否和startId相等，
+            // 如果相等就立刻停止服务，不相等则不停止服务，这个策略可以从AMS的stopServiceToken方法的实现中找到依据，
+            // 读者感兴趣的话可以自行查看源码实现。
             stopSelf(msg.arg1);
         }
     }
@@ -116,6 +126,12 @@ public abstract class IntentService extends Service {
         mRedelivery = enabled;
     }
 
+    /**
+     * 实现上，IntentService封装了HandlerThread和Handler，这一点可以从它的onCreate方法中看出来，如下所示。
+     * 当IntentService被第一次启动时，它的onCreate方法会被调用，onCreate方法会创建一个HandlerThread
+     * 然后使用它的Looper来构造一个Handler对象mServiceHandler
+     * 这样通过mServiceHandler发送的消息最终都会在HandlerThread中执行
+     */
     @Override
     public void onCreate() {
         // TODO: It would be nice to have an option to hold a partial wakelock
@@ -134,9 +150,18 @@ public abstract class IntentService extends Service {
         mServiceHandler = new ServiceHandler(mServiceLooper);
     }
 
+    /**
+     * IntentService仅仅是通过mServiceHandler发送了一个消息，这个消息会在HandlerThread中被处理。
+     * mServiceHandler收到消息后，会将Intent对象传递给onHandleIntent方法去处理。
+     * 注意这个Intent对象的内容和外界的startService(intent)中的intent的内容是完全一致的，
+     * 通过这个Intent对象即可解析出外界启动IntentService时所传递的参数，
+     * 通过这些参数就可以区分具体的后台任务，这样在onHandleIntent方法中就可以对不同的后台任务做处理了。
+     * @param intent
+     * @param startId
+     */
     @Override
     public void onStart(@Nullable Intent intent, int startId) {
-        // 从消息对象里面取出一个消息
+        // 从消息对象里面取出一个消息。从意图消息消息里面
         Message msg = mServiceHandler.obtainMessage();
         // 将启动Service传入的intent封装成消息发出
         msg.arg1 = startId;
@@ -193,6 +218,7 @@ public abstract class IntentService extends Service {
      *               its process has gone away; see
      *               {@link android.app.Service#onStartCommand}
      *               for details.
+     *
      */
     @WorkerThread
     protected abstract void onHandleIntent(@Nullable Intent intent);

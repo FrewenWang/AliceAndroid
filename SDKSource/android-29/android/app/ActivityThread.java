@@ -213,7 +213,10 @@ final class RemoteServiceException extends AndroidRuntimeException {
  * application process, scheduling and executing activities,
  * broadcasts, and other operations on it as the activity
  * manager requests.
- *
+ *  从入口ActivityThread 类开始看：首先 ActivityThread 并不是一个 Thread，就只是一个 final类而已。
+ *  我们常说的主线程就是从这个类的 main 方法开始，main 方法很简短，
+ *  一眼就能看全（如上），我们看到里面有 Looper 了，那么接下来就找找 ActivityThread 对应的 Handler啊，
+ *  就是内部类H，其继承 Handler，贴出 handleMessage 的小部分：
  * {@hide}
  */
 public final class ActivityThread extends ClientTransactionHandler {
@@ -1747,6 +1750,12 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
     }
 
+    /**
+     * 看完这 Handler 里处理消息的内容应该明白了吧， Activity 的生命周期都有对应的 case 条件了，
+     * ActivityThread 有个getHandler方法，得到这个handler就可以发送消息，然后 loop 里就分发消息，
+     * 然后就发给 handler, 然后就执行到 H（Handler ）里的对应代码。
+     * 所以这些代码就不会卡死～，有消息过来就能执行。
+     */
     class H extends Handler {
         public static final int BIND_APPLICATION        = 110;
         @UnsupportedAppUsage
@@ -2168,6 +2177,10 @@ public final class ActivityThread extends ClientTransactionHandler {
                 displayId, null, pkgInfo.getCompatibilityInfo(), pkgInfo.getClassLoader());
     }
 
+    /**
+     * 主线程
+     * @return
+     */
     @UnsupportedAppUsage
     final Handler getHandler() {
         return mH;
@@ -7383,6 +7396,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         thread.attach(false, startSeq);
         // 获取主线程的Handler对象
         // 步骤二：同时在这个主线程获取sMainThreadHandler
+        // 我们可以看这个ThreadHandler是怎么实例化。通过thread对象的getHandler()
         if (sMainThreadHandler == null) {
             sMainThreadHandler = thread.getHandler();
         }

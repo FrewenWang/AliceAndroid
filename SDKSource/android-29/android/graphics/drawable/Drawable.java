@@ -1121,6 +1121,7 @@ public abstract class Drawable {
      *         doesn't have a suggested minimum width, 0 is returned.
      */
     public int getMinimumWidth() {
+        // 返回背景图Drawable的原始宽度
         final int intrinsicWidth = getIntrinsicWidth();
         return intrinsicWidth > 0 ? intrinsicWidth : 0;
     }

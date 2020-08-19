@@ -6859,7 +6859,7 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
      * account both the MeasureSpec requirements for this view and its padding.
      * We skip children that are in the GONE state The heavy lifting is done in
      * getChildMeasureSpec.
-     *
+     *  对于ViewGroup来说，除了完成自己的measure过程以外，还会遍历去调用所有子元素的measure方法，各个子元素再递归去执行这个过程。
      * @param widthMeasureSpec The width requirements for this view
      * @param heightMeasureSpec The height requirements for this view
      */
@@ -6869,6 +6869,7 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
         for (int i = 0; i < size; ++i) {
             final View child = children[i];
             if ((child.mViewFlags & VISIBILITY_MASK) != GONE) {
+                //，ViewGroup在measure时，会对每一个子元素进行measure，measureChild这个方法的实现也很好理解，如下所示。
                 measureChild(child, widthMeasureSpec, heightMeasureSpec);
             }
         }
@@ -6885,13 +6886,16 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
      */
     protected void measureChild(View child, int parentWidthMeasureSpec,
             int parentHeightMeasureSpec) {
+        // 获取Child的LayoutParams.主要是为了获取View的宽高等尺寸
         final LayoutParams lp = child.getLayoutParams();
-
+        /// 这个方法很重要，我们可看一下，这个参数传入的parentWidthMeasureSpec(父View的测量规格)、父View的padding、子View的宽度
         final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
                 mPaddingLeft + mPaddingRight, lp.width);
+        /// 这个方法很重要，我们可看一下，这个参数传入的parentHeightMeasureSpec(父View的测量规格)、父View的padding、子View的高度
         final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec,
                 mPaddingTop + mPaddingBottom, lp.height);
-
+        /// 正式由这些共同作用，然后确定生成了子View的测量规格
+        // 然后最后计算子View的measure方法
         child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
     }
 

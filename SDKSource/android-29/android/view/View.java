@@ -24579,7 +24579,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      *
      *
      * @param widthMeasureSpec Horizontal space requirements as imposed by the
-     *        parent 由父View施加的水平测量规格
+     *        parent    由父View施加的水平测量规格
      * @param heightMeasureSpec Vertical space requirements as imposed by the
      *        parent    由父View施加的竖直测量规格
      *
@@ -24622,6 +24622,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             int cacheIndex = forceLayout ? -1 : mMeasureCache.indexOfKey(key);
             if (cacheIndex < 0 || sIgnoreMeasureCache) {
                 // measure ourselves, this should set the measured dimension flag back
+                // 进行计算视图的大小
                 onMeasure(widthMeasureSpec, heightMeasureSpec);
                 mPrivateFlags3 &= ~PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT;
             } else {
@@ -24695,6 +24696,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * @see #getSuggestedMinimumWidth()
      * @see android.view.View.MeasureSpec#getMode(int)
      * @see android.view.View.MeasureSpec#getSize(int)
+     * View的onmeasure方法很简单，就是再里面调用了setMeasuredDimension设置测量的尺寸。那这个方法就比较重要了。
      */
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),
@@ -24808,24 +24810,31 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * MeasureSpec imposed no constraints. Will get larger if allowed
      * by the MeasureSpec.
      *
-     * @param size Default size for this view
-     * @param measureSpec Constraints imposed by the parent
+     * @param size Default size for this view  当前View的默认尺寸
+     * @param measureSpec Constraints imposed by the parent  父View施加的measureSpec约束
      * @return The size this view should be.
+     * 获取View测量出来的默认尺寸的大小。传入的参数是尺寸和MeasureSpec
+     * 我们要清晰理解这个传入尺寸和MeasureSpec
      */
     public static int getDefaultSize(int size, int measureSpec) {
+        // 设置默认大小
         int result = size;
+        // 获取父View施加的宽/高测量规格的模式 & 测量大小
         int specMode = MeasureSpec.getMode(measureSpec);
         int specSize = MeasureSpec.getSize(measureSpec);
 
         switch (specMode) {
         case MeasureSpec.UNSPECIFIED:
+            // 模式为UNSPECIFIED时，使用提供的默认大小 = 参数Size
             result = size;
             break;
+        // 模式为AT_MOST,EXACTLY时，使用View测量后的宽/高值 = measureSpec中的Size
         case MeasureSpec.AT_MOST:
         case MeasureSpec.EXACTLY:
             result = specSize;
             break;
         }
+        // 返回View的宽/高值
         return result;
     }
 
@@ -24853,10 +24862,19 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * <p>
      * When being used in {@link #onMeasure(int, int)}, the caller should still
      * ensure the returned width is within the requirements of the parent.
-     *
+     * 从getSuggestedMinimumWidth的代码可以看出：
+     * 如果View没有设置背景，那么View的宽度为mMinWidth，而mMinWidth对应于android:minWidth这个属性所指定的值
+     * 因此View的宽度即为android:minWidth属性所指定的值。
      * @return The suggested minimum width of the view.
      */
     protected int getSuggestedMinimumWidth() {
+        // 若 View 无设置背景，那么View的宽度 = mMinWidth
+        // mMinWidth· = android:minWidth属性所指定的值；
+        // 若android:minWidth没指定，则默认为0
+
+        // 若 View设置了背景，View的宽度为mMinWidth和mBackground.getMinimumWidth()中的最大值
+        // 那么，mBackground.getMinimumWidth()的大小具体指多少
+        // 继续看getMinimumWidth()的源码
         return (mBackground == null) ? mMinWidth : max(mMinWidth, mBackground.getMinimumWidth());
     }
 

@@ -1913,6 +1913,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                     ContextCleanupInfo cci = (ContextCleanupInfo)msg.obj;
                     cci.context.performFinalCleanup(cci.who, cci.what);
                     break;
+                //当ActivityThread的mH（Handler）收到GC_WHEN_IDLE消息之后。会调用GcIdler()
                 case GC_WHEN_IDLE:
                     scheduleGcIdler();
                     break;
@@ -7415,6 +7416,9 @@ public final class ActivityThread extends ClientTransactionHandler {
         throw new RuntimeException("Main thread loop unexpectedly exited");
     }
 
+    /**
+     *
+     */
     private void purgePendingResources() {
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "purgePendingResources");
         nPurgePendingResources();

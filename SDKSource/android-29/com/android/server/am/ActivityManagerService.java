@@ -3647,6 +3647,10 @@ public class ActivityManagerService extends IActivityManager.Stub
         return null;
     }
 
+    /**
+     * 当应用内存不够用的时候会调用这个方法
+     * @param dyingProc
+     */
     final void doLowMemReportIfNeededLocked(ProcessRecord dyingProc) {
         // If there are no longer any background processes running,
         // and the app that died was not running instrumentation,

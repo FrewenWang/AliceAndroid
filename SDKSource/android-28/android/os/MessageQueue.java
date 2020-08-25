@@ -48,8 +48,12 @@ public final class MessageQueue {
     private long mPtr; // used by native code
 
     Message mMessages;
+    // 存放IdleHandler的ArrayList(mIdleHandlers)
     private final ArrayList<IdleHandler> mIdleHandlers = new ArrayList<IdleHandler>();
     private SparseArray<FileDescriptorRecord> mFileDescriptorRecords;
+    // 还有一个IdleHandler数组(mPendingIdleHandlers)
+    // 后面的数组，它里面放的IdleHandler实例都是临时的，也就是每次使用完(调用了queueIdle方法)之后，都会置空(mPendingIdleHandlers[i]=null)
+    // 那它们会在什么时候用到呢? 就是在 @see MessageQueue.next()方法里面
     private IdleHandler[] mPendingIdleHandlers;
     private boolean mQuitting;
 
@@ -94,7 +98,7 @@ public final class MessageQueue {
      * Returns true if the looper has no pending messages which are due to be processed.
      *
      * <p>This method is safe to call from any thread.
-     *
+     *  判断当前队列是不是空闲的，辅助方法
      * @return True if the looper is idle.
      */
     public boolean isIdle() {
@@ -111,6 +115,7 @@ public final class MessageQueue {
      * invoked, or explicitly removing it with {@link #removeIdleHandler}.
      *
      * <p>This method is safe to call from any thread.
+     * 添加一个IdleHandler 到空闲队列中，ArrayList 存储
      *
      * @param handler The IdleHandler to be added.
      */
@@ -129,7 +134,7 @@ public final class MessageQueue {
      * in the idle list, nothing is done.
      *
      * <p>This method is safe to call from any thread.
-     *
+     *   删除一个IdleHandler
      * @param handler The IdleHandler to be removed.
      */
     public void removeIdleHandler(@NonNull IdleHandler handler) {
@@ -307,6 +312,12 @@ public final class MessageQueue {
         return newWatchedEvents;
     }
 
+    /**
+     * 我们学习一下IdleHandlers:
+     * 如果本次循环拿到的Message为空，或者！这个Message是一个延时的消息而且还没到指定触发时间，那么就认定当前的队列为空闲时间。
+     * 接着会遍历mPendingIdleHandlers数组(这个数组里面的元素每次都会到mIdleHandlers中去拿)来调用每一个IdleHandler实例的queueIdle方法。
+     * @return
+     */
     Message next() {
         // Return here if the message loop has already quit and been disposed.
         // This can happen if the application tries to restart a looper after quit
@@ -318,14 +329,15 @@ public final class MessageQueue {
 
         int pendingIdleHandlerCount = -1; // -1 only during first iteration
         int nextPollTimeoutMillis = 0;
-        for (;;) {
+        for (;;) { //循环获取下一条消息
             if (nextPollTimeoutMillis != 0) {
                 Binder.flushPendingCommands();
             }
-
+            //
             nativePollOnce(ptr, nextPollTimeoutMillis);
 
             synchronized (this) {
+                // 此处为正常消息队列的处理
                 // Try to retrieve the next message.  Return if found.
                 final long now = SystemClock.uptimeMillis();
                 Message prevMsg = null;
@@ -365,6 +377,10 @@ public final class MessageQueue {
                     return null;
                 }
 
+
+                /**
+                 * 下面就是idleHandler中的when的Number
+                 */
                 // If first time idle, then get the number of idlers to run.
                 // Idle handles only run if the queue is empty or if the first message
                 // in the queue (possibly a barrier) is due to be handled in the future.
@@ -372,38 +388,46 @@ public final class MessageQueue {
                         && (mMessages == null || now < mMessages.when)) {
                     pendingIdleHandlerCount = mIdleHandlers.size();
                 }
+
+                //表示没有设置idle handler 去运行，就阻塞
                 if (pendingIdleHandlerCount <= 0) {
                     // No idle handlers to run.  Loop and wait some more.
                     mBlocked = true;
                     continue;
                 }
-
+                //设置长度，最小长度是4
                 if (mPendingIdleHandlers == null) {
                     mPendingIdleHandlers = new IdleHandler[Math.max(pendingIdleHandlerCount, 4)];
                 }
+                //将集合转化为数组
                 mPendingIdleHandlers = mIdleHandlers.toArray(mPendingIdleHandlers);
             }
 
             // Run the idle handlers.
             // We only ever reach this code block during the first iteration.
+            //循环遍历这个空闲队列数组
             for (int i = 0; i < pendingIdleHandlerCount; i++) {
                 final IdleHandler idler = mPendingIdleHandlers[i];
                 mPendingIdleHandlers[i] = null; // release the reference to the handler
 
                 boolean keep = false;
                 try {
+                    //回调取出返回值
                     keep = idler.queueIdle();
                 } catch (Throwable t) {
                     Log.wtf(TAG, "IdleHandler threw exception", t);
                 }
-
+                // 如果这个方法返回false的话，那么这个实例就会从mIdleHandlers中移除，
+                // 也就是当下次队列空闲的时候，不会继续回调它的queueIdle方法了。
                 if (!keep) {
                     synchronized (this) {
+                        //执行操作后就从集合中remove了
                         mIdleHandlers.remove(idler);
                     }
                 }
             }
-
+            // 处理完IdleHandler后会将nextPollTimeoutMillis设置为0，也就是不阻塞消息队列，
+            // 当然要注意这里执行的代码同样不能太耗时，因为它是同步执行的，如果太耗时肯定会影响后面的message执行。
             // Reset the idle handler count to 0 so we do not run them again.
             pendingIdleHandlerCount = 0;
 
@@ -567,7 +591,6 @@ public final class MessageQueue {
             msg.markInUse();
             // 标记消息的处理事件（是一个消息发送事件+延迟时间）
             msg.when = when;
-
             /// 获取当前的消息队列里面的所有消息
             Message p = mMessages;
             // 判断是否触发唤醒
@@ -828,6 +851,7 @@ public final class MessageQueue {
     /**
      * Callback interface for discovering when a thread is going to block
      * waiting for more messages.
+     * 可以理解为消息暂时处理完的适合回调的
      */
     public static interface IdleHandler {
         /**
@@ -837,6 +861,7 @@ public final class MessageQueue {
          * pending in the queue, but they are all scheduled to be dispatched
          * after the current time.
          */
+        // 返回true就是单次回调后不删除，下次进入空闲时继续回调该方法，false 只回调单次执行完之后会移除
         boolean queueIdle();
     }
 

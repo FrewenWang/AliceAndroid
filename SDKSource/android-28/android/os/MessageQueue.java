@@ -36,6 +36,9 @@ import java.util.ArrayList;
  *
  * <p>You can retrieve the MessageQueue for the current thread with
  * {@link Looper#myQueue() Looper.myQueue()}.
+ *
+ * 关于MessageQueue的Native层的代码：
+ * https://blog.csdn.net/chewbee/article/details/78108201
  */
 public final class MessageQueue {
     private static final String TAG = "MessageQueue";
@@ -44,6 +47,9 @@ public final class MessageQueue {
     // True if the message queue can be quit.
     private final boolean mQuitAllowed;
 
+    /**
+     * 保存native层的MessageQueue引用，见2.1
+     */
     @SuppressWarnings("unused")
     private long mPtr; // used by native code
 
@@ -64,6 +70,11 @@ public final class MessageQueue {
     // Barriers are indicated by messages with a null target whose arg1 field carries the token.
     private int mNextBarrierToken;
 
+    /**
+     * 在Java层的MessageQueue中定义了几个native方法：
+     * nativeInit方法:在构建Java层的MessageQueue时，会调用nativeInit()方法进行初始化。
+     * @return
+     */
     private native static long nativeInit();
     private native static void nativeDestroy(long ptr);
     private native void nativePollOnce(long ptr, int timeoutMillis); /*non-static for callbacks*/
@@ -71,8 +82,13 @@ public final class MessageQueue {
     private native static boolean nativeIsPolling(long ptr);
     private native static void nativeSetFileDescriptorEvents(long ptr, int fd, int events);
 
+    /**
+     * MessageQueue的实例化我们知道是在Looper对象初始化的prepare的时候。
+     * @param quitAllowed
+     */
     MessageQueue(boolean quitAllowed) {
         mQuitAllowed = quitAllowed;
+        // 保存native层的MessageQueue引用，见2.1
         mPtr = nativeInit();
     }
 
@@ -333,7 +349,23 @@ public final class MessageQueue {
             if (nextPollTimeoutMillis != 0) {
                 Binder.flushPendingCommands();
             }
-            //
+            // 在Java层MessageQueue的next方法中，
+            // 会阻塞调用native层的nativePollOnce方法来获取消息队列中的消息。
+            // 这个地方是阻塞调用：
+            // 1、调用到jni层nativePollOnce方法(android_os_MessageQueue_nativePollOnce)
+            // 2、调用NativeMessageQueue.pollOnce()方法
+            // 3、调用Looper中的pollOnce方法，这个方法进行循环处理响应列表中的事件。然后进行内部的轮询处理
+            // pollOnce()方法等待事件准备好，有一个可选的超时时间，timeoutMilllis有以下取值：
+            //0，立即返回，没有阻塞；
+            //负数，一直阻塞，直到事件发生；
+            //正数，表示最多等待多久时间；
+            // pollOnce方法的返回值可以有以下几个取值：
+            // POLL_WAKE，在超时之前，通过wake()方法唤醒的，没有callbacks被触发，没有文件描述符准备好了，即pipe写端的write事件触发；
+            // POLL_CALLBACK，在一个或多个文件描述符被触发了；
+            // POLL_TIMEOUT，在超时之前，没有数据准备好了，表示等待超时；
+            // POLL_ERROR，发生了错误；
+
+            //函数awoken的实现很简单，它只把管道中内容读取出来，清空管道，以便下次调用epoll_wait时可以再次阻塞等待。
             nativePollOnce(ptr, nextPollTimeoutMillis);
 
             synchronized (this) {
@@ -624,6 +656,16 @@ public final class MessageQueue {
             }
 
             // We can assume mPtr != 0 because mQuitting is false.
+            // nativeWake用于唤醒功能，在添加消息到消息队列enqueueMessage()，
+            // 或者把消息从消息队列中全部移除quit()时，可能需要调用nativeWake方法。
+
+            // 总结：nativeWake()方法主要是向管道mWakeEventFd中写入字符1，唤醒在mWakeEventFd上等待的事件。
+            // 往文件描述中写入内容的目的是为了唤醒应用程序的主线程，当应用程序的消息队列中没有消息处理时，
+            // 应用程序的主线程就会进入空闲等待状态，而这个空闲等待状态就是通过调用Looper类的pollInner函数进入的，
+            // 具体就是在pollInner函数中调用epoll_wait函数来等待管道中有内容可读的。
+            //当文件描述符有内容可读时，应用程序的主线程就会从Looper的pollInner函数返回到JNI层的nativePollOnce函数，
+            // 最后返回到Java层的MessageQueue.next函数中去，在这里就会发现消息队列中有新的消息需要处理了，
+            // 于是就处理这个消息。
             if (needWake) {
                 nativeWake(mPtr);
             }

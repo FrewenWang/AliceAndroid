@@ -192,12 +192,16 @@ public class ThreadLocal<T> {
      * to the specified value.  Most subclasses will have no need to
      * override this method, relying solely on the {@link #initialValue}
      * method to set the values of thread-locals.
-     *
+     *  从set方法我们可以看到，首先获取到了当前线程t，然后调用getMap获取ThreadLocalMap，
+     *  如果map存在，则将当前线程对象t作为key，
+     *  要存储的对象作为value存到map里面去。如果该Map不存在，则初始化一个。
      * @param value the value to be stored in the current thread's copy of
      *        this thread-local.
      */
     public void set(T value) {
         Thread t = Thread.currentThread();
+        // ThreadLocalMap是什么，getMap方法又是如何实现的。
+        // 
         ThreadLocalMap map = getMap(t);
         if (map != null)
             map.set(this, value);

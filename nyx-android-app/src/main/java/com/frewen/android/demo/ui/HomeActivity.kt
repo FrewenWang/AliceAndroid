@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -34,6 +35,9 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavi
     }
 
     private lateinit var navController: NavController
+
+
+    private var lastBackClickTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,4 +74,18 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavi
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     override fun supportFragmentInjector() = dispatchingAndroidInjector
+
+    /**
+     * 点击HomeActivity的的返回键的点击两次退出页面
+     */
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        if (System.currentTimeMillis() - lastBackClickTime > 1000) {
+            Toast.makeText(applicationContext, "再按一次退出", Toast.LENGTH_SHORT).show()
+            lastBackClickTime = System.currentTimeMillis()
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

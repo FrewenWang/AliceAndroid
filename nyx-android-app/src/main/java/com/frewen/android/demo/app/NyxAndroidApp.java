@@ -89,7 +89,7 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
     private void initPerformanceDetector() {
         //initBlockCanary();
         //initAnrWatchDog();
-        initStrictMode();
+        //initStrictMode();
         // 初始化Bugly
         initBugly();
     }

@@ -1,11 +1,12 @@
 package com.frewen.demo.library.ui.fragment
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.frewen.aura.framework.fragment.BaseFragment
+import androidx.fragment.app.Fragment
 import com.frewen.aura.toolkits.kotlin.ext.autoCleared
 import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 
@@ -17,22 +18,15 @@ import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
  * @version: 1.0.0
  *      完成基础功能设计
  * @version: 1.0.1
- *
- *
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-abstract class BaseDataBindingFragment<VDB : ViewDataBinding> : BaseFragment() {
-
+abstract class BaseDataBindingFragment<VDB : ViewDataBinding> : Fragment() {
     /**
      * 根据Fragment动态清理和获取binding对象
      */
     var binding by autoCleared<VDB>()
 
-    /**
-     * BaseDataBindingFragment来实现BaseFragment的createView。
-     * 我们在这里面进行View的创建
-     */
-    override fun createView(inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(
                 inflater,
                 getLayoutId(),

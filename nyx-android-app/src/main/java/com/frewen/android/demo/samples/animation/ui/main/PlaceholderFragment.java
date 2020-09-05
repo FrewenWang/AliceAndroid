@@ -42,15 +42,20 @@ public class PlaceholderFragment extends BaseFragment {
     }
 
     @Override
-    protected View createView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
-        View root = inflater.inflate(R.layout.fragment_animation_demo, container, false);
-        final TextView textView = root.findViewById(R.id.section_label);
+    protected int getLayoutId() {
+        return R.layout.fragment_animation_demo;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final TextView textView = view.findViewById(R.id.section_label);
         pageViewModel.getText().observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
-        return root;
+
     }
 }

@@ -19,15 +19,8 @@ import com.frewen.aura.framework.fragment.BaseFragment;
 @FragmentDestination(pageUrl = "main/tabs/recommend", asStarter = false)
 public class RecommendFragment extends BaseFragment {
 
-    /**
-     * 生成页面View返回
-     * @param inflater
-     * @param container
-     * @param b
-     */
     @Override
-    protected View createView(LayoutInflater inflater, ViewGroup container, boolean b) {
-        return null;
+    protected int getLayoutId() {
+        return 0;
     }
-
 }

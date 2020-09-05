@@ -14,25 +14,25 @@
     <!--我们还可以通过action来进行navigation的跳转Action -->
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.frewen.android.demo.ui.home.HomeFragment"
+        android:name="com.frewen.android.demo.samples.tiktok.fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_main_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.frewen.android.demo.ui.recommend.RecommendFragment"
+        android:name="com.frewen.android.demo.samples.tiktok.fragments.MsgFragment"
         android:label="@string/title_recommend"
         tools:layout="@layout/fragment_main_recommend" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.frewen.android.demo.ui.discovery.DiscoveryFragment"
+        android:name="com.frewen.android.demo.samples.tiktok.fragments.RecommendFragment"
         android:label="@string/title_discovery"
         tools:layout="@layout/fragment_main_discovery" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.frewen.android.demo.ui.profile.MyProfileFragment"
+        android:name="com.frewen.android.demo.samples.tiktok.fragments.MineFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_main_my_profile" />
 </navigation>

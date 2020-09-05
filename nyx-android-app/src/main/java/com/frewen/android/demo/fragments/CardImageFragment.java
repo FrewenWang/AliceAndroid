@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.adapter.CardImageAdapter;
 import com.frewen.android.demo.bean.ArticleCommonBean;
+import com.frewen.aura.framework.fragment.BaseButterKnifeFragment;
 import com.frewen.aura.framework.fragment.BaseFragment;
 import com.frewen.aura.toolkits.common.FileUtils;
 import com.google.gson.Gson;
@@ -29,8 +30,7 @@ import butterknife.ButterKnife;
  * @time: 2020/8/3 19:14
  * Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
-public class CardImageFragment extends BaseFragment {
-
+public class CardImageFragment extends BaseButterKnifeFragment {
     /**
      * RecyclerView
      */
@@ -50,10 +50,8 @@ public class CardImageFragment extends BaseFragment {
 
 
     @Override
-    protected View createView(LayoutInflater inflater, ViewGroup container, boolean attachToRoot) {
-        View view = inflater.inflate(R.layout.fragment_card_image, container, attachToRoot);
-        ButterKnife.bind(this, view);
-        return view;
+    protected int getLayoutId() {
+        return R.layout.fragment_card_image;
     }
 
     @Override

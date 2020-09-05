@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 主内容区域是ViewPager-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/search" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:gravity="center"
+            android:text="直播"
+            android:textColor="#cccccc"
+            android:textSize="15sp" />
+
+        <com.androidkun.xtablayout.XTabLayout
+            android:id="@+id/tab_title"
+            android:layout_width="160dp"
+            android:layout_height="44dp"
+            android:layout_centerInParent="true"
+            app:xTabIndicatorColor="@color/white"
+            app:xTabIndicatorWidth="20dp"
+            app:xTabSelectedTextColor="@color/white"
+            app:xTabTextBold="true"
+            app:xTabTextColor="#CCCCCC"
+            app:xTabTextSize="18sp" />
+
+    </RelativeLayout>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="48dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/tiktok_menu" />
+
+        <com.androidkun.xtablayout.XTabLayout
+            android:id="@+id/tab_mainmenu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/black"
+            app:xTabSelectedTextColor="@color/white"
+            app:xTabSelectedTextSize="16sp"
+            app:xTabTextBold="true"
+            app:xTabTextColor="#8F8F94"
+            app:xTabTextSize="15sp" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

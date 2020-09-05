@@ -24079,6 +24079,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         if (id == NO_ID) {
             return null;
         }
+        // 根据ID来进行遍历查找View，
+        // 这个地方我们可以看一下他的查找算法用的是什么算法
         return findViewTraversal(id);
     }
 

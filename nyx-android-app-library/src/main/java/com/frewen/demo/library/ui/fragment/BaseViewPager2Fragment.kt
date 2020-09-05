@@ -1,18 +1,13 @@
 package com.frewen.demo.library.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
-import com.flyco.tablayout.CommonTabLayout
-import com.flyco.tablayout.listener.CustomTabEntity
-import com.flyco.tablayout.listener.OnTabSelectListener
 import com.frewen.aura.framework.fragment.BaseFragment
 import com.frewen.demo.library.R
+import kotlinx.android.synthetic.main.fragment_view_pager2.*
 
 /**
  * @filename: BaseViewPager2Fragment
@@ -24,25 +19,21 @@ import com.frewen.demo.library.R
  */
 abstract class BaseViewPager2Fragment : BaseFragment() {
 
-    protected var viewPager: ViewPager2? = null
-
-    protected var tabLayout: CommonTabLayout? = null
+    companion object {
+        private const val TAG = "BaseViewPager2Fragment"
+    }
 
     /**
      * ViewFragment中缓存的页面的个数
      */
-    protected var offscreenPageLimit = 1
-
-    abstract val createTitles: ArrayList<CustomTabEntity>
+    private var offscreenPageLimit = 1
 
     abstract val createFragments: Array<Fragment>
 
-    protected val adapter: ViewPager2Adapter by lazy { ViewPager2Adapter(activity!!).apply { addFragments(createFragments) } }
+    protected val adapter: ViewPager2Adapter by lazy { ViewPager2Adapter(requireActivity()).apply { addFragments(createFragments) } }
 
-
-    override fun createView(inflater: LayoutInflater?, container: ViewGroup?, attachToRoot: Boolean): View? {
-
-        return inflater?.inflate(R.layout.fragment_view_pager2, container, false)
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_view_pager2
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,31 +46,15 @@ abstract class BaseViewPager2Fragment : BaseFragment() {
     }
 
     private fun initViewPager() {
-//        viewPager = rootView?.findViewById(R.id.viewPager)
-//        tabLayout = rootView?.findViewById(R.id.tabLayout)
         viewPager?.offscreenPageLimit = offscreenPageLimit
-
-
         viewPager?.adapter = adapter
-        tabLayout?.setTabData(createTitles)
-        tabLayout?.setOnTabSelectListener(object : OnTabSelectListener {
-
-            override fun onTabSelect(position: Int) {
-                viewPager?.currentItem = position
-            }
-
-            override fun onTabReselect(position: Int) {
-
-            }
-        })
-
     }
 
     /**
      * BaseViewPager2Fragment的内部类
      * ViewPager2Adapter   inner 修饰符进行修饰
      */
-    inner class ViewPager2Adapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+    class ViewPager2Adapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
         /**
          * 可变的Fragment数组List
          */
@@ -93,6 +68,4 @@ abstract class BaseViewPager2Fragment : BaseFragment() {
 
         override fun createFragment(position: Int) = fragments[position]
     }
-
-
 }

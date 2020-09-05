@@ -4691,6 +4691,8 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
 
     /**
      * {@hide}
+     * 我们重点看一下ViewGroup的findViewTraversal的遍历查找对应ID的算法实现
+     *
      */
     @Override
     protected <T extends View> T findViewTraversal(@IdRes int id) {
@@ -4698,7 +4700,9 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
         if (id == mID) {
             return (T) this;
         }
-        // 获取当前ViewGroup的所有子View(此节点下的所有子节点)
+        // 获取当前ViewGroup的所有子View(此节点下的所有子节点)。
+        // 我们要做的就是遍历ViewGroup下的所有子View
+        // 找到对应ID的子View
         final View[] where = mChildren;
         final int len = mChildrenCount;
         // 进行子VIew的遍历
@@ -4708,9 +4712,14 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
             // 我们可以分析如果这个ViewGroup的都是View的话。则直接判断ID即可。
             // 如果是ViewGroup的话，则我们在递归子ViewGroup的子View.依次类推。知道找到对应View
             // 从这里面我们可以看出findViewById是一个深度优先的递归查找算法
-            if ((v.mPrivateFlags & PFLAG_IS_ROOT_NAMESPACE) == 0) {
-                v = v.findViewById(id);
 
+            /// 按位与运算符（&）参加运算的两个数据，按二进制位进行“与”运算。
+            //  两位同时为“1”，结果才为“1”，否则为0
+            if ((v.mPrivateFlags & PFLAG_IS_ROOT_NAMESPACE) == 0) {
+                // 进行递归调用所有的子View的findViewById方法。
+                // 这里我们可以看到其实是一个深度优先的算法。
+                v = v.findViewById(id);
+                /// 如果中途找到对应的VIew。则直接返回，否则最后返回null
                 if (v != null) {
                     return (T) v;
                 }

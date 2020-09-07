@@ -46,31 +46,6 @@
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="48dp"
-        android:background="@color/blue" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="35dp"
-            android:layout_centerInParent="true"
-            android:background="@mipmap/tiktok_menu" />
-
-        <com.androidkun.xtablayout.XTabLayout
-            android:id="@+id/tab_mainmenu"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/black"
-            app:xTabSelectedTextColor="@color/white"
-            app:xTabSelectedTextSize="16sp"
-            app:xTabTextBold="true"
-            app:xTabTextColor="#8F8F94"
-            app:xTabTextSize="15sp" />
-    </RelativeLayout>
-
+        android:layout_marginBottom="48dp" />
 
 </RelativeLayout>

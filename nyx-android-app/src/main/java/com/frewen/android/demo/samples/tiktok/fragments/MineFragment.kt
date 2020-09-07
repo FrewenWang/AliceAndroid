@@ -26,11 +26,6 @@ class MineFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mineViewModel = ViewModelProviders.of(this).get(MineViewModel::class.java)
-
-        val textureView: TextView = view.findViewById(R.id.content)
-        mineViewModel.text.observe(viewLifecycleOwner) {
-            textureView.text = it
-        }
     }
 
     override fun getLayoutId(): Int {

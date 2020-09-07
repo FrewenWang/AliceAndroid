@@ -28,15 +28,10 @@ class MainFragment : BaseButterKnifeFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mineViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-
-        val textureView: TextView = view.findViewById(R.id.content)
-        mineViewModel.text.observe(viewLifecycleOwner) {
-            textureView.text = it
-        }
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_tiktok_mine
+        return R.layout.fragment_tiktok_home_video_feed
     }
 
 

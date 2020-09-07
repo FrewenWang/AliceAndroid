@@ -1,4 +1,4 @@
-package com.frewen.android.demo.samples.view.behavior;
+package com.frewen.android.demo.behavior;
 
 import android.content.Context;
 import android.util.AttributeSet;

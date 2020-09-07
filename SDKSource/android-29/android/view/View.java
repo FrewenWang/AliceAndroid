@@ -21954,6 +21954,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      */
     @SuppressWarnings({"unchecked"})
     public void layout(int l, int t, int r, int b) {
+
         if ((mPrivateFlags3 & PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT) != 0) {
             onMeasure(mOldWidthMeasureSpec, mOldHeightMeasureSpec);
             mPrivateFlags3 &= ~PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT;
@@ -22096,11 +22097,12 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             int oldHeight = mBottom - mTop;
             int newWidth = right - left;
             int newHeight = bottom - top;
+            //
             boolean sizeChanged = (newWidth != oldWidth) || (newHeight != oldHeight);
 
             // Invalidate our old position
             invalidate(sizeChanged);
-
+            // layout方法直接把四个参数赋值给对应的控件坐标变量(mLeft,mTop,mRight,mBottom)，也就是确定了控件的区域；
             mLeft = left;
             mTop = top;
             mRight = right;
@@ -22109,7 +22111,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
             mPrivateFlags |= PFLAG_HAS_BOUNDS;
 
-
+            // 如果旧的宽度和高度任意一个发生了改变都会调用sizeChange方法，而sizeChange方法里面就是onSizeChange方法。
             if (sizeChanged) {
                 sizeChange(newWidth, newHeight, oldWidth, oldHeight);
             }

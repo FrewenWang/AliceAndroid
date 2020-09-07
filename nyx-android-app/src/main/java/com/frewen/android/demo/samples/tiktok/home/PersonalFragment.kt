@@ -28,10 +28,6 @@ class PersonalFragment : BaseFragment() {
 
         mineViewModel = ViewModelProviders.of(this).get(PersonalViewModel::class.java)
 
-        val textureView: TextView = view.findViewById(R.id.content)
-        mineViewModel.text.observe(viewLifecycleOwner) {
-            textureView.text = it
-        }
     }
 
     override fun getLayoutId(): Int {

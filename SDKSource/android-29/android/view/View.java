@@ -20997,6 +20997,9 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
+     * 在drawAnimation中主要的操作是动画初始化、动画操作、界面刷新。
+     * 在drawAnimation中首先会判断动画是否进行了初始化，如果未初始化则先初始化，然后调用动画监听器的onStart函数。
+     * 动画的具体实现是通过 Animation 中的 getTransformation(long currentTime, Transformation outTransformation,float scale)方法
      * Utility function, called by draw(canvas, parent, drawingTime) to handle the less common
      * case of an active Animation being run on the view.
      */
@@ -21004,16 +21007,25 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             Animation a, boolean scalingRequired) {
         Transformation invalidationTransform;
         final int flags = parent.mGroupFlags;
+        // 1.判断动画是否己经初始化过
         final boolean initialized = a.isInitialized();
         if (!initialized) {
+            // 如果没有初始化动画的话
+            // 初始化动画，代码省略
             a.initialize(mRight - mLeft, mBottom - mTop, parent.getWidth(), parent.getHeight());
             a.initializeInvalidateRegion(0, 0, mRight - mLeft, mBottom - mTop);
             if (mAttachInfo != null) a.setListenerHandler(mAttachInfo.mHandler);
+            /// 这个代码很熟悉吧，这里就是我们动画的相关回调
+            // 如果设置了动画的监听,则触发对应的回调
             onAnimationStart();
         }
-
+        // 获取Transformation对象，存储动画的信息
         final Transformation t = parent.getChildTransformation();
+        // 2.调用了Animation的getTransformation，这里就是通过计算获取动画的相关值
+        // 动画的具体实现是通过 Animation 中的 getTransformation(long currentTime, Transformation outTransformation,float scale)方法
+        // 所以我们需要好好学习一下这个代码
         boolean more = a.getTransformation(drawingTime, t, 1f);
+
         if (scalingRequired && mAttachInfo.mApplicationScale != 1f) {
             if (parent.mInvalidationTransformation == null) {
                 parent.mInvalidationTransformation = new Transformation();
@@ -21025,6 +21037,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         }
 
         if (more) {
+            //3.根据具体实现，判断当前动画类型是否需要进行调整位置大小，然后刷新不同的区域
             if (!a.willChangeBounds()) {
                 if ((flags & (ViewGroup.FLAG_OPTIMIZE_INVALIDATE | ViewGroup.FLAG_ANIMATION_DONE)) ==
                         ViewGroup.FLAG_OPTIMIZE_INVALIDATE) {
@@ -21040,15 +21053,17 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                     parent.mInvalidateRegion = new RectF();
                 }
                 final RectF region = parent.mInvalidateRegion;
+                // 获取重绘的区域
                 a.getInvalidateRegion(0, 0, mRight - mLeft, mBottom - mTop, region,
                         invalidationTransform);
 
                 // The child need to draw an animation, potentially offscreen, so
                 // make sure we do not cancel invalidate requests
                 parent.mPrivateFlags |= PFLAG_DRAW_ANIMATION;
-
+                // 重新计算有效区域
                 final int left = mLeft + (int) region.left;
                 final int top = mTop + (int) region.top;
+                // 更新这块区域
                 parent.invalidate(left, top, left + (int) (region.width() + .5f),
                         top + (int) (region.height() + .5f));
             }
@@ -21100,7 +21115,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
     /**
      * This method is called by ViewGroup.drawChild() to have each child view draw itself.
-     *
+     *  ViewGroup.drawChild（）调用此方法以使每个子视图都绘制自己。
      * This is where the View specializes rendering behavior based on layer type,
      * and hardware acceleration.
      */
@@ -21117,6 +21132,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
         boolean more = false;
         final boolean childHasIdentityMatrix = hasIdentityMatrix();
+        //查看是否需要清除动画信息
         final int parentFlags = parent.mGroupFlags;
 
         if ((parentFlags & ViewGroup.FLAG_CLEAR_TRANSFORMATION) != 0) {
@@ -21127,8 +21143,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         Transformation transformToApply = null;
         boolean concatMatrix = false;
         final boolean scalingRequired = mAttachInfo != null && mAttachInfo.mScalingRequired;
+        // 获取设置的动画信息
         final Animation a = getAnimation();
+        // 下面就是此次绘制的过程中，动画信息如果不为null。所以下面就是动画相关的逻辑
         if (a != null) {
+            /// 这个逻辑就是绘制动画的相关逻辑
             more = applyLegacyAnimation(parent, drawingTime, a, scalingRequired);
             concatMatrix = a.willChangeTransformationMatrix();
             if (concatMatrix) {
@@ -21445,7 +21464,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
          *   4. 绘制装饰（渐变框，滑动条等等）
          * 注：
          *    a. 在调用该方法之前必须要完成 layout 过程
-         *    b. 所有的视图最终都是调用 View 的 draw （）绘制视图（ ViewGroup 没有复写此方法）
+         *    b. 所有的视图最终都是调用View的draw()绘制视图（ViewGroup没有复写此方法）
          *    c. 在自定义View时，不应该复写该方法，而是复写 onDraw(Canvas) 方法进行绘制
          *    d. 若自定义的视图确实要复写该方法，那么需先调用 super.draw(canvas)完成系统的绘制，然后再进行自定义的绘制
          */ 
@@ -21473,11 +21492,10 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         boolean horizontalEdges = (viewFlags & FADING_EDGE_HORIZONTAL) != 0;
         boolean verticalEdges = (viewFlags & FADING_EDGE_VERTICAL) != 0;
         if (!verticalEdges && !horizontalEdges) {
-            // Step 3, draw the content
-            // 绘制View的本山的内容
+            // 步骤三,  绘制View的内容区域
             onDraw(canvas);
 
-            // Step 4, draw the children
+            //步骤四, 进行子View的绘制
             dispatchDraw(canvas);
 
             drawAutofilledHighlight(canvas);
@@ -21487,7 +21505,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 mOverlay.getOverlayView().dispatchDraw(canvas);
             }
 
-            // Step 6, draw decorations (foreground, scrollbars)
+            // 步骤六, 绘制前景装饰 (foreground, scrollbars)
             onDrawForeground(canvas);
 
             // Step 7, draw the default focus highlight
@@ -21596,8 +21614,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         // View的内容绘制
         onDraw(canvas);
 
-        // Step 4, draw the children
-        // 子View的绘制
+        // Step 4,  子View的绘制
         dispatchDraw(canvas);
 
         // Step 5, draw the fade effect and restore layers
@@ -24961,14 +24978,21 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
-     * Start the specified animation now.
      *
+     * startAnimation 中首先设置了动画的起始时间，然后将该动画设置到该 View 中，最后再向ViewGroup请求刷新视图，
+     * 随后ViewGroup就会调用dispatchDraw方法对这个View所在的区域进行重绘。
+     * 对于某个View的重绘最终会调用ViewGroup中的drawChild(Canvas canvas, View child, long drawingTime)方法，
+     * 我们看看这个函数：
      * @param animation the animation to start now
      */
     public void startAnimation(Animation animation) {
+        // 1.初始化动画开始时间
         animation.setStartTime(Animation.START_ON_FIRST_FRAME);
+        //2.对View设置动画
         setAnimation(animation);
+        //3.刷新父类缓存
         invalidateParentCaches();
+        //4.刷新View本身及子View
         invalidate(true);
     }
 

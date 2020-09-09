@@ -35,6 +35,11 @@ public class LinearInterpolator extends BaseInterpolator implements NativeInterp
     public LinearInterpolator(Context context, AttributeSet attrs) {
     }
 
+    /**
+     * 线性插值器的输出百分比就是输入的百分比，不做任何处理，使得动画的速率不会发生变化：
+     * @param input
+     * @return
+     */
     public float getInterpolation(float input) {
         return input;
     }

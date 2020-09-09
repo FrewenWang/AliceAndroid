@@ -4163,6 +4163,11 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
         }
     }
 
+    /**
+     * View的dispatchDraw方法是一个空实现。但是ViewGroup的dispatchDraw不是空实现
+     * 他的作用是
+     * @param canvas
+     */
     @Override
     protected void dispatchDraw(Canvas canvas) {
         boolean usingRenderNodeProperties = canvas.isRecordingFor(mRenderNode);
@@ -4476,6 +4481,7 @@ public abstract class ViewGroup extends View implements ViewParent, ViewManager 
      * @return True if an invalidate() was issued
      */
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
+        // 只是进行了一个转发，我们再看一下 View 的 draw(Canvas canvas, ViewGroup parent, long drawingTime)
         return child.draw(canvas, this, drawingTime);
     }
 

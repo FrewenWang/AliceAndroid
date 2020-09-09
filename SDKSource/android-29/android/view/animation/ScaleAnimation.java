@@ -237,6 +237,11 @@ public class ScaleAnimation extends Animation {
         }
     }
 
+    /**
+     * 当执行完 applyTransformation 之后，View 的属性就发生了变化，不断地重复这个过程，动画就随之产生了。
+     * @param interpolatedTime
+     * @param t
+     */
     @Override
     protected void applyTransformation(float interpolatedTime, Transformation t) {
         float sx = 1.0f;
@@ -249,7 +254,7 @@ public class ScaleAnimation extends Animation {
         if (mFromY != 1.0f || mToY != 1.0f) {
             sy = mFromY + ((mToY - mFromY) * interpolatedTime);
         }
-
+        // 通过Matrix实现View的缩放
         if (mPivotX == 0 && mPivotY == 0) {
             t.getMatrix().setScale(sx, sy);
         } else {

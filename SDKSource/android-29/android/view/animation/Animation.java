@@ -892,10 +892,15 @@ public abstract class Animation implements Cloneable {
      * Gets the transformation to apply at a specified point in time. Implementations of this
      * method should always replace the specified Transformation or document they are doing
      * otherwise.
+     * 在这个方法中，首先会获取己经流逝的动画执行时间百分比，
+     * 然后再通过插值器来重新计算这个百分比，也就是调用了插值器的getInterpolation(float input)
+     * 方法来获取当前的时间百分比，并且以此来计算当前动画的属性值，
+     * 例如，线性插值器的输出百分比就是输入的百分比，不做任何处理，使得动画的速率不会发生变化：
      *
-     * @param currentTime Where we are in the animation. This is wall clock time.
+     * @param currentTime       Where we are in the animation. This is wall clock time.
      * @param outTransformation A transformation object that is provided by the
-     *        caller and will be filled in by the animation.
+     *                          caller and will be filled in by the animation.
+     *
      * @return True if the animation is still running
      */
     public boolean getTransformation(long currentTime, Transformation outTransformation) {
@@ -906,6 +911,7 @@ public abstract class Animation implements Cloneable {
         final long startOffset = getStartOffset();
         final long duration = mDuration;
         float normalizedTime;
+        // 1.计算当前时间的流逝百分比
         if (duration != 0) {
             normalizedTime = ((float) (currentTime - (mStartTime + startOffset))) /
                     (float) duration;
@@ -913,7 +919,7 @@ public abstract class Animation implements Cloneable {
             // time is a step-change with a zero duration
             normalizedTime = currentTime < mStartTime ? 0.0f : 1.0f;
         }
-
+        // 动画是否己经完成
         final boolean expired = normalizedTime >= 1.0f || isCanceled();
         mMore = !expired;
 
@@ -933,8 +939,9 @@ public abstract class Animation implements Cloneable {
             if (mCycleFlip) {
                 normalizedTime = 1.0f - normalizedTime;
             }
-
+            // 2.通过插值器获取动画执行百分比
             final float interpolatedTime = mInterpolator.getInterpolation(normalizedTime);
+            // 3.应用动画效果
             applyTransformation(interpolatedTime, outTransformation);
         }
 
@@ -960,7 +967,7 @@ public abstract class Animation implements Cloneable {
                 fireAnimationRepeat();
             }
         }
-
+        // 4.如果动画执行完毕,那么触发动画完成的回调或者执行重复动画等操作
         if (!mMore && mOneMoreTime) {
             mOneMoreTime = false;
             return true;
@@ -1027,6 +1034,9 @@ public abstract class Animation implements Cloneable {
     public boolean getTransformation(long currentTime, Transformation outTransformation,
             float scale) {
         mScaleFactor = scale;
+        //这个方法中，主要是获取缩放系数和调用
+        // Animation.getTransformation(long currentTime,Transformation outTransformation)
+        // 来计算和应用动画效果：
         return getTransformation(currentTime, outTransformation);
     }
 
@@ -1049,6 +1059,8 @@ public abstract class Animation implements Cloneable {
     }
 
     /**
+     * 在调用了插值器的getInterpolation方法之后，会继续调用动画类的applyTransformation方法将属性应用到对应的对象中。
+     * applyTransformation在Animation基类中是空实现，那我们选择缩放动画（ScaleAnimation）来看看它的具体实现
      * Helper for getTransformation. Subclasses should implement this to apply
      * their transforms given an interpolation value.  Implementations of this
      * method should always replace the specified Transformation or document

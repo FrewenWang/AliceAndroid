@@ -136,7 +136,8 @@ import java.util.concurrent.CountDownLatch;
  * and the WindowManager.  This is for the most part an internal implementation
  * detail of {@link WindowManagerGlobal}.
  * ViewRootImpl是视图层次结构的顶部，实现了View和WindowManager之间所需的协议。
- * 是WindowManagerGlobal内部实现中重要的组成部分
+ * 是WindowManagerGlobal内部实现中重要的组成部分.
+ * ViewRoot对应于ViewRootImpl类，它是连接WindowManager和DecorView的纽带，View的三大流程均是通过ViewRoot来完成的。
  * {@hide}
  */
 @SuppressWarnings({"EmptyCatchBlock", "PointlessBooleanExpression"})
@@ -760,6 +761,7 @@ public final class ViewRootImpl implements ViewParent,
 
     /**
      * We have one child
+     * 将DecorView的添加到Window的过程中。会实例化ViewRootImpl对象
      */
     public void setView(View view, WindowManager.LayoutParams attrs, View panelParentView) {
         synchronized (this) {
@@ -1709,7 +1711,7 @@ public final class ViewRootImpl implements ViewParent,
             mTraversalScheduled = true;
             // 2. 同步屏障
             mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();
-            // 3. 向 Choreographer 提交一个任务
+            // 3. 向 Choreographer 提交一个任务。然后
             mChoreographer.postCallback(
                     Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);
             if (!mUnbufferedInputDispatch) {
@@ -2570,6 +2572,7 @@ public final class ViewRootImpl implements ViewParent,
                             + " coveredInsetsChanged=" + contentInsetsChanged);
 
                      // Ask host how big it wants to be
+                    // 这个地方调用performMeasure，进行View的测量
                     performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);
 
                     // Implementation of weights from WindowManager.LayoutParams
@@ -2619,6 +2622,7 @@ public final class ViewRootImpl implements ViewParent,
         boolean triggerGlobalLayoutListener = didLayout
                 || mAttachInfo.mRecomputeGlobalAttributes;
         if (didLayout) {
+            /// 这个地方进行View的布局
             performLayout(lp, mWidth, mHeight);
 
             // By this point all views have been sized and positioned
@@ -2783,7 +2787,7 @@ public final class ViewRootImpl implements ViewParent,
                 }
                 mPendingTransitions.clear();
             }
-
+            // 这个地方进行View的绘制
             performDraw();
         } else {
             if (isViewVisible) {

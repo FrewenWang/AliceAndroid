@@ -1,11 +1,8 @@
 package com.frewen.android.demo.samples.gson;
 
-import com.frewen.android.demo.bean.UserInfo;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
+import com.frewen.android.demo.model.UserInfo;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 

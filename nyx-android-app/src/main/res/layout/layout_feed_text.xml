@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!--variable的意思是我们在布局文件里面声明一个遍历user。这个变量的类型是User,也就是我们下面导入的类型-->
+        <variable
+            name="user"
+            type="UserInfo" />
+        <!-- 我们在这个地方导入Model对象  -->
+        <import type="com.frewen.android.demo.model.UserInfo" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+
+        <!-- DataBinding在设置图片Url的时候，因为我们需要使用Glide进行加载图片Url -->
+        <!-- 所以我们这边不能直接给CircleImageView来设置URL。所以我们借助DataBindingExpandUtils -->
+        <!-- DataBinding帮我们提供了BindingAdapter方法 -->
+        <com.frewen.aura.ui.circlezoomview.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:imgUrl="@{user.avatar}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher_round">
+
+        </com.frewen.aura.ui.circlezoomview.CircleImageView>
+
+        <!-- 使用@{user.name}完成author_name和user.name的数据绑定 -->
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:text="@{user.name}"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/create_time"
+            app:layout_constraintLeft_toRightOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="用户名"></TextView>
+
+        <TextView
+            android:id="@+id/create_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/avatar"
+            app:layout_constraintTop_toBottomOf="@+id/author_name"
+            tools:text="1小时前"></TextView>
+
+        <ImageView
+            android:id="@+id/feed_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"></ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -13,6 +13,34 @@
         <item name="colorSecondary">@color/yellow_500</item>
     </style>
 
+    <!--这个是包含Material风格的Theme主题-->
+    <style name="NyxAppMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/gray_50_a600</item>
+        <item name="colorPrimaryDark">@color/green_700</item>
+        <item name="colorOnSurface">@color/blue</item>
+        <item name="colorAccent">@color/gray_50</item>
+        <item name="colorSurface">@color/gray_50</item>
+        <item name="colorSecondary">@color/yellow_500</item>
+        <item name="materialButtonStyle">@style/materialButtonStyle</item>
+    </style>
+
+    <style name="materialButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:inset">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="minHeight">0dp</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+
     <!-- 定义全屏的AppTheme -->
     <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
         <item name="android:windowFullscreen">true</item>

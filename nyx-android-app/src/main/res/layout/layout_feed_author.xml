@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!--variable的意思是我们在布局文件里面声明变量lines。然后这个lines的类型是Integer-->
+        <!--TODO 我们需要重点看这个lines怎么传入-->
+        <!--TODO 同样我们需要重点看这个feedText怎么传入-->
+        <variable
+            name="lines"
+            type="java.lang.Integer" />
+
+        <variable
+            name="feedText"
+            type="java.lang.String" />
+
+        <import type="android.text.TextUtils"></import>
+
+        <import type="android.view.View"></import>
+
+
+    </data>
+
+    <!--这个是信息流的评论的文本 -->
+    <!-- 这里我们就看到了DataBinding的强大之处，不仅可以引入Model变量，还可以引入-->
+    <!-- 各种普通数据类型的值，甚至可以做方法计算TextUtils.isEmpty(feedText)? View.GONE: View.VISIBLE-->
+    <!-- 只要我们把对应的类引入import即可-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
+        android:ellipsize="end"
+        android:maxLines="@{lines}"
+        android:orientation="vertical"
+        android:text="@{feedText}"
+        android:textColor="@color/color_common_black_alpha45"
+        android:textSize="16sp"
+        android:visibility="@{TextUtils.isEmpty(feedText)? View.GONE: View.VISIBLE}"
+        tools:text="评论文本">
+
+    </TextView>
+
+</layout>

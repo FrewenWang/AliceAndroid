@@ -1,14 +1,12 @@
 package com.frewen.android.demo.samples.gson;
 
-import com.frewen.android.demo.bean.UserInfo;
+import com.frewen.android.demo.model.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * @filename: GsonHelperTest

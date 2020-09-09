@@ -11,18 +11,12 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/NyxAppTheme">
+        android:theme="@style/NyxAppMaterialTheme">
         <activity android:name=".samples.designpattern.NotificationActivity"></activity>
         <activity android:name=".samples.designpattern.ProxyPatternActivity" />
         <activity
             android:name=".samples.tiktok.TikTokActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"></activity>
         <activity
             android:name=".ui.login.ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
@@ -45,7 +39,13 @@
         <activity android:name=".samples.dagger2.Dagger2Activity" />
         <activity
             android:name=".ui.SplashActivity"
-            android:theme="@style/AppTheme.Splash" />
+            android:theme="@style/AppTheme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />
@@ -76,7 +76,9 @@
         <activity android:name=".samples.bitmap.BitmapDemoActivity" />
         <activity android:name=".samples.eventbus.StickyMsgActivity" />
         <activity android:name=".samples.fragment.FragmentDemoActivity" />
-        <activity android:name=".samples.fragment.FragmentStackActivity" /> <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
+        <activity android:name=".samples.fragment.FragmentStackActivity" />
+
+        <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
         <!-- 因此，android:authorities必须是唯一的，这里建议读者在命名的时候加上包名前缀。 -->
         <!-- 为了演示进程间通信，我们让BookProvider运行在独立的进程中并给它添加了权限， -->
         <!-- 这样外界应用如果想访问BookProvider，就必须声明“com.frewen.content.provider”这个权限。 -->
@@ -105,7 +107,7 @@
         <service
             android:name=".samples.ipc.remote.socket.RemoteTCPService"
             android:process=":socket_server" />
-    </application> <!-- 读取手机状态 -->
+    </application>
     <permission
         android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE"
         android:protectionLevel="normal" /> <!-- 访问WIFI状态 -->

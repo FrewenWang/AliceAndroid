@@ -24701,6 +24701,9 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * @see android.view.View.MeasureSpec#getMode(int)
      * @see android.view.View.MeasureSpec#getSize(int)
      * View的onmeasure方法很简单，就是再里面调用了setMeasuredDimension设置测量的尺寸。那这个方法就比较重要了。
+     *
+     * 这个地方又一个非常重要的知识点：自定义View的wrap_content不起作用的原理
+     * 其实最根本的原因就是在setMeasuredDimension中的getDefaultSize的这个方法的实现
      */
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),
@@ -24835,6 +24838,9 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         // 模式为AT_MOST,EXACTLY时，使用View测量后的宽/高值 = measureSpec中的Size
         case MeasureSpec.AT_MOST:
         case MeasureSpec.EXACTLY:
+            // 这个地方我们可以看到。在获取自定义View的宽高的时候，准确模式和最大适配模式，默认尺寸都是父View的测试尺寸
+            // 这个地方如果我们自己实现自定义View的时候，自己不重写getDefaultSize的话，那么会发现wrap_content不起作用
+            // 而是默认效果和match_parent
             result = specSize;
             break;
         }

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.bean.UserInfo;
+import com.frewen.android.demo.model.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

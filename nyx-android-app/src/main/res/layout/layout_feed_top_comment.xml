@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="comment"
+            type="com.frewen.android.demo.model.Comment" />
+
+
+        <import type="com.frewen.android.demo.utils.StringConvert"></import>
+
+        <import type="android.view.View"></import>
+
+        <import type="android.text.TextUtils"></import>
+
+    </data>
+
+
+    <com.frewen.aura.ui.view.alpha.framelayout.CornerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/blue"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:visibility="@{comment == null?View.GONE:View.VISIBLE}">
+
+        <!-- 评论图片 -->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="right|top"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_launcher_background"></ImageView>
+
+        <!-- 评论区的主布局 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 纵向的LinearLayout里面的一个横向的最热评论布局-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <!--  最左边是一个评论者头像 -->
+                <com.frewen.aura.ui.circlezoomview.CircleImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:imgUrl="@{comment.author.avatar}"
+                    tools:src="@mipmap/ic_launcher_round">
+
+                </com.frewen.aura.ui.circlezoomview.CircleImageView>
+
+                <!-- 用户名称 -->
+                <TextView
+                    android:id="@+id/user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="@{comment.author.name}"
+                    android:textColor="@color/gray_50"
+                    android:textSize="12sp"
+                    tools:text="评论者"></TextView>
+
+                <!-- 这个地方是透明分割线 -->
+                <com.frewen.aura.ui.space.DividerSpace
+                    android:layout_width="0dp"
+                    android:layout_height="1px"
+                    android:layout_weight="1">
+
+                </com.frewen.aura.ui.space.DividerSpace>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@{comment.ugc.likeCount>0?StringConvert.convertFeedUgc(comment.ugc.likeCount):null}"
+                    android:textColor="@{comment.ugc.hasLiked?@color/color_theme:@color/color_3d3}"
+                    android:textSize="12sp"
+                    tools:text="1000" />
+                <!-- 点赞按钮 -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    tools:src="@mipmap/icon_liked"></ImageView>
+            </LinearLayout>
+
+            <!-- 评论下面的UGC内容 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="36dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{comment.commentText}"
+                android:textColor="@color/color_common_black_alpha45"
+                android:textSize="14sp"
+                android:visibility="@{TextUtils.isEmpty(comment.commentText)?View.GONE:View.VISIBLE}"
+                tools:text="神秘的JetPack神秘的JetPack神秘的JetPack"></TextView>
+
+            <FrameLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}">
+
+                <com.frewen.aura.ui.circlezoomview.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}"
+                    app:imgUrl="@{comment.imageUrl}"
+                    tools:src="@mipmap/ic_launcher">
+
+                </com.frewen.aura.ui.circlezoomview.CircleImageView>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_liked"
+                    android:visibility="@{TextUtils.isEmpty(comment.videoUrl)?View.GONE:View.VISIBLE}"></ImageView>
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+    </com.frewen.aura.ui.view.alpha.framelayout.CornerFrameLayout>
+</layout>

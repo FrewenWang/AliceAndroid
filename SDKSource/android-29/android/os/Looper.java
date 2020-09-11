@@ -107,6 +107,7 @@ public final class Looper {
 
     /**
      * 我们重点来分析prepare的方法
+     *
      * @param quitAllowed
      */
     private static void prepare(boolean quitAllowed) {
@@ -161,6 +162,7 @@ public final class Looper {
      * Run the message queue in this thread. Be sure to call
      * {@link #quit()} to end the loop.
      * 这个方法主要是进行当前线程里面的message queue队列的遍历，来遍历消息，进行消息的分发
+     * 这个我们自己在线程创建的时候自己类执行以下loop()方法
      */
     public static void loop() {
         // 这个方法就是从TreadLocal里面取得当前的Looper对象。

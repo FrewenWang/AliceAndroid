@@ -41,6 +41,7 @@ public class PropertyAnimationFragment extends BaseFragment {
         pageViewModel.setIndex(index);
     }
 
+    
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_animation_property;

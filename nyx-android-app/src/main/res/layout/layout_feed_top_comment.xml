@@ -88,7 +88,6 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@{comment.ugc.likeCount>0?StringConvert.convertFeedUgc(comment.ugc.likeCount):null}"
-                    android:textColor="@{comment.ugc.hasLiked?@color/color_theme:@color/color_3d3}"
                     android:textSize="12sp"
                     tools:text="1000" />
                 <!-- 点赞按钮 -->

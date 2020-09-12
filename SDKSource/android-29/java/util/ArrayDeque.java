@@ -122,7 +122,8 @@ public class ArrayDeque<E> extends AbstractCollection<E>
 
     /**
      * Allocates empty array to hold the given number of elements.
-     *
+     *  计算容量，这段代码的逻辑是算出大于numElements的最接近的2的n次方且不小于8，
+     *  比如，3算出来是8，9算出来是16，33算出来是64
      * @param numElements  the number of elements to hold
      */
     private void allocateElements(int numElements) {
@@ -149,15 +150,27 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * when head and tail have wrapped around to become equal.
      */
     private void doubleCapacity() {
+        // 首先判断收尾已经相连了
         assert head == tail;
+        // 头指针的位置
         int p = head;
+        // 旧数组长度
         int n = elements.length;
+        // 头指针离数组尾的距离
         int r = n - p; // number of elements to the right of p
+        // 新长度为旧长度的两倍.将N左移一位，相当于乘以2
         int newCapacity = n << 1;
+        // 判断是否溢出.如果持续左移，可能会出现溢出
         if (newCapacity < 0)
             throw new IllegalStateException("Sorry, deque too big");
+
+        // 新建新数组
         Object[] a = new Object[newCapacity];
+        // 这里特别注意，Head指针之后的元素其实是addFirst插入的元素
+        // 将旧数组head之后的元素拷贝到新数组中。（原始数组、原始数组开始拷贝的位置、目标数组，目标数组开始存储的我内置、数组的长度）
         System.arraycopy(elements, p, a, 0, r);
+
+        // 将旧数组下标0到head之间的元素拷贝到新数组中（原始数组、原始数组开始拷贝的位置、目标数组，目标数组开始存储的我内置、数组的长度）
         System.arraycopy(elements, 0, a, r, p);
         // Android-added: Clear old array instance that's about to become eligible for GC.
         // This ensures that array elements can be eligible for garbage collection even
@@ -165,20 +178,22 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         // take a while in some GC implementations, if the array instance is longer lived
         // (its liveness rarely checked) than some of its contents.
         Arrays.fill(elements, null);
+        // 赋值为新数组
         elements = a;
         head = 0;
+        // head指向0，tail指向旧数组长度表示的位置
         tail = n;
     }
 
     /**
-     * Constructs an empty array deque with an initial capacity
-     * sufficient to hold 16 elements.
+     * 默认构造方法，初始容量为16
      */
     public ArrayDeque() {
         elements = new Object[16];
     }
 
     /**
+     * 指定元素个数初始化
      * Constructs an empty array deque with an initial capacity
      * sufficient to hold the specified number of elements.
      *
@@ -189,6 +204,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
     }
 
     /**
+     * 将集合c中的元素初始化到数组中
      * Constructs a deque containing the elements of the specified
      * collection, in the order they are returned by the collection's
      * iterator.  (The first element returned by the collection's
@@ -199,6 +215,7 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @throws NullPointerException if the specified collection is null
      */
     public ArrayDeque(Collection<? extends E> c) {
+        // 初始化数组
         allocateElements(c.size());
         addAll(c);
     }
@@ -209,16 +226,26 @@ public class ArrayDeque<E> extends AbstractCollection<E>
 
     /**
      * Inserts the specified element at the front of this deque.
-     *
+     * 这个其实是从数组尾部开始插入的过程
      * @param e the element to add
      * @throws NullPointerException if the specified element is null
      */
     public void addFirst(E e) {
-        if (e == null)
+        // 不允许null元素。这个很重要。ArrayQueue不允许元素为null
+        // 因为他是根据对应的是否为null，判断是否存在元素。
+        if (e == null){
             throw new NullPointerException();
+        }
+        // 将head指针减1并与数组长度减1取模
+        // 这是为了防止数组到头了边界溢出
+        // 如果到头了就从尾再向前
+        // 相当于循环利用数组
         elements[head = (head - 1) & (elements.length - 1)] = e;
-        if (head == tail)
+        // 如果头尾挨在一起了，就扩容
+        // 扩容规则也很简单，直接两倍
+        if (head == tail){
             doubleCapacity();
+        }
     }
 
     /**
@@ -230,9 +257,14 @@ public class ArrayDeque<E> extends AbstractCollection<E>
      * @throws NullPointerException if the specified element is null
      */
     public void addLast(E e) {
+        // 不允许null元素。这个很重要。ArrayQueue不允许元素为null
+        // 因为他是根据对应的是否为null，判断是否存在元素。
         if (e == null)
             throw new NullPointerException();
+        // 在尾指针的位置放入元素
+        // 可以看到tail指针指向的是队列最后一个元素的下一个位置
         elements[tail] = e;
+        // tail指针加1，如果到数组尾了就从头开始
         if ( (tail = (tail + 1) & (elements.length - 1)) == head)
             doubleCapacity();
     }
@@ -281,28 +313,46 @@ public class ArrayDeque<E> extends AbstractCollection<E>
         return x;
     }
 
+    /**
+     * 头部元素出队列。初始内部的时间就是数组后续的Head队列的头一个元素深处
+     */
     public E pollFirst() {
+        // 存储临时的elements
         final Object[] elements = this.elements;
+        // 找到Head的索引
         final int h = head;
         @SuppressWarnings("unchecked")
-        E result = (E) elements[h];
+        // 取出Head的索引的对应原色
+                E result = (E) elements[h];
         // Element is null if deque empty
+        // 将队列头置为空
         if (result != null) {
+            // 队列头指针右移一位
             elements[h] = null; // Must null out slot
             head = (h + 1) & (elements.length - 1);
         }
+        // 将元素取得原色
         return result;
     }
 
+    /**
+     * 从队列尾部出队列
+     * @return
+     */
     public E pollLast() {
         final Object[] elements = this.elements;
+        // 计算对应的Tail的索引值
         final int t = (tail - 1) & (elements.length - 1);
         @SuppressWarnings("unchecked")
+        // 取当前尾指针处元素
         E result = (E) elements[t];
         if (result != null) {
+            // 将当前尾指针处置为空
             elements[t] = null;
+            // tail指向新的尾指针处
             tail = t;
         }
+        // 返回取得的元素
         return result;
     }
 

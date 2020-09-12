@@ -71,7 +71,6 @@ public class GsonDemoActivity extends AppCompatActivity {
      */
     private void testVersion() {
         UserInfo userInfo = new UserInfo("测试版本", 18);
-        userInfo.setGender("Male");
 
         System.out.println("User json for Version 1.0 ");
         Gson gson = new GsonBuilder().setVersion(1.0).setPrettyPrinting().create();

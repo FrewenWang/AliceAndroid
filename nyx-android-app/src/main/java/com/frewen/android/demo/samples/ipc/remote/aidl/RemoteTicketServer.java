@@ -15,12 +15,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * @filename: RemoteTicketServer
  * @introduction: 服务端关于客户端调用接口的处理逻辑
- * <p>
- * * 实例化Binder的对象。通过AIDL文件生成对应的Binder对象。
- * * 然后通过操作AIDL中的方法，来给客户端返回服务端的数据
+ *         <p>
+ *         * 实例化Binder的对象。通过AIDL文件生成对应的Binder对象。
+ *         * 然后通过操作AIDL中的方法，来给客户端返回服务端的数据
  * @author: Frewen.Wong
  * @time: 2019/9/4 0004 下午8:47
- * Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
 public class RemoteTicketServer extends IRemoteServiceInterface.Stub {
     private static final String TAG = "T:RemoteTicketServer";
@@ -46,12 +46,11 @@ public class RemoteTicketServer extends IRemoteServiceInterface.Stub {
     /**
      * 获取演唱会列表
      *
-     * @return
      * @throws RemoteException
      */
     @Override
     public List<RemoteTicket> getTicketList() throws RemoteException {
-        Log.d(TAG, "FMsg:getTicketList() begin");
+        Log.d(TAG, "FMsg:getTicketList() begin currentThread = " + Thread.currentThread().getName());
         // 获取门票列表，模拟一个耗时任务的实现
         SystemClock.sleep(30 * 1000);
         Log.d(TAG, "FMsg:getTicketList() end currentThread = " + Thread.currentThread().getName());
@@ -60,7 +59,7 @@ public class RemoteTicketServer extends IRemoteServiceInterface.Stub {
 
     @Override
     public void addTicket(RemoteTicket ticket) throws RemoteException {
-        Log.d(TAG, "FMsg:addTicket() called with: ticket = [" + ticket + "]");
+        Log.d(TAG, "FMsg:addTicket() called with: ticket = [" + ticket + "], on " + Thread.currentThread().getName());
         onNewTicketArrived(ticket);
     }
 
@@ -68,6 +67,7 @@ public class RemoteTicketServer extends IRemoteServiceInterface.Stub {
      * 定义当有新的门票添加的回调方法
      *
      * @param ticket
+     *
      * @throws RemoteException
      */
     private void onNewTicketArrived(RemoteTicket ticket) throws RemoteException {
@@ -102,13 +102,13 @@ public class RemoteTicketServer extends IRemoteServiceInterface.Stub {
 
     @Override
     public void registerListener(IOnNewTicketArrivedListener listener) throws RemoteException {
-        Log.d(TAG, "FMsg:registerListener() called with: listener = [" + listener.getClass() + "]");
-        Log.d(TAG, "FMsg:registerListener() called with: mListenerList = [" + mListenerList + "]");
+        Log.d(TAG, "FMsg:registerListener() called with: listener = [" + listener.getClass() + "]  on Thread:" + Thread.currentThread().getName());
+        Log.d(TAG, "FMsg:registerListener() called with: mListenerList = [" + mListenerList + "] on Thread:" + Thread.currentThread().getName());
         // 注册当前的listener
         mListenerList.register(listener);
         final int N = mListenerList.beginBroadcast();
         mListenerList.finishBroadcast();
-        Log.d(TAG, "registerListener, current size:" + N);
+        Log.d(TAG, "FMsg:registerListener, current size:" + N + " on Thread:" + Thread.currentThread().getName());
     }
 
     @Override
@@ -146,11 +146,12 @@ public class RemoteTicketServer extends IRemoteServiceInterface.Stub {
      *
      * 注意：这个方法如果不是跨进程继续绑定的话。这个方法是不会调用的。
      * 换句话说：这种方法只能作为跨进程绑定远程服务的权限判断接口
+     *
      * @param code
      * @param data
      * @param reply
      * @param flags
-     * @return
+     *
      * @throws RemoteException
      */
     @Override

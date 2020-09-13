@@ -9,6 +9,7 @@ import android.view.animation.*
 import android.widget.ImageView
 import butterknife.BindView
 import com.frewen.android.demo.R
+import com.frewen.android.demo.samples.ipc.client.AIDLDemoActivity
 import com.frewen.android.demo.samples.view.RecyclerViewDemoActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
 import com.frewen.aura.toolkits.common.ResourcesUtils
@@ -120,7 +121,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         CoroutineScope(job).launch {
             delay(splashDuration)
             // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+            val intent = Intent(this@SplashActivity, AIDLDemoActivity::class.java)
             startActivity(intent)
             // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
             finish()

@@ -10,6 +10,8 @@ import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 
 @FragmentDestination(pageUrl = "main/tabs/home", asStarter = true)
 class HomeFragment() : BaseDataBindingFragment<FragmentMainHomeBinding, HomeViewModel>(), Injectable {
+
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_main_home
     }

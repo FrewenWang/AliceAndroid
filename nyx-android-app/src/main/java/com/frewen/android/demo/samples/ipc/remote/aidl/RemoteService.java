@@ -23,7 +23,7 @@ import static android.os.Binder.getCallingUid;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/9/4 0004 下午7:51
- * Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
 public class RemoteService extends Service {
     private static final String TAG = "T:RemoteService";
@@ -37,7 +37,7 @@ public class RemoteService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d(TAG, "FMsg:onCreate() called");
+        Log.d(TAG, "FMsg:onCreate() called on " + Thread.currentThread().getName());
         Map<String, String> place1List = new HashMap<>(2);
         place1List.put("10月16日", "北京");
         place1List.put("10月21日", "济南");
@@ -50,7 +50,7 @@ public class RemoteService extends Service {
         addNewTicket(new RemoteTicket(10002, "周杰伦无与伦比演唱会买票", 2100.50, place2List));
 
         // 我们启动一个子线程任务，来模拟不断有演唱会票可售卖。
-        new Thread(new ServiceWorker()).start();
+        // new Thread(new ServiceWorker()).start();
     }
 
     @Nullable
@@ -64,6 +64,9 @@ public class RemoteService extends Service {
          * 一个应用来绑定我们的服务时，会验证这个应用的权限，如果它没有使用这个权限，
          * onBind方法就会直接返回null，最终结果是这个应用无法绑定到我们的服务，
          * 这样就达到了权限验证的效果，这种方法同样适用于Messenger中，读者可以自行扩展。
+         *
+         * 还有第二种验证权限的方法
+         * @see #RemoteTicketServer.onTransact(int, Parcel, Parcel, int)
          */
         int check = checkCallingOrSelfPermission(
                 "com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE");
@@ -95,7 +98,6 @@ public class RemoteService extends Service {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
                 int ticketId = random + 1;
                 RemoteTicket newTicket = new RemoteTicket(ticketId, "周杰伦演唱会#" + ticketId, 1000.00 + ticketId, null);
                 addNewTicket(newTicket);

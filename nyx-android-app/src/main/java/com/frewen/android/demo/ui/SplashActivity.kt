@@ -120,7 +120,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         CoroutineScope(job).launch {
             delay(splashDuration)
             // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, RecyclerViewDemoActivity::class.java)
+            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
             startActivity(intent)
             // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
             finish()

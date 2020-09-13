@@ -7,8 +7,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.frewen.aura.toolkits.kotlin.ext.autoCleared
 import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
+import javax.inject.Inject
 
 /**
  * @filename: BaseDataBindingFragment
@@ -20,11 +24,16 @@ import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
  * @version: 1.0.1
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-abstract class BaseDataBindingFragment<VDB : ViewDataBinding> : Fragment() {
+abstract class BaseDataBindingFragment<VDB : ViewDataBinding, VM : ViewModel> : Fragment() {
     /**
      * 根据Fragment动态清理和获取binding对象
      */
     var binding by autoCleared<VDB>()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var viewModel: VM
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(
@@ -33,8 +42,13 @@ abstract class BaseDataBindingFragment<VDB : ViewDataBinding> : Fragment() {
                 container,
                 false,
                 AuraDataBindingComponent())
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
+
         return binding?.root
     }
+
+    abstract fun getViewModelClass(): Class<VM>
 
     /**
      * 抽象方法，供子类传入LayoutID

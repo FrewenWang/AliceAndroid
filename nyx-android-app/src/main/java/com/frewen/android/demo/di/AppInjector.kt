@@ -66,7 +66,7 @@ object AppInjector {
         if (activity is HasSupportFragmentInjector) {
             AndroidInjection.inject(activity)
         }
-
+        // 进行统一回调，当Fragment创建的时候，来进行Fragment的注入
         if (activity is FragmentActivity) {
             activity.supportFragmentManager.registerFragmentLifecycleCallbacks(
                     object : FragmentManager.FragmentLifecycleCallbacks() {

@@ -71,6 +71,9 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavi
     }
 
 
+    /**
+     * 表明有Fragment需要注入
+     */
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     override fun supportFragmentInjector() = dispatchingAndroidInjector

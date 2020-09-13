@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.frewen.android.demo.R;
 import com.frewen.aura.toolkits.common.FileUtils;
+import com.frewen.network.interceptor.HeadersInterceptor;
+import com.frewen.network.model.HttpHeaders;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +69,9 @@ public class OkHttp3Activity extends AppCompatActivity {
      */
     public void asyncGetStringFromServer(View view) {
         //创建 OkHttpClient 对象
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new HeadersInterceptor(new HttpHeaders()))
+                .addInterceptor(new TestOkHttpInterceptor()).build();
         Request request = new Request.Builder()
                 .url("http://www.baidu.com")
                 .build();

@@ -1733,6 +1733,11 @@ public final class ViewRootImpl implements ViewParent,
         }
     }
 
+    /**
+     * 我们都知道Android上面View的绘制都是在doTraversal的完成的。
+     *
+     */
+    // frameworks/base/core/java/android/view/ViewRootImpl.java
     void doTraversal() {
         if (mTraversalScheduled) {
             mTraversalScheduled = false;
@@ -1741,7 +1746,10 @@ public final class ViewRootImpl implements ViewParent,
             if (mProfile) {
                 Debug.startMethodTracing("ViewAncestor");
             }
-
+            // 然后，我们可以看到这个doTraversal其实是调用了performTraversals方法。
+            // 而doTraversal()函数本身会调用 performTraversals()来完成具体的绘制调用，因为绘制涉及到非常多的流程，所以这一步其实非常庞大.
+            // 这个performTraversals的方法会依次去调用View的performMeasure、performLayout、performDraw方法
+            // 这个方法里面又会调用对应View相关的测量、布局、绘制的方法
             performTraversals();
 
             if (mProfile) {
@@ -1975,6 +1983,7 @@ public final class ViewRootImpl implements ViewParent,
     /**
      * ViewRoot的performTraversals 执行View的遍历方法
      */
+    // frameworks/base/core/java/android/view/ViewRootImpl.java
     private void performTraversals() {
         // cache mView since it is used so much below...
         final View host = mView;
@@ -2059,6 +2068,9 @@ public final class ViewRootImpl implements ViewParent,
             if (mViewLayoutDirectionInitial == View.LAYOUT_DIRECTION_INHERIT) {
                 host.setLayoutDirection(config.getLayoutDirection());
             }
+            //可以看到mFirst为true时，即准备开始第一次绘制时会调用mHost的dispatchAttachedToWindow函数
+            //经过ViewGroup对各个子View进行dispatchAttachedToWindow事件的层层风发，最终执行到调用post方法的那个view。
+            // 其中mHost其实就是在Activity执行setContentView之后经过PhoneWindow最后创建ViewRootImpl并设置进来的DecorView。
             host.dispatchAttachedToWindow(mAttachInfo, 0);
             mAttachInfo.mTreeObserver.dispatchOnWindowAttachedChange(true);
             dispatchApplyInsets(host);

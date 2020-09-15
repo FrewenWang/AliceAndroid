@@ -41,7 +41,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme">
-        <activity android:name=".samples.view.recyclerview.AdapterSampleActivity"></activity>
+        <activity android:name=".performance.PerformanceActivity"></activity>
+        <activity android:name=".samples.view.recyclerview.AdapterSampleActivity" />
         <activity android:name=".samples.view.recyclerview.AnimatorSampleActivity" />
         <activity android:name=".samples.designpattern.chainresponsibility.ChainResponsibilityActivity" />
         <activity android:name=".samples.designpattern.NotificationActivity" />

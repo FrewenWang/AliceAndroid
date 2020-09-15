@@ -23,7 +23,10 @@ import android.util.proto.ProtoOutputStream;
 import com.android.internal.annotations.VisibleForTesting;
 
 /**
- *
+ *  定义一个可以发送给Handler的描述和任意数据对象的消息。
+ *  此对象包含两个额外的int字段和一个额外的对象字段，这样就可以使用在很多情况下不用做分配工作。
+ *  尽管Message的构造器是公开的，但是获取Message对象的最好方法是调用Message.obtain()或者Handler.obtainMessage()，
+ *  这样是从一个可回收的对象池中获取Message对象。
  * Defines a message containing a description and arbitrary data object that can be
  * sent to a {@link Handler}.  This object contains two extra int fields and an
  * extra object field that allow you to not do allocations in many cases.
@@ -35,6 +38,9 @@ import com.android.internal.annotations.VisibleForTesting;
  */
 public final class Message implements Parcelable {
     /**
+     * 成员变量 what
+     * Message用一个标志来区分不同消息的身份，不同的Handler使用相同的消息不会弄混，一般使用16进制形式来表示，阅读起来比较容易
+     * 用户定义的Message的标识符用以分辨消息的内容。Hander拥有自己的消息代码的命名空间，因此你不用担心与其他的Handler冲突。
      * User-defined message code so that the recipient can identify
      * what this message is about. Each {@link Handler} has its own name-space
      * for message codes, so you do not need to worry about yours conflicting
@@ -43,6 +49,7 @@ public final class Message implements Parcelable {
     public int what;
 
     /**
+     * arg1和arg2都是Message类的可选变量，可以用来存放两个整数值，不用访问obj对象就能读取的变量。
      * arg1 and arg2 are lower-cost alternatives to using
      * {@link #setData(Bundle) setData()} if you only need to store a
      * few integer values.
@@ -50,6 +57,8 @@ public final class Message implements Parcelable {
     public int arg1;
 
     /**
+     * 因为两个注释一样，我就不重复翻译了，翻译如下：
+     * 如果你仅仅是保存几个整形的数值，相对于使用setData()方法，使用arg1和arg2是较低成本的替代方案。
      * arg1 and arg2 are lower-cost alternatives to using
      * {@link #setData(Bundle) setData()} if you only need to store a
      * few integer values.
@@ -57,6 +66,7 @@ public final class Message implements Parcelable {
     public int arg2;
 
     /**
+     * obj 用来保存对象，接受信息后取出获得传送的对象。
      * An arbitrary object to send to the recipient.  When using
      * {@link Messenger} to send the message across processes this can only
      * be non-null if it contains a Parcelable of a framework class (not one
@@ -69,6 +79,7 @@ public final class Message implements Parcelable {
     public Object obj;
 
     /**
+     * 回复跨进程的Messenger
      * Optional Messenger where replies to this message can be sent.  The
      * semantics of exactly how this is used are up to the sender and
      * receiver.
@@ -83,6 +94,7 @@ public final class Message implements Parcelable {
     public static final int UID_NONE = -1;
 
     /**
+     *  Messager发送这的Uid
      * Optional field indicating the uid that sent the message.  This is
      * only valid for messages posted by a {@link Messenger}; otherwise,
      * it will be -1.
@@ -116,6 +128,7 @@ public final class Message implements Parcelable {
     /*package*/ int flags;
 
     /**
+     * 用于存储发送消息的时间点，以毫秒为单位
      * The targeted delivery time of this message. The time-base is
      * {@link SystemClock#uptimeMillis}.
      * @hide Only for use within the tests.
@@ -124,26 +137,33 @@ public final class Message implements Parcelable {
     @VisibleForTesting(visibility = VisibleForTesting.Visibility.PACKAGE)
     public long when;
 
+    // 用于存储比较复杂的数据
     /*package*/ Bundle data;
 
+    // 用于存储发送当前Message的Handler对象，前面提到过Handler其实和Message相互持有引用的
     @UnsupportedAppUsage
     /*package*/ Handler target;
 
+    // 用于存储将会执行的Runnable对象，前面提到过除了handlerMessage(Message msg)方法，
+    // 你也可以使用Runnable执行操作，要注意的是这种方法并不会创建新的线程。
     @UnsupportedAppUsage
     /*package*/ Runnable callback;
 
+    // 指向下一个Message，也就是Message其实是一个链表结构
     // sometimes we store linked lists of these things
     @UnsupportedAppUsage
     /*package*/ Message next;
 
-
+    // 该静态变量仅仅是为了给同步块提供一个锁而已
     /** @hide */
     public static final Object sPoolSync = new Object();
+    //该静态的Message是整个线程池链表的头部，通过它才能够逐个取出对象池的Message
     private static Message sPool;
+    // 该静态变量用于记录对象池中的Message的数量，也就是链表的长度
     private static int sPoolSize = 0;
-
+    // 设置了对象池中的Message的最大数量，也就是链表的最大长度
     private static final int MAX_POOL_SIZE = 50;
-
+    //该版本系统是否支持回收标志位
     private static boolean gCheckRecycle = true;
 
     /**

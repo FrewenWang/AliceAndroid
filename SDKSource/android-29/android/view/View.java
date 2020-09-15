@@ -17832,10 +17832,13 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      *
      * @return the queue of runnables for this view
      */
+    // frameworks/base/core/java/android/view/View.java
     private HandlerActionQueue getRunQueue() {
         if (mRunQueue == null) {
             mRunQueue = new HandlerActionQueue();
         }
+        // getRunQueue返回的是本地缓存的一个HandlerActionQueue类的实例mRunQueue，
+        // 并且mRunQueue本身是lazyInit的。
         return mRunQueue;
     }
 
@@ -17861,6 +17864,8 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
+     * 稍微有点经验的安卓开发人员应该都知道View类的post和postDelayed方法。
+     * 我们知道调用这个方法可以保证在UI线程中进行需要的操作，方便地进行异步通信。
      * <p>Causes the Runnable to be added to the message queue.
      * The runnable will be run on the user interface thread.</p>
      *
@@ -17873,14 +17878,43 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * @see #postDelayed
      * @see #removeCallbacks
      */
+    // frameworks/base/core/java/android/view/View.java
     public boolean post(Runnable action) {
+        // 这里有两个有用的信息：
+        // 如果当前存在AttachInfo那么直接使用它里面的Handler发送消息。这同正常的Handler机制是一致的。
+        // 如果不存在，那么获取一个RunQueue并post给它。
+        // 至于AttachInfo什么情况下不为空，一会会跟下面的RunQueue会合起来看。这里主要看一下RunQueue。
+
+        // 意思是将任务交由attachInfo中的Handler处理，保证在UI线程执行。
         final AttachInfo attachInfo = mAttachInfo;
+        // 从本质上说，它还是依赖于以Handler、Looper、MessageQueue、Message为基础的异步消息处理机制。
+        // 只不过相对于新建Handler进行处理更加便捷。
+
+        // 因为attachInfo中的Handler其实是由该View的ViewRootImpl提供的，
+        // 所以post方法相当于把这个事件添加到了UI 事件队列中。
         if (attachInfo != null) {
             return attachInfo.mHandler.post(action);
         }
 
+        /**
+         * 这里我们可以说一下常用的例子：
+         * 我们在Android的Activity的onCreate中获取View准确宽高的三种方法：
+         * 1. 通过onWindowFocusChanged方法
+         * 2. 通过View.post()来实现
+         * 3. 通过ViewTreeObserver的OnGlobalLayoutListener回调
+         *  那么？ 为什么我们在onCreate获取View的宽高可能不准确呢？
+         *
+         * 在onCreate方法中获取某个view的宽高,而直接View#getWidth获取到的值是0。
+         * 要知道View显示到界面上需要经历onMeasure、onLayout和onDraw三个过程，
+         * 而View的宽高是在onLayout阶段才能最终确定的，而在Activity#onCreate中并不能保证View已经执行到了onLayout方法，
+         * 也就是说Activity的生命周期周期与View的绘制流程并不是一一绑定。
+         * 那为什么调用post方法就能起作用呢？首先MessageQueue是按顺序处理消息的，
+         * 而在setContentView()后队列中会包含一条询问是否完成布局的消息，
+         * 而我们的任务通过View#post方法被添加到队列尾部，保证了在layout结束以后才执行。
+         */
         // Postpone the runnable until we know on which thread it needs to run.
         // Assume that the runnable will be successfully placed after attach.
+        //下面再看来看mRunQueue如何处理postDelayed()：
         getRunQueue().post(action);
         return true;
     }
@@ -19565,8 +19599,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
      * @param info the {@link android.view.View.AttachInfo} to associated with
      *        this view
      */
+    // frameworks/base/core/java/android/view/View.java
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     void dispatchAttachedToWindow(AttachInfo info, int visibility) {
+        //其实稍微注意一下源码就可以发现，
+        // 在View的dispatchAttachedToWindow方法中会设置AttachInfo并且处理mRunQueue中的队列：
         mAttachInfo = info;
         if (mOverlay != null) {
             mOverlay.getOverlayView().dispatchAttachedToWindow(info, visibility);
@@ -19585,7 +19622,11 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
             mAttachInfo.mScrollContainers.add(this);
             mPrivateFlags |= PFLAG_SCROLL_CONTAINER_ADDED;
         }
+        // 来进行处理所有的mRunQueue中的队列里面的消息时间
         // Transfer all pending runnables.
+        //（默认情况下没人调用post等相关方法这个变量会是null），
+        // 并将mAttachInfo中的mHandler对象传递到其内部的executeActions中，同时在View里将mRunQueue置null。
+        //下面来看HandlerActionQueue的executeActions函数
         if (mRunQueue != null) {
             mRunQueue.executeActions(info.mHandler);
             mRunQueue = null;

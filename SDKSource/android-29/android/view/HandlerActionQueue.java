@@ -29,19 +29,25 @@ public class HandlerActionQueue {
     private HandlerAction[] mActions;
     private int mCount;
 
+    // frameworks/base/core/java/android/view/HandlerActionQueue.java
     public void post(Runnable action) {
         postDelayed(action, 0);
     }
 
+    // frameworks/base/core/java/android/view/HandlerActionQueue.java
     public void postDelayed(Runnable action, long delayMillis) {
         final HandlerAction handlerAction = new HandlerAction(action, delayMillis);
 
         synchronized (this) {
+            // HandlerAction对象也是LazyInit的
             if (mActions == null) {
                 mActions = new HandlerAction[4];
             }
+            //这里其实也非常明显，首先HandlerActionQueue会将进来的Runnable对象封装成HandlerAction。
+            // 最后将HandlerAction对象加入到本地的mActions(即HandlerAction数组中)缓存起来。
             mActions = GrowingArrayUtils.append(mActions, mCount, handlerAction);
             mCount++;
+            /// 到这里其实调用就结束了，那么什么时候才会执行到呢？
         }
     }
 
@@ -77,11 +83,21 @@ public class HandlerActionQueue {
         }
     }
 
+    /**
+     * 这里其实就是读取HandlerAction数组并通过View中传递过来的mHandler执行postDelay的行为。
+     * 其实不论是在什么时机调用post最终都会用到mAttachInfo的mHandler对象来发送消息到MainLooper中。
+     * 虽然知道view.post的任务最终的一定会通过AttachInfo的mHandler对象post出去，但是他是哪里来的呢？
+     * @param handler
+     */
+    // frameworks/base/core/java/android/view/HandlerActionQueue.java
     public void executeActions(Handler handler) {
         synchronized (this) {
+            // 遍历很多actions
             final HandlerAction[] actions = mActions;
+            /// 进行Action的遍历。将所有的Actions取出来
             for (int i = 0, count = mCount; i < count; i++) {
                 final HandlerAction handlerAction = actions[i];
+                /// 调用handler的postDelay的方法
                 handler.postDelayed(handlerAction.action, handlerAction.delay);
             }
 

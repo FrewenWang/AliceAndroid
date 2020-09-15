@@ -321,58 +321,82 @@ public final class MessageQueue {
         // Return here if the message loop has already quit and been disposed.
         // This can happen if the application tries to restart a looper after quit
         // which is not supported.
+
+        // 如果消息循环已经退出了。则直接在这里return。因为调用disposed()方法后mPtr=0
         final long ptr = mPtr;
         if (ptr == 0) {
             return null;
         }
-
+        // 记录空闲时处理的IdlerHandler的数量
         int pendingIdleHandlerCount = -1; // -1 only during first iteration
+        // native层用到的变量 ，如果消息尚未到达处理时间，则表示为距离该消息处理事件的总时长，
+        // 表明Native Looper只需要block到消息需要处理的时间就行了。 所以nextPollTimeoutMillis>0表示还有消息待处理
         int nextPollTimeoutMillis = 0;
         for (;;) {
             if (nextPollTimeoutMillis != 0) {
+                // 刷新下Binder命令，一般在阻塞前调用
                 Binder.flushPendingCommands();
             }
-
+            // 调用native层进行消息标示，nextPollTimeoutMillis 为0立即返回，为-1则阻塞等待。
             nativePollOnce(ptr, nextPollTimeoutMillis);
-
+            // 加上同步锁
             synchronized (this) {
                 // Try to retrieve the next message.  Return if found.
+                // 获取开机到现在的时间
                 final long now = SystemClock.uptimeMillis();
                 Message prevMsg = null;
+                // 获取MessageQueue的链表表头的第一个元素
                 Message msg = mMessages;
                 // 如果msg不为空并且target为空，说明是一个同步屏障消息
                 // 关于同步屏障的问题，我们可以参考#ViewRootImpl#scheduleTraversals的方法
+                // 如果是则执行循环，拦截所有同步消息，直到取到第一个异步消息为止
                 // 进入do while循环，遍历链表，直到找到异步消息msg.isAsynchronous()才跳出循环交给Handler去处理这个异步消息。
                 if (msg != null && msg.target == null) {
                     // Stalled by a barrier.  Find the next asynchronous message in the queue.
+                    // 如果能进入这个if，则表面MessageQueue的第一个元素就是障栅(barrier)
                     do {
                         prevMsg = msg;
                         msg = msg.next;
+                        //如果msg==null或者msg是异步消息则退出循环，msg==null则意味着已经循环结束
                     } while (msg != null && !msg.isAsynchronous());
                 }
+
+                // 判断是否有可执行的Message
                 if (msg != null) {
+                    // 判断该Mesage是否到了被执行的时间。
                     if (now < msg.when) {
                         // Next message is not ready.  Set a timeout to wake up when it is ready.
+                        // 当Message还没有到被执行时间的时候，记录下一次要执行的Message的时间点
                         nextPollTimeoutMillis = (int) Math.min(msg.when - now, Integer.MAX_VALUE);
                     } else {
                         // Got a message.
+                        // Message的被执行时间已到
+                        // 从队列中取出该Message，并重新构建原来队列的链接
+                        // 刺客说明说有消息，所以不能阻塞
                         mBlocked = false;
+                        // 如果还有上一个元素
                         if (prevMsg != null) {
+                            //上一个元素的next(越过自己)直接指向下一个元素
                             prevMsg.next = msg.next;
                         } else {
+                            //如果没有上一个元素，则说明是消息队列中的头元素，直接让第二个元素变成头元素
                             mMessages = msg.next;
                         }
+                        // 因为要取出msg，所以msg的next不能指向链表的任何元素，所以next要置为null
                         msg.next = null;
                         if (DEBUG) Log.v(TAG, "Returning message: " + msg);
+                        // 标记该Message为正处于使用状态，然后返回Message
                         msg.markInUse();
                         return msg;
                     }
                 } else {
                     // No more messages.
+                    // 没有任何可执行的Message，重置时间
                     nextPollTimeoutMillis = -1;
                 }
 
                 // Process the quit message now that all pending messages have been handled.
+                // 关闭消息队列，返回null，通知Looper停止循环
                 if (mQuitting) {
                     dispose();
                     return null;
@@ -555,15 +579,22 @@ public final class MessageQueue {
      * @return
      */
     boolean enqueueMessage(Message msg, long when) {
+        /// 判断这个消息是否有目标处理者
+        //判断msg的target变量是否为null，如果为null，则为障栅(barrier)，
+        // 而障栅(barrier)入队则是通过postSyncBarrier()方法入队，所以msg的target一定有值
         if (msg.target == null) {
             throw new IllegalArgumentException("Message must have a target.");
         }
-
+        // 判断这个消息是否已经被处理
+        //判断msg的标志位，因为此时的msg应该是要入队，意味着msg的标志位应该显示还未被使用。
+        // 如果显示已使用，明显有问题，直接抛异常。
         if (msg.isInUse()) {
             throw new IllegalStateException(msg + " This message is already in use.");
         }
-        // 调用同步代码块中的逻辑
+        //加入同步锁。 调用同步代码块中的逻辑.
         synchronized (this) {
+            /// 特殊判断逻辑
+            //判断消息队列是否正在被关闭，如果是正在被关闭，则return false告诉消息入队是失败，并且回收消息
             if (mQuitting) {
                 IllegalStateException e = new IllegalStateException(
                         msg.target + " sending message to a Handler on a dead thread");
@@ -571,38 +602,65 @@ public final class MessageQueue {
                 msg.recycle();
                 return false;
             }
+
+            //设置msg的when并且修改msg的标志位，msg标志位显示为已使用
             // 这个就是标记消息正在使用中
             msg.markInUse();
             // 标记消息触发的事件
             msg.when = when;
-            // 获取当前的消息队列
+
+            // 获取当前的消息队列.这个消息Message对象他是一个队列性质的对象
             Message p = mMessages;
-            // 判断是否触发唤醒
+
+            // 判断是否触发唤醒。判断是否需要唤醒
             boolean needWake;
-            // 如果消息队列为空，并且是立即执行。获取队列的第一个消息事件也比当前的msg要迟
-            // 则这个时候这个消息就要入队列。
+
+            // 如果p==null则说明消息队列中的链表的头部元素为null；
+            // when == 0 表示立即执行；
+            // when< p.when 表示 msg的执行时间早与链表中的头部元素的时间
+            // 所以上面三个条件，那个条件成立，都要把msg设置成消息队列中链表的头部是元素
+            // 所以下面这个代码逻辑是如果消息队列为空，或者消息是立即执行，或者这个延迟的消息早于消息队列头部执行的时间
+            // 那么这个消息就应该插入队列的头部。
             if (p == null || when == 0 || when < p.when) {
                 // New head, wake up the event queue if blocked.
                 msg.next = p;
                 mMessages = msg;
                 needWake = mBlocked;
             } else {
+                /// 否则。则执行下面的逻辑。
+                // 如果上面三个条件都不满足则说明要把msg插入到中间的位置，不需要插入到头部
+
                 // Inserted within the middle of the queue.  Usually we don't have to wake
                 // up the event queue unless there is a barrier at the head of the queue
                 // and the message is the earliest asynchronous message in the queue.
+
+                //  如果头部元素不是障栅(barrier)或者异步消息，而且还是插入中间的位置，我们是不唤醒消息队列的。
                 needWake = mBlocked && p.target == null && msg.isAsynchronous();
+
+                // 其实将延迟消息插入到中间的位置的话，也是进入到一个死循环之内
+                // 将p的值赋值给prev
                 Message prev;
                 // 又是一个死循环，这个死循环是进行遍历这个消息队列。然后看这个消息查到哪里比较合适
-                for (;;) {
+                // 进入一个死循环，将p的值赋值给prev，前面的带我们知道，p指向的是mMessage，所以这里是将prev指向了mMessage，
+                // 在下一次循环的时候，prev则指向了第一个message，一次类推。接着讲p指向了p.next也就是mMessage.next，
+                // 也就是消息队列链表中的第二个元素。这一步骤实现了消息指针的移动，此时p表示的消息队列中第二个元素。
+                for (; ; ) {
                     prev = p;
                     p = p.next;
+                    // p==null，则说明没有下一个元素，即消息队列到头了，跳出循环；
+                    // 或者p!=null&&when < p.when 则说明当前需要入队的这个message的执行时间是小于队列中这个任务的执行时间的，
+                    // 也就是说这个需要入队的message需要比队列中这个message先执行，则说明这个位置刚刚是适合这个message的，所以跳出循环。
                     if (p == null || when < p.when) {
                         break;
                     }
+                    // 因为没有满足条件，说明队列中还有消息，不需要唤醒。
+                    // 如果需要唤醒，则唤醒，具体请看后面的Handler中的Native详解。
                     if (needWake && p.isAsynchronous()) {
                         needWake = false;
                     }
                 }
+                //跳出循环后主要做了两件事：事件A，将入队的这个消息的next指向循环中获取到的应该排在这个消息之后message。
+                // 事件B，将msg前面的message.next指向了msg。这样就将一个message完成了入队。
                 msg.next = p; // invariant: p == prev.next
                 prev.next = msg;
             }
@@ -612,6 +670,7 @@ public final class MessageQueue {
                 nativeWake(mPtr);
             }
         }
+        //返回true，告知入队成功。
         return true;
     }
 

@@ -624,6 +624,8 @@ public class Handler {
      *         message queue.  Returns false on failure, usually because the
      *         looper processing the message queue is exiting.
      * 使用Handler来发送异步消息
+     * 在当前时间，在所有待处理消息之后，将消息推送到消息队列的末尾。
+     * 在和当前线程关联的的Handler里面的handleMessage将收到这条消息，
      */
     public final boolean sendMessage(@NonNull Message msg) {
         // 调用sendMessageDelayed
@@ -687,11 +689,17 @@ public class Handler {
      *         occurs then the message will be dropped.
      */
     public final boolean sendMessageDelayed(@NonNull Message msg, long delayMillis) {
+        // 该方法内部就做了两件事
+        // 1、判断delayMillis是否小于0
+        // 2、调用了public boolean sendMessageAtTime(Message msg, long uptimeMillis)方法
         if (delayMillis < 0) {
             delayMillis = 0;
         }
         // 其实是在未来某个时间点类处理这个消息
         // 返回系统启动到现在的毫秒数，不包含休眠时间。就是说统计系统启动到现在的非休眠期时间+delayMillis
+        //以android系统的SystemClock的uptimeMillis()为基准，以毫秒为基本单位的绝对时间下，
+        // 在所有待处理消息后，将消息放到消息队列中。深度睡眠中的时间将会延迟执行的时间，
+        // 你将在和当前线程办的规定的Handler中的handleMessage中收到该消息。
         return sendMessageAtTime(msg, SystemClock.uptimeMillis() + delayMillis);
     }
 
@@ -715,7 +723,7 @@ public class Handler {
      *         occurs then the message will be dropped.
      */
     public boolean sendMessageAtTime(@NonNull Message msg, long uptimeMillis) {
-        // 获取消息队列
+        // 获取Java层的Looper里面消息队列
         MessageQueue queue = mQueue;
         if (queue == null) {
             RuntimeException e = new RuntimeException(
@@ -724,6 +732,7 @@ public class Handler {
             return false;
         }
         // 将当前的消息以及延迟的世间异步加入到消息队列中
+        // 调用了boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis)方法
         return enqueueMessage(queue, msg, uptimeMillis);
     }
 
@@ -776,7 +785,7 @@ public class Handler {
      */
     private boolean enqueueMessage(@NonNull MessageQueue queue, @NonNull Message msg,
                                    long uptimeMillis) {
-        // 为当前消息msg添加target。 这个target其实就是这个handler对象
+        // 为当前消息msg添加target。 这个target其实就是当前这个handler对象
         // 所以我们想到之前在Looper的对象在loop()方法里面调用
 
         // 哪个Handler发送的消息，最终这个消息的target就是这个Handler对象
@@ -784,10 +793,12 @@ public class Handler {
         msg.workSourceUid = ThreadLocalWorkSource.getUid();
 
         // 设置这个消息是异步的，这个变量的实例化是在Handler实例化的时候
+        // 如果Handler的mAsynchronous值为true(默认为false，即不设置)，
+        // 则设置msg的flags值，让是否异步在Handler和Message达成统一。
         if (mAsynchronous) {
             msg.setAsynchronous(true);
         }
-        // 执行queue中的异步消息队列
+        // 执行queue中的异步消息入队列相关逻辑
         return queue.enqueueMessage(msg, uptimeMillis);
     }
 

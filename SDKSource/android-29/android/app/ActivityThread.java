@@ -7124,7 +7124,12 @@ public final class ActivityThread extends ClientTransactionHandler {
             android.ddm.DdmHandleAppName.setAppName("<pre-initialized>",
                                                     UserHandle.myUserId());
             RuntimeInit.setApplicationObject(mAppThread.asBinder());
+            /// 这个地方其实是通过跨进程通信获取AMS的Binder对象引用
             final IActivityManager mgr = ActivityManager.getService();
+
+            //// 调用AMS中的attachApplication。这个是一个同步方法
+            // 我们知道我们通过AIDL来调用跨进程通信，然后其实客户端是会被挂起的。
+            // 所以我们知道我们所调用的服务端方法如果是一个耗时方法的话。我们应该放在子线程中去调用
             try {
                 mgr.attachApplication(mAppThread, startSeq);
             } catch (RemoteException ex) {
@@ -7357,6 +7362,9 @@ public final class ActivityThread extends ClientTransactionHandler {
     }
     /**
      * Android程序的启动入口函数
+     * 在本书的前面章节中己经提到多次，在应用启动时，首先会 fork 一个子进程，并且调用ActivityThread.main方法启动该进程。
+     * ActivityThread又会构建Application对象，然后和Activity、ContextImpl关联起来，
+     * 最后会调用Activity的onCreate、onStart、onResume函数使Activity运行起来，此时应用的用户界面就呈现在我们面前了。
      */
     public static void main(String[] args) {
         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, "ActivityThreadMain");
@@ -7394,7 +7402,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         // 实例化ActivityThread的对象
         // 这个地方就是实例化ActivityThread
         ActivityThread thread = new ActivityThread();
-        // 
+        // 调用ActivityThread的thread方法
         thread.attach(false, startSeq);
         // 获取主线程的Handler对象
         // 步骤二：同时在这个主线程获取sMainThreadHandler

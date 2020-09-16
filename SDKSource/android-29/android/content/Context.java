@@ -90,6 +90,13 @@ import java.util.concurrent.Executor;
  * allows access to application-specific resources and classes, as well as
  * up-calls for application-level operations such as launching activities,
  * broadcasting and receiving intents, etc.
+ *
+ * Context是最重要的一个类型，Context意为上下文，也就是程序的运行环境。
+ * 它封装了很多重要的操作，如startActivity()、sendBroadcast()、bindService等，因此，Context对开发者来说是最重要的高层接口。
+ * Context只是一个定义了很多接口的抽象类，这些接口的功能实现并不是在 Context 及其子类中，而是通过其他子系统来完成，
+ * 例如 startActivity 的真正实现是通过ActivityManagerService，获取应用包相关信息则是通过PackageManagerService。
+ * Context只是做了一个高层次的统一封装，
+ * 正如上文所示，Context 只是一个抽象类，它的真正实现在ContextImpl类中，ContextImpl就是今天我们要分析的外观类。
  */
 public abstract class Context {
     /** @hide */

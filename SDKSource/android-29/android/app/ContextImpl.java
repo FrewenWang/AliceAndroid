@@ -163,6 +163,10 @@ class ReceiverRestrictedContext extends ContextWrapper {
  * Common implementation of Context API, which provides the base
  * context object for Activity and other application components.
  * ContextImpl则是上下文功能的实现类；主要作用是实现Context里面的抽象方法
+ *
+ * 在本书的前面章节中己经提到多次，在应用启动时，首先会 fork 一个子进程，并且调用ActivityThread.main方法启动该进程。
+ * ActivityThread又会构建Application对象，然后和Activity、ContextImpl关联起来，
+ * 最后会调用Activity的onCreate、onStart、onResume函数使Activity运行起来，此时应用的用户界面就呈现在我们面前了。
  */
 class ContextImpl extends Context {
     private final static String TAG = "ContextImpl";

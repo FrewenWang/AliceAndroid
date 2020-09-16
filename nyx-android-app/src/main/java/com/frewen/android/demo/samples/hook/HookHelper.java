@@ -87,6 +87,6 @@ public class HookHelper {
      *
      */
     public static void hookAndroidClickEvent() {
-        Method mHookMethod = ReflectionInvokeHelper.
+//        Method mHookMethod = ReflectionInvokeHelper.
     }
 }

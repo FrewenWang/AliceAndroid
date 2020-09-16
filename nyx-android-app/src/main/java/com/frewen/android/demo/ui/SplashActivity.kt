@@ -12,6 +12,7 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.samples.designpattern.ProxyPatternActivity
 import com.frewen.android.demo.samples.ipc.client.AIDLDemoActivity
 import com.frewen.android.demo.samples.view.RecyclerViewDemoActivity
+import com.frewen.android.demo.samples.view.ViewDemoActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
 import com.frewen.aura.toolkits.common.ResourcesUtils
 import com.frewen.aura.toolkits.common.SharedPrefUtils
@@ -122,7 +123,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         CoroutineScope(job).launch {
             delay(splashDuration)
             // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, ProxyPatternActivity::class.java)
+            val intent = Intent(this@SplashActivity, ViewDemoActivity::class.java)
             startActivity(intent)
             // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
             finish()

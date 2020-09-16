@@ -3437,7 +3437,8 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         // Hint the GraphicsEnvironment that an activity is launching on the process.
         GraphicsEnvironment.hintActivityLaunch();
-
+        // 执行启动Activity的相关的操作。在这个方法里面会调用Activity的Attach方法
+        // 同时也会回调Activity的生命周期函数
         final Activity a = performLaunchActivity(r, customIntent);
 
         if (a != null) {

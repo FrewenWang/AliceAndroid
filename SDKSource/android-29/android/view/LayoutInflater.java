@@ -280,6 +280,7 @@ public abstract class LayoutInflater {
      * Obtains the LayoutInflater from the given context.
      */
     public static LayoutInflater from(Context context) {
+        // 其实这也是调用的 (LayoutInflater) context.getSystemService的方法实现
         LayoutInflater LayoutInflater =
                 (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (LayoutInflater == null) {
@@ -478,6 +479,7 @@ public abstract class LayoutInflater {
      *         XML file.
      */
     public View inflate(@LayoutRes int resource, @Nullable ViewGroup root) {
+        // root不为空时，attachToRoot默认为true
         return inflate(resource, root, root != null);
     }
 
@@ -504,7 +506,7 @@ public abstract class LayoutInflater {
     /**
      * Inflate a new view hierarchy from the specified xml resource. Throws
      * {@link InflateException} if there is an error.
-     *
+     *         XML的ResourceId
      * @param resource ID for an XML layout resource to load (e.g.,
      *        <code>R.layout.main_page</code>)
      * @param root Optional view to be the parent of the generated hierarchy (if
@@ -529,6 +531,13 @@ public abstract class LayoutInflater {
         if (view != null) {
             return view;
         }
+        // root不为空时，attachToRoot默认为true。
+        // 布局id会被通过调用getLayout方法生成一个XmlResourceParser对象。
+
+        // Android中布局文件都是使用xml编写的，所以解析过程自然涉及xml的解析。
+        // 常用的xml解析方式有DOM，SAX和PULL三种方式。DOM不适合xml文档较大，内存较小的场景，
+        // 所以不适用于手机这样内存有限的移动设备上。SAX和PULL类似，都具有解析速度快，占用内存少的优点，
+        // 而相对之下，PULL的操作方式更为简单易用，所以，Android系统内部在解析各种xml时都用的是PULL解析器。
         XmlResourceParser parser = res.getLayout(resource);
         try {
             return inflate(parser, root, attachToRoot);
@@ -592,6 +601,7 @@ public abstract class LayoutInflater {
     private void advanceToRootNode(XmlPullParser parser)
         throws InflateException, IOException, XmlPullParserException {
         // Look for the root node.
+        // 尝试找到布局文件的根节点
         int type;
         while ((type = parser.next()) != XmlPullParser.START_TAG &&
             type != XmlPullParser.END_DOCUMENT) {
@@ -615,6 +625,7 @@ public abstract class LayoutInflater {
      *
      * @param parser XML dom node containing the description of the view
      *        hierarchy.
+     *        是Pull解析器通过XML的文件来生成对应的Pull解析器对象
      * @param root Optional view to be the parent of the generated hierarchy (if
      *        <em>attachToRoot</em> is true), or else simply an object that
      *        provides a set of LayoutParams values for root of the returned
@@ -625,8 +636,36 @@ public abstract class LayoutInflater {
      * @return The root View of the inflated hierarchy. If root was supplied and
      *         attachToRoot is true, this is root; otherwise it is the root of
      *         the inflated XML file.
+     *
+     *         首先定义布局根View这一个概念，注意与root并不是同一个东西：
+     *
+     *         root是我们传进来的第二个参数
+     *         布局根View则是传递进来的布局文件的根节点所对应的View
+     *
+     *  这个方法主要有下面几个步骤：
+     *
+     *  1、首先查找根节点，如果整个xml文件解析完毕也没看到根节点，会抛出异常；
+     *  2、如果查找到的根节点名称是merge标签，会调用rInflate方法继续解析布局，最终返回root；
+     *  3、如果是其他标签（View、TextView等），会调用createViewFromTag生成布局根View，
+     *  并调用rInflateChildren递归解析余下的子View，添加至布局根View中，最后视root和attachToRoot参数的情况最终返回view或者root。
      */
     public View inflate(XmlPullParser parser, @Nullable ViewGroup root, boolean attachToRoot) {
+
+        // 从这里我们可以理清root和attachToRoot参数的关系了：
+        // root != null， attachToRoot == true：
+        // 传进来的布局会被加载成为一个View并作为子View添加到root中，最终返回root；
+        // 而且这个布局根节点的android:layout_参数会被解析用来设置View的大小。
+
+        // root == null， attachToRoot无用：
+        // 当root为空时，attachToRoot是什么都没有意义，此时传进来的布局会被加载成为一个View并直接返回；
+        // 布局根View的android:layout_xxx属性会被忽略。
+
+        // root != null， attachToRoot == false：
+        // 传进来的布局会被加载成为一个View并直接返回。
+        //布局根View的android:layout_xxx属性会被解析成LayoutParams并保留。(root只用来参与生成布局根View的LayoutParams)
+
+
+        // 我们通过Pull精细
         synchronized (mConstructorArgs) {
             Trace.traceBegin(Trace.TRACE_TAG_VIEW, "inflate");
 
@@ -634,10 +673,13 @@ public abstract class LayoutInflater {
             final AttributeSet attrs = Xml.asAttributeSet(parser);
             Context lastContext = (Context) mConstructorArgs[0];
             mConstructorArgs[0] = inflaterContext;
+            /// 首先注意result初值为root
             View result = root;
 
             try {
+                // 这个地方是尝试找到布局的根节点
                 advanceToRootNode(parser);
+                // 获取当前节点名称，如merge，RelativeLayout等
                 final String name = parser.getName();
 
                 if (DEBUG) {
@@ -646,16 +688,18 @@ public abstract class LayoutInflater {
                             + name);
                     System.out.println("**************************");
                 }
-
+                // 这个地方是merge节点的判断逻辑
                 if (TAG_MERGE.equals(name)) {
+                    /// 这个地方说明merge节点必须附着在一个根View上
                     if (root == null || !attachToRoot) {
                         throw new InflateException("<merge /> can be used only with a valid "
                                 + "ViewGroup root and attachToRoot=true");
                     }
-
+                    /// 会调用rInflate方法继续解析布局，最终返回root
                     rInflate(parser, root, inflaterContext, attrs, false);
                 } else {
                     // Temp is the root view that was found in the xml
+                    // 根据当前信息生成一个View
                     final View temp = createViewFromTag(root, name, inflaterContext, attrs);
 
                     ViewGroup.LayoutParams params = null;
@@ -666,7 +710,9 @@ public abstract class LayoutInflater {
                                     root);
                         }
                         // Create layout params that match root, if supplied
+                        // 如果指定了root参数的话，根据节点的布局参数生成合适的LayoutParams
                         params = root.generateLayoutParams(attrs);
+                        // 若指定了attachToRoot为false，会将生成的布局参数应用于上一步生成的View
                         if (!attachToRoot) {
                             // Set the layout params for temp if we are not
                             // attaching. (If we are, we use addView, below)
@@ -679,6 +725,7 @@ public abstract class LayoutInflater {
                     }
 
                     // Inflate all children under temp against its context.
+                    // 由上至下，递归加载xml内View，并添加到temp里
                     rInflateChildren(parser, temp, attrs, true);
 
                     if (DEBUG) {
@@ -687,12 +734,15 @@ public abstract class LayoutInflater {
 
                     // We are supposed to attach all the views we found (int temp)
                     // to root. Do that now.
+                    // 如果root不为空且指定了attachToRoot为true时，会将temp作为子View添加到root中
                     if (root != null && attachToRoot) {
                         root.addView(temp, params);
                     }
 
                     // Decide whether to return the root that was passed in or the
                     // top view found in xml.
+                    // 如果指定的root为空，或者attachToRoot为false的时候，返回的是加载出来的View，
+                    // 否则返回root
                     if (root == null || !attachToRoot) {
                         result = temp;
                     }
@@ -1000,7 +1050,11 @@ public abstract class LayoutInflater {
                 final Object lastContext = mConstructorArgs[0];
                 mConstructorArgs[0] = context;
                 try {
+                    // 如果View标签中没有"."，则代表是系统的widget，则调用onCreateView，
+                    // 这个方法会通过"createView"方法创建View
+                    // 不过前缀字段会自动补"android.view."前缀。
                     if (-1 == name.indexOf('.')) {
+                        /// 这个代码里面其实是通过发射来生成对一个对应的View
                         view = onCreateView(context, parent, name, attrs);
                     } else {
                         view = createView(context, name, null, attrs);
@@ -1081,6 +1135,7 @@ public abstract class LayoutInflater {
      */
     final void rInflateChildren(XmlPullParser parser, View parent, AttributeSet attrs,
             boolean finishInflate) throws XmlPullParserException, IOException {
+        /// qish
         rInflate(parser, parent, parent.getContext(), attrs, finishInflate);
     }
 
@@ -1090,6 +1145,11 @@ public abstract class LayoutInflater {
      * <p>
      * <strong>Note:</strong> Default visibility so the BridgeInflater can
      * override it.
+     * 这是一个递归方法，用于递归xml层次结构并实例化相关View以及他们自己View，然后调用onFinishInflate（）
+     *  原来，rInflate主要是调用了createViewFromTag生成当前解析到的View节点，
+     *  并递归调用rInflate逐层生成子View，添加到各自的上层View节点中。
+     *  当某个节点下面的所有子节点View解析生成完成后，才会调起onFinishInflate回调。
+     *  所以createViewFromTag才是真正生成View的地方啊。
      */
     void rInflate(XmlPullParser parser, View parent, Context context,
             AttributeSet attrs, boolean finishInflate) throws XmlPullParserException, IOException {
@@ -1107,6 +1167,7 @@ public abstract class LayoutInflater {
 
             final String name = parser.getName();
 
+            // 解析“requestFocus”标签，让父View调用requestFocus()获取焦点
             if (TAG_REQUEST_FOCUS.equals(name)) {
                 pendingRequestFocus = true;
                 consumeChildElements(parser);
@@ -1120,10 +1181,13 @@ public abstract class LayoutInflater {
             } else if (TAG_MERGE.equals(name)) {
                 throw new InflateException("<merge /> must be the root element");
             } else {
+                // 调用createViewFromTag生成一个View
                 final View view = createViewFromTag(parent, name, context, attrs);
                 final ViewGroup viewGroup = (ViewGroup) parent;
                 final ViewGroup.LayoutParams params = viewGroup.generateLayoutParams(attrs);
+                //其实这个方法也是调用rInflate 逐层递归调用rInflate，解析view嵌套的子View.
                 rInflateChildren(parser, view, attrs, true);
+                // 将解析生成子View添加到上一层View中
                 viewGroup.addView(view, params);
             }
         }
@@ -1132,6 +1196,7 @@ public abstract class LayoutInflater {
             parent.restoreDefaultFocus();
         }
 
+        // 内层子View被解析出来后，将调用其父View的“onFinishInflate()”回调
         if (finishInflate) {
             parent.onFinishInflate();
         }

@@ -3321,6 +3321,14 @@ public class Activity extends ContextThemeWrapper
      * @see #setContentView(android.view.View, android.view.ViewGroup.LayoutParams)
      */
     public void setContentView(@LayoutRes int layoutResID) {
+        // 第一步：我们看到Activity里面的调用的getWindow的setContentView方法
+        // 我们都知道这个getWindow其实就是PhoneWindow
+        // 那么这个Window是什么时候被实例化的呢？？
+
+        // 这里先总结下得到的信息：
+        // 一个Activity对应一个Window
+        // Window只有一个子类：PhoneWindow
+        // 在Activity中调用setContentView，其实就是调用Activity里面的PhoneWindow的setContentView方法
         getWindow().setContentView(layoutResID);
         initWindowDecorActionBar();
     }
@@ -7725,6 +7733,13 @@ public class Activity extends ContextThemeWrapper
     /**
      * 在Activity 启动过程中会调用ActivityThread的performLaunchActivity 方法，
      * performLaunchActivity方法中又会调用Activity的attach方法，PhoneWindow就是在Activity的attach方法中创建的
+     *
+     * 这里先总结下得到的信息：
+     *
+     * 1、一个Activity对应一个Window
+     * 2、Window只有一个子类：PhoneWindow
+     * 3、在Activity中调用setContentView
+     * 其实就是调用Activity里面的PhoneWindow的setContentView方法
      */
     @UnsupportedAppUsage
     final void attach(Context context, ActivityThread aThread,
@@ -7739,7 +7754,6 @@ public class Activity extends ContextThemeWrapper
         mFragments.attachHost(null /*parent*/);
         // PhoneWindow是何时创建的呢？在Activity 启动过程中会调用ActivityThread的performLaunchActivity方法
         // ActivityThread的performLaunchActivity方法中会调用activity的attach方法。
-        //
         mWindow = new PhoneWindow(this, window, activityConfigCallback);
         mWindow.setWindowControllerCallback(this);
         mWindow.setCallback(this);

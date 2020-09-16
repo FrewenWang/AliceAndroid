@@ -6,9 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -63,7 +61,7 @@ public class ViewTouchConflictActivity extends AppCompatActivity {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.item_list, R.id.name, datas);
+                R.layout.item_list_textview, R.id.name, datas);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener((parent, view, position, id) -> Toast.makeText(ViewTouchConflictActivity.this, "click item",
                 Toast.LENGTH_SHORT).show());

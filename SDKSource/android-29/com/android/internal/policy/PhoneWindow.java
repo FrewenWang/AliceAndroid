@@ -424,25 +424,41 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         // Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window
         // decor, when theme attributes and the like are crystalized. Do not check the feature
         // before this happens.
+        // mContentParent变量大家还记得是什么吗，我这里再提一下。
+        // installDecor指定了一个布局，其中findViewById得到的一个ViewGroup就是这个mContentParent。
         if (mContentParent == null) {
             installDecor();
         } else if (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) {
             mContentParent.removeAllViews();
         }
-
+        /// 那么到底走的if还是else呢，这里做了一个判断，是否设置了FEATURE_CONTENT_TRANSITIONS，
+        // 这个是在哪里设置的呢，其实是在generateLayout方法中。我们的布局Style文件。
+        // 这个如果要研究的就要翻看我们不同的Android的版本AS在创建工程的时候传入AS Style
+        // 一般情况下，我们是不会修改这个值的，所以默认就是false
         if (hasFeature(FEATURE_CONTENT_TRANSITIONS)) {
             final Scene newScene = Scene.getSceneForLayout(mContentParent, layoutResID,
                     getContext());
             transitionTo(newScene);
         } else {
+            // hasFeature(FEATURE_CONTENT_TRANSITIONS)默认为false
+            // 我们就开始走这个逻辑
+            /// 方法其实就是将我们写的布局文件通过LayoutInflater放到Android系统给我们指定的一个父容器mContentParent中。
+            /// 这个父容器其实就是我们的content容器
+            // 而且mContentParent是DecorView的，现在我们写的布局也进入DecorView了，
+            // 那么这个DecorView将包含整个界面，甚至可以这样说，
+            // DecorView就是我们直接看到的界面了
             mLayoutInflater.inflate(layoutResID, mContentParent);
         }
+        // requestFitSystemWindows方法的名字听起来是将界面装载到系统窗口中，大概像这样：
         mContentParent.requestApplyInsets();
         final Callback cb = getCallback();
         if (cb != null && !isDestroyed()) {
             cb.onContentChanged();
         }
         mContentParentExplicitlySet = true;
+
+        //所以关于setContentView的探索就到此为止。
+        // 有读者就说了，为什么啊，看了这么久好不容易看到这里来，你一句就给我打发了？继续跟源码啊！
     }
 
     @Override
@@ -2334,6 +2350,11 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         return new DecorView(context, featureId, this, getAttributes());
     }
 
+    /**
+     * 传入的参数是DecorView
+     * @param decor
+     * @return
+     */
     protected ViewGroup generateLayout(DecorView decor) {
         // Apply data from current theme.
 
@@ -2624,7 +2645,10 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
             // System.out.println("Simple!");
         }
 
+        // 我们重点看看这个方法。我们重点就是我们我们的Content的布局。
+        // 也就是我们的安卓View的布局里面的内容区域布局
         mDecor.startChanging();
+        // int变量layoutResource赋值，都赋这种值R.layout.XXX（即：layoutResource = R.layout.XXX）
         mDecor.onResourcesLoaded(mLayoutInflater, layoutResource);
 
         ViewGroup contentParent = (ViewGroup)findViewById(ID_ANDROID_CONTENT);
@@ -2679,9 +2703,17 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         mAlwaysReadCloseOnTouchAttr = true;
     }
 
+    /**
+     * 根据对PhoneWindow内部的分析，务必让我再来总结一下installDecor方法，以及我们得到的知识：
+     * installDecor方法实质是将系统的一个布局文件(R.id.content 内容基础布局)转化成View，并将这个view添加到DecorView中。
+     * PhoneWindow持有DecorView
+     * 每个Activity都对应一个PhoneWidow
+     * 我们知道了在使用requestWindowFeature的时候，需要放在setContentView前面的原因（没想到吧😏）
+     */
     private void installDecor() {
         mForceDecorInstall = false;
         if (mDecor == null) {
+            //实质-> mDecor = new DecorView(参数)，这是个ViewGroup
             mDecor = generateDecor(-1);
             mDecor.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
             mDecor.setIsRootNamespace(true);
@@ -2691,7 +2723,12 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         } else {
             mDecor.setWindow(this);
         }
+
+        // 在某个条件下，layoutResource = R.layout.XXX，该布局里面包含一个id为content的容器ViewGroup
+        // mDecor使用LayoutInflater，将这个布局转化成了View，并添加给了mDecor，也就是他自己
+        // 通过findViewById(ID_ANDROID_CONTENT)，我们得到了R.layout.XXX布局中的那个容器ViewGroup
         if (mContentParent == null) {
+            // 得到一个布局，通过findViewById将布局中的一个ViewGroup得到。
             mContentParent = generateLayout(mDecor);
 
             // Set up decor part of UI to ignore fitsSystemWindows if appropriate.

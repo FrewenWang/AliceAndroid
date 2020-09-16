@@ -2074,6 +2074,11 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         }
     }
 
+    /**
+     * 看看mDecor.onResourcesLoaded(mLayoutInflater, layoutResource);，看看这个布局做了什么处理。
+     * @param inflater
+     * @param layoutResource
+     */
     void onResourcesLoaded(LayoutInflater inflater, int layoutResource) {
         if (mBackdropFrameRenderer != null) {
             loadBackgroundDrawablesIfNeeded();
@@ -2084,6 +2089,8 @@ public class DecorView extends FrameLayout implements RootViewSurfaceTaker, Wind
         }
 
         mDecorCaptionView = createDecorCaptionView(inflater);
+        //用我们熟悉的LayoutInflater，将这个布局转化为一个View，
+        // 然后将view直接加入DecorView。直接就加进DecorView？难不成这个DecorView是一个ViewGroup。没错：
         final View root = inflater.inflate(layoutResource, null);
         if (mDecorCaptionView != null) {
             if (mDecorCaptionView.getParent() == null) {

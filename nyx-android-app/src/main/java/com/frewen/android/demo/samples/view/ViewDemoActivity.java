@@ -2,25 +2,29 @@ package com.frewen.android.demo.samples.view;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.ViewTreeObserver;
+import android.widget.RelativeLayout;
 
 import com.frewen.android.demo.R;
 import com.frewen.aura.framework.kotlin.activity.BaseActivity;
 
-import androidx.appcompat.widget.Toolbar;
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * @filename: ViewDemoActivity
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019-05-15 08:17
- * Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
 public class ViewDemoActivity extends BaseActivity {
     private static final String TAG = "T:ViewDemoActivity";
-    LinearLayout mLinearLayout;
-    TextView mTextView;
+
+    @BindView(R.id.root)
+    RelativeLayout root;
 
     @Override
     protected void initData(Bundle savedInstanceState) {
@@ -53,6 +57,33 @@ public class ViewDemoActivity extends BaseActivity {
 //            }
 //        });
 
+        // 我们给rootView来添加一个视图变化的监听。来监听当前的视频
+        root.getViewTreeObserver().addOnGlobalLayoutListener(() -> hookViews(root, 0));
+
+    }
+
+    private void hookViews(RelativeLayout root, int i) {
+
+    }
+
+    @OnClick({R.id.button})
+    public void clickAddButton(View view) {
+        /**
+         * 即root传参为空，与上面第2种情况对应，所以此时布局根View的android:layout_xx属性都被忽略了。
+         * 也就是相当于并没有给TextView设置宽高，所以只能按默认的TextView大小显示了。
+         */
+//        View insideView = LayoutInflater.from(ViewDemoActivity.this).inflate(R.layout.item_list_textview, null);
+//        root.addView(insideView);
+        /**
+         * 如果我们想让这个TextView能设置的android:layout_xx属性都能生效的话，我们需要使用下面的方式
+         */
+//        View insideView = LayoutInflater.from(ViewDemoActivity.this).inflate(R.layout.item_list_textview, root);
+
+        /**
+         * 如果我们想让这个TextView能设置的android:layout_xx属性都能生效的话，我们需要使用下面的方式
+         */
+        View insideView = LayoutInflater.from(ViewDemoActivity.this).inflate(R.layout.item_list_textview, root, false);
+        root.addView(insideView);
     }
 
     /**
@@ -79,6 +110,6 @@ public class ViewDemoActivity extends BaseActivity {
 
     @Override
     protected void destroyView() {
-
+        // root.getViewTreeObserver().removeOnGlobalLayoutListener();
     }
 }

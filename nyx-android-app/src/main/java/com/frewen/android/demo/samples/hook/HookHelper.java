@@ -8,6 +8,7 @@ import com.frewen.android.demo.BuildConfig;
 import com.frewen.aura.toolkits.reflection.ReflectionInvokeHelper;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 /**
@@ -80,5 +81,12 @@ public class HookHelper {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     *
+     */
+    public static void hookAndroidClickEvent() {
+        Method mHookMethod = ReflectionInvokeHelper.
     }
 }

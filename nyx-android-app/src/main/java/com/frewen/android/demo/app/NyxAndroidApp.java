@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Debug;
 import android.os.StrictMode;
+import android.os.Trace;
 import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
@@ -13,6 +14,7 @@ import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.network.VideoApiService;
 import com.frewen.android.demo.performance.AppBlockCanaryContext;
+import com.frewen.android.demo.performance.LaunchTimeRecord;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.aura.framework.app.BaseMVPApp;
@@ -28,6 +30,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import javax.inject.Inject;
 
+import androidx.core.os.TraceCompat;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -54,6 +57,7 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
 
     @Override
     protected void attachBaseContext(Context base) {
+        LaunchTimeRecord.INSTANCE.startRecord("Application");
         // 在这里调用Context的方法会崩溃
         super.attachBaseContext(base);
         // 在这里可以正常调用Context的方法
@@ -64,11 +68,12 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
     public void onCreate() {
         super.onCreate();
 
-        Debug.startMethodTracing("Application OnCreate Start Begin");
-
+        // 生成TraceView的，文件默认存储8M的信息
+        // Debug.startMethodTracing("AndroidSamples");
+        // 使用Systrace进行分析
+        TraceCompat.beginSection("NyxAndroid Start");
 
         initPerformanceDetector();
-
 
         AuraToolKits.init(null, "AndroidSamples");
 
@@ -80,7 +85,9 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector {
         //Application级别注入
         AppInjector.INSTANCE.inject(this);
 
-        Debug.startMethodTracing("Application OnCreate Start End");
+        // 执行结束的时候录制TraceView的相关信息
+        // Debug.stopMethodTracing();
+        TraceCompat.endSection();
     }
 
     /**

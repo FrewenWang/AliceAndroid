@@ -10,12 +10,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.frewen.aura.toolkits.utils.ToastUtils
 import com.tencent.bugly.crashreport.CrashReport
+import javax.inject.Inject
 
 /**
  * 这个是ViewModel的实现，我们来简单看一下这个类的实现：
  * 这个ViewModel我们来让他继承自AndroidViewModel
  */
-class MyProfileViewModel(application: Application) : AndroidViewModel(application) {
+class MyProfileViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
     private val context = getApplication<Application>().applicationContext!!
 
     val loginName = ObservableField<String>()

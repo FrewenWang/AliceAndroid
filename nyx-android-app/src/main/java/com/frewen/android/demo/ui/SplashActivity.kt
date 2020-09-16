@@ -3,16 +3,16 @@ package com.frewen.android.demo.ui
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewTreeObserver
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.*
 import android.widget.ImageView
+import androidx.core.view.doOnPreDraw
 import butterknife.BindView
 import com.frewen.android.demo.R
-import com.frewen.android.demo.samples.designpattern.ProxyPatternActivity
-import com.frewen.android.demo.samples.ipc.client.AIDLDemoActivity
-import com.frewen.android.demo.samples.view.RecyclerViewDemoActivity
-import com.frewen.android.demo.samples.view.ViewDemoActivity
+import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
+import com.frewen.android.demo.performance.LaunchTimeRecord.startRecord
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
 import com.frewen.aura.toolkits.common.ResourcesUtils
 import com.frewen.aura.toolkits.common.SharedPrefUtils
@@ -123,7 +123,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         CoroutineScope(job).launch {
             delay(splashDuration)
             // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, ViewDemoActivity::class.java)
+            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
             startActivity(intent)
             // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
             finish()
@@ -193,11 +193,27 @@ class SplashActivity : BaseButterKnifeActivity() {
         /// 在动画结束时应用的水平缩放系数
         /// 在动画开始时应用的垂直缩放系数
         /// 在动画结束时应用垂直缩放系数
-        val scaleAnimation = ScaleAnimation(1f, 1.1f, 1f, 1.1f
-                , Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        val scaleAnimation = ScaleAnimation(1f, 1.1f, 1f, 1.1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
         scaleAnimation.duration = splashDuration
         scaleAnimation.fillAfter = true
+
+        /**
+         * TODO 关于View的addOnPreDrawListener需要学习
+         * 注意：viewTreeObserver.addOnDrawListener的是最低API要求是16这个需要注意
+         */
+        splashBg!!.viewTreeObserver.addOnPreDrawListener(
+                object : ViewTreeObserver.OnPreDrawListener {
+                    override fun onPreDraw(): Boolean {
+                        splashBg!!.viewTreeObserver.removeOnPreDrawListener(this)
+                        endRecord("Application")
+                        return true
+                    }
+                })
+
+//        splashBg!!.doOnPreDraw { endRecord("Application") }
+
         splashBg!!.startAnimation(scaleAnimation)
+
     }
 
     /**

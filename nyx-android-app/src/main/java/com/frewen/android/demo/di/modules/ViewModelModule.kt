@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.frewen.android.demo.di.annotation.ViewModelKey
 import com.frewen.android.demo.samples.tiktok.fragments.HomeViewModel
 import com.frewen.android.demo.ui.discovery.DiscoveryViewModel
+import com.frewen.android.demo.ui.profile.MyProfileViewModel
 import com.frewen.android.demo.viewmodel.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -43,6 +44,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
     abstract fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MyProfileViewModel::class)
+    abstract fun bindMyProfileViewModel(myProfileViewModel: MyProfileViewModel): ViewModel
 
     /**
      *

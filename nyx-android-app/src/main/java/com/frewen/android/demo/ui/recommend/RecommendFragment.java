@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.frewen.android.aura.annotations.FragmentDestination;
+import com.frewen.android.demo.R;
 import com.frewen.aura.framework.fragment.BaseFragment;
 
 
@@ -21,6 +22,6 @@ public class RecommendFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.fragment_main_recommend;
     }
 }

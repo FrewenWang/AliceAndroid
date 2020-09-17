@@ -260,6 +260,29 @@ import java.util.stream.Stream;
  * @author Doug Lea
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
+ *
+ *   具体介绍：https://www.jianshu.com/p/c0642afe03e0
+ *   JDK1.7的版本的实现：
+ *           ConcurrentHashMap采用分段锁的机制，实现并发的更新操作，底层采用数组+链表的存储结构。
+ *           其包含两个核心静态内部类 Segment和HashEntry。
+ *           Segment继承ReentrantLock用来充当锁的角色，每个 Segment 对象守护每个散列映射表的若干个桶。
+ *           HashEntry 用来封装映射表的键 / 值对；
+ *           每个桶是由若干个 HashEntry 对象链接起来的链表。
+ *           一个 ConcurrentHashMap 实例中包含由若干个 Segment 对象组成的数组，下面我们通过一个图来演示一下 ConcurrentHashMap 的结构：
+ *    JDK1.8分析
+ *           1.8的实现已经抛弃了Segment分段锁机制，利用CAS+Synchronized来保证并发更新的安全，底层采用数组+链表+红黑树的存储结构。
+ *
+ *           重要概念
+ *           在开始之前，有些重要的概念需要介绍一下：
+ *           table：默认为null，初始化发生在第一次插入操作，默认大小为16的数组，用来存储Node节点数据，扩容时大小总是2的幂次方。
+ *           nextTable：默认为null，扩容时新生成的数组，其大小为原数组的两倍。
+ *           sizeCtl ：默认为0，用来控制table的初始化和扩容操作，具体应用在后续会体现出来。
+ *           **-1 **代表table正在初始化
+ *           1、如果table未初始化，表示table需要初始化的大小。
+ *           2、如果table初始化完成，表示table的容量，默认是table大小的0.75倍，居然用这个公式算0.75（n - (n >>> 2)）。
+ *
+ *         文章参考： https://www.jianshu.com/p/c0642afe03e0
+ *
  */
 public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     implements ConcurrentMap<K,V>, Serializable {
@@ -621,6 +644,8 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * in bulk tasks.  Subclasses of Node with a negative hash field
      * are special, and contain null keys and values (but are never
      * exported).  Otherwise, keys and vals are never null.
+     *
+     * Node：保存key，value及key的hash值的数据结构。
      */
     static class Node<K,V> implements Map.Entry<K,V> {
         final int hash;
@@ -693,6 +718,11 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * cheapest possible way to reduce systematic lossage, as well as
      * to incorporate impact of the highest bits that would otherwise
      * never be used in index calculations because of table bounds.
+     *
+     * Hash的算法的计算规则.
+     * 将Key的HashCode值进行无符号右移16位
+     * 然后再和key的hashCode值进行异或运算
+     * 结果再和0x7fffffff进行按位与运算
      */
     static final int spread(int h) {
         return (h ^ (h >>> 16)) & HASH_BITS;
@@ -701,16 +731,20 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     /**
      * Returns a power of two table size for the given desired capacity.
      * See Hackers Delight, sec 3.2
+     * 实例化ConcurrentHashMap时带参数时，会根据参数调整table的大小，
+     * 假设参数为100，最终会调整成128，确保table的大小总是2的幂次方，算法如下：
+     * 其实就是调整为大于等于传入的容量的最好二次幂计算结果
      */
     private static final int tableSizeFor(int c) {
-        int n = c - 1;
-        n |= n >>> 1;
+        int n = c - 1;    //n = 100-1 = 99;
+        n |= n >>> 1;     //n = 100-1 = 99;
         n |= n >>> 2;
         n |= n >>> 4;
         n |= n >>> 8;
         n |= n >>> 16;
         return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
+
 
     /**
      * Returns x's Class if it is of the form "class C implements
@@ -763,11 +797,36 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * writes to be conservative.
      */
 
+    /**
+     * Doug Lea采用Unsafe.getObjectVolatile来获取，
+     * 也许有人质疑，直接table[index]不可以么，为什么要这么复杂？
+     * 在java内存模型中，我们已经知道每个线程都有一个工作内存，里面存储着table的副本，虽然table是volatile修饰的，
+     * 但不能保证线程每次都拿到table中的最新元素，Unsafe.getObjectVolatile可以直接获取指定内存的数据，
+     * 保证了每次拿到数据都是最新的。
+     * @param tab
+     * @param i
+     * @param <K>
+     * @param <V>
+     * @return
+     */
     @SuppressWarnings("unchecked")
     static final <K,V> Node<K,V> tabAt(Node<K,V>[] tab, int i) {
         return (Node<K,V>)U.getObjectVolatile(tab, ((long)i << ASHIFT) + ABASE);
     }
 
+    /**
+     * 如果f为null，说明table中这个位置第一次插入元素，利用Unsafe.compareAndSwapObject方法插入Node节点。
+     * 同样的道理，我们也是希望compareAndSwapObject保证原子性进行插入
+     *
+     * 如果CAS失败，说明有其它线程提前插入了节点，自旋重新尝试在这个位置插入节点。所以一般情况下，这个地方可以保证完全插入进去
+     * @param tab
+     * @param i
+     * @param c
+     * @param v
+     * @param <K>
+     * @param <V>
+     * @return
+     */
     static final <K,V> boolean casTabAt(Node<K,V>[] tab, int i,
                                         Node<K,V> c, Node<K,V> v) {
         return U.compareAndSwapObject(tab, ((long)i << ASHIFT) + ABASE, c, v);
@@ -804,6 +863,10 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * when table is null, holds the initial table size to use upon
      * creation, or 0 for default. After initialization, holds the
      * next element count value upon which to resize the table.
+     *
+     * sizeCtl默认为0，如果ConcurrentHashMap实例化时有传参数，sizeCtl会是一个2的幂次方的值。
+     * 所以执行第一次put操作的线程会执行Unsafe.compareAndSwapInt方法修改sizeCtl为-1，
+     * 有且只有一个线程能够修改成功，其它线程通过Thread.yield()让出CPU时间片等待table初始化完成。
      */
     private transient volatile int sizeCtl;
 
@@ -1014,30 +1077,48 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      * @return the previous value associated with {@code key}, or
      *         {@code null} if there was no mapping for {@code key}
      * @throws NullPointerException if the specified key or value is null
+     * 进行put(K key, V value)的插入数据的操作
      */
     public V put(K key, V value) {
         return putVal(key, value, false);
     }
 
+    /**
+     * 假设table已经初始化完成，put操作采用CAS+synchronized实现并发插入或更新操作，
+     * 具体实现如下。
+     */
     /** Implementation for put and putIfAbsent */
     final V putVal(K key, V value, boolean onlyIfAbsent) {
+        // ConcurrentHash不允许Key或者Value为null
         if (key == null || value == null) throw new NullPointerException();
+
+        // hash算法
         int hash = spread(key.hashCode());
         int binCount = 0;
         for (Node<K,V>[] tab = table;;) {
             Node<K,V> f; int n, i, fh;
             if (tab == null || (n = tab.length) == 0)
                 tab = initTable();
+            /// table中定位索引位置，n是table的大小
+            // 获取table中对应索引的元素f。
             else if ((f = tabAt(tab, i = (n - 1) & hash)) == null) {
+                // 如果f为null，说明table中这个位置第一次插入元素，
+                // 利用Unsafe.compareAndSwapObject方法插入Node节点。
+
+                /// 如果CAS成功，说明Node节点已经插入，随后addCount(1L, binCount)方法会检查当前容量是否需要进行扩容。
                 if (casTabAt(tab, i, null,
                              new Node<K,V>(hash, key, value, null)))
                     break;                   // no lock when adding to empty bin
-            }
-            else if ((fh = f.hash) == MOVED)
+            } else if ((fh = f.hash) == MOVED){
+                //如果f的hash值为-1，说明当前f是ForwardingNode节点，
+                // 意味有其它线程正在扩容，则一起进行扩容操作。
                 tab = helpTransfer(tab, f);
-            else {
+            } else {
                 V oldVal = null;
+                // 其余情况把新的Node节点按链表或红黑树的方式插入到合适的位置，这个过程采用同步内置锁实现并发，代码如下:
+                // 这个地方我们可以看到他的对象锁的申请其实是对应索引处的元素的对象锁。其实就是我们数组中链表元素对象
                 synchronized (f) {
+                    /// 在节点f上进行同步，节点插入之前，再次利用tabAt(tab, i) == f判断，防止被其它线程修改。
                     if (tabAt(tab, i) == f) {
                         if (fh >= 0) {
                             binCount = 1;
@@ -1052,14 +1133,17 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
                                     break;
                                 }
                                 Node<K,V> pred = e;
+                                //如果f.hash >= 0，说明f是链表结构的头结点，遍历链表，
+                                // 如果找到对应的node节点，则修改value，否则在链表尾部加入节点。
                                 if ((e = e.next) == null) {
                                     pred.next = new Node<K,V>(hash, key,
                                                               value, null);
                                     break;
                                 }
                             }
-                        }
-                        else if (f instanceof TreeBin) {
+                        } else if (f instanceof TreeBin) {
+                            // 如果f是TreeBin类型节点，说明f是红黑树根节点，
+                            // 则在树结构上遍历元素，更新或增加节点。
                             Node<K,V> p;
                             binCount = 2;
                             if ((p = ((TreeBin<K,V>)f).putTreeVal(hash, key,
@@ -2233,6 +2317,8 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
 
     /**
      * A node inserted at head of bins during transfer operations.
+     * ForwardingNode：一个特殊的Node节点，hash值为-1，其中存储nextTable的引用。
+     * 只有table发生扩容的时候，ForwardingNode才会发挥作用，作为一个占位符放在table中表示当前节点为null或则已经被移动。
      */
     static final class ForwardingNode<K,V> extends Node<K,V> {
         final Node<K,V>[] nextTable;
@@ -2293,17 +2379,26 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
 
     /**
      * Initializes table, using the size recorded in sizeCtl.
+     * 前面已经提到过，table初始化操作会延缓到第一次put行为。但是put是可以并发执行的，
+     * Doug Lea是如何实现table只初始化一次的？让我们来看看源码的实现。
      */
     private final Node<K,V>[] initTable() {
         Node<K,V>[] tab; int sc;
+        // 我们首先判断table是否为null
         while ((tab = table) == null || tab.length == 0) {
+            /// //如果一个线程发现sizeCtl<0，意味着另外的线程执行CAS操作成功，当前线程只需要让出cpu时间片
             if ((sc = sizeCtl) < 0)
                 Thread.yield(); // lost initialization race; just spin
+            //// 否则进行CAS交互，将sizeCtl的值设置为-1。然后进行initTable的初始化
+            /// 这个操作肯定可以保证只有一个线程可以操作
             else if (U.compareAndSwapInt(this, SIZECTL, sc, -1)) {
                 try {
                     if ((tab = table) == null || tab.length == 0) {
+                        /// 实例化数组的大小，如果(sc > 0) 说明用户有传入默认大小
+                        /// 否则使用系统提供的默认容量大小
                         int n = (sc > 0) ? sc : DEFAULT_CAPACITY;
                         @SuppressWarnings("unchecked")
+                        // nt初始化对应容量大小的Node数组
                         Node<K,V>[] nt = (Node<K,V>[])new Node<?,?>[n];
                         table = tab = nt;
                         sc = n - (n >>> 2);
@@ -2326,6 +2421,9 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
      *
      * @param x the count to add
      * @param check if <0, don't check resize, if <= 1 only check if uncontended
+     *
+     * 当table容量不足的时候，即table的元素数量达到容量阈值sizeCtl，需要对table进行扩容。
+     * 整个扩容分为两部分：
      */
     private final void addCount(long x, int check) {
         CounterCell[] as; long b, s;
@@ -2345,20 +2443,23 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
             s = sumCount();
         }
         if (check >= 0) {
-            Node<K,V>[] tab, nt; int n, sc;
-            while (s >= (long)(sc = sizeCtl) && (tab = table) != null &&
-                   (n = tab.length) < MAXIMUM_CAPACITY) {
+            // 这两个过程在单线程下实现很简单，但是ConcurrentHashMap是支持并发插入的，
+            // 扩容操作自然也会有并发的出现，这种情况下，第二步可以支持节点的并发复制，
+            // 这样性能自然提升不少，但实现的复杂度也上升了一个台阶。
+            Node<K, V>[] tab, nt;
+            int n, sc;
+            while (s >= (long) (sc = sizeCtl) && (tab = table) != null &&
+                    (n = tab.length) < MAXIMUM_CAPACITY) {
                 int rs = resizeStamp(n);
                 if (sc < 0) {
                     if ((sc >>> RESIZE_STAMP_SHIFT) != rs || sc == rs + 1 ||
-                        sc == rs + MAX_RESIZERS || (nt = nextTable) == null ||
-                        transferIndex <= 0)
+                            sc == rs + MAX_RESIZERS || (nt = nextTable) == null ||
+                            transferIndex <= 0)
                         break;
                     if (U.compareAndSwapInt(this, SIZECTL, sc, sc + 1))
                         transfer(tab, nt);
-                }
-                else if (U.compareAndSwapInt(this, SIZECTL, sc,
-                                             (rs << RESIZE_STAMP_SHIFT) + 2))
+                } else if (U.compareAndSwapInt(this, SIZECTL, sc,
+                        (rs << RESIZE_STAMP_SHIFT) + 2))
                     transfer(tab, null);
                 s = sumCount();
             }

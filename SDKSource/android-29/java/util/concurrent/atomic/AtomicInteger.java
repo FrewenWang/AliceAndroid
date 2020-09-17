@@ -53,7 +53,9 @@ import java.util.function.IntUnaryOperator;
  */
 public class AtomicInteger extends Number implements java.io.Serializable {
     private static final long serialVersionUID = 6214790243416807050L;
-
+    // 这里用到了 sun.misc.Unsafe 类，它可以提供硬件级别的原子操作，
+    // 它可以获取某个属性在内存中的位置，也可以修改对象的字段值，只不过该类对一般开发而言，
+    // 很少会用到，其底层是用 C/C++ 实现的，所以它的方式都是被 native 关键字修饰过的。
     private static final sun.misc.Unsafe U = sun.misc.Unsafe.getUnsafe();
     private static final long VALUE;
 
@@ -152,10 +154,14 @@ public class AtomicInteger extends Number implements java.io.Serializable {
 
     /**
      * Atomically increments by one the current value.
-     *
+     * getAndIncrement() 方法底层利用 CAS 技术保证了并发安全。
      * @return the previous value
      */
     public final int getAndIncrement() {
+        //// 我们分析一下这个参数：
+        /// 参数this:当前对象
+        /// 参数VALUE: 当前对象的读取的原始值
+        /// getAndIncrement需要加1的偏移量
         return U.getAndAddInt(this, VALUE, 1);
     }
 

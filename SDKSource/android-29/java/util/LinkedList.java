@@ -78,6 +78,22 @@ import java.util.function.Consumer;
  * @see     ArrayList
  * @since 1.2
  * @param <E> the type of elements held in this collection
+ *
+ * LinkedList 是一个继承于AbstractSequentialList的双向链表。它也可以被当作堆栈、队列或双端队列进行操作。
+ * LinkedList 实现 List 接口，能对它进行队列操作。
+ * LinkedList 实现 Deque 接口，即能将LinkedList当作双端队列使用。
+ * LinkedList 实现了Cloneable接口，即覆盖了函数clone()，能克隆。
+ * LinkedList 实现java.io.Serializable接口，这意味着LinkedList支持序列化，能通过序列化去传输。
+ * LinkedList 是非同步的。
+ *
+ *           LinkedList的本质是双向链表。
+ *           (01) LinkedList继承于AbstractSequentialList，并且实现了Dequeue接口。
+ *           (02) LinkedList包含两个重要的成员：header 和 size。
+ *          header是双向链表的表头，它是双向链表节点所对应的类Entry的实例。
+ *           Entry中包含成员变量： previous, next, element。
+ *           其中，previous是该节点的上一个节点，next是该节点的下一个节点，element是该节点所包含的值。
+ *          、size是双向链表中节点的个数。
+ *   文章转自：https://www.cnblogs.com/skywang12345/p/3308807.html
  */
 
 public class LinkedList<E>
@@ -122,6 +138,7 @@ public class LinkedList<E>
 
     /**
      * Links e as first element.
+     *
      */
     private void linkFirst(E e) {
         final Node<E> f = first;
@@ -971,7 +988,7 @@ public class LinkedList<E>
     }
     /**
      * 私有的静态内部类。我们LinkedList的Node节点
-     * 
+     * 我们可以看到LinkedList的Node节点是一个双链表的结构
      */
     private static class Node<E> {
         E item;

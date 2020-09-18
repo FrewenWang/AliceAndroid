@@ -32,7 +32,7 @@ buildscript {
      */
     dependencies {
         // 应用Gradle插件
-        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath 'com.android.tools.build:gradle:3.6.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -44,7 +44,7 @@ buildscript {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
         // 面向切面编程的插件，具体怎么用有待学习
         // https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
-        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.8'
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
 
     }
 }

@@ -8,9 +8,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.chaquo.python'
 
-apply plugin: 'android-aspectjx'
+//apply plugin: 'android-aspectjx'
 //或者这样也可以
-//apply plugin: 'com.hujiang.android-aspectjx'
+apply plugin: 'com.hujiang.android-aspectjx'
 
 
 android {
@@ -68,6 +68,20 @@ android {
             cmake {
                 cppFlags ""
             }
+        }
+
+        aspectjx {
+            //false 关闭AspectJX功能  true 开启
+//            enabled true
+            include 'com.frewen.android.demo.*' // 'com.frewen.android.demo.app.*'
+
+            //排除所有package路径中包含`android.support`的class文件及库（jar文件）
+//            exclude 'com.alibaba'
+//            exclude 'android.support'
+//            exclude 'org.apache.weex'
+//            exclude 'com.aliyun'
+//            exclude 'com.taobao'
+//            exclude 'alibaba'
         }
     }
     // 这个闭包主要指定生成安装文件的主要配置，一般包含两个子闭包，一个是debug闭包，用于指定生成测试版安装文件的配置，可以忽略不写；
@@ -289,7 +303,8 @@ dependencies {
     implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
 
 
-    implementation 'org.aspectj:aspectjrt:1.8.+'
+//    implementation 'org.aspectj:aspectjrt:1.8.+'
+    implementation 'org.aspectj:aspectjrt:1.9.5'
 }
 
 

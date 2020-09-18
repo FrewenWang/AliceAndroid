@@ -63,8 +63,9 @@ class SplashActivity : BaseButterKnifeActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         // Make sure this is before calling super.onCreate
+        // 我们在清单文件里面设置的启动的透明主题，来减少白屏，但是在Activity启动之后，我们要设置回来
         // 我们可以通过代码来设置主题。我们通过设置透明主题,来减少白屏
-        //setTheme(R.style.LauncherTheme);
+        setTheme(R.style.NyxAppMaterialTheme)
         super.onCreate(savedInstanceState)
         /**
          * 进行APP权限申请

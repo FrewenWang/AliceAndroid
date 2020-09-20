@@ -125,7 +125,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         CoroutineScope(job).launch {
             delay(splashDuration)
             // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, ProtobufActivity::class.java)
+            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
             startActivity(intent)
             // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
             finish()
@@ -226,7 +226,7 @@ class SplashActivity : BaseButterKnifeActivity() {
      * 1. The semicircle motion only supports in horizontal direction and always go clockwise.
      * 2. The input parameters always represent as percentage (where 1.0 is 100%).
      */
-    private inner class SemicircleAnimation internal constructor(private val mFromXValue: Float, private val mToXValue: Float) : Animation() {
+    private inner class SemicircleAnimation(private val mFromXValue: Float, private val mToXValue: Float) : Animation() {
         private var mRadius = 0f
         override fun initialize(width: Int, height: Int, parentWidth: Int, parentHeight: Int) {
             super.initialize(width, height, parentWidth, parentHeight)

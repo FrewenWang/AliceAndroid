@@ -9,12 +9,14 @@ import android.util.Log;
 import com.androidnetworking.AndroidNetworking;
 import com.frewen.android.demo.BuildConfig;
 import com.frewen.android.demo.di.AppInjector;
+import com.frewen.android.demo.error.ErrorActivity;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.network.VideoApiService;
 import com.frewen.android.demo.performance.AppBlockCanaryContext;
 import com.frewen.android.demo.performance.LaunchTimeRecord;
 import com.frewen.android.demo.samples.hook.HookHelper;
 import com.frewen.android.demo.samples.network.Constant;
+import com.frewen.android.demo.ui.SplashActivity;
 import com.frewen.aura.framework.app.BaseMVPApp;
 import com.frewen.aura.framework.taskstarter.ModuleProvider;
 import com.frewen.aura.toolkits.concurrent.ThreadFactoryImpl;
@@ -35,6 +37,7 @@ import java.util.concurrent.Executors;
 import javax.inject.Inject;
 
 import androidx.core.os.TraceCompat;
+import cat.ereza.customactivityoncrash.config.CaocConfig;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -106,7 +109,6 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
         initX5Browser();
 
 
-
         initNetworkApi();
         //Application级别注入
         AppInjector.INSTANCE.inject(this);
@@ -122,9 +124,32 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
             e.printStackTrace();
         }
 
+
+        initCustomActivityOnCrash();
+
         // 执行结束的时候录制TraceView的相关信息
         // Debug.stopMethodTracing();
         TraceCompat.endSection();
+    }
+
+    /**
+     * 初始化当应用崩溃的时候，所要跳转的Activity
+     * 框架官网：https://github.com/Ereza/CustomActivityOnCrash
+     */
+    private void initCustomActivityOnCrash() {
+        //防止项目崩溃，崩溃后打开错误界面
+        CaocConfig.Builder.create()
+                .backgroundMode(CaocConfig.BACKGROUND_MODE_SILENT) //default: CaocConfig.BACKGROUND_MODE_SHOW_CUSTOM
+                .enabled(true)//是否启用CustomActivityOnCrash崩溃拦截机制 必须启用！不然集成这个库干啥？？？
+                .showErrorDetails(false) //是否必须显示包含错误详细信息的按钮 default: true
+                .showRestartButton(false) //是否必须显示“重新启动应用程序”按钮或“关闭应用程序”按钮default: true
+                .logErrorOnRestart(false) //是否必须重新堆栈堆栈跟踪 default: true
+                .trackActivities(true) //是否必须跟踪用户访问的活动及其生命周期调用 default: false
+                .minTimeBetweenCrashesMs(2000) //应用程序崩溃之间必须经过的时间 default: 3000
+                .restartActivity(SplashActivity.class) // 重启的activity
+                .errorActivity(ErrorActivity.class) //发生错误跳转的activity
+                .eventListener(null) //允许你指定事件侦听器，以便在库显示错误活动 default: null
+                .apply();
     }
 
     /**
@@ -204,8 +229,6 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
         String packageName = context.getPackageName();
         // 获取当前进程名
         String processName = ProcessInfoUtils.getProcessName(this);
-        Log.d(TAG, "FMsg:initBugly() processName:" + processName);
-        Log.d(TAG, "FMsg:initBugly() packageName:" + packageName);
         // 设置是否为上报进程的策略
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
         strategy.setUploadProcess(processName == null || processName.equals(packageName));

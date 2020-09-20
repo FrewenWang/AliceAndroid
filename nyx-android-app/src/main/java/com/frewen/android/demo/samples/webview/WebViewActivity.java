@@ -7,17 +7,15 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 import com.frewen.android.demo.R;
-import com.frewen.aura.framework.kotlin.activity.BaseActivity;
+import com.frewen.aura.framework.ui.BaseActivity;
 
 import androidx.appcompat.widget.Toolbar;
 
 /**
  * @filename: WebViewActivity
- * @introduction:
+ * @introduction: 这个Demo参考：https://github.com/youlookwhat/WebViewStudy
  *
- * 这个Demo参考：https://github.com/youlookwhat/WebViewStudy
- *
- * X5浏览器的接入指南：https://x5.tencent.com/docs/access.html
+ *         X5浏览器的接入指南：https://x5.tencent.com/docs/access.html
  * @author: Frewen.Wong
  * @time: 2019-05-15 08:18
  *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
@@ -31,20 +29,6 @@ public class WebViewActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    }
-
-
-    @Override
-    protected void bindContentView() {
-        setContentView(R.layout.activity_web_view);
-    }
-
-    @Override
-    protected void initView() {
-
-        initToolBar();
-        initWebView();
-        openWebPage();
     }
 
     /**
@@ -72,7 +56,7 @@ public class WebViewActivity extends BaseActivity {
      * 初始化WebView
      */
     private void initWebView() {
-         mWebView = findViewById(R.id.web_view);
+        mWebView = findViewById(R.id.web_view);
         // 获取WebView的设置对象
         WebSettings webSettings = mWebView.getSettings();
         // 网页内容的宽度是否可大于WebView控件的宽度
@@ -120,13 +104,4 @@ public class WebViewActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void initData(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void destroyView() {
-
-    }
 }

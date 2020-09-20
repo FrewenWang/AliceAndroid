@@ -1,11 +1,5 @@
 package com.frewen.android.demo.performance;
 
-import android.util.Log;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-
 /**
  * @filename: PerformanceAop
  * @introduction: 进行方法耗时的时长的相关逻辑
@@ -45,22 +39,22 @@ import org.aspectj.lang.annotation.Aspect;
  * 这种方式的优雅的获取方法耗时的方式
  * AOP的理解及使用
  */
-@Aspect
-public class PerformanceAop {
-    private static final String TAG = "PerformanceAop";
-
-    /**
-     * 代码之前和代码执行之后都插入相应的代码
-     */
-    @Around("call(* com.frewen.android.demo.app.NyxAndroidApp.**(..))")
-    public void getMethodDuration(ProceedingJoinPoint joinPoint) {
-        long time = System.currentTimeMillis();
-        Log.e(TAG, "FMsg:getMethodDuration: " + (System.currentTimeMillis() - time));
-        try {
-            joinPoint.proceed();
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-        Log.e(TAG, "FMsg:getMethodDuration: " + (System.currentTimeMillis() - time));
-    }
-}
+//@Aspect
+//public class PerformanceAop {
+//    private static final String TAG = "PerformanceAop";
+//
+//    /**
+//     * 代码之前和代码执行之后都插入相应的代码
+//     */
+//    @Around("call(* com.frewen.android.demo.app.NyxAndroidApp.**(..))")
+//    public void getMethodDuration(ProceedingJoinPoint joinPoint) {
+//        long time = System.currentTimeMillis();
+//        Log.e(TAG, "FMsg:getMethodDuration: " + (System.currentTimeMillis() - time));
+//        try {
+//            joinPoint.proceed();
+//        } catch (Throwable throwable) {
+//            throwable.printStackTrace();
+//        }
+//        Log.e(TAG, "FMsg:getMethodDuration: " + (System.currentTimeMillis() - time));
+//    }
+//}

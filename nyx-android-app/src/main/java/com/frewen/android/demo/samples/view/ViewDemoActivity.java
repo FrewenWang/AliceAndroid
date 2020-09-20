@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
 import com.frewen.android.demo.R;
-import com.frewen.aura.framework.kotlin.activity.BaseActivity;
+import com.frewen.aura.framework.ui.BaseButterKnifeActivity;
+
+import org.jetbrains.annotations.Nullable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,23 +21,23 @@ import butterknife.OnClick;
  * @time: 2019-05-15 08:17
  *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
-public class ViewDemoActivity extends BaseActivity {
+public class ViewDemoActivity extends BaseButterKnifeActivity {
     private static final String TAG = "T:ViewDemoActivity";
 
     @BindView(R.id.root)
     RelativeLayout root;
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-
+    protected int getContentViewId() {
+        return R.layout.activity_view_demo;
     }
 
     @Override
-    protected void bindContentView() {
-        setContentView(R.layout.activity_view_demo);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initView();
     }
 
-    @Override
     protected void initView() {
         //在onCreate()、onStrart()、onResume()方法中会返回0，
         // 这是因为当前activity所代表的界面还没显示出来没有添加到WindowPhone的DecorView上
@@ -108,8 +109,4 @@ public class ViewDemoActivity extends BaseActivity {
                 + ",top=" + top + ",bottom= " + bottom);
     }
 
-    @Override
-    protected void destroyView() {
-        // root.getViewTreeObserver().removeOnGlobalLayoutListener();
-    }
 }

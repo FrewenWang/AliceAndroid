@@ -1353,6 +1353,10 @@ public class Activity extends ContextThemeWrapper
         }
     }
 
+    /**
+     * 包名：android.app.Activity
+     * @param outState
+     */
     private void dispatchActivitySaveInstanceState(@NonNull Bundle outState) {
         Object[] callbacks = collectActivityLifecycleCallbacks();
         if (callbacks != null) {
@@ -1361,6 +1365,7 @@ public class Activity extends ContextThemeWrapper
                         .onActivitySaveInstanceState(this, outState);
             }
         }
+        // 通过让getApplication进行分发dispatchActivitySaveInstanceState
         getApplication().dispatchActivitySaveInstanceState(this, outState);
     }
 
@@ -2108,6 +2113,10 @@ public class Activity extends ContextThemeWrapper
      * @see #onCreate
      * @see #onRestoreInstanceState
      * @see #onPause
+     *
+     * 关于保存和恢复View层次结构，系统的工作流程是这样的：首先Activity被意外终止时，
+     * Activity会调用onSaveInstanceState去保存数据，然后Activity会委托Window去保存数据，
+     * 接着Window再委托它上面的顶级容器去保存数据。
      */
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putBundle(WINDOW_HIERARCHY_TAG, mWindow.saveHierarchyState());
@@ -2121,6 +2130,7 @@ public class Activity extends ContextThemeWrapper
             outState.putBoolean(AUTOFILL_RESET_NEEDED, true);
             getAutofillManager().onSaveInstanceState(outState);
         }
+        // 进行onSaveInstanceState事件的分发
         dispatchActivitySaveInstanceState(outState);
     }
 

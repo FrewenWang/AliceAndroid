@@ -45,6 +45,8 @@ buildscript {
         // 面向切面编程的插件，具体怎么用有待学习
         // https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
+        // https://github.com/google/protobuf-gradle-plugin
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
 
     }
 }

@@ -5831,6 +5831,10 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         }
     }
 
+    /**
+     * 包名：android.widget#TextView#onSaveInstanceState
+     * @return
+     */
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
@@ -5841,6 +5845,7 @@ public class TextView extends View implements ViewTreeObserver.OnPreDrawListener
         int start = -1;
         int end = -1;
 
+        /// 保存了自己的文本选中状态
         if (mText != null) {
             start = getSelectionStart();
             end = getSelectionEnd();

@@ -12,6 +12,8 @@ apply plugin: 'com.chaquo.python'
 //或者这样也可以
 apply plugin: 'com.hujiang.android-aspectjx'
 
+apply plugin: 'com.google.protobuf'
+
 
 android {
     println "android Configuration Lifecycle  invoked"
@@ -151,6 +153,49 @@ android {
             dirs 'libs'   // aar目录
         }
     }
+
+    sourceSets {
+        main {
+            // 定义proto文件目录
+            proto {
+                // In addition to the default 'src/main/proto'
+                srcDir 'src/main/protobuf'
+                srcDir 'src/main/protocolbuffers'
+                // In addition to the default '**/*.proto' (use with caution).
+                // Using an extension other than 'proto' is NOT recommended,
+                // because when proto files are published along with class files, we can
+                // only tell the type of a file from its extension.
+                include '**/*.protodevel'
+            }
+            java {
+                srcDir 'src/main/java'
+            }
+        }
+        test {
+            proto {
+                // In addition to the default 'src/test/proto'
+                srcDir 'src/test/protocolbuffers'
+            }
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        javalite {
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                javalite {}
+            }
+        }
+    }
 }
 
 dependencies {
@@ -275,7 +320,6 @@ dependencies {
     implementation 'devlight.io:navigationtabbar:1.2.5'
 
 
-
     implementation 'com.androidkun:XTabLayout:1.1.4'
 
 
@@ -293,18 +337,26 @@ dependencies {
 
     // 添加SmartRefreshLayout的开源框架依赖
     implementation 'androidx.appcompat:appcompat:1.0.0'                 //必须 1.0.0 以上
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
-    implementation  'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
-    implementation  'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
-    implementation  'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
-    implementation  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
-    implementation  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
-    implementation  'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+    implementation 'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
+    implementation 'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
+    implementation 'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
+    implementation 'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
+    implementation 'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
+    implementation 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
 
 
 //    implementation 'org.aspectj:aspectjrt:1.8.+'
     implementation 'org.aspectj:aspectjrt:1.9.5'
+
+
+    // 定义protobuf依赖，使用精简版
+    api 'com.google.protobuf:protobuf-java:3.5.1'
+    api 'com.google.protobuf:protoc:3.5.1'
+    implementation('com.squareup.retrofit2:converter-protobuf:2.2.0') {
+        exclude group: 'com.google.protobuf', module: 'protobuf-java'
+    }
 }
 
 

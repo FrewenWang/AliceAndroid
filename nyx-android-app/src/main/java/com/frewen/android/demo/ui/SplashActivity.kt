@@ -11,6 +11,7 @@ import android.widget.ImageView
 import androidx.core.view.doOnPreDraw
 import butterknife.BindView
 import com.frewen.android.demo.R
+import com.frewen.android.demo.error.ErrorActivity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.android.demo.performance.LaunchTimeRecord.startRecord
 import com.frewen.android.demo.samples.net.ProtobufActivity
@@ -125,7 +126,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         CoroutineScope(job).launch {
             delay(splashDuration)
             // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
+            val intent = Intent(this@SplashActivity, ErrorActivity::class.java)
             startActivity(intent)
             // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
             finish()

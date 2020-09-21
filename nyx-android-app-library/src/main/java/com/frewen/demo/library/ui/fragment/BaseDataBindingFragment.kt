@@ -42,8 +42,9 @@ abstract class BaseDataBindingFragment<VDB : ViewDataBinding, VM : ViewModel> : 
                 container,
                 false,
                 AuraDataBindingComponent())
-
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
+        // 目前此方法已经过时，我们使用其他的实现方法
+        //viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(getViewModelClass())
 
         return binding?.root
     }

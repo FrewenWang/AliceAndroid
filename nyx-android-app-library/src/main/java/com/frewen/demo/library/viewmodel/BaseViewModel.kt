@@ -1,6 +1,7 @@
 package com.frewen.demo.library.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 
 /**
  * @filename: AbsViewModel
@@ -10,6 +11,6 @@ import androidx.lifecycle.ViewModel
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-abstract class AbsViewModel<T> : ViewModel() {
+open class BaseViewModel constructor(application: Application) : AndroidViewModel(application) {
 
 }

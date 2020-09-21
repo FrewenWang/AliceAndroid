@@ -1,12 +1,71 @@
 package com.frewen.android.demo.error
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import androidx.core.content.getSystemService
+import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import com.frewen.android.demo.R
-import com.frewen.aura.framework.ui.BaseActivity
+import com.frewen.android.demo.databinding.ActivityErrorBinding
+import com.frewen.aura.toolkits.utils.ToastUtils
+import com.frewen.demo.library.extention.click
+import com.frewen.demo.library.extention.init
+import com.frewen.demo.library.extention.showMessageDialog
+import com.frewen.demo.library.ui.activity.BaseDataBindingActivity
+import com.frewen.demo.library.viewmodel.BaseViewModel
+import kotlinx.android.synthetic.main.activity_error.*
+import kotlinx.android.synthetic.main.layout_tool_bar_common.*
 
-class ErrorActivity : BaseActivity() {
+class ErrorActivity : BaseDataBindingActivity<ActivityErrorBinding, BaseViewModel>() {
+
+    override fun getContentViewId() = R.layout.activity_error
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_error)
+        // 使用扩展函数，给toolBar设置Title
+        toolbar.init("App异常")
+
+        val config = CustomActivityOnCrash.getConfigFromIntent(intent)
+        errorRestart.click {
+            Log.d(TAG, "onCreate() errorRestart.click  called")
+            config?.run {
+                CustomActivityOnCrash.restartApplication(this@ErrorActivity, this)
+            }
+        }
+
+        errorSendError.click {
+            /** */
+            /* */
+            CustomActivityOnCrash.getStackTraceFromIntent(intent)?.let {
+                showMessageDialog(it, "发现有Bug不去打作者脸？", "必须打", {
+                    val mClipData = ClipData.newPlainText("errorLog", it)
+                    // 将ClipData内容放到系统剪贴板里。
+                    getSystemService<ClipboardManager>()?.primaryClip = mClipData
+                    ToastUtils.showShort("已复制错误日志")
+                    try {
+                        val url = "mqqwpa://im/chat?chat_type=wpa&uin=61511225"
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    } catch (e: Exception) {
+                        ToastUtils.showShort("请先安装QQ")
+                    }
+                }, "我不敢")
+            }
+        }
+
+
     }
+
+    /**
+     * 设置沉浸式状态栏
+     */
+    override fun enableTranslucentStatusBar(): Boolean {
+        return true
+    }
+
+
 }
+

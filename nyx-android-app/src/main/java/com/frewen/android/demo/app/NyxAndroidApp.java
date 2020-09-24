@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
 import com.frewen.android.demo.BuildConfig;
+import com.frewen.android.demo.app.taskstarter.BuglyInitTask;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.error.ErrorActivity;
 import com.frewen.android.demo.network.MyNetworkConfig;
@@ -19,6 +20,7 @@ import com.frewen.android.demo.samples.network.Constant;
 import com.frewen.android.demo.ui.SplashActivity;
 import com.frewen.aura.framework.app.BaseMVPApp;
 import com.frewen.aura.framework.taskstarter.ModuleProvider;
+import com.frewen.aura.framework.taskstarter.ModuleTaskDispatcher;
 import com.frewen.aura.toolkits.concurrent.ThreadFactoryImpl;
 import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.demo.library.network.core.NetworkApi;
@@ -97,6 +99,9 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
             mCountDownLatch.countDown();
         });
 
+
+        initModuleTaskDispatcher();
+
         // 生成TraceView的，文件默认存储8M的信息
         // Debug.startMethodTracing("AndroidSamples");
         // 使用Systrace进行分析
@@ -130,6 +135,11 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
         // 执行结束的时候录制TraceView的相关信息
         // Debug.stopMethodTracing();
         TraceCompat.endSection();
+    }
+
+    private void initModuleTaskDispatcher() {
+        ModuleTaskDispatcher.getInstance().init(this);
+        ModuleTaskDispatcher.getInstance().addTask(new BuglyInitTask()).start();
     }
 
     /**

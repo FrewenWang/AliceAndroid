@@ -14,7 +14,9 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.error.ErrorActivity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.android.demo.performance.LaunchTimeRecord.startRecord
+import com.frewen.android.demo.samples.glide.Glide4Activity
 import com.frewen.android.demo.samples.net.ProtobufActivity
+import com.frewen.android.demo.samples.window.WindowDemoActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
 import com.frewen.aura.toolkits.common.ResourcesUtils
 import com.frewen.aura.toolkits.common.SharedPrefUtils
@@ -69,6 +71,10 @@ class SplashActivity : BaseButterKnifeActivity() {
         // 我们可以通过代码来设置主题。我们通过设置透明主题,来减少白屏
         setTheme(R.style.NyxAppMaterialTheme)
         super.onCreate(savedInstanceState)
+
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
         /**
          * 进行APP权限申请
          */
@@ -126,7 +132,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         CoroutineScope(job).launch {
             delay(splashDuration)
             // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, ErrorActivity::class.java)
+            val intent = Intent(this@SplashActivity, WindowDemoActivity::class.java)
             startActivity(intent)
             // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
             finish()

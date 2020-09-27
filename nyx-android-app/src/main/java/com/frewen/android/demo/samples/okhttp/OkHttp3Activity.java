@@ -50,7 +50,7 @@ public class OkHttp3Activity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url("http://www.baidu.com")
                 .build();
-        //excute()是同步的网络请求，不能直接在UI线程进行网络请求
+        //execute()是同步的网络请求，不能直接在UI线程进行网络请求
         // 否则会报 android.os.NetworkOnMainThreadException
         new Thread(() -> {
             try {
@@ -75,6 +75,7 @@ public class OkHttp3Activity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url("http://www.baidu.com")
                 .build();
+        /// 请求是如何被处理
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

@@ -17,5 +17,10 @@ public class BuglyInitTask extends BaseModuleTask {
 
     }
 
+    @Override
+    public boolean needWait() {
+        return false;
+    }
+
 
 }

@@ -127,19 +127,40 @@ public class Toast {
 
     /**
      * Show the view for the specified duration.
+     * Toast属于系统Window，
+     * 它内部的视图由两种方式指定，
+     * 一种是系统默认的样式，
+     * 另一种是通过setView方法来指定一个自定义View。
+     * 不管如何，它们都对应Toast的一个View类型的内部成员mNextView。
      */
     public void show() {
         if (mNextView == null) {
             throw new RuntimeException("setView must have been called");
         }
-
+        // 通过跨进程通信获取INotificationManager
         INotificationManager service = getService();
         String pkg = mContext.getOpPackageName();
+        // 显示和隐藏Toast都需要通过NMS来实现，
+        // 由于NMS运行在系统的进程中，所以只能通过远程调用的方式来显示和隐藏Toast。
+        // 需要注意的是TN这个类，它是一个Binder类，在Toast和NMS进行IPC的过程中，
+        // 当NMS处理Toast的显示或隐藏请求时会跨进程回调TN中的方法，这个时候由于TN运行在Binder线程池中，
+        // 所以需要通过Handler将其切换到当前线程中。这里的当前线程是指发送Toast请求所在的线程。
         TN tn = mTN;
         tn.mNextView = mNextView;
         final int displayId = mContext.getDisplayId();
-
+        /// 添加到Toast显示的队列里面去。通过跨进程通信来显示Toast
+        // 注意，由于这里使用了Handler，所以这意味着Toast无法在没有Looper的线程中弹出，
+        // 这是因为Handler需要使用Looper才能完成切换线程的功能
         try {
+            // NMS的enqueueToast方法的第一个参数表示当前应用的包名
+            // 第二个参数tn表示远程回调
+            // 第三个参数表示Toast的时长
+            // enqueueToast首先将Toast请求封装为ToastRecord对象并将其添加到一个名为mToastQueue的队列中。
+            // mToastQueue其实是一个ArrayList。
+            // 对于非系统应用来说，mToastQueue中最多能同时存在50个ToastRecord，这样做是为了防止DOS（Denial ofService）。
+            // 如果不这么做，试想一下，如果我们通过大量的循环去连续弹出Toast，
+            // 这将会导致其他应用没有机会弹出Toast，那么对于其他应用的Toast请求，
+            // 系统的行为就是拒绝服务，这就是拒绝服务攻击的含义，这种手段常用于网络攻击中。
             service.enqueueToast(pkg, tn, mDuration, displayId);
         } catch (RemoteException e) {
             // Empty
@@ -283,17 +304,21 @@ public class Toast {
      */
     public static Toast makeText(@NonNull Context context, @Nullable Looper looper,
             @NonNull CharSequence text, @Duration int duration) {
-        Toast result = new Toast(context, looper);
 
+        // 这里面是自己去实例化了一个Toast
+        Toast result = new Toast(context, looper);
+        // 自己去主动
         LayoutInflater inflate = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflate.inflate(com.android.internal.R.layout.transient_notification, null);
         TextView tv = (TextView)v.findViewById(com.android.internal.R.id.message);
         tv.setText(text);
 
+        // 将View复制给mNextView
         result.mNextView = v;
+        // 将duration复制给mDuration
         result.mDuration = duration;
-
+        // 调用这个静态方法，我们就返回了一个Toast的实例化对象。下面我们就要看一下show方法了。
         return result;
     }
 
@@ -346,9 +371,11 @@ public class Toast {
 
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P)
     static private INotificationManager getService() {
+        // 首先，我们判断Service的Bind对象是不是能够拿到，
         if (sService != null) {
             return sService;
         }
+        /// 如果没有
         sService = INotificationManager.Stub.asInterface(ServiceManager.getService("notification"));
         return sService;
     }

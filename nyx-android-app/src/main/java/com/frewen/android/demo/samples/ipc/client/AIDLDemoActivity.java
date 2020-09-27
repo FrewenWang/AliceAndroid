@@ -152,9 +152,14 @@ public class AIDLDemoActivity extends AppCompatActivity {
      * 绑定远程Service之后的ServiceConnection回调
      *
      * ServiceConnection是我们来进行绑定远程Service的时候的结果回调
-     *
      * 需要主要的是。onServiceConnected、onServiceDisconnected的方法都是运行在客户端的UI主线程中的
      * 所以在这个方法我们我们也不能调用mRemoteServiceInterface的耗时方法，因为这个时候客户端的主线程会被挂起。
+     *
+     * AIDL通信中最重要的通信句柄是IBinder对象
+     * 而针对这个对象，我们需要重点看，客户端是怎么拿到这个对象的。然后服务端是怎么提供这个对象。
+     *
+     * 1、这里我们看客户端是怎么拿到的。 这个地方是通过ServiceConnection的回调中onServiceConnected。也就是说客户端必须先Bind服务端的Service
+     * 然后在服务端的onServiceConnected的回调中，来获取IRemoteServiceInterface.Stub.asInterface(service);
      */
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override

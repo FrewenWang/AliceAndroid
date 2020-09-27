@@ -856,17 +856,31 @@ public final class ViewRootImpl implements ViewParent,
                 // Schedule the first layout -before- adding to the window
                 // manager, to make sure we do the relayout before receiving
                 // any other events from the system.
+                // 在setView内部会通过requestLayout来完成异步刷新请求。
                 requestLayout();
+
+
                 if ((mWindowAttributes.inputFeatures
                         & WindowManager.LayoutParams.INPUT_FEATURE_NO_INPUT_CHANNEL) == 0) {
                     mInputChannel = new InputChannel();
                 }
                 mForceDecorViewVisibility = (mWindowAttributes.privateFlags
                         & PRIVATE_FLAG_FORCE_DECOR_VIEW_VISIBILITY) != 0;
+
+                // 1.通过binder对象mWindowSession调用WindowManagerService的接口请求
+                // 接着会通过WindowSession最终来完成Window的添加过程。
+                // 在下面的代码中，mWindowSession的类型是IWindowSession，
+                // 它是一个Binder对象，真正的实现类是Session，也就是Window的添加过程是一次IPC调用。
+                // 我们可以看看mWindowSession的实例我们是怎么获取的？？？
+                /**
+                 * {@link android.view.WindowManagerGlobal.getWindowSession()}
+                 */
                 try {
                     mOrigWindowType = mWindowAttributes.type;
                     mAttachInfo.mRecomputeGlobalAttributes = true;
                     collectViewAttributes();
+                    // 在Session内部会通过WindowManagerService来实现Window的添加
+                    // 这是一个IPC通信过程，我们可以去WindowManagerService的里面这个方法的实现
                     res = mWindowSession.addToDisplay(mWindow, mSeq, mWindowAttributes,
                             getHostVisibility(), mDisplay.getDisplayId(), mTmpFrame,
                             mAttachInfo.mContentInsets, mAttachInfo.mStableInsets,
@@ -901,6 +915,8 @@ public final class ViewRootImpl implements ViewParent,
                 mPendingAlwaysConsumeSystemBars = mAttachInfo.mAlwaysConsumeSystemBars;
                 mInsetsController.onStateChanged(mTempInsets);
                 if (DEBUG_LAYOUT) Log.v(mTag, "Added window " + mWindow);
+
+                //// 下面这些逻辑是判断是够Add Window成功的逻辑！！！！
                 if (res < WindowManagerGlobal.ADD_OKAY) {
                     mAttachInfo.mRootView = null;
                     mAdded = false;
@@ -913,6 +929,7 @@ public final class ViewRootImpl implements ViewParent,
                             throw new WindowManager.BadTokenException(
                                     "Unable to add window -- token " + attrs.token
                                     + " is not valid; is your activity running?");
+                            //2.如果请求失败（token验证失败）则抛出BadTokenException异常
                         case WindowManagerGlobal.ADD_NOT_APP_TOKEN:
                             throw new WindowManager.BadTokenException(
                                     "Unable to add window -- token " + attrs.token
@@ -1218,6 +1235,13 @@ public final class ViewRootImpl implements ViewParent,
         return mLocation;
     }
 
+    /**
+     * 这个方式是WindowManagerGlobal.updateView()方法的调用。
+     * 会找到对应的ViewRootImpl然后调用ViewRootImpl.setLayoutParams(WindowManager.LayoutParams attrs, boolean newView)
+     *
+     * @param attrs
+     * @param newView
+     */
     void setLayoutParams(WindowManager.LayoutParams attrs, boolean newView) {
         synchronized (this) {
             final int oldInsetLeft = mWindowAttributes.surfaceInsets.left;
@@ -1288,6 +1312,7 @@ public final class ViewRootImpl implements ViewParent,
             }
 
             mWindowAttributesChanged = true;
+            // 在ViewRootImpl中会通过scheduleTraversals方法来对View重新布局，包括测量、布局、重绘这三个过程。
             scheduleTraversals();
         }
     }
@@ -4191,8 +4216,17 @@ public final class ViewRootImpl implements ViewParent,
         }
     }
 
+    /**
+     * dispatchDetachedFromWindow方法主要做四件事：
+     *
+     */
     void dispatchDetachedFromWindow() {
         mFirstInputStage.onDetachedFromWindow();
+
+        // 调用View的dispatchDetachedFromWindow方法，
+        // 在内部会调用View的onDetached-FromWindow()以及onDetachedFromWindowInternal()。
+        // 对于onDetachedFromWindow()大家一定不陌生，
+        // 当View从Window中移除时，这个方法就会被调用，可以在这个方法内部做一些资源回收的工作，比如终止动画、停止线程等。
         if (mView != null && mView.mAttachInfo != null) {
             mAttachInfo.mTreeObserver.dispatchOnWindowAttachedChange(false);
             mView.dispatchDetachedFromWindow();
@@ -4215,6 +4249,7 @@ public final class ViewRootImpl implements ViewParent,
 
         destroySurface();
 
+        // （1）垃圾回收相关的工作，比如清除数据和消息、移除回调。
         if (mInputQueueCallback != null && mInputQueue != null) {
             mInputQueueCallback.onInputQueueDestroyed(mInputQueue);
             mInputQueue.dispose();
@@ -4225,6 +4260,9 @@ public final class ViewRootImpl implements ViewParent,
             mInputEventReceiver.dispose();
             mInputEventReceiver = null;
         }
+
+        // 通过Session的remove方法删除Window:mWindowSession.remove(mWindow)，
+        // 这同样是一个IPC过程，最终会调用WindowManagerService的removeWindow方法。
         try {
             mWindowSession.remove(mWindow);
         } catch (RemoteException e) {
@@ -7176,6 +7214,7 @@ public final class ViewRootImpl implements ViewParent,
     boolean die(boolean immediate) {
         // Make sure we do execute immediately if we are in the middle of a traversal or the damage
         // done by dispatchDetachedFromWindow will cause havoc on return.
+        // 如果是同步删除。如果是同步删除（立即删除），那么就不发消息直接调用doDie方法，这就是这两种删除方式的区别。
         if (immediate && !mIsInTraversal) {
             doDie();
             return false;
@@ -7187,10 +7226,14 @@ public final class ViewRootImpl implements ViewParent,
             Log.e(mTag, "Attempting to destroy the window while drawing!\n" +
                     "  window=" + this + ", title=" + mWindowAttributes.getTitle());
         }
+        // 在die方法内部只是做了简单的判断，如果是异步删除，那么就发送一个MSG_DIE的消息
         mHandler.sendEmptyMessage(MSG_DIE);
         return true;
     }
 
+    /**
+     * {@link android.view.WindowManagerGlobal.removeView } --> ViewRootImpl.die(immediate) -->doDie
+     */
     void doDie() {
         checkThread();
         if (LOCAL_LOGV) Log.v(mTag, "DIE in " + this + " of " + mSurface);
@@ -7200,6 +7243,8 @@ public final class ViewRootImpl implements ViewParent,
             }
             mRemoved = true;
             if (mAdded) {
+                // 在doDie内部会调用dispatchDetachedFromWindow方法，
+                // 真正删除View的逻辑在dispatchDetachedFromWindow方法的内部实现。
                 dispatchDetachedFromWindow();
             }
 
@@ -7228,6 +7273,8 @@ public final class ViewRootImpl implements ViewParent,
 
             mAdded = false;
         }
+        // 调用WindowManagerGlobal的doRemoveView方法刷新数据，
+        // 包括mRoots、mParams以及mDyingViews，需要将当前Window所关联的这三类对象从列表中删除。
         WindowManagerGlobal.getInstance().doRemoveView(this);
     }
 

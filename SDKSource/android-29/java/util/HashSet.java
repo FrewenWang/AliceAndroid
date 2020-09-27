@@ -84,6 +84,9 @@ import java.io.InvalidObjectException;
  * @see     TreeSet
  * @see     HashMap
  * @since   1.2
+ * 说明： HashSet的代码实际上非常简单，通过上面的注释应该很能够看懂。
+ * 它是通过HashMap实现的，若对HashSet的理解有困难，建议先学习以下HashMap；
+ * 学完HashMap之后，在学习HashSet就非常容易了。
  */
 
 public class HashSet<E>
@@ -92,30 +95,43 @@ public class HashSet<E>
 {
     static final long serialVersionUID = -5024744406713321676L;
 
+    // HashSet是通过map(HashMap对象)保存内容的。而这个map是不对参与序列化的
+    // 这个是不是会造成数据丢失？？
     private transient HashMap<E,Object> map;
-
     // Dummy value to associate with an Object in the backing Map
+    // PRESENT是向map中插入key-value对应的value
+    // 因为HashSet中只需要用到key，而HashMap是key-value键值对；
+    // 所以，向map中添加键值对时，键值对的值固定是PRESENT
+    // TODO 这个我们还需要继续学习
     private static final Object PRESENT = new Object();
 
     /**
-     * Constructs a new, empty set; the backing <tt>HashMap</tt> instance has
-     * default initial capacity (16) and load factor (0.75).
+     * 默认构造函数，会创建一个空的Map集合。
+     * 这个空的Map集合其实就是我们默认容量为16，加载因子为0.75的hashMap
      */
     public HashSet() {
+        // 调用HashMap的默认构造函数，创建map
         map = new HashMap<>();
     }
 
     /**
-     * Constructs a new set containing the elements in the specified
-     * collection.  The <tt>HashMap</tt> is created with default load factor
-     * (0.75) and an initial capacity sufficient to contain the elements in
-     * the specified collection.
-     *
-     * @param c the collection whose elements are to be placed into this set
-     * @throws NullPointerException if the specified collection is null
+     * 带集合的构造函数
+     * @param c
      */
     public HashSet(Collection<? extends E> c) {
-        map = new HashMap<>(Math.max((int) (c.size()/.75f) + 1, 16));
+        // 创建map。
+        // 为什么要调用Math.max((int) (c.size()/.75f) + 1, 16)，从 (c.size()/.75f) + 1 和 16 中选择一个比较大的数呢？
+        // 首先，说明(c.size()/.75f) + 1
+        //   因为从HashMap的效率(时间成本和空间成本)考虑，HashMap的加载因子是0.75。
+        //   当HashMap的“阈值”(阈值=HashMap总的大小*加载因子) < “HashMap实际大小”时，
+        //   就需要将HashMap的容量翻倍。
+        //   所以，(c.size()/.75f) + 1 计算出来的正好是总的空间大小。
+        //   接下来，说明为什么是16。
+        //   HashMap的总的大小，必须是2的指数倍。若创建HashMap时，指定的大小不是2的指数倍；
+        //   HashMap的构造函数中也会重新计算，找出比“指定大小”大的最小的2的指数倍的数。
+        //   所以，这里指定为16是从性能考虑。避免重复计算。
+        map = new HashMap<>(Math.max((int) (c.size() / .75f) + 1, 16));
+        // 将集合(c)中的全部元素添加到HashSet中
         addAll(c);
     }
 
@@ -127,6 +143,7 @@ public class HashSet<E>
      * @param      loadFactor        the load factor of the hash map
      * @throws     IllegalArgumentException if the initial capacity is less
      *             than zero, or if the load factor is nonpositive
+     * 指定HashSet初始容量和加载因子的构造函数
      */
     public HashSet(int initialCapacity, float loadFactor) {
         map = new HashMap<>(initialCapacity, loadFactor);
@@ -139,6 +156,7 @@ public class HashSet<E>
      * @param      initialCapacity   the initial capacity of the hash table
      * @throws     IllegalArgumentException if the initial capacity is less
      *             than zero
+     *             // 指定HashSet初始容量的构造函数
      */
     public HashSet(int initialCapacity) {
         map = new HashMap<>(initialCapacity);
@@ -216,6 +234,13 @@ public class HashSet<E>
      * element
      */
     public boolean add(E e) {
+        // 将元素(e)添加到HashSet中。所以说HashSet其实就是往HashMap里面添加一个原色。
+        // 作为HashMap的Key.然后使用PRESENT对象作为Value
+        // 然后,由于HashMap的Key是允许重复的，正式借助了这个特性，才达到了我们HashSet的不能存储重复元素的特性
+        // 又由于HashMap中的key是无序的，所以这个HashSet里面的元素也是无效的。
+
+        // 那再来讲讲为什么HashSet可以存储null原色。这个也很简单嘛
+        // HashMap就可以
         return map.put(e, PRESENT)==null;
     }
 
@@ -246,13 +271,15 @@ public class HashSet<E>
     /**
      * Returns a shallow copy of this <tt>HashSet</tt> instance: the elements
      * themselves are not cloned.
-     *
+     * 克隆一个HashSet，并返回Object对象. 但是里面的元素是不会进行被克隆拷贝
      * @return a shallow copy of this set
      */
     @SuppressWarnings("unchecked")
     public Object clone() {
         try {
+            // 调用HashSet的拷贝函数
             HashSet<E> newSet = (HashSet<E>) super.clone();
+            // 调用里面Map的clone函数
             newSet.map = (HashMap<E, Object>) map.clone();
             return newSet;
         } catch (CloneNotSupportedException e) {
@@ -264,6 +291,8 @@ public class HashSet<E>
      * Save the state of this <tt>HashSet</tt> instance to a stream (that is,
      * serialize it).
      *
+     * java.io.Serializable的写入函数
+     * 将HashSet的“总的容量，加载因子，实际容量，所有的元素”都写入到输出流中
      * @serialData The capacity of the backing <tt>HashMap</tt> instance
      *             (int), and its load factor (float) are emitted, followed by
      *             the size of the set (the number of elements it contains)
@@ -288,6 +317,8 @@ public class HashSet<E>
     }
 
     /**
+     * java.io.Serializable的读取函数
+     * 将HashSet的“总的容量，加载因子，实际容量，所有的元素”依次读出
      * Reconstitute the <tt>HashSet</tt> instance from a stream (that is,
      * deserialize it).
      */

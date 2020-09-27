@@ -6184,13 +6184,22 @@ public class Activity extends ContextThemeWrapper
      * 调用Activity的makeViasion
      */
     void makeVisible() {
+        // 如果mDecorView么没有被绑定到
         if (!mWindowAdded) {
             // 获取当前的mWindowManager
             ViewManager wm = getWindowManager();
+            /// 这个地方我们可以可以看到DecorView真正的显示出来
+            /// 这个地方也就是说，为什么Activity真正可以和用户交互是在onResume里面呢。
+            // 其实就是因为只有在这时候，DecorView通过WindowManager真正去Add到Window上之后，才真正的显示出来
+
+            /// 这里面我们不再去介绍WindowManager去AddView的流程
+            // 简单说说一下调用流程： WindowManager.addView --> WindowManagerImpl.addView ---> WindowManagerGlobal.addView
+            /// ---WindowManagerGlobal -->ViewRootImpl.setView() --->requestLayout(View的整体异步刷新) --->WindowSession最终来完成Window的添加过程
+            // 这样我们的View就彻底的被显示在界面之上
             wm.addView(mDecor, getWindow().getAttributes());
             mWindowAdded = true;
         }
-        // 设置让Decor俩设置进行电视
+        // 设置让Decor俩设置进行显示出来
         mDecor.setVisibility(View.VISIBLE);
     }
 
@@ -6673,6 +6682,12 @@ public class Activity extends ContextThemeWrapper
         }
     }
 
+    /**
+     * 在这个方法中直接返回了activity的mWindowManager对象，
+     * 还记得在Activity界面绘制流程说到过activity的mWindowManager对象在activity的attach方法中：
+     * @param name
+     * @return
+     */
     @Override
     public Object getSystemService(@ServiceName @NonNull String name) {
         if (getBaseContext() == null) {
@@ -7741,11 +7756,13 @@ public class Activity extends ContextThemeWrapper
     }
 
     /**
-     * 在Activity 启动过程中会调用ActivityThread的performLaunchActivity 方法，
-     * performLaunchActivity方法中又会调用Activity的attach方法，PhoneWindow就是在Activity的attach方法中创建的
+     * 在Activity启动过程中会调用ActivityThread的performLaunchActivity 方法，
+     * 在ActivityThread的performLaunchActivity方法，
+     * 会通过仪表盘来进行Instrumentation.newActivity反射回去Activity的实例
+     * performLaunchActivity方法中又会调用Activity的attach方法，
+     * PhoneWindow就是在Activity的attach方法中创建的
      *
      * 这里先总结下得到的信息：
-     *
      * 1、一个Activity对应一个Window
      * 2、Window只有一个子类：PhoneWindow
      * 3、在Activity中调用setContentView
@@ -7762,10 +7779,16 @@ public class Activity extends ContextThemeWrapper
         attachBaseContext(context);
 
         mFragments.attachHost(null /*parent*/);
-        // PhoneWindow是何时创建的呢？在Activity 启动过程中会调用ActivityThread的performLaunchActivity方法
+        // PhoneWindow是何时创建的呢？
+        // 在Activity 启动过程中会调用ActivityThread的performLaunchActivity方法
         // ActivityThread的performLaunchActivity方法中会调用activity的attach方法。
         mWindow = new PhoneWindow(this, window, activityConfigCallback);
         mWindow.setWindowControllerCallback(this);
+        /// 并且设置PhoneWindow的回调
+        // Callback接口中的方法很多，但是有几个却是我们都非常熟悉的，比如onAttachedToWindow、onDetachedFromWindow、dispatchTouchEvent
+        /**
+         * {@link Window.CallBack }
+         */
         mWindow.setCallback(this);
         mWindow.setOnWindowDismissedCallback(this);
         mWindow.getLayoutInflater().setPrivateFactory(this);
@@ -7799,6 +7822,7 @@ public class Activity extends ContextThemeWrapper
                         Looper.myLooper());
             }
         }
+
 
         /// 然后在这个方法，我们给这个PhoneWindow来设置WindowManager
         // 那么WindowManager的实例是怎么得到的呢？

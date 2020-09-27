@@ -145,14 +145,20 @@ public final class WindowManagerGlobal {
     @UnsupportedAppUsage
     private final Object mLock = new Object();
 
+    // 在WindowManagerGlobal内部有如下几个列表比较重要：
+    //mViews存储的是所有Window所对应的View
     @UnsupportedAppUsage
     private final ArrayList<View> mViews = new ArrayList<View>();
+
     @UnsupportedAppUsage
     private final ArrayList<ViewRootImpl> mRoots = new ArrayList<ViewRootImpl>();
     @UnsupportedAppUsage
+    //  mParams存储的是所有Window所对应的布局参数，
     private final ArrayList<WindowManager.LayoutParams> mParams =
             new ArrayList<WindowManager.LayoutParams>();
+    // 而mDyingViews则存储了那些正在被删除的View对象，或者说是那些已经调用removeView方法但是删除操作还未完成的Window对象。
     private final ArraySet<View> mDyingViews = new ArraySet<View>();
+
 
     private Runnable mSystemPropertyUpdater;
 
@@ -202,6 +208,7 @@ public final class WindowManagerGlobal {
                     // was instantiated here.
                     // TODO(b/116157766): Remove this hack after cleaning up @UnsupportedAppUsage
                     InputMethodManager.ensureDefaultInstanceForDefaultDisplayIfNecessary();
+                    //我们获取WindowManagerService()的IWindowSession是一个Binder对象
                     IWindowManager windowManager = getWindowManagerService();
                     sWindowSession = windowManager.openSession(
                             new IWindowSessionCallback.Stub() {
@@ -306,8 +313,27 @@ public final class WindowManagerGlobal {
         return null;
     }
 
+    /**
+     * 我们知道ViewManager里面有三个方法： {@link android.view.ViewManager } addView removeView updateView
+     * 然后{@link android.view.WindowManager} 继承了VIewManager的接口。 WindowManager的的接口实现是{@link WindowManagerImpl}
+     * 但是WindowManagerImpl实现了addView的之后，并没有自己来实现这个方法。而是通过桥接模式交给了这个类 {@link WindowManagerGlobal}
+     * @param view
+     * @param params
+     * @param display
+     * @param parentWindow
+     *
+     * 可以看出WindowManagerImpl的addView方法调用WindowManagerGlobal的addView方法是多出来了两个参数mDisplay,
+     * mParentWindow，我们只看后一个，多了一个Window类型的mParentWindow，
+     * 可以一mParentWindow并不是在Dialog的show方法中赋值的。
+     * 那么它在哪赋值呢？在WindowManagerImpl类中搜索mParentWindow发现它在WindowManagerImpl的两个参数的构造方法中被赋值。
+     * 从这里我们可以猜测，如果是使用的activity上下文，
+     * 那么在创建WindowManagerImpl实例的时候用的是两个参数的构造方法，
+     * 而其他的上下文是用的一个参数的构造方法。现在问题就集中到了WindowManagerImpl是如何被创建的了。
+     */
     public void addView(View view, ViewGroup.LayoutParams params,
             Display display, Window parentWindow) {
+
+        // 1．检查参数是否合法，如果是子Window那么还需要调整一些布局参数
         if (view == null) {
             throw new IllegalArgumentException("view must not be null");
         }
@@ -318,6 +344,12 @@ public final class WindowManagerGlobal {
             throw new IllegalArgumentException("Params must be WindowManager.LayoutParams");
         }
 
+        /// 如果是子Window那么还需要调整一些布局参数
+        /// //1.将传进来的ViewGroup.LayoutParams类型的params转成
+        //  WindowManager.LayoutParams类型的wparams
+        //从上文的分析中可以看出attrs.token的赋值在Window的adjustLayoutParamsForSubWindow方法中。
+        // 而Dialog默认的WindowManager.LayoutParams.type是应用级别的，
+        // 因此，如果能进入这个方法内，attrs.token肯定能被赋值。
         final WindowManager.LayoutParams wparams = (WindowManager.LayoutParams) params;
         if (parentWindow != null) {
             parentWindow.adjustLayoutParamsForSubWindow(wparams);
@@ -374,16 +406,25 @@ public final class WindowManagerGlobal {
                 }
             }
 
+            // 2．创建ViewRootImpI并将View添加到列表中
             root = new ViewRootImpl(view.getContext(), display);
 
             view.setLayoutParams(wparams);
 
+            //mViews存储的是所有Window所对应的View,
+            // mRoots存储的是所有Window所对应的ViewRootImpl,
+            // mParams存储的是所有Window所对应的布局参数，
+            // 而mDyingViews则存储了那些正在被删除的View对象，
+            // 或者说是那些已经调用removeView方法但是删除操作还未完成的Window对象。
+            // 在addView中通过如下方式将Window的一系列对象添加到列表中：
             mViews.add(view);
             mRoots.add(root);
             mParams.add(wparams);
 
             // do this last because it fires off messages to start doing things
             try {
+                // 然后我们交由ViewRootImpl的setView方法来完成
+                // 4.通过ViewRootImpl联系WindowManagerService将view绘制到屏幕上
                 root.setView(view, wparams, panelParentView);
             } catch (RuntimeException e) {
                 // BadTokenException or InvalidDisplayException, clean up.
@@ -409,6 +450,8 @@ public final class WindowManagerGlobal {
 
         synchronized (mLock) {
             int index = findViewLocked(view, true);
+            // updateViewLayout方法做的事情就比较简单了，首先它需要更新View的LayoutParams并替换掉老的LayoutParams，
+            // 接着再更新ViewRootImpl中的LayoutParams，这一步是通过ViewRootImpl的setLayoutParams方法来实现的。
             ViewRootImpl root = mRoots.get(index);
             mParams.remove(index);
             mParams.add(index, wparams);
@@ -416,6 +459,13 @@ public final class WindowManagerGlobal {
         }
     }
 
+    /**
+     * 我们知道ViewManager里面有三个方法： {@link android.view.ViewManager } addView removeView updateView
+     * 然后{@link android.view.WindowManager} 继承了VIewManager的接口。 WindowManager的的接口实现是{@link WindowManagerImpl}
+     * 但是WindowManagerImpl实现了addView的之后，并没有自己来实现这个方法。而是通过桥接模式交给了这个类 {@link WindowManagerGlobal}
+     * @param view
+     * @param immediate
+     */
     @UnsupportedAppUsage
     public void removeView(View view, boolean immediate) {
         if (view == null) {
@@ -423,6 +473,9 @@ public final class WindowManagerGlobal {
         }
 
         synchronized (mLock) {
+            /// 我们找到我们对应的View的索引
+            // 首先通过findViewLocked来查找待删除的View的索引，
+            // 这个查找过程就是建立的数组遍历，然后再调用removeViewLocked来做进一步的删除
             int index = findViewLocked(view, true);
             View curView = mRoots.get(index).getView();
             removeViewLocked(index, immediate);
@@ -478,6 +531,8 @@ public final class WindowManagerGlobal {
     }
 
     private void removeViewLocked(int index, boolean immediate) {
+
+        // removeViewLocked是通过ViewRootImpl来完成删除操作的。
         ViewRootImpl root = mRoots.get(index);
         View view = root.getView();
 
@@ -487,6 +542,13 @@ public final class WindowManagerGlobal {
                 imm.windowDismissed(mViews.get(index).getWindowToken());
             }
         }
+
+        // 在WindowManager中提供了两种删除接口removeView和removeViewImmediate，它们分别表示异步删除和同步删除
+        // 其中removeViewImmediate使用起来需要特别注意，一般来说不需要使用此方法来删除Window以免发生意外的错误。
+        // 这里主要说异步删除的情况，具体的删除操作由ViewRoot-Impl的die方法来完成。
+        // 在异步删除的情况下，die方法只是发送了一个请求删除的消息后就立刻返回了，
+        // 这个时候View并没有完成删除操作，所以最后会将其添加到mDyingViews中，mDyingViews表示待删除的View列表。
+
         boolean deferred = root.die(immediate);
         if (view != null) {
             view.assignParent(null);
@@ -512,6 +574,7 @@ public final class WindowManagerGlobal {
     }
 
     private int findViewLocked(View view, boolean required) {
+        // 找到对应View的索引
         final int index = mViews.indexOf(view);
         if (required && index < 0) {
             throw new IllegalArgumentException("View=" + view + " not attached to window manager");

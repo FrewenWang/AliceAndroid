@@ -176,11 +176,36 @@ public class Dialog implements DialogInterface, Window.Callback,
      * @param context the context in which the dialog should run
      * @param themeResId a style resource describing the theme to use for the
      *              window, or {@code 0} to use the default dialog theme
+     *
+     * 在Dialog的构造方法中传入一个Application的上下文环境。看看程序是否报错：
+     *   Caused by: android.view.WindowManager$BadTokenException: Unable to add window -- token null is not for an application
+     *     at android.view.ViewRootImpl.setView(ViewRootImpl.java:517)
+     *     at android.view.WindowManagerImpl.addView(WindowManagerImpl.java:301)
+     *     at android.view.WindowManagerImpl.addView(WindowManagerImpl.java:215)
+     *     at android.view.WindowManagerImpl$CompatModeWrapper.addView(WindowManagerImpl.java:140)
+     * 这段错误日志，有两点我们需要注意一下：
+     * 程序报了一个BadTokenException异常
+     * 程序报错是在ViewRootImpl的setView方法中
+     * 我们一定很疑惑BadTokenException到底是个啥，在说明这个之前我们首先需要了解Token，
+     *  在了解了Token的概念之后，再结合ViewRootImpl的setView方法，就能理解BadTokenException这个到底是什么，怎么产生的。
+     *                   也就能彻底明白为什么Dialog的COntext必须是Activty
      */
     public Dialog(@NonNull Context context, @StyleRes int themeResId) {
         this(context, themeResId, true);
     }
 
+    /**
+     * Dialog的研究我们重点研究问题：
+     * 1、Dialog是怎么被创建起来的？？ 同时Dialog是怎么显示出来的？ {@link #addContentView(View, ViewGroup.LayoutParams)}}
+     * 2、Dialog的Window的创建过程
+     * 3、Dialog的启动之后，他所附着的Activity的声明周期走向，为什么是这样
+     * 4、Dialog的Context为什么必须是Activity 。是怎么和Activity共用同一个WindowToken的
+     *
+     * Dialog的创建很简单，我们看构造函数
+     * @param context
+     * @param themeResId
+     * @param createContextThemeWrapper
+     */
     Dialog(@NonNull Context context, @StyleRes int themeResId, boolean createContextThemeWrapper) {
         if (createContextThemeWrapper) {
             if (themeResId == Resources.ID_NULL) {
@@ -192,11 +217,16 @@ public class Dialog implements DialogInterface, Window.Callback,
         } else {
             mContext = context;
         }
-
+        //1.创建一个WindowManagerImpl对象
+        //第二个问题解决：mWindowManager是通过context.getSystemService(Context.WINDOW_SERVICE)获取
+        //通过这个context获取的WindowManager可以让他们公用同一个mWindowManager
         mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-
+        //2.创建一个PhoneWindow对象
+        // 然后直接进行实例化PhoneWindow
         final Window w = new PhoneWindow(mContext);
         mWindow = w;
+        //3.使dialog能够响应用户的事件
+        // 设置Window的相关回调
         w.setCallback(this);
         w.setOnWindowDismissedCallback(this);
         w.setOnWindowSwipeDismissedCallback(() -> {
@@ -204,6 +234,7 @@ public class Dialog implements DialogInterface, Window.Callback,
                 cancel();
             }
         });
+        //4.为window对象设置WindowManager
         w.setWindowManager(mWindowManager, null, null);
         w.setGravity(Gravity.CENTER);
 
@@ -297,6 +328,9 @@ public class Dialog implements DialogInterface, Window.Callback,
      * application layer and opaque.  Note that you should not override this
      * method to do initialization when the dialog is shown, instead implement
      * that in {@link #onStart}.
+     *
+     * Dialog的show方法还是比较简单的。首先执行DecorView的显示状态为VISIBLE
+     * mWindowManager.addView(mDecor, l)
      */
     public void show() {
         if (mShowing) {
@@ -338,8 +372,13 @@ public class Dialog implements DialogInterface, Window.Callback,
                     WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION;
             restoreSoftInputMode = true;
         }
-
+        /// 通过这个地方，我们就可以知道Dialog彻底被显示出来了。
+        /// 这里面我们不再去介绍WindowManager去AddView的流程
+        // 简单说说一下调用流程： WindowManager.addView --> WindowManagerImpl.addView ---> WindowManagerGlobal.addView
+        /// ---WindowManagerGlobal -->ViewRootImpl.setView() --->requestLayout(View的整体异步刷新) --->WindowSession最终来完成Window的添加过程
+        // 这样我们的View就彻底的被显示在界面之上
         mWindowManager.addView(mDecor, l);
+
         if (restoreSoftInputMode) {
             l.softInputMode &=
                     ~WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION;
@@ -591,6 +630,11 @@ public class Dialog implements DialogInterface, Window.Callback,
      * @param params Layout parameters for the view.
      */
     public void setContentView(@NonNull View view, @Nullable ViewGroup.LayoutParams params) {
+        // 初始化DecorView并将DiaIog的视图添加到DecorView中
+        // 是不是很简单。这个和Activity的setContentView的调用简直一模一样
+        // 我们之前在分析Activity的setContentView的时候也说了。setContentView调用完毕之后，
+        // 测试的View只是被实例化成了各种对象而已。并没有显示出来，更没有去Add到Window上面
+        // 那么这个地方很显然，也是这样的。是Dialog的ContentView是什么时候显示出来的。我们来看看他的Show方法
         mWindow.setContentView(view, params);
     }
 

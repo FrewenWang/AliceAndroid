@@ -150,6 +150,24 @@ class Session extends IWindowSession.Stub implements IBinder.DeathRecipient {
         }
     }
 
+    /**
+     * Window的添加请求就交给WindowManagerService去处理了，在Window-ManagerService内部会为每一个应用保留一个单独的Session。
+     * 具体Window在WindowManagerService内部是怎么添加的，
+     * 本章不对其进行进一步的分析，这是因为到此为止我们对Window的添加这一流程已经清楚
+     * @param window
+     * @param seq
+     * @param attrs
+     * @param viewVisibility
+     * @param displayId
+     * @param outFrame
+     * @param outContentInsets
+     * @param outStableInsets
+     * @param outOutsets
+     * @param outDisplayCutout
+     * @param outInputChannel
+     * @param outInsetsState
+     * @return
+     */
     @Override
     public int addToDisplay(IWindow window, int seq, WindowManager.LayoutParams attrs,
             int viewVisibility, int displayId, Rect outFrame, Rect outContentInsets,

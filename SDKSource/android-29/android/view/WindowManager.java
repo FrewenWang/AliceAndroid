@@ -74,6 +74,15 @@ import java.util.Objects;
 /**
  * WindowManager是一个接口类，继承自接口ViewManager，从名称就知道它是用来管理Window的，它的实现类为WindowManagerImpl。
  * 如果我们想要对Window（View）进行添加、更新和删除操作就可以使用WindowManager，
+ * 这三个方法定义在ViewManager中，而WindowManager继承了ViewManager。
+ * 对开发者来说，WindowManager常用的就只有这三个功能而已，但是这三个功能已经足够我们使用了。
+ * 它可以创建一个Window并向其添加View，还可以更新Window中的View，另外如果想要删除一个Window，那么只需要删除它里面的View即可。
+ * 由此来看，WindowManager操作Window的过程更像是在操作Window中的View。
+ * 我们时常见到那种可以拖动的Window效果，其实是很好实现的，
+ * 只需要根据手指的位置来设定LayoutParams中的x和y的值即可改变Window的位置。
+ * 首先给View设置onTouchListener:mFloatingButton.setOnTouchListener(this)。
+ * 然后在onTouch方法中不断更新View的位置即可：
+ *
  * WindowManager会将具体的工作交由WMS来处理，
  * WindowManager和WMS通过Binder来进行跨进程通信，WMS作为系统服务有很多API是不会暴露给WindowManager的，
  *

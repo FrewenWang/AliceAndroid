@@ -38,6 +38,11 @@ public class ViewDemoActivity extends BaseButterKnifeActivity {
         initView();
     }
 
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
     protected void initView() {
         //在onCreate()、onStrart()、onResume()方法中会返回0，
         // 这是因为当前activity所代表的界面还没显示出来没有添加到WindowPhone的DecorView上

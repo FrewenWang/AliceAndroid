@@ -2992,6 +2992,18 @@ public final class ActivityThread extends ClientTransactionHandler {
         return aInfo;
     }
 
+    /**
+     * 这个是我们进行启动Activity的逻辑
+     * @param parent
+     * @param id
+     * @param intent
+     * @param activityInfo
+     * @param token
+     * @param state
+     * @param lastNonConfigurationInstances
+     * @param assistToken
+     * @return
+     */
     @UnsupportedAppUsage(maxTargetSdk = Build.VERSION_CODES.P, trackingBug = 115609023)
     public final Activity startActivityNow(Activity parent, String id,
         Intent intent, ActivityInfo activityInfo, IBinder token, Bundle state,
@@ -3179,6 +3191,23 @@ public final class ActivityThread extends ClientTransactionHandler {
      * 创建对象ContextImpl;
      * Application/ContextImpl都attach到Activity对象;
      * 执行onCreate()等回调;
+     *
+     *
+     *
+     * 这里面我们稍微分析一下这个ActivityClientRecord对象
+     *
+     * 1、启动Activity的流程当中，首先，ActivityManagerService会创建ActivityRecord由其本身来管理，
+     * 同时会为这个ActivityRecord创建一个IApplication（本质上就是一个Binder）。
+     *
+     * 2、ActivityManagerService将这个binder对象传递给WindowManagerService，让WindowManagerService记录下这个Binder。
+     *
+     *3、当ActivityManagerService这边完成数据结构的添加之后，会返回给ActivityThread一个ActivityClientRecord数据结构，中间就包含了Token这个Binder对象。
+     *
+     *4、ActivityThread这边拿到这个Token的Binder对象之后，就需要让WindowManagerService去在界面上添加一个对应窗口，
+     * 在添加窗口传给WindowManagerService的数据中WindowManager.LayoutParams这里面就包含了Token。
+     *
+     *5、最终WindowManagerService在添加窗口的时候，就需要将这个Token的Binder和之前ActivityManagerService保存在里面的Binder做比较，
+     * 验证通过说明是合法的，否则，就会抛出BadTokenException这个异常。
      */
     /**  Core implementation of activity launch. */
     private Activity performLaunchActivity(ActivityClientRecord r, Intent customIntent) {
@@ -3205,7 +3234,8 @@ public final class ActivityThread extends ClientTransactionHandler {
         Activity activity = null;
         try {
             java.lang.ClassLoader cl = appContext.getClassLoader();
-            //4: 创建Activity对象、通过仪表盘类来进行实例化
+            //4: 创建Activity对象、通过仪表盘类来进行实例化。
+            // 我们知道在ActivirtyThread里面来进行新的Activity的创建和初始化
             activity = mInstrumentation.newActivity(
                     cl, component.getClassName(), r.intent);
             StrictMode.incrementExpectedActivityCount(activity.getClass());
@@ -4266,6 +4296,20 @@ public final class ActivityThread extends ClientTransactionHandler {
         r.mPendingRemoveWindowManager = null;
     }
 
+    /**
+     * 我们知道。Activity被创建之后，首先执行仪表盘的meakeNewActivity
+     * 实现需要执行的是{@link #performLaunchActivity(android.app.ActivityThread.ActivityClientRecord, Intent)}
+     *
+     * 然后 执行 {@link #handleStartActivity(android.app.ActivityThread.ActivityClientRecord, PendingTransactionActions)}
+     *
+     * 然后这个时候，就开始调用Activity的第二个生命周期onResume
+     * 也就是是 {@link #handleResumeActivity(IBinder, boolean, boolean, String)}
+     *
+     * @param token
+     * @param finalStateRequest
+     * @param isForward
+     * @param reason
+     */
     @Override
     public void handleResumeActivity(IBinder token, boolean finalStateRequest, boolean isForward,
             String reason) {
@@ -4383,6 +4427,12 @@ public final class ActivityThread extends ClientTransactionHandler {
 
             r.activity.mVisibleFromServer = true;
             mNumVisibleActivities++;
+            // 这里面有个非常重要的方法，就是activity的makeVisible
+            /**
+             * 首先会调用Activity的onResume方法，接着会调用Activity的makeVisible()，
+             * 正是在makeVisible方法中，DecorView真正地完成了添加和显示这两个过程，到这里Activity的视图才能被用户看到
+             * {@link #activity.makeVisible
+             */
             if (r.activity.mVisibleFromClient) {
                 r.activity.makeVisible();
             }

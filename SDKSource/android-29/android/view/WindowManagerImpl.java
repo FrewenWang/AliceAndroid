@@ -50,12 +50,15 @@ import java.util.List;
  * activity -- the window manager will not normally allow you to add arbitrary
  * windows that are not associated with an activity.
  *
+ *  Window的添加过程需要通过WindowManager的addView来实现，WindowManager是一个接口，它的真正实现是WindowManagerImpl类。
+ *  在WindowManagerImpl中Window的三大操作的实现如下：
  * @see WindowManager
  * @see WindowManagerGlobal
  * @hide
  */
 public final class WindowManagerImpl implements WindowManager {
     /**
+     * WindowManagerImpl这种工作模式是典型的桥接模式，将所有的操作全部委托给WindowManagerGlobal来实现。
      * WindowManagerGlobal是一个单例，说明在一个进程中只有一个WindowManagerGlobal实例
      */
     @UnsupportedAppUsage
@@ -72,6 +75,11 @@ public final class WindowManagerImpl implements WindowManager {
         this(context, null);
     }
 
+    /**
+     * 我们看到WindowManagerImpl在创建的时候会有个parentWindow的Window对象
+     * @param context
+     * @param parentWindow
+     */
     private WindowManagerImpl(Context context, Window parentWindow) {
         mContext = context;
         mParentWindow = parentWindow;
@@ -110,13 +118,30 @@ public final class WindowManagerImpl implements WindowManager {
      *  而是将功能实现委托给了WindowManagerGlobal
      * @param view
      * @param params
+     *
+     * 可以看出WindowManagerImpl的addView方法调用WindowManagerGlobal的addView方法是多出来了两个参数mDisplay,
+     * mParentWindow，我们只看后一个，多了一个Window类型的mParentWindow，
+     *
+     * 可以一mParentWindow并不是在Dialog的show方法中赋值的。
+     * 那么它在哪赋值呢？在WindowManagerImpl类中搜索mParentWindow发现它在WindowManagerImpl的两个参数的构造方法中被赋值。
+     * 从这里我们可以猜测，如果是使用的activity上下文，
+     * 那么在创建WindowManagerImpl实例的时候用的是两个参数的构造方法，
+     *
+     * 而其他的上下文是用的一个参数的构造方法。现在问题就集中到了WindowManagerImpl是如何被创建的了。
      */
     @Override
     public void addView(@NonNull View view, @NonNull ViewGroup.LayoutParams params) {
         applyDefaultToken(params);
+
         mGlobal.addView(view, params, mContext.getDisplay(), mParentWindow);
     }
 
+    /**
+     * WindowManagerImpl并没有直接实现Window的三大操作，而是全部交给了WindowManagerGlobal来处理，
+     * WindowManagerGlobal以工厂的形式向外提供自己的实例
+     * @param view
+     * @param params
+     */
     @Override
     public void updateViewLayout(@NonNull View view, @NonNull ViewGroup.LayoutParams params) {
         applyDefaultToken(params);

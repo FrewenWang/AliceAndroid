@@ -53,6 +53,11 @@ import java.util.List;
 
 /**
  * Window是一个抽象类，具体的实现类为PhoneWindow，它对View进行管理。
+ * Window是一个抽象的概念，每一个Window都对应着一个View和一个ViewRootImpl, Window和View通过ViewRootImpl来建立联系，因此Window并不是实际存在的，它是以View的形式存在。
+ * 因此Window并不是实际存在的，它是以View的形式存在。
+ * 这点从WindowManager的定义也可以看出，它提供的三个接口方法addView、updateViewLayout以及removeView都是针对View的，
+ * 这说明View才是Window存在的实体。在实际使用中无法直接访问Window，对Window的访问必须通过WindowManager。
+ * 为了分析Window的内部机制，这里从Window的添加、删除以及更新说起。
  * Abstract base class for a top-level window look and behavior policy.  An
  * instance of this class should be used as the top-level view added to the
  * window manager. It provides standard UI policies such as a background, title
@@ -770,6 +775,8 @@ public abstract class Window {
      */
     public void setWindowManager(WindowManager wm, IBinder appToken, String appName,
             boolean hardwareAccelerated) {
+
+        // ActivityManagerService传过来的Token赋值给Winow的mAppToken，这个token最后会保存到attr.token
         mAppToken = appToken;
         mAppName = appName;
         mHardwareAccelerated = hardwareAccelerated;
@@ -783,10 +790,20 @@ public abstract class Window {
         mWindowManager = ((WindowManagerImpl)wm).createLocalWindowManager(this);
     }
 
+    /**
+     * adjustLayoutParamsForSubWindow方法调整一个类型为WindowManager.LayoutParams的变量wparams的一些属性值。
+     * @param wp
+     */
     void adjustLayoutParamsForSubWindow(WindowManager.LayoutParams wp) {
         CharSequence curTitle = wp.getTitle();
+        // 这段代码首先会做一个判断如果wp.type的值有没有位于WindowManager.LayoutParams.FIRST_SUB_WINDOW
+        // 与WindowManager.LayoutParams.LAST_SUB_WINDOW之间，如果没有则会给wp.token赋值。
+
+
         if (wp.type >= WindowManager.LayoutParams.FIRST_SUB_WINDOW &&
                 wp.type <= WindowManager.LayoutParams.LAST_SUB_WINDOW) {
+            // 判断Window是子窗口集的逻辑判断
+            // 进行token赋值
             if (wp.token == null) {
                 View decor = peekDecorView();
                 if (decor != null) {
@@ -817,6 +834,8 @@ public abstract class Window {
             }
         } else if (wp.type >= WindowManager.LayoutParams.FIRST_SYSTEM_WINDOW &&
                 wp.type <= WindowManager.LayoutParams.LAST_SYSTEM_WINDOW) {
+            // 判断Window是系统窗口集的逻辑判断
+
             // We don't set the app token to this system window because the life cycles should be
             // independent. If an app creates a system window and then the app goes to the stopped
             // state, the system window should not be affected (can still show and receive input
@@ -830,6 +849,9 @@ public abstract class Window {
                 wp.setTitle(title);
             }
         } else {
+            // 判断Window是系统窗口集的逻辑判断
+            // Dialog的WindowManager.LayoutParams.type默认是应用级的，
+            // 因此会走else分支，给wp.token赋值mAppToken。至于mAppToken是什么???
             if (wp.token == null) {
                 wp.token = mContainer == null ? mAppToken : mContainer.mAppToken;
             }

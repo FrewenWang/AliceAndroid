@@ -32,6 +32,8 @@ public class HeadersInterceptor implements Interceptor {
         if (null != mHttpHeaders || mHttpHeaders.getHeadersMap().isEmpty()) {
             return chain.proceed(builder.build());
         }
+
+        /// 这个其实是在请求之前做的一些操作
         try {
             for (Map.Entry<String, String> entry : mHttpHeaders.getHeadersMap().entrySet()) {
                 //去除重复的header

@@ -282,6 +282,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * WindowManager和WindowManagerService的交互是一个IPC过程。
+ * Android中所有的视图都是通过Window来呈现的，不管是Activity、Dialog还是Toast，
+ * 它们的视图实际上都是附加在Window上的，因此Window实际是View的直接管理者。
+ */
 /** {@hide} */
 public class WindowManagerService extends IWindowManager.Stub
         implements Watchdog.Monitor, WindowManagerPolicy.WindowManagerFuncs {

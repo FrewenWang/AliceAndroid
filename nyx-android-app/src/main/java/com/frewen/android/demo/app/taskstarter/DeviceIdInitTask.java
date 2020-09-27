@@ -24,4 +24,9 @@ public class DeviceIdInitTask extends BaseModuleTask {
                 Context.TELEPHONY_SERVICE);
         mDeviceId = manager.getDeviceId();
     }
+
+    @Override
+    public boolean needWait() {
+        return false;
+    }
 }

@@ -33,9 +33,7 @@ public class RxJava2Activity extends BaseButterKnifeActivity {
     FloatingActionButton mFab;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void initView(Bundle savedInstanceState) {
 
     }
 

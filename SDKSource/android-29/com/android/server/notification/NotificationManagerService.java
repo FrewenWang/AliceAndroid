@@ -2120,6 +2120,12 @@ public class NotificationManagerService extends SystemService {
         scheduleInterruptionFilterChanged(interruptionFilter);
     }
 
+    /**
+     * 这个地方通过getBinderService来对外进行提供NotificationManagerService
+     *
+     * TODO 理论上这个地方提供IBinder对象就是可以。为什么他要转成INotificationManager
+     * @return
+     */
     @VisibleForTesting
     INotificationManager getBinderService() {
         return INotificationManager.Stub.asInterface(mService);
@@ -2234,11 +2240,21 @@ public class NotificationManagerService extends SystemService {
         return mInternalService;
     }
 
+    /**
+     *
+     */
     @VisibleForTesting
     final IBinder mService = new INotificationManager.Stub() {
         // Toasts
         // ============================================================================
 
+        /**
+         * 我们来看NotificationManager的Server端怎么来处理这个Toast入队列的这方法的
+         * @param pkg
+         * @param callback
+         * @param duration
+         * @param displayId
+         */
         @Override
         public void enqueueToast(String pkg, ITransientNotification callback, int duration,
                 int displayId)
@@ -2307,6 +2323,8 @@ public class NotificationManagerService extends SystemService {
 
                         Binder token = new Binder();
                         mWindowManagerInternal.addWindowToken(token, TYPE_TOAST, displayId);
+
+                        // 我们在这个地方啊来实例化一个ToastRecord对象，然后添加到mToastQueue
                         record = new ToastRecord(callingPid, pkg, callback, duration, token,
                                 displayId);
                         mToastQueue.add(record);
@@ -2318,6 +2336,10 @@ public class NotificationManagerService extends SystemService {
                     // If the callback fails, this will remove it from the list, so don't
                     // assume that it's valid after this.
                     if (index == 0) {
+                        // showNextToastLocked
+                        // 需要注意的是，Toast的显示是由ToastRecord的callback来完成的，
+                        // 这个callback实际上就是Toast中的TN对象的远程Binder，通过callback来访问TN中的方法是需要跨进程来完成的，
+                        // 最终被调用的TN中的方法会运行在发起Toast请求的应用的Binder线程池中。
                         showNextToastLocked();
                     }
                 } finally {

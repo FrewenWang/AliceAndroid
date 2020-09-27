@@ -22,7 +22,9 @@ public final class ServiceManager {
 
     /**
      * Returns a reference to a service with the given name.
-     *
+     * 返回对具有给定名称的服务的引用。
+     * 比如：我们在Toast里面显示View的时候， 那么我们就是通过ServiceManager.getService("notification")
+     * 来获取INotificationManager的Binder对象的
      * @param name the name of the service to get
      * @return a reference to the service, or <code>null</code> if the service doesn't exist
      */

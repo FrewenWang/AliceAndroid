@@ -5354,6 +5354,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
             long mCreateRunningAverageNs = 0;
             long mBindRunningAverageNs = 0;
         }
+        //
         SparseArray<ScrapData> mScrap = new SparseArray<>();
 
         private int mAttachCount = 0;
@@ -5432,7 +5433,9 @@ public class RecyclerView extends ViewGroup implements ScrollingView, NestedScro
          * @param scrap ViewHolder to be added to the pool.
          */
         public void putRecycledView(ViewHolder scrap) {
+            // 获取View的类型
             final int viewType = scrap.getItemViewType();
+            // 根据viewType获取View的容器
             final ArrayList<ViewHolder> scrapHeap = getScrapDataForType(viewType).mScrapHeap;
             if (mScrap.get(viewType).mMaxScrap <= scrapHeap.size()) {
                 return;

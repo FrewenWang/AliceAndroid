@@ -123,7 +123,7 @@ import java.util.List;
  * <p>
  * todo: need to pull the generic functionality out into a base class
  * in android.widget.
- *
+ *  Window是一个抽象类，它的具体实现是PhoneWindow。创建一个Window是很简单的事，只需要通过WindowManager即可完成。
  * @hide
  */
 public class PhoneWindow extends Window implements MenuBuilder.Callback {
@@ -419,14 +419,27 @@ public class PhoneWindow extends Window implements MenuBuilder.Callback {
         return mContentScene;
     }
 
+
+    /**
+     * 所以这个方法是非常重要的方法。
+     * 这个方法的调用不仅仅在Activity.setContentView
+     * 还有Dialog.setContetnView中都会有这个方法的调用。其实包括Toast
+     * @param layoutResID
+     */
     @Override
     public void setContentView(int layoutResID) {
         // Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window
         // decor, when theme attributes and the like are crystalized. Do not check the feature
         // before this happens.
+
         // mContentParent变量大家还记得是什么吗，我这里再提一下。
         // installDecor指定了一个布局，其中findViewById得到的一个ViewGroup就是这个mContentParent。
         if (mContentParent == null) {
+            // DecorView是一个FrameLayout，在第4章已经做了初步的介绍，这里再简单说一下。
+            // DecorView是Activity中的顶级View，一般来说它的内部包含标题栏和内部栏，但是这个会随着主题的变换而发生改变。
+            // 不管怎么样，内容栏是一定要存在的，并且内容来具体固定的id，那就是“content”，它的完整id是android.R.id.content。
+            // DecorView的创建过程由installDecor方法来完成，
+            // 在方法内部会通过generateDecor方法来直接创建DecorView
             installDecor();
         } else if (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) {
             mContentParent.removeAllViews();

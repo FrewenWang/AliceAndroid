@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.frewen.aura.toolkits.kotlin.ext.autoCleared
+import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 import javax.inject.Inject
 
@@ -22,9 +23,12 @@ import javax.inject.Inject
  * @version: 1.0.0
  *      完成基础功能设计
  * @version: 1.0.1
+ *      因为这个BaseDataBindingFragment使用了Dagger2来进行ViewModelProvider.Factory的依赖注入。
+ *      所以这个类实现了Injectable接口
+ *
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-abstract class BaseDataBindingFragment<VDB : ViewDataBinding, VM : ViewModel> : Fragment() {
+abstract class BaseDataBindingFragment<VDB : ViewDataBinding, VM : ViewModel> : Fragment(), Injectable {
     /**
      * 根据Fragment动态清理和获取binding对象
      */

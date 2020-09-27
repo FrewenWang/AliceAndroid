@@ -4,7 +4,7 @@
     <!-- To see how these attributes are used, please visit https://material.io/develop/android/theming/color/ -->
     <!--<item name="android:colorBackground">@color/gray_50</item>    -->
     <style name="NyxAppTheme" parent="AppTheme.NoActionBar">
-        <item name="colorPrimary">@color/colorAccent</item>
+<!--        <item name="colorPrimary">@color/colorAccent</item>-->
         <item name="colorOnPrimary">@color/gray_50_a600</item>
         <item name="colorPrimaryDark">@color/green_700</item>
         <item name="colorOnSurface">@color/blue</item>
@@ -15,7 +15,7 @@
 
     <!--这个是包含Material风格的Theme主题-->
     <style name="NyxAppMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorAccent</item>
+<!--        <item name="colorPrimary">@color/colorAccent</item>-->
         <item name="colorOnPrimary">@color/gray_50_a600</item>
         <item name="colorPrimaryDark">@color/green_700</item>
         <item name="colorOnSurface">@color/blue</item>

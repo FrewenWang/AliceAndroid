@@ -1,6 +1,7 @@
 package com.frewen.android.demo.di.modules
 
 import com.frewen.android.demo.ui.discovery.DiscoveryFragment
+import com.frewen.android.demo.ui.discovery.content.DailyQuestionFragment
 import com.frewen.android.demo.ui.home.HomeFragment
 import com.frewen.android.demo.ui.profile.MyProfileFragment
 import com.frewen.android.demo.ui.recommend.RecommendFragment
@@ -26,4 +27,7 @@ abstract class MainFragmentBindModule {
 
     @ContributesAndroidInjector
     abstract fun contributeMyProfileFragment(): MyProfileFragment
+
+    @ContributesAndroidInjector
+    abstract fun contributeDailyQuestionFragment(): DailyQuestionFragment
 }

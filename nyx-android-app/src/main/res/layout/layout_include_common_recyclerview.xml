@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <!--    merge标签主要用于辅助include标签,在使用include后可能导致布局嵌套过多,-->
+    <!--    多余的layout节点或导致解析变慢(可通过hierarchy viewer工具查看布局的嵌套情况)-->
+    <!--    官方文档说明:merge用于消除视图层次结构中的冗余视图,例如根布局是LinearLayout,-->
+    <!--    那么我们又include一个LinerLayout布局就没意义了,反而会减慢UI加载速度-->
+    <!--    merge标签常用场景:-->
+    <merge>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </merge>
+
+</layout>

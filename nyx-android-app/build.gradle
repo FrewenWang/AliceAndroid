@@ -359,6 +359,19 @@ dependencies {
     }
 
     implementation 'cat.ereza:customactivityoncrash:2.3.0'
+
+    //=================<editor-folder desc = "Dependence:多彩绚丽的Dialog的控件">======================
+    // https://github.com/afollestad/material-dialogs
+    implementation 'com.afollestad.material-dialogs:core:3.3.0'
+    implementation 'com.afollestad.material-dialogs:input:3.3.0'
+    implementation 'com.afollestad.material-dialogs:color:3.3.0'
+    implementation 'com.afollestad.material-dialogs:files:3.3.0'
+    implementation 'com.afollestad.material-dialogs:datetime:3.3.0'
+    implementation 'com.afollestad.material-dialogs:bottomsheets:3.3.0'
+    implementation 'com.afollestad.material-dialogs:lifecycle:3.3.0'
+    //================= </editor-folder desc = "多彩绚丽的Dialog的控件">===========================
+
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
 }
 
 

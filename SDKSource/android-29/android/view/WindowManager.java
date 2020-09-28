@@ -105,26 +105,15 @@ import java.util.Objects;
 @SystemService(Context.WINDOW_SERVICE)
 public interface WindowManager extends ViewManager {
 
-    /** @hide */
     int DOCKED_INVALID = -1;
-    /** @hide */
     int DOCKED_LEFT = 1;
-    /** @hide */
     int DOCKED_TOP = 2;
-    /** @hide */
     int DOCKED_RIGHT = 3;
-    /** @hide */
     int DOCKED_BOTTOM = 4;
-
-    /** @hide */
     String INPUT_CONSUMER_PIP = "pip_input_consumer";
-    /** @hide */
     String INPUT_CONSUMER_NAVIGATION = "nav_input_consumer";
-    /** @hide */
     String INPUT_CONSUMER_WALLPAPER = "wallpaper_input_consumer";
-    /** @hide */
     String INPUT_CONSUMER_RECENTS_ANIMATION = "recents_animation_input_consumer";
-
     /**
      * Not set up for a transition.
      * @hide

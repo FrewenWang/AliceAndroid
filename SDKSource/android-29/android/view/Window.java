@@ -763,6 +763,7 @@ public abstract class Window {
      * @param wm The window manager for adding new windows.
      */
     public void setWindowManager(WindowManager wm, IBinder appToken, String appName) {
+        // 默认关闭硬件，加速调用重载方法
         setWindowManager(wm, appToken, appName, false);
     }
 
@@ -776,7 +777,8 @@ public abstract class Window {
     public void setWindowManager(WindowManager wm, IBinder appToken, String appName,
             boolean hardwareAccelerated) {
 
-        // ActivityManagerService传过来的Token赋值给Winow的mAppToken，这个token最后会保存到attr.token
+        //ActivityManagerService在启动的时候会传给ActivtyThread的一个Token
+        // 传过来的Token赋值给Winow的mAppToken，这个token最后会保存到attr.token
         mAppToken = appToken;
         mAppName = appName;
         mHardwareAccelerated = hardwareAccelerated;

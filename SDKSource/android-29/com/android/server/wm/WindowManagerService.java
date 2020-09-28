@@ -286,6 +286,10 @@ import java.util.List;
  * WindowManager和WindowManagerService的交互是一个IPC过程。
  * Android中所有的视图都是通过Window来呈现的，不管是Activity、Dialog还是Toast，
  * 它们的视图实际上都是附加在Window上的，因此Window实际是View的直接管理者。
+ * WindowManagerService（下称WMS）这个系统服务，
+ * 可以毫不夸张地说，Android的framework层主要就是由它与另外一个系统服务ActivityManagerService（简称AMS）
+ * 还有View所构成，这3个模块穿插交互在整个framework中，
+ * 掌握了它们之间的关系以及每一个步骤的逻辑，你对framework就至少了解百分之五十了。
  */
 /** {@hide} */
 public class WindowManagerService extends IWindowManager.Stub
@@ -974,6 +978,7 @@ public class WindowManagerService extends IWindowManager.Stub
     /**
      * Creates and returns an instance of the WindowManagerService. This call allows the caller
      * to override the {@link TransactionFactory} to stub functionality under test.
+     * WMS的mian方法很简单，通过Handler的runWithScissors方法执行一个特殊的同步Task并在其中构造WMS的实例。
      */
     @VisibleForTesting
     public static WindowManagerService main(final Context context, final InputManagerService im,
@@ -1001,9 +1006,26 @@ public class WindowManagerService extends IWindowManager.Stub
         new WindowManagerShellCommand(this).exec(this, in, out, err, args, callback, result);
     }
 
+    /**
+     * WMS的构造方法逻辑不算复杂，大部分是对一些窗口管理将要使用到的成员变量进行初始化。
+     * WMS主要功能可以分为两方面，
+     * 一是对窗口的管理；二是对事件的管理和分发。
+     * 其接口方法以AIDL的方式定义在IWindowManager.aidl文件中，编译后会生成一个IWindowManager.java接口文件，
+     * 这个接口文件定义了WMS绝大部分的功能方法，大家有兴趣可自行查看。
+     * 作为窗口的管理承担者，WMS中定义了许多各种不同的窗口，它们都被定义在WMS的成员变量中。
+     * @param context
+     * @param inputManager
+     * @param showBootMsgs
+     * @param onlyCore
+     * @param policy
+     * @param atm
+     * @param transactionFactory
+     */
     private WindowManagerService(Context context, InputManagerService inputManager,
             boolean showBootMsgs, boolean onlyCore, WindowManagerPolicy policy,
             ActivityTaskManagerService atm, TransactionFactory transactionFactory) {
+
+        // —些成员变量赋值
         installLock(this, INDEX_WINDOW);
         mGlobalLock = atm.getGlobalLock();
         mAtmService = atm;
@@ -1035,6 +1057,7 @@ public class WindowManagerService extends IWindowManager.Stub
         mTransactionFactory = transactionFactory;
         mTransaction = mTransactionFactory.make();
         mPolicy = policy;
+        // 构造Window动画对象
         mAnimator = new WindowAnimator(this);
         mRoot = new RootWindowContainer(this);
 
@@ -1045,7 +1068,7 @@ public class WindowManagerService extends IWindowManager.Stub
                 Choreographer.getInstance());
 
         LocalServices.addService(WindowManagerPolicy.class, mPolicy);
-
+        // 获取显示服务
         mDisplayManager = (DisplayManager)context.getSystemService(Context.DISPLAY_SERVICE);
 
         mKeyguardDisableHandler = KeyguardDisableHandler.create(mContext, mPolicy, mH);
@@ -1078,7 +1101,7 @@ public class WindowManagerService extends IWindowManager.Stub
         mScreenFrozenLock = mPowerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK, "SCREEN_FROZEN");
         mScreenFrozenLock.setReferenceCounted(false);
-
+        // 获取IActivityManager对象
         mActivityManager = ActivityManager.getService();
         mActivityTaskManager = ActivityTaskManager.getService();
         mAmInternal = LocalServices.getService(ActivityManagerInternal.class);

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/toolbar_title"
         android:layout_width="match_parent"
@@ -15,17 +14,12 @@
         android:fitsSystemWindows="true"
         android:gravity="center_vertical"
         android:text="这可能是RxJava 2.x最好的学习Demo"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/holo_red_dark"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_behavior="@string/simple_view_behavior"
-        app:svb_dependOn="@id/home_appbar"
-        app:svb_dependType="y"
-        app:svb_targetAlpha="1"
-        app:svb_targetY="0dp" />
+        app:layout_behavior="@string/simple_view_behavior" />
 
-
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/home_viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -82,8 +76,7 @@
         android:layout_margin="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="32dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_behavior="@string/fab_hide_sheet_behavior"
+        android:src="@mipmap/icon_star"
         app:layout_scrollFlags="scroll|enterAlways|snap" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -138,7 +138,7 @@ public class AuraRecyclerView extends ViewGroup {
         int itemLift, itemTop = 0, itemRight, itemBottom;
         for (int i = 0; i < rowCount && itemTop < height; i++) {
             itemBottom = itemTop + heights[i];
-            addView();
+            // addView();
             itemTop = itemBottom;
         }
 

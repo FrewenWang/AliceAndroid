@@ -110,7 +110,6 @@
         <activity android:name=".samples.glide.Glide4Activity" />
         <activity android:name=".samples.network.FreeNetWorkDemoActivity" />
         <activity android:name=".samples.OptimusNetWorkActivity" />
-        <activity android:name=".samples.rxjava2.OperatorActivity" />
         <activity android:name=".samples.PermissionActivity" />
         <activity android:name=".samples.okhttp.OkHttp3Activity" />
         <activity android:name=".samples.AgoraDemoActivity" />

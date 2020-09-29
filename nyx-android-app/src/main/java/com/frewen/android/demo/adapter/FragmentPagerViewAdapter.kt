@@ -1,7 +1,5 @@
 package com.frewen.android.demo.adapter
 
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -13,9 +11,12 @@ import androidx.fragment.app.FragmentPagerAdapter
  * @time: 2020/4/3 17:35
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-open class FragmentPagerViewAdapter(private val fragmentList: List<Fragment>, fragmentManager: FragmentManager, behavior: Int) : FragmentPagerAdapter(fragmentManager, behavior) {
+open class FragmentPagerViewAdapter(
+        private val titleList: Array<String>,
+        private val fragmentList: List<Fragment>,
+        fragmentManager: FragmentManager,
+        behavior: Int) : FragmentPagerAdapter(fragmentManager, behavior) {
 
-    private val mChannels: ObservableList<Object> = ObservableArrayList()
 
     /**
      * 获取ViewPager中的每个页面的Fragment
@@ -35,7 +36,7 @@ open class FragmentPagerViewAdapter(private val fragmentList: List<Fragment>, fr
      * 获取页面的标题
      */
     override fun getPageTitle(position: Int): CharSequence? {
-        return super.getPageTitle(position)
+        return titleList[position]
     }
 
 }

@@ -11,7 +11,7 @@ import com.frewen.adapter.core.abslistview.BaseAdapter;
 import com.frewen.adapter.core.abslistview.ViewHolder;
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.concurrent.HandlerThreadActivity;
-import com.frewen.android.demo.data.ContentData;
+import com.frewen.android.demo.model.ContentData;
 import com.frewen.android.demo.samples.bitmap.BitmapDemoActivity;
 import com.frewen.android.demo.samples.bluetooth.BlueToothDemoActivity;
 import com.frewen.android.demo.samples.eventbus.EventBusActivity;
@@ -50,7 +50,7 @@ public class SampleDemoActivity extends AppCompatActivity {
         BaseAdapter<ContentData> adapter = new BaseAdapter<ContentData>(this, R.layout.layout_item, mDatas) {
             @Override
             protected void convert(ViewHolder viewHolder, ContentData item, int position) {
-                viewHolder.setText(R.id.tv_item, item.getName() + " : " + viewHolder.getItemPosition()
+                viewHolder.setText(R.id.tv_item, item.getTitle() + " : " + viewHolder.getItemPosition()
                         + " , " + viewHolder.getItemPosition());
             }
         };

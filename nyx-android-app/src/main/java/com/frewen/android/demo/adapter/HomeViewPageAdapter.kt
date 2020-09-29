@@ -9,6 +9,6 @@ import androidx.fragment.app.FragmentManager
  * @time: 2020/5/24 12:54
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class HomeViewPageAdapter(fragmentManager: FragmentManager, behavior: Int) : FragmentPagerViewAdapter(null!!, fragmentManager, behavior) {
+public class HomeViewPageAdapter(fragmentManager: FragmentManager, behavior: Int) : FragmentPagerViewAdapter(null!!, null!!, fragmentManager, behavior) {
 
 }

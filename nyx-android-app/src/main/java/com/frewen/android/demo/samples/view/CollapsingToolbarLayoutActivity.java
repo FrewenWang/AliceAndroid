@@ -91,7 +91,7 @@ public class CollapsingToolbarLayoutActivity extends AppCompatActivity {
         fragments.add(CardImageFragment.newInstance());
 
 
-        viewPager.setAdapter(new FragmentPagerViewAdapter(fragments, getSupportFragmentManager(), fragments.size()) {
+        viewPager.setAdapter(new FragmentPagerViewAdapter(mTitles, fragments, getSupportFragmentManager(), fragments.size()) {
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {

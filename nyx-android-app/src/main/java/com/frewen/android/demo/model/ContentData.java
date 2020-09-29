@@ -1,9 +1,9 @@
-package com.frewen.android.demo.data;
+package com.frewen.android.demo.model;
+
+import com.frewen.android.demo.ui.HomeActivity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * lombok :
@@ -21,32 +21,50 @@ import lombok.ToString;
  * 如果该资源有其它关闭方法，可使用 @Cleanup(“methodName”) 来指定要调用的方法，也会生成默认的构造方法
  * ToString 这个注解用在 类 上，可以生成所有参数的 toString 方法，还会生成默认的构造方法。
  * RequiredArgsConstructor 这个注解用在 类 上，使用类中所有带有 @NonNull 注解的或者带有 final 修饰的成员变量生成对应的构造方法。
+ *
  * @author frewen
  */
 public class ContentData {
 
     /**
-     * content name
+     * 标题
      */
-    @Setter
-    private String name;
+    private String title;
+    /**
+     * 内容
+     */
+    private String content;
     /**
      * content clazz
      */
     private Class<?> clazz;
 
-
-    public ContentData(String name, Class<?> clazz) {
-        this.name = name;
+    public ContentData(String title, String content, Class<?> clazz) {
+        this.title = title;
+        this.content = content;
         this.clazz = clazz;
     }
 
-    public String getName() {
-        return name;
+
+    public ContentData(String title, Class<?> clazz) {
+        this.title = title;
+        this.clazz = clazz;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Class<?> getClazz() {

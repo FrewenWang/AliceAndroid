@@ -16,6 +16,7 @@ import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.android.demo.performance.LaunchTimeRecord.startRecord
 import com.frewen.android.demo.samples.glide.Glide4Activity
 import com.frewen.android.demo.samples.net.ProtobufActivity
+import com.frewen.android.demo.samples.rxjava2.RxJava2Activity
 import com.frewen.android.demo.samples.view.custom.recyclerview.AuraRecyclerViewActivity
 import com.frewen.android.demo.samples.window.WindowDemoActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
@@ -133,7 +134,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         CoroutineScope(job).launch {
             delay(splashDuration)
             // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, AuraRecyclerViewActivity::class.java)
+            val intent = Intent(this@SplashActivity, RxJava2Activity::class.java)
             startActivity(intent)
             // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
             finish()

@@ -30,8 +30,7 @@
         android:name="android.permission.BLUETOOTH_PRIVILEGED"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 这个权限是我们在创建系统Window的时候我们需要申请权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 这个权限是我们在创建系统Window的时候我们需要申请权限 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
@@ -43,10 +42,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme">
+        <activity android:name=".samples.view.custom.recyclerview.AuraRecyclerViewActivity"></activity>
         <activity
             android:name=".samples.window.WindowDemoActivity"
             android:label="@string/title_activity_window_demo"
-            android:theme="@style/NyxAppMaterialTheme.NoActionBar"></activity>
+            android:theme="@style/NyxAppMaterialTheme.NoActionBar" />
         <activity android:name=".error.ErrorActivity" />
         <activity android:name=".samples.net.ProtobufActivity">
             <intent-filter>

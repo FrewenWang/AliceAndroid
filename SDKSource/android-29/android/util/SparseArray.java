@@ -65,7 +65,7 @@ public class SparseArray<E> implements Cloneable {
     private int mSize;
 
     /**
-     * Creates a new SparseArray containing no mappings.
+     * SparseArray是默认的初始化容量是10
      */
     public SparseArray() {
         this(10);
@@ -77,6 +77,7 @@ public class SparseArray<E> implements Cloneable {
      * number of mappings.  If you supply an initial capacity of 0, the
      * sparse array will be initialized with a light-weight representation
      * not requiring any additional array allocations.
+     *
      */
     public SparseArray(int initialCapacity) {
         if (initialCapacity == 0) {
@@ -230,18 +231,20 @@ public class SparseArray<E> implements Cloneable {
     }
 
     /**
-     * Adds a mapping from the specified key to the specified value,
-     * replacing the previous mapping from the specified key if there
-     * was one.
+     * 添加从指定键到指定值的映射，如果键值相同则会进行映射Value的替换
      */
     public void put(int key, E value) {
+        // 1.先进行二分查找。 把所有的Keys来进行还有对应的Key然后来进行二分查找
+        // 查找到的索引的Index
         int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
 
+        // 2. 如果找到了，则 i 必大于等于 0
         if (i >= 0) {
+            /// 如果找到了，则进行替换对应的Value其实就可以了。
             mValues[i] = value;
         } else {
+            // 3. 没找到，则找一个正确的位置再插入
             i = ~i;
-
             if (i < mSize && mValues[i] == DELETED) {
                 mKeys[i] = key;
                 mValues[i] = value;

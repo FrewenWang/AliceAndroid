@@ -132,7 +132,7 @@
 
 
     <!--RxJava2的实例Demo的线管应用字符串-->
-    <string name="doSomething">doSomething</string>
+    <string name="rx_start">启动</string>
     <string name="rx_create">create</string>
     <string name="rx_just">just</string>
     <string name="rx_map">map</string>

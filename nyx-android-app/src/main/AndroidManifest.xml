@@ -42,19 +42,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme">
-        <activity android:name=".samples.view.custom.recyclerview.AuraRecyclerViewActivity"></activity>
+
         <activity
-            android:name=".samples.window.WindowDemoActivity"
-            android:label="@string/title_activity_window_demo"
-            android:theme="@style/NyxAppMaterialTheme.NoActionBar" />
-        <activity android:name=".error.ErrorActivity" />
-        <activity android:name=".samples.net.ProtobufActivity">
+            android:name=".ui.SplashActivity"
+            android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.HomeActivity"
+            android:theme="@style/AppTheme.FullScreen" />
+
+        <activity android:name=".samples.view.custom.recyclerview.AuraRecyclerViewActivity" />
+        <activity
+            android:name=".samples.window.WindowDemoActivity"
+            android:label="@string/title_activity_window_demo"
+            android:theme="@style/NyxAppMaterialTheme.NoActionBar" />
+        <activity android:name=".error.ErrorActivity" />
+        <activity android:name=".samples.net.ProtobufActivity" />
         <activity android:name=".performance.PerformanceActivity" />
         <activity android:name=".samples.view.recyclerview.AdapterSampleActivity" />
         <activity android:name=".samples.view.recyclerview.AnimatorSampleActivity" />
@@ -84,18 +92,6 @@
         <activity android:name=".samples.sqlite.SQLiteDemoActivity" />
         <activity android:name=".ui.publish.PublishActivity" />
         <activity android:name=".samples.dagger2.Dagger2Activity" />
-        <activity
-            android:name=".ui.SplashActivity"
-            android:theme="@style/AppTheme.Splash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".ui.HomeActivity"
-            android:theme="@style/AppTheme.FullScreen" />
         <activity android:name=".samples.hook.target.TargetActivity" />
         <activity android:name=".samples.hook.HookDemoActivity" />
         <activity android:name=".samples.unitest.AndroidUnitTestActivity" />
@@ -122,7 +118,22 @@
         <activity android:name=".samples.bitmap.BitmapDemoActivity" />
         <activity android:name=".samples.eventbus.StickyMsgActivity" />
         <activity android:name=".samples.fragment.FragmentDemoActivity" />
-        <activity android:name=".samples.fragment.FragmentStackActivity" /> <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
+        <activity android:name=".samples.fragment.FragmentStackActivity" />
+
+
+        <!--  RxJava2的基础知识学习的相关Activity -->
+        <activity android:name=".samples.rxjava2.operators.RxCreateActivity"></activity>
+        <activity android:name=".samples.rxjava2.operators.RxZipActivity"></activity>
+        <activity android:name=".samples.rxjava2.operators.RxMapActivity"></activity>
+        <activity android:name=".samples.rxjava2.operators.RxFlatMapActivity"></activity>
+        <activity android:name=".samples.rxjava2.operators.RxConcatMapActivity"></activity>
+        <activity android:name=".samples.rxjava2.operators.RxTimerActivity"></activity>
+        <activity android:name=".samples.rxjava2.operators.RxTakeActivity"></activity>
+        <activity android:name=".samples.rxjava2.operators.RxSkipActivity"></activity>
+        <activity android:name=".samples.rxjava2.usecase.RxNetSingleActivity"></activity>
+
+
+        <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
         <!-- 因此，android:authorities必须是唯一的，这里建议读者在命名的时候加上包名前缀。 -->
         <!-- 为了演示进程间通信，我们让BookProvider运行在独立的进程中并给它添加了权限， -->
         <!-- 这样外界应用如果想访问BookProvider，就必须声明“com.frewen.content.provider”这个权限。 -->

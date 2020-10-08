@@ -1,5 +1,6 @@
 package com.frewen.android.demo.samples.rxjava2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.adapter.OperatorsAdapter;
 import com.frewen.android.demo.model.ContentData;
+import com.frewen.android.demo.samples.rxjava2.usecase.RxNetSingleActivity;
 import com.frewen.android.demo.ui.HomeActivity;
 import com.frewen.aura.framework.fragment.BaseButterKnifeFragment;
 
@@ -85,6 +87,7 @@ public class RxUseCaseFragment extends BaseButterKnifeFragment implements SwipeR
      */
     private void itemClick(int position) {
         Log.d(TAG, "FMsg:itemClick() called with: position = [" + position + "]");
+        startActivity(new Intent(getActivity(), data.get(position).getClazz()));
     }
 
     /**
@@ -97,7 +100,7 @@ public class RxUseCaseFragment extends BaseButterKnifeFragment implements SwipeR
                         "2、通过 map 操作符结合 Gson , 将 Response 转换为 bean 类;\n" +
                         "3、通过 doOnNext() 方法，解析 bean 中的数据，并进行数据库存储等操作;\n" +
                         "4、调度线程，在子线程进行耗时操作任务，在主线程更新 UI;\n" +
-                        "5、通过 subscribe(),根据请求成功或者失败来更新 UI。", HomeActivity.class));
+                        "5、通过 subscribe(),根据请求成功或者失败来更新 UI。", RxNetSingleActivity.class));
         data.add(new ContentData("使用框架 rx2-Networking",
                 "1、通过 Rx2AndroidNetworking 的 get() 方法获取 Observable 对象(已解析)；\n" +
                         "2、调度线程，根据请求结果更新 UI。", HomeActivity.class));

@@ -1,17 +1,24 @@
 package com.frewen.android.demo.samples.rxjava2;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.adapter.OperatorsAdapter;
 import com.frewen.android.demo.model.ContentData;
+import com.frewen.android.demo.samples.rxjava2.operators.RxConcatMapActivity;
+import com.frewen.android.demo.samples.rxjava2.operators.RxCreateActivity;
+import com.frewen.android.demo.samples.rxjava2.operators.RxFlatMapActivity;
+import com.frewen.android.demo.samples.rxjava2.operators.RxMapActivity;
+import com.frewen.android.demo.samples.rxjava2.operators.RxSkipActivity;
+import com.frewen.android.demo.samples.rxjava2.operators.RxTakeActivity;
+import com.frewen.android.demo.samples.rxjava2.operators.RxTimerActivity;
+import com.frewen.android.demo.samples.rxjava2.operators.RxZipActivity;
 import com.frewen.android.demo.ui.HomeActivity;
 import com.frewen.aura.framework.fragment.BaseButterKnifeFragment;
-import com.frewen.aura.framework.fragment.BaseFragment;
 
 import java.util.ArrayList;
 
@@ -87,6 +94,7 @@ public class OperatorsFragment extends BaseButterKnifeFragment implements SwipeR
      */
     private void itemClick(int position) {
         Log.d(TAG, "FMsg:itemClick() called with: position = [" + position + "]");
+        startActivity(new Intent(getActivity(), data.get(position).getClazz()));
     }
 
     /**
@@ -94,22 +102,22 @@ public class OperatorsFragment extends BaseButterKnifeFragment implements SwipeR
      */
     private void initData() {
         data = new ArrayList<>();
-        data.add(new ContentData(getString(R.string.rx_create), "可用于获取一个被观察的对象", HomeActivity.class));
+        data.add(new ContentData(getString(R.string.rx_create), "可用于获取一个被观察的对象", RxCreateActivity.class));
+        data.add(new ContentData(getString(R.string.rx_map), "基本是RxJava最简单的操作符了作用是对上游发送的每一个事件应用一个函数，" +
+                "使得每一个事件都按照指定的函数去变化", RxMapActivity.class));
         data.add(new ContentData(getString(R.string.rx_zip), "合并事件专用," +
                 "分别从两个上游事件中各取出一个组合," +
                 "一个事件只能被使用一次，顺序严格按照事件发送的顺序," +
-                "最终下游事件收到的是和上游事件最少的数目相同（必须两两配对，多余的舍弃)", HomeActivity.class));
-        data.add(new ContentData(getString(R.string.rx_map), "基本是RxJava 最简单的操作符了作用是对上游发送的每一个事件应用一个函数，" +
-                "使得每一个事件都按照指定的函数去变化", HomeActivity.class));
-        data.add(new ContentData(getString(R.string.rx_flatMap), "FlatMap将一个发送事件的上游Observable变换成多个发送事件的Observables， 然后将它们发射的时间合并后放进一个单独的Observable里", HomeActivity.class));
-        data.add(new ContentData(getString(R.string.rx_concatMap), "concatMap作用和flatMap几乎一模一样，唯一的区别是它能保证事件的顺序", HomeActivity.class));
+                "最终下游事件收到的是和上游事件最少的数目相同（必须两两配对，多余的舍弃)", RxZipActivity.class));
+        data.add(new ContentData(getString(R.string.rx_flatMap), "FlatMap将一个发送事件的上游Observable变换成多个发送事件的Observables， 然后将它们发射的时间合并后放进一个单独的Observable里", RxFlatMapActivity.class));
+        data.add(new ContentData(getString(R.string.rx_concatMap), "concatMap作用和flatMap几乎一模一样，唯一的区别是它能保证事件的顺序", RxConcatMapActivity.class));
         data.add(new ContentData(getString(R.string.rx_doOnNext), "让订阅者在接收到数据前干点事情的操作符", HomeActivity.class));
         data.add(new ContentData(getString(R.string.rx_filter), "过滤操作符，取正确的值", HomeActivity.class));
-        data.add(new ContentData(getString(R.string.rx_skip), "接受一个long型参数，代表跳过多少个数目的事件再开始接收", HomeActivity.class));
-        data.add(new ContentData(getString(R.string.rx_take), "用于指定订阅者最多收到多少数据", HomeActivity.class));
+        data.add(new ContentData(getString(R.string.rx_skip), "接受一个long型参数，代表跳过多少个数目的事件再开始接收", RxSkipActivity.class));
+        data.add(new ContentData(getString(R.string.rx_take), "用于指定订阅者最多收到多少数据", RxTakeActivity.class));
         data.add(new ContentData(getString(R.string.rx_timer), "在Rxjava中timer 操作符既可以延迟执行一段逻辑，也可以间隔执行一段逻辑\n" +
                 "【注意】但在RxJava 2.x已经过时了，现在用interval操作符来间隔执行，详见RxIntervalActivity\n" +
-                "timer和interval都默认执行在一个新线程上。", HomeActivity.class));
+                "timer和interval都默认执行在一个新线程上。", RxTimerActivity.class));
         data.add(new ContentData(getString(R.string.rx_interval), "间隔执行操作，默认在新线程", HomeActivity.class));
         data.add(new ContentData(getString(R.string.rx_just), "just操作符，和RxJava 1.x 没有什么区别，就是接受一个可变参数，依次发送", HomeActivity.class));
         data.add(new ContentData(getString(R.string.rx_single), "顾名思义，Single只会接收一个参数" +

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_tool_bar_common" />
+
+    <Button
+        android:id="@+id/rx_operators_btn"
+        style="@style/WrapWrap"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="@string/rx_start" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/rx_operators_text"
+            style="@style/MatchWrap" />
+
+    </ScrollView>
+
+
+</LinearLayout>

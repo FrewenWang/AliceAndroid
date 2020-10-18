@@ -287,9 +287,8 @@ public class FragmentActivity extends ComponentActivity implements
     }
 
     /**
+     * 在页面中通过ViewModelProvider类来实例化ViewModel。
      * Returns the {@link ViewModelStore} associated with this activity
-     *
-     * @return a {@code ViewModelStore}
      */
     @NonNull
     @Override

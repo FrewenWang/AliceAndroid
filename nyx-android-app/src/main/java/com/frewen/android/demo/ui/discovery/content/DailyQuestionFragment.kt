@@ -2,10 +2,12 @@ package com.frewen.android.demo.ui.discovery.content
 
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.DataBindingComponent
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainMyProfileBinding
 import com.frewen.android.demo.ui.discovery.DiscoveryViewModel
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
+import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 
 /**
  * @filename: DailyQuestionFragment

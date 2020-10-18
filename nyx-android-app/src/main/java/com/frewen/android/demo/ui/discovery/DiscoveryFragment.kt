@@ -2,6 +2,7 @@ package com.frewen.android.demo.ui.discovery
 
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.DataBindingComponent
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.frewen.android.aura.annotations.FragmentDestination
@@ -13,10 +14,11 @@ import com.frewen.android.demo.ui.discovery.content.DailyQuestionFragment
 import com.frewen.android.demo.ui.profile.MyProfileViewModel
 import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
+import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_main_discovery.*
 
 /**
- *   所有使用实现自Injectable的类。需要有注册inject的
+ * 所有使用实现自Injectable的类。需要有注册inject的
  *   Process: com.frewen.android.demo.debug, PID: 2570
  *   java.lang.IllegalArgumentException: No injector was found for com.frewen.android.demo.ui.discovery.DiscoveryFragment
  */

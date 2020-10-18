@@ -1,10 +1,12 @@
 package com.frewen.android.demo.ui.profile
 
+import androidx.databinding.DataBindingComponent
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainMyProfileBinding
 import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
+import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 
 @FragmentDestination(pageUrl = "main/tabs/myProfile", asStarter = false)
 class MyProfileFragment : BaseDataBindingFragment<FragmentMainMyProfileBinding, MyProfileViewModel>(), Injectable {
@@ -16,6 +18,4 @@ class MyProfileFragment : BaseDataBindingFragment<FragmentMainMyProfileBinding, 
     override fun getLayoutId(): Int {
         return R.layout.fragment_main_my_profile
     }
-
-
 }

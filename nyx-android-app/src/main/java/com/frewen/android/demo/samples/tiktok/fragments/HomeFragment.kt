@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
-import com.frewen.android.demo.performance.LaunchTimeRecord.startRecord
 import com.frewen.android.demo.samples.tiktok.home.MainFragment
 import com.frewen.android.demo.samples.tiktok.home.PersonalFragment
 import com.frewen.demo.library.ui.fragment.BaseViewPager2Fragment

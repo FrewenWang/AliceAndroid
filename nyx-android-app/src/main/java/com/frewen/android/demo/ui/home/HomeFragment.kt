@@ -2,6 +2,7 @@ package com.frewen.android.demo.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.DataBindingComponent
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
@@ -9,6 +10,7 @@ import com.frewen.android.demo.performance.LaunchTimeRecord
 import com.frewen.android.demo.samples.tiktok.fragments.HomeViewModel
 import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
+import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 
 
 @FragmentDestination(pageUrl = "main/tabs/home", asStarter = true)
@@ -26,6 +28,4 @@ class HomeFragment() : BaseDataBindingFragment<FragmentMainHomeBinding, HomeView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-
-
 }

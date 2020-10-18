@@ -202,16 +202,19 @@ dependencies {
 
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-
 
     //========================添加单元测试相关的依赖===================================================
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //========================添加单元测试相关的依赖===================================================
+
+
+    //=====================<editor-folder desc = "Kotlin标准库的依赖">===============================
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //=====================</editor-folder desc = "Kotlin标准库的依赖">===============================
 
 
     //======<editor-folder desc = "Dependence:Android Performance Monitor依赖">======================

@@ -2,7 +2,6 @@ package com.frewen.demo.library.ui.holder
 
 import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingComponent

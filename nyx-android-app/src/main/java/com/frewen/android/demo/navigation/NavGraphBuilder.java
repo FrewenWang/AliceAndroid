@@ -31,7 +31,6 @@ public class NavGraphBuilder {
 
         NavGraph navGraph = new NavGraph(new NavGraphNavigator(provider));
 
-
         ActivityNavigator activityNavigator = provider.getNavigator(ActivityNavigator.class);
 //        FragmentNavigator fragmentNavigator = provider.getNavigator(FragmentNavigator.class);
         AuraFragmentNavigator fragmentNavigator = new AuraFragmentNavigator(activity, activity.getSupportFragmentManager(), containerId);

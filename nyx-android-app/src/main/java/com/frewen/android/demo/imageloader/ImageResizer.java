@@ -10,11 +10,10 @@ import android.graphics.Bitmap;
  *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class ImageResizer {
+
     private static final String TAG = "ImageResizer";
 
     public ImageResizer() {
 
     }
-
-    public Bitmap decode
 }

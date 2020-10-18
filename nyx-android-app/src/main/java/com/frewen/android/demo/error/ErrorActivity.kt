@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.getSystemService
+import androidx.databinding.DataBindingComponent
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.ActivityErrorBinding
@@ -14,15 +15,19 @@ import com.frewen.aura.toolkits.utils.ToastUtils
 import com.frewen.demo.library.extention.click
 import com.frewen.demo.library.extention.init
 import com.frewen.demo.library.extention.showMessageDialog
-import com.frewen.demo.library.ui.activity.BaseDataBindingActivity
-import com.frewen.demo.library.viewmodel.BaseViewModel
+import com.frewen.aura.framework.mvvm.activity.BaseVMDataBindingActivity
+import com.frewen.aura.framework.mvvm.vm.BaseViewModel
+import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 import kotlinx.android.synthetic.main.activity_error.*
 import kotlinx.android.synthetic.main.layout_tool_bar_common.*
 
-class ErrorActivity : BaseDataBindingActivity<ActivityErrorBinding, BaseViewModel>() {
+class ErrorActivity : BaseVMDataBindingActivity<BaseViewModel, ActivityErrorBinding>() {
+
+    companion object {
+        const val TAG = "ErrorActivity"
+    }
 
     override fun getContentViewId() = R.layout.activity_error
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +60,6 @@ class ErrorActivity : BaseDataBindingActivity<ActivityErrorBinding, BaseViewMode
                 }, "我不敢")
             }
         }
-
-
     }
 
     /**
@@ -65,7 +68,5 @@ class ErrorActivity : BaseDataBindingActivity<ActivityErrorBinding, BaseViewMode
     override fun enableTranslucentStatusBar(): Boolean {
         return true
     }
-
-
 }
 

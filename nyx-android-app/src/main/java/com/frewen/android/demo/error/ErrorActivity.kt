@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.core.content.getSystemService
-import androidx.databinding.DataBindingComponent
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.ActivityErrorBinding
@@ -17,7 +16,6 @@ import com.frewen.demo.library.extention.init
 import com.frewen.demo.library.extention.showMessageDialog
 import com.frewen.aura.framework.mvvm.activity.BaseVMDataBindingActivity
 import com.frewen.aura.framework.mvvm.vm.BaseViewModel
-import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 import kotlinx.android.synthetic.main.activity_error.*
 import kotlinx.android.synthetic.main.layout_tool_bar_common.*
 

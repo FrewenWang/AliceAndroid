@@ -6,8 +6,9 @@
     android:background="@color/colorPrimary"
     android:gravity="center_vertical">
 
+    <!-- 顶部Title的左侧按钮-->
     <ImageView
-        android:id="@+id/ivCalendar"
+        android:id="@+id/ivLeftBtn"
         android:layout_width="38.5dp"
         android:layout_height="38.5dp"
         android:layout_gravity="start"
@@ -16,7 +17,7 @@
         android:visibility="invisible" />
 
     <com.flyco.tablayout.CommonTabLayout
-        android:id="@+id/tabLayout"
+        android:id="@+id/centerTabLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
@@ -32,8 +33,9 @@
         app:tl_textUnselectColor="@color/colorTextSecondary"
         app:tl_textsize="12sp" />
 
+    <!-- 顶部Title的右侧按钮-->
     <ImageView
-        android:id="@+id/ivSearch"
+        android:id="@+id/ivRightBtn"
         android:layout_width="43dp"
         android:layout_height="43dp"
         android:layout_gravity="end"

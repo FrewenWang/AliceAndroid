@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private static final String TAG = "SectionsPagerAdapter";
     private static final String[] TAB_TITLES = new String[]{"补间动画", "逐帧动画", "属性动画"};
-    private static final Fragment[] TAB_FRAGMENT_PAGES = new Fragment[]{PlaceholderFragment.newInstance(1), PlaceholderFragment.newInstance(2), PropertyAnimationFragment.newInstance(3)};
+    private static final Fragment[] TAB_FRAGMENT_PAGES = new Fragment[]{PlaceholderViewFragment.newInstance(1), PlaceholderViewFragment.newInstance(2), PropertyAnimationViewFragment.newInstance(3)};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {

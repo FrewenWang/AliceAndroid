@@ -1,12 +1,8 @@
 package com.frewen.android.demo.ui.recommend;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.frewen.android.aura.annotations.FragmentDestination;
 import com.frewen.android.demo.R;
-import com.frewen.aura.framework.fragment.BaseFragment;
+import com.frewen.aura.framework.fragment.BaseViewFragment;
 
 
 /**
@@ -18,7 +14,7 @@ import com.frewen.aura.framework.fragment.BaseFragment;
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 @FragmentDestination(pageUrl = "main/tabs/recommend", asStarter = false)
-public class RecommendFragment extends BaseFragment {
+public class RecommendViewFragment extends BaseViewFragment {
 
     @Override
     protected int getLayoutId() {

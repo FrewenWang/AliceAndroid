@@ -4,8 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- 顶部的PageTitle的布局-->
+    <include layout="@layout/include_layout_main_page_title_bar" />
+
+    <View
+        android:id="@+id/viewHorizontalLine"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/color_common_gray" />
+
+    <!--底层的ViewPager2的容器布局-->
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+        android:id="@+id/viewPager2"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

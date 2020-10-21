@@ -18,13 +18,17 @@ import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_main_discovery.*
 
 /**
- * 所有使用实现自Injectable的类。需要有注册inject的
- *   Process: com.frewen.android.demo.debug, PID: 2570
- *   java.lang.IllegalArgumentException: No injector was found for com.frewen.android.demo.ui.discovery.DiscoveryFragment
+ * 首页的发现页面的Fragment
  */
 @FragmentDestination(pageUrl = "main/tabs/discovery", asStarter = false)
 class DiscoveryFragment : BaseDataBindingFragment<FragmentMainDiscoveryBinding, MyProfileViewModel>(), Injectable {
-
+    /**
+     * 注意！！！！！
+     * 所有使用实现自Injectable的类。需要有注册inject的注解的实例对象，否则会报下面的错误：
+     *   Process: com.frewen.android.demo.debug, PID: 2570
+     *              java.lang.IllegalArgumentException:
+     *              No injector was found for com.frewen.android.demo.ui.discovery.DiscoveryFragment
+     */
     var titleData = arrayListOf("广场", "每日一问", "体系", "导航")
 
     /**

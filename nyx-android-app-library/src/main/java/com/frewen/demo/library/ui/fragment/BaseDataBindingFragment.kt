@@ -37,7 +37,7 @@ abstract class BaseDataBindingFragment<VDB : ViewDataBinding, VM : ViewModel> : 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: VM
+    lateinit var viewModel: VM
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(

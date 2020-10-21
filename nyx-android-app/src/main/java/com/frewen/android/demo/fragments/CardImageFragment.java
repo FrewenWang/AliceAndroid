@@ -1,15 +1,11 @@
 package com.frewen.android.demo.fragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.adapter.CardImageAdapter;
 import com.frewen.android.demo.bean.ArticleCommonBean;
 import com.frewen.aura.framework.fragment.BaseButterKnifeFragment;
-import com.frewen.aura.framework.fragment.BaseFragment;
 import com.frewen.aura.toolkits.common.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,7 +17,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @filename: CardImageFragment

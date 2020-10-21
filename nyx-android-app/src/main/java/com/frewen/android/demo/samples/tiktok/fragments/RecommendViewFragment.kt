@@ -1,14 +1,12 @@
 package com.frewen.android.demo.samples.tiktok.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.observe
 import com.frewen.android.demo.R
-import com.frewen.aura.framework.fragment.BaseFragment
+import com.frewen.aura.framework.fragment.BaseViewFragment
 
 /**
  * @filename: HomeFragment
@@ -18,18 +16,24 @@ import com.frewen.aura.framework.fragment.BaseFragment
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class MineFragment : BaseFragment() {
+class RecommendViewFragment : BaseViewFragment() {
 
-    private lateinit var mineViewModel: MineViewModel
+    private lateinit var recommendViewModel: RecommendViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recommendViewModel = ViewModelProviders.of(this).get(RecommendViewModel::class.java)
 
-        mineViewModel = ViewModelProviders.of(this).get(MineViewModel::class.java)
+        val textureView: TextView = view.findViewById(R.id.content)
+
+        recommendViewModel.text.observe(viewLifecycleOwner) {
+            textureView.text = it
+        }
+
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_tiktok_mine
+        return R.layout.fragment_tiktok_msg
     }
 
 

@@ -3,7 +3,7 @@ package com.frewen.android.demo.samples.rxjava2;
 import android.os.Bundle;
 
 import com.frewen.android.demo.R;
-import com.frewen.aura.framework.fragment.BaseFragment;
+import com.frewen.aura.framework.fragment.BaseViewFragment;
 
 /**
  * @filename: OperatorsFragment
@@ -12,14 +12,14 @@ import com.frewen.aura.framework.fragment.BaseFragment;
  * @time: 2020/9/29 13:40
  *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class SamplesFragment extends BaseFragment {
+public class SamplesViewFragment extends BaseViewFragment {
 
     /**
      *
      */
-    public static SamplesFragment newInstance() {
+    public static SamplesViewFragment newInstance() {
         Bundle args = new Bundle();
-        SamplesFragment fragment = new SamplesFragment();
+        SamplesViewFragment fragment = new SamplesViewFragment();
         fragment.setArguments(args);
         return fragment;
     }

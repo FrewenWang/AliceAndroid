@@ -1,13 +1,11 @@
 package com.frewen.android.demo.samples.animation.ui.main;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.frewen.android.demo.R;
-import com.frewen.aura.framework.fragment.BaseFragment;
+import com.frewen.aura.framework.fragment.BaseViewFragment;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
@@ -16,14 +14,14 @@ import androidx.lifecycle.ViewModelProviders;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PropertyAnimationFragment extends BaseFragment {
+public class PlaceholderViewFragment extends BaseViewFragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
 
-    public static PropertyAnimationFragment newInstance(int index) {
-        PropertyAnimationFragment fragment = new PropertyAnimationFragment();
+    public static PlaceholderViewFragment newInstance(int index) {
+        PlaceholderViewFragment fragment = new PlaceholderViewFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -41,10 +39,9 @@ public class PropertyAnimationFragment extends BaseFragment {
         pageViewModel.setIndex(index);
     }
 
-    
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_animation_property;
+        return R.layout.fragment_animation_demo;
     }
 
     @Override
@@ -57,5 +54,6 @@ public class PropertyAnimationFragment extends BaseFragment {
                 textView.setText(s);
             }
         });
+
     }
 }

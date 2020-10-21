@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.frewen.aura.framework.fragment.BaseFragment
+import com.frewen.aura.framework.fragment.BaseViewFragment
 import com.frewen.demo.library.R
 import kotlinx.android.synthetic.main.fragment_view_pager2.*
 
@@ -17,10 +18,10 @@ import kotlinx.android.synthetic.main.fragment_view_pager2.*
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-abstract class BaseViewPager2Fragment : BaseFragment() {
+abstract class BaseViewPager2ViewFragment : BaseViewFragment() {
 
     companion object {
-        private const val TAG = "BaseViewPager2Fragment"
+        private const val TAG = "BaseViewPager2ViewFragment"
     }
 
     /**
@@ -46,8 +47,8 @@ abstract class BaseViewPager2Fragment : BaseFragment() {
     }
 
     private fun initViewPager() {
-        viewPager?.offscreenPageLimit = offscreenPageLimit
-        viewPager?.adapter = adapter
+        viewPager2?.offscreenPageLimit = offscreenPageLimit
+        viewPager2?.adapter = adapter
     }
 
     /**

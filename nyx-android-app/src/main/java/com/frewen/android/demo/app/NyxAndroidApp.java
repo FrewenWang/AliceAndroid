@@ -12,7 +12,7 @@ import com.frewen.android.demo.app.taskstarter.BuglyInitTask;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.error.ErrorActivity;
 import com.frewen.android.demo.network.MyNetworkConfig;
-import com.frewen.android.demo.network.VideoApiService;
+import com.frewen.android.demo.network.NyxApiService;
 import com.frewen.android.demo.performance.AppBlockCanaryContext;
 import com.frewen.android.demo.performance.LaunchTimeRecord;
 import com.frewen.android.demo.samples.hook.HookHelper;
@@ -265,7 +265,7 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
                 .setWriteTimeOut(10 * 1000)
                 .setCacheMaxSize(100 * 1024 * 1024)//设置缓存大小为100M
                 .setConnectTimeout(5 * 1000)
-                .setApiService(VideoApiService.class)
+                .setApiService(NyxApiService.class)
                 //默认网络不好自动重试3次
                 .setRetryCount(3);
     }

@@ -7,7 +7,7 @@
 
         <variable
             name="comment"
-            type="com.frewen.android.demo.model.Comment" />
+            type="com.frewen.android.demo.logic.model.Comment" />
 
 
         <import type="com.frewen.android.demo.utils.StringConvert"></import>

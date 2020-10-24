@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".samples.ipc.socket.SocketActivity">
+    tools:context=".logic.samples.ipc.socket.SocketActivity">
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

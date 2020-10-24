@@ -10,7 +10,7 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.model.NavigationDestination;
+import com.frewen.android.demo.logic.model.NavigationDestination;
 import com.frewen.android.demo.constant.AppConfig;
 import com.frewen.android.demo.jetpack.navigation.BottomNavigationBar;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;

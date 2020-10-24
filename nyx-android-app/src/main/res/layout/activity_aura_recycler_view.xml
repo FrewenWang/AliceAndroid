@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.frewen.android.demo.samples.view.custom.recyclerview.AuraRecyclerViewActivity">
+    tools:context=".logic.samples.view.custom.recyclerview.AuraRecyclerViewActivity">
 
 
-    <com.frewen.android.demo.samples.view.custom.recyclerview.AuraRecyclerView
+    <com.frewen.android.demo.logic.samples.view.custom.recyclerview.AuraRecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/blue"
         android:padding="30dp">
 
-    </com.frewen.android.demo.samples.view.custom.recyclerview.AuraRecyclerView>
+    </com.frewen.android.demo.logic.samples.view.custom.recyclerview.AuraRecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

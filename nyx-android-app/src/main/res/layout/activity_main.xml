@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".samples.SampleDemoActivity">
+    tools:context=".logic.samples.SampleDemoActivity">
 
     <!--<com.frewen.aura.ui.layout.refresh.FreeRefreshLayout-->
     <!--android:layout_width="match_parent"-->

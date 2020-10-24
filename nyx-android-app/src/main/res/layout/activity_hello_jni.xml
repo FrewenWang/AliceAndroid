@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".samples.jni.HelloJNIActivity">
+    tools:context=".logic.samples.jni.HelloJNIActivity">
 
     <TextView
         android:id="@+id/sample_text"

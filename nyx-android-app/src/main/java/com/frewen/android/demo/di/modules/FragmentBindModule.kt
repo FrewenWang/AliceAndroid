@@ -1,10 +1,10 @@
 package com.frewen.android.demo.di.modules
 
-import com.frewen.android.demo.ui.discovery.DiscoveryFragment
-import com.frewen.android.demo.ui.discovery.content.DailyQuestionFragment
-import com.frewen.android.demo.ui.home.HomeFragment
-import com.frewen.android.demo.ui.profile.MyProfileFragment
-import com.frewen.android.demo.ui.recommend.RecommendFragment
+import com.frewen.android.demo.logic.ui.discovery.DiscoveryFragment
+import com.frewen.android.demo.logic.ui.discovery.content.DailyQuestionFragment
+import com.frewen.android.demo.logic.ui.home.HomeFragment
+import com.frewen.android.demo.logic.ui.profile.MyProfileFragment
+import com.frewen.android.demo.logic.ui.recommend.RecommendFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -31,7 +31,7 @@ abstract class MainFragmentBindModule {
     /**
      * 报下面的错误：
      * java.lang.IllegalArgumentException: No injector factory bound for
-     * Class<com.frewen.android.demo.ui.discovery.content.DailyQuestionFragment>
+     * Class<com.frewen.android.demo.logic.ui.discovery.content.DailyQuestionFragment>
      *  需要添加：
      * @ContributesAndroidInjector
      * abstract fun contributeDailyQuestionFragment(): DailyQuestionFragment

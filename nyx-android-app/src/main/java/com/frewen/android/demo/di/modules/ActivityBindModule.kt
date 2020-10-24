@@ -1,6 +1,6 @@
 package com.frewen.android.demo.di.modules
 
-import com.frewen.android.demo.ui.HomeActivity
+import com.frewen.android.demo.logic.ui.HomeActivity
 import com.frewen.aura.framework.di.scope.ActivityScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

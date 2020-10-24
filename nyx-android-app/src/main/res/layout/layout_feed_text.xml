@@ -9,7 +9,7 @@
             name="user"
             type="UserInfo" />
         <!-- 我们在这个地方导入Model对象  -->
-        <import type="com.frewen.android.demo.model.UserInfo" />
+        <import type="com.frewen.android.demo.logic.model.UserInfo" />
 
     </data>
 

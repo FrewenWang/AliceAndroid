@@ -3,11 +3,11 @@ package com.frewen.android.demo.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.frewen.android.demo.di.annotation.ViewModelKey
-import com.frewen.android.demo.samples.tiktok.fragments.HomeViewModel
-import com.frewen.android.demo.ui.discovery.DiscoveryViewModel
-import com.frewen.android.demo.ui.profile.MyProfileViewModel
+import com.frewen.android.demo.logic.samples.tiktok.fragments.HomeViewModel
+import com.frewen.android.demo.logic.ui.discovery.DiscoveryViewModel
+import com.frewen.android.demo.logic.ui.profile.MyProfileViewModel
 import com.frewen.android.demo.mvvm.viewmodel.ViewModelFactory
-import com.frewen.android.demo.ui.discovery.content.DailyQuestionViewModel
+import com.frewen.android.demo.logic.ui.discovery.content.DailyQuestionViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

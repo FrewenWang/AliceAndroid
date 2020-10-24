@@ -7,7 +7,7 @@
     <!-- 上面一个Fragment是 fragment_view_pager-->
     <fragment
         android:id="@+id/view_pager_fragment"
-        android:name="com.frewen.android.demo.samples.jetpack.fragment.HomeViewPagerFragment"
+        android:name="com.frewen.android.demo.logic.samples.jetpack.fragment.HomeViewPagerFragment"
         tools:layout="@layout/fragment_view_pager">
         <!-- action的 -->
         <action
@@ -22,7 +22,7 @@
     <!--花朵详情页的Fragment-->
     <fragment
         android:id="@+id/flower_detail_fragment"
-        android:name="com.frewen.android.demo.samples.jetpack.fragment.FlowerDetailFragment"
+        android:name="com.frewen.android.demo.logic.samples.jetpack.fragment.FlowerDetailFragment"
         android:label="@string/flower_details_title"
         tools:layout="@layout/fragment_flower_detail">
         <!--  DataBinding的数据  -->

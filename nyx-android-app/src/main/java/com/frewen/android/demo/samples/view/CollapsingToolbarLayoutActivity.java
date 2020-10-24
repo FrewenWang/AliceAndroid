@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.adapter.FragmentPagerViewAdapter;
-import com.frewen.android.demo.fragments.CardImageFragment;
+import com.frewen.android.demo.ui.fragments.CardImageFragment;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 

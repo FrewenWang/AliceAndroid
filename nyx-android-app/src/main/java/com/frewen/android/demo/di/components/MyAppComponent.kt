@@ -32,7 +32,10 @@ import dagger.android.support.AndroidSupportInjectionModule
     ActivityBindModule::class
 ])
 interface MyAppComponent {
+
+
     /**
+     * 这个其实很好理解，就是我们在初始化MyAppComponent的时候
      * 通过 @Component.Builder 增加builder方法，提供Application 注入方法。
      */
     @Component.Builder

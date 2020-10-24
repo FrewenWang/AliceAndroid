@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.frewen.android.demo.R
-import com.frewen.android.demo.data.SampleData
+import com.frewen.android.demo.model.data.SampleData
 import com.frewen.android.demo.samples.view.RecyclerViewDemoActivity
 import kotlinx.android.synthetic.main.activity_animator_sample.*
 

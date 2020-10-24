@@ -15,10 +15,4 @@ import retrofit2.http.Path;
  */
 public interface NyxApiService extends BaseApiService {
 
-
-    /**
-     * 每日一问列表数据
-     */
-    @GET("wenda/list/{page}/json")
-    suspend fun getAskData(@Path("page")page: Int): ApiResponse<ApiPagerResponse<ArrayList<AriticleResponse>>>
 }

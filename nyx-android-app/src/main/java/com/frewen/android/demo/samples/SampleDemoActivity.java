@@ -10,7 +10,7 @@ import android.widget.ListView;
 import com.frewen.adapter.core.abslistview.BaseAdapter;
 import com.frewen.adapter.core.abslistview.ViewHolder;
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.concurrent.HandlerThreadActivity;
+import com.frewen.android.demo.samples.concurrent.HandlerThreadActivity;
 import com.frewen.android.demo.model.ContentData;
 import com.frewen.android.demo.samples.bitmap.BitmapDemoActivity;
 import com.frewen.android.demo.samples.bluetooth.BlueToothDemoActivity;

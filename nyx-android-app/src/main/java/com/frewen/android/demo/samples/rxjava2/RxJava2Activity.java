@@ -5,17 +5,13 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.frewen.android.demo.BuildConfig;
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.adapter.FragmentPagerViewAdapter;
-import com.frewen.android.demo.fragments.CardImageFragment;
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity;
 import com.frewen.aura.toolkits.display.DisplayHelper;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +20,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import androidx.viewpager2.widget.ViewPager2;
 import butterknife.BindView;
 
 /**

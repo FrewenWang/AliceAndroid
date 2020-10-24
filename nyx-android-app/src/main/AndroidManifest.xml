@@ -110,7 +110,7 @@
         <activity android:name=".samples.PermissionActivity" />
         <activity android:name=".samples.okhttp.OkHttp3Activity" />
         <activity android:name=".samples.AgoraDemoActivity" />
-        <activity android:name=".concurrent.HandlerThreadActivity" />
+        <activity android:name=".samples.concurrent.HandlerThreadActivity" />
         <activity android:name=".samples.ipc.IPCDemoActivity" />
         <activity android:name=".samples.ipc.client.ContentProviderActivity" />
         <activity android:name=".samples.ipc.socket.SocketActivity" />

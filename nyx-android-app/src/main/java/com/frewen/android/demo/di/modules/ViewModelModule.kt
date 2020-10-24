@@ -6,21 +6,21 @@ import com.frewen.android.demo.di.annotation.ViewModelKey
 import com.frewen.android.demo.samples.tiktok.fragments.HomeViewModel
 import com.frewen.android.demo.ui.discovery.DiscoveryViewModel
 import com.frewen.android.demo.ui.profile.MyProfileViewModel
-import com.frewen.android.demo.viewmodel.ViewModelFactory
+import com.frewen.android.demo.mvvm.viewmodel.ViewModelFactory
+import com.frewen.android.demo.ui.discovery.content.DailyQuestionViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
 
 /**
- * @filename: MyAppModule
+ * @filename: ViewModelModule
  * @introduction: 我们没有使用AuraFrameWork里面提供的
- * @see AppMudule
+ * @see MyAppModule
  * 而是我们自己来实现的MyAppModule 是否能考虑扩展？？
  * @author: Frewen.Wong
  * @time: 2020/4/7 12:54
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-@Suppress("unused")
 @Module
 abstract class ViewModelModule {
 
@@ -40,15 +40,28 @@ abstract class ViewModelModule {
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 
+    /**
+     * 相信大家经常会使用@Provides来在Module里面提供需要注入对象的构造, 但从来没有用过@Binds.
+     * 如果我们需要注入一个接口的实现,我们常常会这么做:
+     *
+     */
     @Binds
     @IntoMap
     @ViewModelKey(HomeViewModel::class)
     abstract fun bindHomeViewModel(homeViewModel: HomeViewModel): ViewModel
 
+    /**
+     *
+     */
     @Binds
     @IntoMap
     @ViewModelKey(MyProfileViewModel::class)
     abstract fun bindMyProfileViewModel(myProfileViewModel: MyProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DailyQuestionViewModel::class)
+    abstract fun bindDailyQuestionViewModel(dailyQuestionViewModel: DailyQuestionViewModel): ViewModel
 
     /**
      *

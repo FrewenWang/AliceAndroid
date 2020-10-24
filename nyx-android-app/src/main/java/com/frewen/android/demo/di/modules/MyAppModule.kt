@@ -17,6 +17,8 @@ import retrofit2.Retrofit
  */
 @Module(includes = [ViewModelModule::class])
 class MyAppModule {
+
+
     @AppScope
     @Provides
     fun providerRetrofit(): Retrofit {

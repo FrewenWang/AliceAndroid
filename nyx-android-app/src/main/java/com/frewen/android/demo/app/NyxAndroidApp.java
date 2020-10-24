@@ -282,6 +282,9 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
         }
     }
 
+    /**
+     * 用来进行Activity的相关注入
+     */
     @Override
     public AndroidInjector<Activity> activityInjector() {
         return this.dispatchingAndroidInjector;

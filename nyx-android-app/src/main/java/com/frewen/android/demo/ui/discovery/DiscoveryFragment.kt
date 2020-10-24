@@ -2,19 +2,16 @@ package com.frewen.android.demo.ui.discovery
 
 import android.os.Bundle
 import android.view.View
-import androidx.databinding.DataBindingComponent
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainDiscoveryBinding
 import com.frewen.android.demo.extention.bindViewPager2
-import com.frewen.android.demo.extention.initOnFragment
+import com.frewen.demo.library.extention.initOnFragment
 import com.frewen.android.demo.ui.discovery.content.DailyQuestionFragment
 import com.frewen.android.demo.ui.profile.MyProfileViewModel
 import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
-import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
 import kotlinx.android.synthetic.main.fragment_main_discovery.*
 
 /**

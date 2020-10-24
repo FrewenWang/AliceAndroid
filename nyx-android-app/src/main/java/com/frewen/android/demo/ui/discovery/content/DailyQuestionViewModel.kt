@@ -1,6 +1,8 @@
 package com.frewen.android.demo.ui.discovery.content
 
-import com.frewen.aura.framework.mvvm.vm.BaseViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import javax.inject.Inject
 
 /**
  * @filename: DailyQuestionViewModel
@@ -10,7 +12,7 @@ import com.frewen.aura.framework.mvvm.vm.BaseViewModel
  * @version 1.0.0
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class DailyQuestionViewModel : BaseViewModel() {
+class DailyQuestionViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     /**
      * 请求每日一答的数据

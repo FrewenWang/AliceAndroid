@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.bean.ArticleCommonBean;
+import com.frewen.android.demo.model.ArticleCommonBean;
 
 import java.util.List;
 

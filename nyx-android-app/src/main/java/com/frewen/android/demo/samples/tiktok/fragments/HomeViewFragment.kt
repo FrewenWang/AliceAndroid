@@ -1,12 +1,7 @@
 package com.frewen.android.demo.samples.tiktok.fragments
 
-import android.os.Bundle
-import android.util.Log
-import android.view.View
-import androidx.fragment.app.Fragment
-import com.frewen.android.demo.samples.tiktok.home.MainFragment
-import com.frewen.android.demo.samples.tiktok.home.PersonalViewFragment
-import com.frewen.demo.library.ui.fragment.BaseViewPager2ViewFragment
+import com.frewen.android.demo.R
+import com.frewen.aura.framework.fragment.BaseViewFragment
 
 /**
  * @filename: HomeFragment
@@ -16,19 +11,13 @@ import com.frewen.demo.library.ui.fragment.BaseViewPager2ViewFragment
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class HomeViewFragment : BaseViewPager2ViewFragment() {
+class HomeViewFragment : BaseViewFragment() {
 
     companion object {
         private const val TAG = "HomeFragment"
     }
 
-    override val createFragments: Array<Fragment>
-        get() = arrayOf(MainFragment(), PersonalViewFragment())
+    override fun getLayoutId() = R.layout.activity_home
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d(Companion.TAG, "onViewCreated() called with: view = $view, savedInstanceState = $savedInstanceState")
-
-    }
 
 }

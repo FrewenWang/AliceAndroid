@@ -4,7 +4,7 @@ import com.frewen.android.demo.ui.discovery.DiscoveryFragment
 import com.frewen.android.demo.ui.discovery.content.DailyQuestionFragment
 import com.frewen.android.demo.ui.home.HomeFragment
 import com.frewen.android.demo.ui.profile.MyProfileFragment
-import com.frewen.android.demo.ui.recommend.RecommendViewFragment
+import com.frewen.android.demo.ui.recommend.RecommendFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -20,7 +20,7 @@ abstract class MainFragmentBindModule {
     abstract fun contributeHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeRecommendFragment(): RecommendViewFragment
+    abstract fun contributeRecommendFragment(): RecommendFragment
 
     @ContributesAndroidInjector
     abstract fun contributeDiscoveryFragment(): DiscoveryFragment

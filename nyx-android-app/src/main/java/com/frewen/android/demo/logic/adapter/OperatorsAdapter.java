@@ -9,12 +9,6 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 
-/**
- * Author: nanchen
- * Email: liushilin520@foxmail.com
- * Date: 2017-06-20  15:03
- */
-
 public abstract class OperatorsAdapter extends BaseQuickAdapter<ContentData, BaseViewHolder> {
 
     public OperatorsAdapter(@Nullable List<ContentData> data) {

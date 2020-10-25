@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 标签边线-->
+    <stroke
+        android:width="2dp"
+        android:color="@color/color_common_black_alpha50" />
+    <!-- 内部填充颜色-->
+    <solid android:color="@color/color_common_black_alpha55" />
+    <!-- 标签角弧度-->
+    <corners android:radius="2dp" />
+
+</shape>

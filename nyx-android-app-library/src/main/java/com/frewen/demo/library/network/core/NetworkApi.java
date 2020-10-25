@@ -41,6 +41,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
 
     /**
      * 初始化参数
+     *
      * @param config
      */
     public static void init(AbsNetworkConfig config) {
@@ -105,8 +106,12 @@ public abstract class NetworkApi implements AbsProgramEnv {
 
     /**
      * 用户自定义拦截器
-     * @return
      */
     public abstract Interceptor getInterceptor();
+
+    public String getBaseUrl() {
+        AssertionsUtils.assertNotNull(mBaseUrl);
+        return mBaseUrl;
+    }
 
 }

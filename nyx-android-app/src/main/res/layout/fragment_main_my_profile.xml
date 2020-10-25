@@ -157,7 +157,7 @@
             android:src="@drawable/ic_logo_black_76dp"
             app:civ_border_color="#cdcdcd"
             app:civ_border_width="1dp"
-            app:civ_circle_background_color="@color/color_common_gray" />
+            app:civ_circle_background_color="@color/color_gray" />
 
     </LinearLayout>
 

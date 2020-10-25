@@ -13,6 +13,7 @@ import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.error.ErrorActivity;
 import com.frewen.android.demo.network.MyNetworkConfig;
 import com.frewen.android.demo.network.NyxApiService;
+import com.frewen.android.demo.network.NyxNetworkApi;
 import com.frewen.android.demo.performance.AppBlockCanaryContext;
 import com.frewen.android.demo.performance.LaunchTimeRecord;
 import com.frewen.android.demo.logic.samples.hook.HookHelper;
@@ -25,6 +26,7 @@ import com.frewen.aura.toolkits.concurrent.ThreadFactoryImpl;
 import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.demo.library.network.core.NetworkApi;
 import com.frewen.keepservice.KeepLiveService;
+import com.frewen.network.api.BaseApiService;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.aura.toolkits.utils.ProcessInfoUtils;
 import com.github.anrwatchdog.ANRError;
@@ -249,7 +251,7 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
     }
 
     private void initNetworkApi() {
-        NetworkApi.init(new MyNetworkConfig(this));
+        NyxNetworkApi.init(new MyNetworkConfig(this));
 
         // 初始化AndroidNetworking网络请求框架
         // https://github.com/amitshekhariitbhu/Fast-Android-Networking
@@ -265,7 +267,7 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
                 .setWriteTimeOut(10 * 1000)
                 .setCacheMaxSize(100 * 1024 * 1024)//设置缓存大小为100M
                 .setConnectTimeout(5 * 1000)
-                .setApiService(NyxApiService.class)
+                .setApiService(BaseApiService.class)
                 //默认网络不好自动重试3次
                 .setRetryCount(3);
     }

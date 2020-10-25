@@ -4,9 +4,9 @@
     <!-- 定义一个矩形形状的Shape-->
     <!-- 边线颜色 -->
     <stroke
-        android:width="0.5dp"
+        android:width="2dp"
         android:color="@android:color/holo_green_dark" />
     <!-- 实心颜色 -->
     <solid android:color="@color/white" />
-    <corners android:radius="1dp" />
+    <corners android:radius="2dp" />
 </shape>

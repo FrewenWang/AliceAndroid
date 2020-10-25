@@ -8,6 +8,7 @@ import com.frewen.android.demo.logic.ui.discovery.DiscoveryViewModel
 import com.frewen.android.demo.logic.ui.profile.MyProfileViewModel
 import com.frewen.android.demo.mvvm.viewmodel.ViewModelFactory
 import com.frewen.android.demo.logic.ui.discovery.content.DailyQuestionViewModel
+import com.frewen.android.demo.logic.ui.recommend.content.EyeRecommendViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -70,5 +71,13 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(DiscoveryViewModel::class)
     abstract fun bindDiscoveryViewModel(discoveryViewModel: DiscoveryViewModel): ViewModel
+
+    /**
+     * 我们所有的ViewModel
+     */
+    @Binds
+    @IntoMap
+    @ViewModelKey(EyeRecommendViewModel::class)
+    abstract fun bindEyeRecommendViewModel(eyeRecommendViewModel: EyeRecommendViewModel): ViewModel
 
 }

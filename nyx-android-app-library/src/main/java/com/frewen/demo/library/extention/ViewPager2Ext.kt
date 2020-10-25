@@ -14,7 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
  */
 fun ViewPager2.initOnFragment(
         fragment: Fragment,
-        fragments: ArrayList<Fragment>,
+        fragments: Array<Fragment>,
         isUserInputEnabled: Boolean = true
 ): ViewPager2 {
     //是否可滑动

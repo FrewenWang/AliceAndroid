@@ -11,7 +11,7 @@
         android:id="@+id/viewHorizontalLine"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/color_common_gray" />
+        android:background="@color/color_gray" />
 
     <!--底层的ViewPager2的容器布局-->
     <androidx.viewpager2.widget.ViewPager2

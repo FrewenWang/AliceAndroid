@@ -161,6 +161,7 @@
     <string name="rx_BehaviorSubject">BehaviorSubject</string>
     <string name="rx_Completable">Completable</string>
     <string name="rx_Flowable">Flowable</string>
+    <string name="load_error_retry">点击重试</string>
 
 
 </resources>

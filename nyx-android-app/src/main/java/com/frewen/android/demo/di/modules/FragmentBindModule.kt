@@ -5,6 +5,7 @@ import com.frewen.android.demo.logic.ui.discovery.content.DailyQuestionFragment
 import com.frewen.android.demo.logic.ui.home.HomeFragment
 import com.frewen.android.demo.logic.ui.profile.MyProfileFragment
 import com.frewen.android.demo.logic.ui.recommend.RecommendFragment
+import com.frewen.android.demo.logic.ui.recommend.content.EyeRecommendFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -38,4 +39,16 @@ abstract class MainFragmentBindModule {
      */
     @ContributesAndroidInjector
     abstract fun contributeDailyQuestionFragment(): DailyQuestionFragment
+
+    /**
+     * 如果EyeRecommendFragment实现了Injectable接口
+     *
+     * 注意！！！！！
+     * 所有使用实现自Injectable的类。需要有注册inject的注解的实例对象，否则会报下面的错误：
+     *   Process: com.frewen.android.demo.debug, PID: 2570
+     *              java.lang.IllegalArgumentException:
+     *              No injector was found for com.frewen.android.demo.logic.ui.discovery.DiscoveryFragment
+     */
+    @ContributesAndroidInjector
+    abstract fun contributeEyeRecommendFragment(): EyeRecommendFragment
 }

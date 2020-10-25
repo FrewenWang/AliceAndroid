@@ -36,12 +36,12 @@ abstract class BaseViewPager2Fragment : BaseViewFragment() {
     /**
      *
      */
-    abstract val createTitles: ArrayList<CustomTabEntity>
+    abstract val tabTitles: ArrayList<CustomTabEntity>
 
     /**
      *
      */
-    abstract val createFragments: ArrayList<Fragment>
+    abstract val contentFragments: Array<Fragment>
 
     override fun getLayoutId(): Int {
         return R.layout.fragment_view_pager2
@@ -59,9 +59,9 @@ abstract class BaseViewPager2Fragment : BaseViewFragment() {
     private fun initViewPager() {
         //初始化viewpager2
         viewPager2
-                .initOnFragment(this, createFragments)
-                .offscreenPageLimit = createFragments.size
-        centerTabLayout?.setTabData(createTitles)
+                .initOnFragment(this, contentFragments)
+                .offscreenPageLimit = offscreenPageLimit
+        centerTabLayout?.setTabData(tabTitles)
         centerTabLayout?.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
                 viewPager2?.currentItem = position

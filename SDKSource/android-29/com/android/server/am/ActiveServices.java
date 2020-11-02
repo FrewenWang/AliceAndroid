@@ -2032,6 +2032,21 @@ public final class ActiveServices {
         }
     }
 
+    /**
+     * 寻找对应的Service进行启动
+     * @param service
+     * @param instanceName
+     * @param resolvedType
+     * @param callingPackage
+     * @param callingPid
+     * @param callingUid
+     * @param userId
+     * @param createIfNeeded
+     * @param callingFromFg
+     * @param isBindExternal
+     * @param allowInstant
+     * @return
+     */
     private ServiceLookupResult retrieveServiceLocked(Intent service,
             String instanceName, String resolvedType, String callingPackage,
             int callingPid, int callingUid, int userId,
@@ -2085,6 +2100,7 @@ public final class ActiveServices {
                 ResolveInfo rInfo = mAm.getPackageManagerInternalLocked().resolveService(service,
                         resolvedType, flags, userId, callingUid);
                 ServiceInfo sInfo = rInfo != null ? rInfo.serviceInfo : null;
+                // ServiceInfo为
                 if (sInfo == null) {
                     Slog.w(TAG_SERVICE, "Unable to start service " + service + " U=" + userId +
                           ": not found");

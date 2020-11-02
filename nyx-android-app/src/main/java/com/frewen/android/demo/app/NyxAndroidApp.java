@@ -12,7 +12,6 @@ import com.frewen.android.demo.app.taskstarter.BuglyInitTask;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.error.ErrorActivity;
 import com.frewen.android.demo.network.MyNetworkConfig;
-import com.frewen.android.demo.network.NyxApiService;
 import com.frewen.android.demo.network.NyxNetworkApi;
 import com.frewen.android.demo.performance.AppBlockCanaryContext;
 import com.frewen.android.demo.performance.LaunchTimeRecord;
@@ -24,8 +23,7 @@ import com.frewen.aura.framework.taskstarter.ModuleProvider;
 import com.frewen.aura.framework.taskstarter.ModuleTaskDispatcher;
 import com.frewen.aura.toolkits.concurrent.ThreadFactoryImpl;
 import com.frewen.aura.toolkits.core.AuraToolKits;
-import com.frewen.demo.library.network.core.NetworkApi;
-import com.frewen.keepservice.KeepLiveService;
+import com.frewen.keepservice.KeepALiveService;
 import com.frewen.network.api.BaseApiService;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.aura.toolkits.utils.ProcessInfoUtils;
@@ -277,7 +275,7 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
         if (processName != null) {
             boolean defaultProcess = processName.equals(getPackageName());
             if (defaultProcess) {
-                startService(new Intent(this, KeepLiveService.class));
+                startService(new Intent(this, KeepALiveService.class));
             } else if (processName.contains(":live")) {
                 Log.i(TAG, "FMsg:attach() called : ");
             }

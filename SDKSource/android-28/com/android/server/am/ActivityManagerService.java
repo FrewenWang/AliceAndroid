@@ -2193,6 +2193,7 @@ public class ActivityManagerService extends IActivityManager.Stub
                 mServices.serviceTimeout((ProcessRecord)msg.obj);
             } break;
             case SERVICE_FOREGROUND_TIMEOUT_MSG: {
+                /// 通知ActivityManagerServvice来进行超时逻辑的处理
                 mServices.serviceForegroundTimeout((ServiceRecord)msg.obj);
             } break;
             case SERVICE_FOREGROUND_CRASH_MSG: {
@@ -20365,6 +20366,18 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
     }
 
+
+    /**
+     * ContenImpl的里面通过调用AMS的startService
+     * @param caller
+     * @param service
+     * @param resolvedType
+     * @param requireForeground 如果是前台Service则为true
+     * @param callingPackage
+     * @param userId
+     * @return
+     * @throws TransactionTooLargeException
+     */
     @Override
     public ComponentName startService(IApplicationThread caller, Intent service,
             String resolvedType, boolean requireForeground, String callingPackage, int userId)
@@ -20387,6 +20400,8 @@ public class ActivityManagerService extends IActivityManager.Stub
             final long origId = Binder.clearCallingIdentity();
             ComponentName res;
             try {
+                /// ActivityServices中的startServiceLocked
+                /// 其实最终调用的是startServiceLocked
                 res = mServices.startServiceLocked(caller, service,
                         resolvedType, callingPid, callingUid,
                         requireForeground, callingPackage, userId);

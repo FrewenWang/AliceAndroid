@@ -1535,6 +1535,8 @@ class ContextImpl extends Context {
     @Override
     public ComponentName startForegroundService(Intent service) {
         warnIfCallingFromSystemProcess();
+        // 在应用中启动startForegroundService将会调用ContextImpl中的startForegroundService，
+        // 接着直接调用startServiceCommon
         return startServiceCommon(service, true, mUser);
     }
 
@@ -1554,11 +1556,19 @@ class ContextImpl extends Context {
         return startServiceCommon(service, true, user);
     }
 
+    /**
+     *
+     * @param service
+     * @param requireForeground  启动前台Service的时候requireForeground需要设置为true
+     * @param user
+     * @return
+     */
     private ComponentName startServiceCommon(Intent service, boolean requireForeground,
             UserHandle user) {
         try {
             validateServiceIntent(service);
             service.prepareToLeaveProcess(this);
+            // startServiceCommon中得到AMS代理并启动startService，其中requireForeground为true
             ComponentName cn = ActivityManager.getService().startService(
                 mMainThread.getApplicationThread(), service, service.resolveTypeIfNeeded(
                             getContentResolver()), requireForeground,

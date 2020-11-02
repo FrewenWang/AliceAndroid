@@ -2788,6 +2788,7 @@ public abstract class Context {
      *
      * @see #stopService
      * @see android.app.Service#startForeground(int, android.app.Notification)
+     * 在应用中启动startForegroundService将会调用ContextImpl中的startForegroundService
      */
     @Nullable
     public abstract ComponentName startForegroundService(Intent service);

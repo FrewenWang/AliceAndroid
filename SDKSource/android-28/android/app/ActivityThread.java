@@ -193,7 +193,15 @@ final class RemoteServiceException extends AndroidRuntimeException {
  * application process, scheduling and executing activities,
  * broadcasts, and other operations on it as the activity
  * manager requests.
+ *  ActivityThread在Android中它就代表了Android的主线程，但是并不是一个Thread类。
+ *  严格来说，UI主线程不是ActivityThread。ActivityThread类是Android APP进程的初始类，它的main函数是这个APP进程的入口。
+ *  APP进程中UI事件的执行代码段都是由ActivityThread提供的。
+ *  也就是说，Main Thread实例是存在的，只是创建它的代码我们不可见。
+ *  ActivityThread的main函数就是在这个Main Thread里被执行的。
  *
+ *  1.Java程序初始类中的main()方法，将作为该程序初始线程的起点，
+ *  任何其他的线程都是由这个初始线程启动的。这个线程就是程序的主线程。
+ * 2.在Thread.java文件头部的说明中，有这样的介绍：Each application has at least one thread running when it is started, the main thread, in the main {@link ThreadGroup}.
  * {@hide}
  */
 public final class ActivityThread extends ClientTransactionHandler {
@@ -802,6 +810,13 @@ public final class ActivityThread extends ClientTransactionHandler {
             sendMessage(H.DESTROY_BACKUP_AGENT, d);
         }
 
+        /**
+         * 首先看创建service的流程：发送创建service的message（CREATE_SERVICE）
+         * @param token
+         * @param info
+         * @param compatInfo
+         * @param processState
+         */
         public final void scheduleCreateService(IBinder token,
                 ServiceInfo info, CompatibilityInfo compatInfo, int processState) {
             updateProcessState(processState, false);
@@ -809,7 +824,7 @@ public final class ActivityThread extends ClientTransactionHandler {
             s.token = token;
             s.info = info;
             s.compatInfo = compatInfo;
-
+            // 接收并处理message
             sendMessage(H.CREATE_SERVICE, s);
         }
 
@@ -1665,6 +1680,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                     break;
                 case CREATE_SERVICE:
                     Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, ("serviceCreate: " + String.valueOf(msg.obj)));
+                    // 创建service
                     handleCreateService((CreateServiceData)msg.obj);
                     Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
                     break;
@@ -3511,6 +3527,7 @@ public final class ActivityThread extends ClientTransactionHandler {
                 data.info.applicationInfo, data.compatInfo);
         Service service = null;
         try {
+            //通过反射创建service实例对象。
             java.lang.ClassLoader cl = packageInfo.getClassLoader();
             service = packageInfo.getAppFactory()
                     .instantiateService(cl, data.info.name, data.intent);
@@ -3527,10 +3544,11 @@ public final class ActivityThread extends ClientTransactionHandler {
 
             ContextImpl context = ContextImpl.createAppContext(this, packageInfo);
             context.setOuterContext(service);
-
+            //初始化一些参数
             Application app = packageInfo.makeApplication(false, mInstrumentation);
             service.attach(context, this, data.info.name, data.token, app,
                     ActivityManager.getService());
+            //调用熟悉的onCreate()
             service.onCreate();
             mServices.put(data.token, service);
             try {

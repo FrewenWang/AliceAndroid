@@ -386,6 +386,19 @@ public final class ActiveServices {
         return (mode != AppOpsManager.MODE_ALLOWED);
     }
 
+    /**
+     * 调用startServiceLocked的方法
+     * @param caller
+     * @param service
+     * @param resolvedType
+     * @param callingPid
+     * @param callingUid
+     * @param fgRequired
+     * @param callingPackage
+     * @param userId
+     * @return
+     * @throws TransactionTooLargeException
+     */
     ComponentName startServiceLocked(IApplicationThread caller, Intent service, String resolvedType,
             int callingPid, int callingUid, boolean fgRequired, String callingPackage, final int userId)
             throws TransactionTooLargeException {
@@ -534,6 +547,7 @@ public final class ActiveServices {
         r.lastActivity = SystemClock.uptimeMillis();
         r.startRequested = true;
         r.delayedStop = false;
+        // 如果是前台Service值为传进来的，true
         r.fgRequired = fgRequired;
         r.pendingStarts.add(new ServiceRecord.StartItem(r, false, r.makeNextStartId(),
                 service, neededGrants, callingUid));
@@ -608,7 +622,7 @@ public final class ActiveServices {
                         "Not potential delay (user " + r.userId + " not started): " + r);
             }
         }
-
+        //
         ComponentName cmp = startServiceInnerLocked(smap, service, r, callerFg, addToStarting);
         return cmp;
     }
@@ -667,6 +681,7 @@ public final class ActiveServices {
         synchronized (r.stats.getBatteryStats()) {
             r.stats.startRunningLocked();
         }
+        //创建并启动Service，并修改addToStarting = true， 启动成功返回空。
         String error = bringUpServiceLocked(r, service.getFlags(), callerFg, false, false);
         if (error != null) {
             return new ComponentName("!!", error);
@@ -2351,6 +2366,8 @@ public final class ActiveServices {
             if (app != null && app.thread != null) {
                 try {
                     app.addPackage(r.appInfo.packageName, r.appInfo.longVersionCode, mAm.mProcessStats);
+                    // 调用realStartServiceLocked创建service
+                    // 真正创建并启动service的地方
                     realStartServiceLocked(r, app, execInFg);
                     return null;
                 } catch (TransactionTooLargeException e) {
@@ -2462,9 +2479,11 @@ public final class ActiveServices {
             mAm.notifyPackageUse(r.serviceInfo.packageName,
                                  PackageManager.NOTIFY_PACKAGE_USE_SERVICE);
             app.forceProcessStateUpTo(ActivityManager.PROCESS_STATE_SERVICE);
+            // 发送msg 创建service。通知业务进程的ActivityThread来进行创建Service
             app.thread.scheduleCreateService(r, r.serviceInfo,
                     mAm.compatibilityInfoForPackageLocked(r.serviceInfo.applicationInfo),
                     app.repProcState);
+            ////发送服务正在后台运行的通知
             r.postNotification();
             created = true;
         } catch (DeadObjectException e) {
@@ -2505,7 +2524,7 @@ public final class ActiveServices {
             r.pendingStarts.add(new ServiceRecord.StartItem(r, false, r.makeNextStartId(),
                     null, null, 0));
         }
-
+        //发送timeout 5s msg。这儿就是发送Service的5秒超时的逻辑
         sendServiceArgsLocked(r, execInFg, true);
 
         if (r.delayed) {
@@ -2525,6 +2544,13 @@ public final class ActiveServices {
         }
     }
 
+    /**
+     * 这个方法就是发的送timeout 5s msg的流程
+     * @param r
+     * @param execInFg
+     * @param oomAdjusted
+     * @throws TransactionTooLargeException
+     */
     private final void sendServiceArgsLocked(ServiceRecord r, boolean execInFg,
             boolean oomAdjusted) throws TransactionTooLargeException {
         final int N = r.pendingStarts.size();
@@ -2561,11 +2587,14 @@ public final class ActiveServices {
                 oomAdjusted = true;
                 mAm.updateOomAdjLocked(r.app, true);
             }
+            // // fgRequired = true 表示前台服务，fgWaiting默认值为false，当发送timeout msg 时修改为true。
             if (r.fgRequired && !r.fgWaiting) {
+                //isForeground =  false 不在前台
                 if (!r.isForeground) {
                     if (DEBUG_BACKGROUND_CHECK) {
                         Slog.i(TAG, "Launched service must call startForeground() within timeout: " + r);
                     }
+                    //发送 timeout msg
                     scheduleServiceForegroundTransitionTimeoutLocked(r);
                 } else {
                     if (DEBUG_BACKGROUND_CHECK) {
@@ -3610,6 +3639,10 @@ public final class ActiveServices {
         }
     }
 
+    /**
+     * serviceForegroundTimeout前台Service的处理的逻辑
+     * @param r
+     */
     void serviceForegroundTimeout(ServiceRecord r) {
         ProcessRecord app;
         synchronized (mAm) {
@@ -3629,7 +3662,7 @@ public final class ActiveServices {
             r.fgWaiting = false;
             stopServiceLocked(r);
         }
-
+        //
         if (app != null) {
             mAm.mAppErrors.appNotResponding(app, null, null, false,
                     "Context.startForegroundService() did not then call Service.startForeground(): "
@@ -3673,6 +3706,7 @@ public final class ActiveServices {
         if (r.app.executingServices.size() == 0 || r.app.thread == null) {
             return;
         }
+        // 发送10s Timeout超时的Message，及报crash
         Message msg = mAm.mHandler.obtainMessage(
                 ActivityManagerService.SERVICE_FOREGROUND_TIMEOUT_MSG);
         msg.obj = r;

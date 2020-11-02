@@ -1,0 +1,13 @@
+def parseLocalProperties() {
+    File file = rootProject.file('local.properties')
+    if (file.exists()) {
+        InputStream inputStream = rootProject.file('local.properties').newDataInputStream();
+        Properties properties = new Properties()
+        properties.load(inputStream)
+    }
+    if (properties.containsKey("sdk.dir")) {
+        println 'packageName:' + properties.getProperty("sdk.dir")
+        ext.packagename = properties.getProperty("sdk.dir")
+        println 'packageName:' + project["packagename"]
+    }
+}

@@ -20,6 +20,10 @@ public class Ugc extends BaseObservable implements Serializable {
      * hasdiss:false
      */
     public int likeCount;
+    public int shareCount;
+    public int commentCount;
+    public boolean hasFavorite;
+    public boolean hasdiss;
 
     @Bindable
     public int getShareCount() {
@@ -31,10 +35,6 @@ public class Ugc extends BaseObservable implements Serializable {
         notifyPropertyChanged(BR._all);
     }
 
-    public int shareCount;
-    public int commentCount;
-    public boolean hasFavorite;
-    public boolean hasdiss;
 
     @Bindable
     public boolean isHasdiss() {

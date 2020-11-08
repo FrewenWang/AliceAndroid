@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.model.UserInfo;
+import com.frewen.android.demo.logic.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -70,16 +70,16 @@ public class GsonDemoActivity extends AppCompatActivity {
      * 这有助于迭代开发和发布值对象。GSON API提供了一种机制来满足这些不同版本数据的请求。
      */
     private void testVersion() {
-        UserInfo userInfo = new UserInfo("测试版本", 18);
+        User user = new User("测试版本", 18);
 
         System.out.println("User json for Version 1.0 ");
         Gson gson = new GsonBuilder().setVersion(1.0).setPrettyPrinting().create();
-        String jsonOutput = gson.toJson(userInfo);
+        String jsonOutput = gson.toJson(user);
         System.out.println(jsonOutput);
 
         System.out.println("User json for Version 1.1 ");
         gson = new GsonBuilder().setVersion(1.1).setPrettyPrinting().create();
-        jsonOutput = gson.toJson(userInfo);
+        jsonOutput = gson.toJson(user);
         System.out.println(jsonOutput);
     }
 
@@ -90,12 +90,12 @@ public class GsonDemoActivity extends AppCompatActivity {
         System.out.println("---------------------Gson测试null支持------------------");
         Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
 
-        UserInfo userInfo = new UserInfo(null, 18);
+        User userInfo = new User(null, 18);
 
         String userJson = gson.toJson(userInfo);
         System.out.println(userJson);
 
-        UserInfo user = gson.fromJson(userJson, UserInfo.class);
+        User user = gson.fromJson(userJson, User.class);
         System.out.println("user name: " + user.getName());
         System.out.println("user age: " + user.getAge());
 
@@ -175,10 +175,10 @@ public class GsonDemoActivity extends AppCompatActivity {
      */
     private void testPrintFormatter() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        List<UserInfo> listOfUser = new ArrayList<UserInfo>();
+        List<User> listOfUser = new ArrayList<User>();
 
-        UserInfo user1 = new UserInfo("格式化输出1", 1);
-        UserInfo user2 = new UserInfo("格式化输出2", 2);
+        User user1 = new User("格式化输出1", 1);
+        User user2 = new User("格式化输出2", 2);
         listOfUser.add(user1);
         listOfUser.add(user2);
         String prettyJsonString = gson.toJson(listOfUser);
@@ -192,23 +192,23 @@ public class GsonDemoActivity extends AppCompatActivity {
     private void testCustomSerializer() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         /// 注册注册序列化适配器
-        gsonBuilder.registerTypeAdapter(UserInfo.class, new UserInfoTypeSerializer());
+        gsonBuilder.registerTypeAdapter(User.class, new UserInfoTypeSerializer());
         /// 注册反序列化适配器
-        gsonBuilder.registerTypeAdapter(UserInfo.class, new UserInfoTypeDeserializer());
+        gsonBuilder.registerTypeAdapter(User.class, new UserInfoTypeDeserializer());
 
         Gson gson = gsonBuilder.create();
 
-        UserInfo userInfo = new UserInfo("自定义序列化", 12);
+        User user = new User("自定义序列化", 12);
 
-        String userJson = gson.toJson(userInfo);
+        String userJson = gson.toJson(user);
 
         System.out.println("Custom Serializer : Json String Representation ");
         System.out.println(userJson);
 
 
-        UserInfo userInfo1 = gson.fromJson(userJson, UserInfo.class);
+        User user1 = gson.fromJson(userJson, User.class);
         System.out.println("Custom DeSerializer : Java Object Creation");
-        System.out.println(userInfo1.toString());
+        System.out.println(user1.toString());
 
     }
 
@@ -224,7 +224,7 @@ public class GsonDemoActivity extends AppCompatActivity {
     }
 
     private void testToGson() {
-        UserInfo person = new UserInfo("Hello", 19);
+        User person = new User("Hello", 19);
         System.out.println(person.getAge());
         Gson gson = new Gson();
         System.out.println(gson.toJson(person));

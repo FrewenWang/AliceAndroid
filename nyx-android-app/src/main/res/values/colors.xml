@@ -13,19 +13,7 @@
     <color name="yellow_300">#f8f99f</color>
     <color name="yellow_500">#ffff63</color>
 
-    <!--主题色为50%的紫色-->
-    <color name="colorPrimary">#BF00FF</color>
-    <!--暗主题色为25%的紫色-->
-    <color name="colorPrimaryDark">#600080</color>
-    <!--亮主题色为75%的紫色-->
-    <color name="colorPrimaryLight">#DF80FF</color>
-    <color name="colorAccent">#BF00FF</color>
-
     <color name="colorAccentAlpha60">#6661f2d4</color>
-    <color name="colorTextPrimary">#444444</color>
-    <color name="colorTextPrimaryDark">#333333</color>
-    <color name="colorTextSecondary">#888888</color>
-
 
     <color name="none_received">#999999</color>
     <color name="start_received">#00FF00</color>
@@ -35,6 +23,22 @@
 
 
     <color name="color_gray_dark">#adadad</color>
+
+
+    <!-- 应用层的颜色色值计算  -->
+    <!--主题色为50%的紫色-->
+    <color name="colorPrimary">#BF00FF</color>
+    <!--暗主题色为25%的紫色-->
+    <color name="colorPrimaryDark">#600080</color>
+    <!--亮主题色为75%的紫色-->
+    <color name="colorPrimaryLight">#DF80FF</color>
+    <color name="colorAccent">#BF00FF</color>
+
+    <color name="colorTextPrimary">#666666</color>
+    <color name="colorTextPrimaryDark">#333333</color>
+    <color name="colorTextSecondary">#888888</color>
+    <!-- 设置内容文本的颜色-->
+    <color name="colorTextContent">#666666</color>
 
 
     <!-- ListView、RecyclerView、GridView的分割线-->

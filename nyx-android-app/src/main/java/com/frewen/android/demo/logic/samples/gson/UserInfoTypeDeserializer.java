@@ -1,6 +1,6 @@
 package com.frewen.android.demo.logic.samples.gson;
 
-import com.frewen.android.demo.logic.model.UserInfo;
+import com.frewen.android.demo.logic.model.User;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -17,13 +17,13 @@ import java.lang.reflect.Type;
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class UserInfoTypeDeserializer implements JsonDeserializer<UserInfo> {
+public class UserInfoTypeDeserializer implements JsonDeserializer<User> {
 
 
     @Override
-    public UserInfo deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        UserInfo userInfo = new UserInfo(jsonObject.get("user_name").getAsString(), jsonObject.get("age").getAsInt());
-        return userInfo;
+        User user = new User(jsonObject.get("user_name").getAsString(), jsonObject.get("age").getAsInt());
+        return user;
     }
 }

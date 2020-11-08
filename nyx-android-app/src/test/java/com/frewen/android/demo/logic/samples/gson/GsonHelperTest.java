@@ -1,6 +1,6 @@
 package com.frewen.android.demo.logic.samples.gson;
 
-import com.frewen.android.demo.logic.model.UserInfo;
+import com.frewen.android.demo.logic.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,7 +18,7 @@ import org.junit.Test;
  */
 public class GsonHelperTest {
 
-    UserInfo userInfo;
+    User mUser;
 
     @Before
     public void setUp() throws Exception {
@@ -29,10 +29,10 @@ public class GsonHelperTest {
     @Test
     public void index() {
         Gson gson = new Gson();
-        System.out.println(gson.toJson(userInfo));
+        System.out.println(gson.toJson(mUser));
         System.out.println("---------------");
         Gson gson1 = new GsonBuilder().create();
-        System.out.println(gson1.toJson(userInfo));
+        System.out.println(gson1.toJson(mUser));
     }
 
 

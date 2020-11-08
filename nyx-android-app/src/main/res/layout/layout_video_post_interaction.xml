@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="feed"
+            type="Post" />
+
+        <variable
+            name="lifeCycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
+
+        <import type="com.frewen.android.demo.logic.model.Post"></import>
+
+        <import type="com.frewen.android.demo.utils.StringConvert"></import>
+
+        <import type="android.content.Context" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_horizontal_margin_16"
+        android:paddingRight="@dimen/dp_horizontal_margin_16">
+
+        <!-- app:iconTint="@{feed.ugc.hasLiked?@color/color_theme:@color/color_3d3}"-->
+        <!-- android:text="@{feed.ugc.likeCount>0?StringConvert.convertFeedUgc(feed.ugc.likeCount):@string/like}"-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/like"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="@dimen/sp_14"
+            app:backgroundTint="@color/color_common_white"
+            app:cornerRadius="0dp"
+            app:icon="@{feed.ugc.hasLiked?@drawable/icon_cell_liked:@drawable/icon_cell_like}"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            tools:icon="@drawable/icon_cell_like"
+            tools:iconTint="@color/color_common_white"
+            tools:text="点赞"
+            tools:textColor="@color/colorTextPrimary" />
+
+
+        <!--app:iconTint="@{feed.ugc.hasdiss?@color/color_theme:@color/color_3d3}" -->
+        <!-- android:textColor="@{feed.ugc.hasdiss?@color/color_theme:@color/color_3d3}"-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/diss"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="踩"
+            android:textSize="@dimen/sp_14"
+            app:backgroundTint="@color/color_common_white"
+            app:cornerRadius="0dp"
+            app:icon="@{feed.ugc.hasdiss?@drawable/icon_cell_dissed:@drawable/icon_cell_diss}"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            tools:icon="@drawable/icon_cell_diss"
+            tools:iconTint="@color/color_common_white"
+            tools:text="点踩"
+            tools:textColor="@color/colorTextPrimary"></com.google.android.material.button.MaterialButton>
+
+        <!-- android:text="@{feed.ugc.commentCount>0?StringConvert.convertFeedUgc(feed.ugc.commentCount):@string/feed_comment}"-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/sp_14"
+            app:backgroundTint="@color/color_common_white"
+            app:cornerRadius="0dp"
+            app:icon="@drawable/icon_cell_comment"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconTint="@color/colorTextPrimary"
+            tools:icon="@drawable/icon_cell_comment"
+            tools:iconTint="@color/color_common_white"
+            tools:text="评论"
+            tools:textColor="@color/colorTextPrimary" />
+
+        <!-- android:text="@{feed.ugc.shareCount>0?StringConvert.convertFeedUgc(feed.ugc.shareCount):@string/share}"-->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/share"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/colorTextPrimary"
+            android:textSize="@dimen/sp_14"
+            app:backgroundTint="@color/color_common_white"
+            app:cornerRadius="0dp"
+            app:icon="@drawable/icon_cell_like"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconTint="@color/colorTextPrimary"
+            tools:icon="@drawable/icon_cell_share"
+            tools:iconTint="@drawable/icon_cell_like"
+            tools:text="分享"
+            tools:textColor="@color/colorTextPrimary" />
+
+    </LinearLayout>
+</layout>

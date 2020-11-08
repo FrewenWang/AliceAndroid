@@ -9,79 +9,75 @@
             name="comment"
             type="com.frewen.android.demo.logic.model.Comment" />
 
-
-        <import type="com.frewen.android.demo.utils.StringConvert"></import>
-
-        <import type="android.view.View"></import>
+        <variable
+            name="lifeCycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
 
         <import type="android.text.TextUtils"></import>
 
-    </data>
+        <import type="android.view.View"></import>
 
+        <import type="com.frewen.android.demo.utils.StringConvert"></import>
+
+    </data>
 
     <com.frewen.aura.ui.view.alpha.framelayout.CornerFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@color/blue"
+        android:layout_marginLeft="@dimen/dp_horizontal_margin_16"
+        android:layout_marginRight="@dimen/dp_horizontal_margin_16"
+        android:background="@color/color_gray"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:visibility="@{comment == null?View.GONE:View.VISIBLE}">
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:visibility="@{comment==null?View.GONE:View.VISIBLE}"
+        app:clip_radius="6dp"
+        app:clip_side="all">
 
-        <!-- 评论图片 -->
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_gravity="right|top"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_launcher_background"></ImageView>
+            android:layout_marginRight="@dimen/dp_10"
+            android:src="@mipmap/icon_god_comment2" />
 
-        <!-- 评论区的主布局 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- 纵向的LinearLayout里面的一个横向的最热评论布局-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:orientation="horizontal">
 
-                <!--  最左边是一个评论者头像 -->
-                <com.frewen.aura.ui.circlezoomview.CircleImageView
+                <com.frewen.demo.library.mvvm.widgets.CircleImageView
                     android:id="@+id/avatar"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    app:imgUrl="@{comment.author.avatar}"
                     tools:src="@mipmap/ic_launcher_round">
 
-                </com.frewen.aura.ui.circlezoomview.CircleImageView>
+                </com.frewen.demo.library.mvvm.widgets.CircleImageView>
 
-                <!-- 用户名称 -->
                 <TextView
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/dp_10"
                     android:gravity="center_vertical"
                     android:text="@{comment.author.name}"
-                    android:textColor="@color/gray_50"
+                    android:textColor="@color/colorTextPrimary"
                     android:textSize="12sp"
-                    tools:text="评论者"></TextView>
+                    tools:text="欢迎NyxAndroid"></TextView>
 
-                <!-- 这个地方是透明分割线 -->
-                <com.frewen.aura.ui.space.DividerSpace
+                <Space
                     android:layout_width="0dp"
                     android:layout_height="1px"
-                    android:layout_weight="1">
-
-                </com.frewen.aura.ui.space.DividerSpace>
+                    android:layout_weight="1"></Space>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -89,55 +85,51 @@
                     android:gravity="center_vertical"
                     android:text="@{comment.ugc.likeCount>0?StringConvert.convertFeedUgc(comment.ugc.likeCount):null}"
                     android:textSize="12sp"
-                    tools:text="1000" />
-                <!-- 点赞按钮 -->
+                    tools:text="1000"></TextView>
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dp"
-                    tools:src="@mipmap/icon_liked"></ImageView>
+                    android:src="@{comment.ugc.hasLiked?@drawable/icon_cell_liked:@drawable/icon_cell_like}"
+                    tools:src="@drawable/icon_cell_liked" />
             </LinearLayout>
 
-            <!-- 评论下面的UGC内容 -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="36dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@{comment.commentText}"
-                android:textColor="@color/color_common_black_alpha45"
-                android:textSize="14sp"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="@dimen/sp_14"
                 android:visibility="@{TextUtils.isEmpty(comment.commentText)?View.GONE:View.VISIBLE}"
                 tools:text="神秘的JetPack神秘的JetPack神秘的JetPack"></TextView>
 
             <FrameLayout
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/dp_10"
                 android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}">
 
-                <com.frewen.aura.ui.circlezoomview.CircleImageView
+                <com.frewen.demo.library.mvvm.widgets.CircleImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:background="@color/color_gray"
                     android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}"
-                    app:imgUrl="@{comment.imageUrl}"
-                    tools:src="@mipmap/ic_launcher">
-
-                </com.frewen.aura.ui.circlezoomview.CircleImageView>
+                    tools:src="@mipmap/ic_launcher" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:src="@mipmap/icon_liked"
+                    android:src="@mipmap/icon_video_play"
                     android:visibility="@{TextUtils.isEmpty(comment.videoUrl)?View.GONE:View.VISIBLE}"></ImageView>
             </FrameLayout>
 
         </LinearLayout>
-
-
     </com.frewen.aura.ui.view.alpha.framelayout.CornerFrameLayout>
 </layout>

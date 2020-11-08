@@ -1,6 +1,6 @@
 package com.frewen.android.demo.logic.samples.gson;
 
-import com.frewen.android.demo.logic.model.UserInfo;
+import com.frewen.android.demo.logic.model.User;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -16,13 +16,13 @@ import java.lang.reflect.Type;
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class UserInfoTypeSerializer implements JsonSerializer<UserInfo> {
+public class UserInfoTypeSerializer implements JsonSerializer<User> {
 
     @Override
-    public JsonElement serialize(UserInfo userInfo, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(User user, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject obj = new JsonObject();
-        obj.addProperty("user_name", userInfo.getName());
-        obj.addProperty("age", userInfo.getAge());
+        obj.addProperty("user_name", user.getName());
+        obj.addProperty("age", user.getAge());
         return obj;
     }
 }

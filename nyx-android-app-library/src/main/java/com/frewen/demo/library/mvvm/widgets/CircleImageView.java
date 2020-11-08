@@ -9,8 +9,13 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.frewen.aura.toolkits.display.DisplayHelper;
 import com.frewen.demo.library.utils.ViewHelper;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.databinding.BindingAdapter;
 
@@ -59,5 +64,29 @@ public class CircleImageView extends AppCompatImageView {
         }
 
         builder.into(imageView);
+    }
+
+    /**
+     * 进行ImageView的数据绑定
+     *
+     * @param widthPx
+     * @param heightPx
+     * @param marginLeft
+     * @param imageUrl
+     */
+    public void bindData(int widthPx, int heightPx, int marginLeft, String imageUrl) {
+        bindData(widthPx, heightPx, marginLeft, DisplayHelper.getHeightPixels(getContext()), DisplayHelper.getWidthPixels(getContext()), imageUrl);
+    }
+
+    private void bindData(int widthPx, int heightPx, int marginLeft, float maxHeight, float maxWidth, String imageUrl) {
+        if (widthPx <= 0 || heightPx <= 0) {
+            Glide.with(this).load(imageUrl).into(new SimpleTarget<Drawable>() {
+                @Override
+                public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                    int height = resource.getIntrinsicHeight();
+                    int width = resource.getIntrinsicWidth();
+                }
+            });
+        }
     }
 }

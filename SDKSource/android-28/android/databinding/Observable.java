@@ -35,24 +35,29 @@ public interface Observable {
 
     /**
      * Adds a callback to listen for changes to the Observable.
+     * 添加属性更改回调
      * @param callback The callback to start listening.
      */
     void addOnPropertyChangedCallback(OnPropertyChangedCallback callback);
 
     /**
      * Removes a callback from those listening for changes.
+     * 从那些正在监听更改的回调中删除一个回调。
      * @param callback The callback that should stop listening.
      */
     void removeOnPropertyChangedCallback(OnPropertyChangedCallback callback);
 
     /**
      * The callback that is called by Observable when an observable property has changed.
+     * 当Observable属性更改时，由Observable调用的回调。
      */
     abstract class OnPropertyChangedCallback {
 
         /**
          * Called by an Observable whenever an observable property changes.
-         * @param sender The Observable that is changing.
+         * 每当可观察属性改变时，由可观察对象调用
+         *
+         * @param sender     The Observable that is changing.
          * @param propertyId The BR identifier of the property that has changed. The getter
          *                   for this property should be annotated with {@link Bindable}.
          */

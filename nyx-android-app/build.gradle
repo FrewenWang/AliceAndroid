@@ -199,17 +199,43 @@ protobuf {
 }
 
 dependencies {
-
-
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
 
-    //========================添加单元测试相关的依赖===================================================
+    //==========<editor-folder desc = "Dependence:添加单元测试相关的依赖">=============================
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    //========================添加单元测试相关的依赖===================================================
+    //==========</editor-folder desc = "Dependence:添加单元测试相关的依赖">============================
+
+    //======<editor-folder desc = "Dependence:性能监控方面的依赖">====================================
+    //======<editor-folder desc = "Dependence:Android Performance Monitor依赖">======================
+    //BlockCanary是一个Android平台的一个非侵入式的性能监控组件，应用只需要实现一个抽象类，提供一些该组件需要的上下文环境，
+    // 就可以在平时使用应用的时候检测主线程上的各种卡慢问题，并通过组件提供的各种信息分析出原因并进行修复。
+    implementation 'com.github.markzhai:blockcanary-android:1.5.0'
+    // 仅在debug包启用BlockCanary进行卡顿监控和提示的话，可以这么用
+    //debugImplementation 'com.github.markzhai:blockcanary-android:1.5.0'
+    //releaseImplementation 'com.github.markzhai:blockcanary-no-op:1.5.0'
+    //======</editor-folder desc = "Dependence:Android Performance Monitor依赖">=====================
+
+    //======<editor-folder desc = "Dependence:ANR-WatchDog依赖">====================================
+    // A simple watchdog that detects Android ANRs (Application Not Responding).
+    // https://github.com/SalomonBrys/ANR-WatchDog
+    implementation 'com.github.anrwatchdog:anrwatchdog:1.4.0'
+    //======</editor-folder desc = "Dependence:ANR-WatchDog依赖">===================================
+
+    //======<editor-folder desc = "Dependence:LeakCanary依赖">====================================
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    //======</editor-folder desc = "Dependence:LeakCanary依赖">===================================
+
+    //======<editor-folder desc = "Dependence:dexposed的AOP框架依赖">================================
+    implementation 'com.taobao.android:dexposed:0.1.1@aar'
+    //======</editor-folder desc = "Dependence:dexposed的AOP框架依赖">===============================
+
+
+    //======</editor-folder desc = "Dependence:性能监控方面的依赖">====================================
+
 
 
     //=====================<editor-folder desc = "Kotlin标准库的依赖">===============================
@@ -217,22 +243,26 @@ dependencies {
     //=====================</editor-folder desc = "Kotlin标准库的依赖">===============================
 
 
+    //======<editor-folder desc = "Dependence:性能监控方面的依赖">====================================
     //======<editor-folder desc = "Dependence:Android Performance Monitor依赖">======================
     //BlockCanary是一个Android平台的一个非侵入式的性能监控组件，应用只需要实现一个抽象类，提供一些该组件需要的上下文环境，
     // 就可以在平时使用应用的时候检测主线程上的各种卡慢问题，并通过组件提供的各种信息分析出原因并进行修复。
+    implementation 'com.github.markzhai:blockcanary-android:1.5.0'
     // 仅在debug包启用BlockCanary进行卡顿监控和提示的话，可以这么用
-    debugImplementation 'com.github.markzhai:blockcanary-android:1.5.0'
-    releaseImplementation 'com.github.markzhai:blockcanary-no-op:1.5.0'
+    //debugImplementation 'com.github.markzhai:blockcanary-android:1.5.0'
+    //releaseImplementation 'com.github.markzhai:blockcanary-no-op:1.5.0'
     //======</editor-folder desc = "Dependence:Android Performance Monitor依赖">=====================
 
     //======<editor-folder desc = "Dependence:ANR-WatchDog依赖">====================================
     // A simple watchdog that detects Android ANRs (Application Not Responding).
+    // https://github.com/SalomonBrys/ANR-WatchDog
     implementation 'com.github.anrwatchdog:anrwatchdog:1.4.0'
     //======</editor-folder desc = "Dependence:ANR-WatchDog依赖">===================================
 
     //======<editor-folder desc = "Dependence:LeakCanary依赖">====================================
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
     //======</editor-folder desc = "Dependence:LeakCanary依赖">===================================
+    //======</editor-folder desc = "Dependence:性能监控方面的依赖">====================================
 
     //========================添加constraintlayout相关的依赖==========================================
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

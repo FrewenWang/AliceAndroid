@@ -201,7 +201,7 @@ public final class Looper {
                 // No message indicates that the message queue is quitting.
                 return;
             }
-
+            // Looper里面的由一个logging对象，在消息开始处理的时候，会打印一个Dispatching to
             // This must be in a local variable, in case a UI event sets the logger
             final Printer logging = me.mLogging;
             if (logging != null) {
@@ -272,7 +272,7 @@ public final class Looper {
             if (logSlowDispatch) {
                 showSlowLog(slowDispatchThresholdMs, dispatchStart, dispatchEnd, "dispatch", msg);
             }
-
+            // 消息处理完成完成之后，会打印这个Finished to的日志
             if (logging != null) {
                 logging.println("<<<<< Finished to " + msg.target + " " + msg.callback);
             }

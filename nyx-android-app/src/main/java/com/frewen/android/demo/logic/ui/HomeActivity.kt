@@ -58,6 +58,13 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavi
         navView.setOnNavigationItemSelectedListener(this)
         // 使用我们自己的NavGraph
         NavGraphBuilder.build(navController, this, R.id.nav_host_fragment)
+
+        // 这个是测试BlockCanary的卡顿问题的解决
+//        try {
+//            Thread.sleep(600)
+//        } catch (e: InterruptedException) {
+//            e.printStackTrace()
+//        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

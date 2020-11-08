@@ -152,6 +152,7 @@ public abstract class ViewDataBinding extends BaseObservable {
 
     /**
      * Runnable executed on animation heartbeat to rebind the dirty Views.
+     * 在动画心跳上执行可运行以重新绑定脏视图
      */
     private final Runnable mRebindRunnable = new Runnable() {
         @Override
@@ -235,6 +236,7 @@ public abstract class ViewDataBinding extends BaseObservable {
             mFrameCallback = new Choreographer.FrameCallback() {
                 @Override
                 public void doFrame(long frameTimeNanos) {
+                    // 进行重新的绑定的时候，会根据刷新帧然后去进行绑定信息的逻辑
                     mRebindRunnable.run();
                 }
             };
@@ -441,6 +443,7 @@ public abstract class ViewDataBinding extends BaseObservable {
 
     /**
      * @hide
+     * 设置重新绑定的逻辑调用
      */
     protected void requestRebind() {
         synchronized (this) {

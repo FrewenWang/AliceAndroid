@@ -17,6 +17,7 @@ package android.databinding;
 
 /**
  * Utility class for managing Observable callbacks.
+ * 用于管理Observable回调的实用程序类。
  */
 public class PropertyChangeRegistry extends
         CallbackRegistry<Observable.OnPropertyChangedCallback, Observable, Void> {

@@ -12,8 +12,8 @@ import java.util.List;
 /**
  * @filename: AppBlockCanaryContext
  * @introduction: https://github.com/markzhai/AndroidPerformanceMonitor/blob/master/README_CN.md
- * 我们可以实现自己的lockCanaryContext 实现自己的监控上下文（强烈建议看清所有配置项，避免使用错误）
- * 实现各种上下文，包括应用标示符，用户uid，网络类型，卡慢判断阙值，Log保存位置等
+ *         我们可以实现自己的lockCanaryContext 实现自己的监控上下文（强烈建议看清所有配置项，避免使用错误）
+ *         实现各种上下文，包括应用标示符，用户uid，网络类型，卡慢判断阙值，Log保存位置等
  * @author: Frewen.Wong
  * @time: 2020/8/16 23:47
  * @version: 1.0.0
@@ -27,6 +27,7 @@ public class AppBlockCanaryContext extends BlockCanaryContext {
      * @return Qualifier which can specify this installation, like version + flavor.
      */
     public String provideQualifier() {
+
         return "unknown";
     }
 
@@ -105,6 +106,7 @@ public class AppBlockCanaryContext extends BlockCanaryContext {
      *
      * @param src  files before compress
      * @param dest files compressed
+     *
      * @return true if compression is successful
      */
     public boolean zip(File[] src, File dest) {

@@ -50,6 +50,8 @@ buildscript {
         // https://github.com/google/protobuf-gradle-plugin
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
 
+//        classpath 'me.ele:lancet-plugin:1.0.6'
+
     }
 }
 

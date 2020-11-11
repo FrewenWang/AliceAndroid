@@ -11,8 +11,8 @@ apply plugin: 'com.chaquo.python'
 //apply plugin: 'android-aspectjx'
 //或者这样也可以
 //apply plugin: 'com.hujiang.android-aspectjx'
-
 apply plugin: 'com.google.protobuf'
+//apply plugin: 'me.ele.lancet'
 
 
 android {
@@ -233,6 +233,9 @@ dependencies {
     implementation 'com.taobao.android:dexposed:0.1.1@aar'
     //======</editor-folder desc = "Dependence:dexposed的AOP框架依赖">===============================
 
+    //======<editor-folder desc = "Dependence:lancet的AOP框架依赖">================================
+//    compileOnly 'me.ele:lancet-base:1.0.6'
+    //======</editor-folder desc = "Dependence:lancet的AOP框架依赖">===============================
 
     //======</editor-folder desc = "Dependence:性能监控方面的依赖">====================================
 

@@ -82,7 +82,7 @@ String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
 if (gitBranch == "dev") {
     apply from: rootProject.file('../GradleDependence/app_dependence.gradle')
 } else {
-    apply from: 'https://gitee.com/frewen1225/gradle_dependence/raw/master/app_dependence.gradle'
+    apply from: 'https://gitee.com/frewen1225/GradleDependence/raw/master/app_dependence.gradle'
 }
 
 

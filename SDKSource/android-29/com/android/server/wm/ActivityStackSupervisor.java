@@ -953,8 +953,15 @@ public class ActivityStackSupervisor implements RecentTasks.Callbacks {
         }
     }
 
+    /**
+     *
+     * @param r
+     * @param andResume
+     * @param checkConfig
+     */
     void startSpecificActivityLocked(ActivityRecord r, boolean andResume, boolean checkConfig) {
         // Is this activity's application already running?
+        // Activity应用程序进程是否已经准备好
         final WindowProcessController wpc =
                 mService.getProcessController(r.processName, r.info.applicationInfo.uid);
 
@@ -963,6 +970,7 @@ public class ActivityStackSupervisor implements RecentTasks.Callbacks {
         if (wpc != null && wpc.hasThread()) {
             try {
                 // 这个方法方法的实现，有时间可以看一下。
+                //
                 realStartActivityLocked(r, wpc, andResume, checkConfig);
                 return;
             } catch (RemoteException e) {

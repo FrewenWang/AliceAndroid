@@ -2560,9 +2560,12 @@ class ActivityStack extends ConfigurationContainer {
      *       non-focused stack to be resumed.
      *       Use {@link RootActivityContainer#resumeFocusedStacksTopActivities} to resume the
      *       right activity for the current system state.
+     *
+     *
      */
     @GuardedBy("mService")
     boolean resumeTopActivityUncheckedLocked(ActivityRecord prev, ActivityOptions options) {
+        //确保栈顶 activity 为Resume
         if (mInResumeTopActivity) {
             // Don't even start recursing.
             return false;
@@ -2570,10 +2573,12 @@ class ActivityStack extends ConfigurationContainer {
 
         boolean result = false;
         try {
+            // 防止递归
             // Protect against recursion.
             mInResumeTopActivity = true;
+            //resumeTopActivityInnerLocked方法中逻辑非常多，这里直接精简到这一句关键代码，
+            // 调用了ActivityStackSupervisor的startSpecificActivityLocked方法
             result = resumeTopActivityInnerLocked(prev, options);
-
             // When resuming the top activity, it may be necessary to pause the top activity (for
             // example, returning to the lock screen. We suppress the normal pause logic in
             // {@link #resumeTopActivityUncheckedLocked}, since the top activity is resumed at the
@@ -2581,6 +2586,7 @@ class ActivityStack extends ConfigurationContainer {
             // to ensure any necessary pause logic occurs. In the case where the Activity will be
             // shown regardless of the lock screen, the call to
             // {@link ActivityStackSupervisor#checkReadyForSleepLocked} is skipped.
+
             final ActivityRecord next = topRunningActivityLocked(true /* focusableOnly */);
             if (next == null || !next.canTurnScreenOn()) {
                 checkReadyForSleep();
@@ -2610,6 +2616,12 @@ class ActivityStack extends ConfigurationContainer {
         mStackSupervisor.updateTopResumedActivityIfNeeded();
     }
 
+    /**
+     *
+     * @param prev
+     * @param options
+     * @return
+     */
     @GuardedBy("mService")
     private boolean resumeTopActivityInnerLocked(ActivityRecord prev, ActivityOptions options) {
         if (!mService.isBooting() && !mService.isBooted()) {
@@ -3034,6 +3046,7 @@ class ActivityStack extends ConfigurationContainer {
                 if (DEBUG_SWITCH) Slog.v(TAG_SWITCH, "Restarting: " + next);
             }
             if (DEBUG_STATES) Slog.d(TAG_STATES, "resumeTopActivityLocked: Restarting " + next);
+            // 精简到这一句关键代码，调用了ActivityStackSupervisor的startSpecificActivityLocked方法
             mStackSupervisor.startSpecificActivityLocked(next, true, true);
         }
 

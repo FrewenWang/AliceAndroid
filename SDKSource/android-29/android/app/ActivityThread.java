@@ -904,6 +904,10 @@ public final class ActivityThread extends ClientTransactionHandler {
         int flags;
     }
 
+    /**
+     * 我们可以看一下ApplicationThread，其实是客户端的一个Bindder对象
+     * 这个在我们启动Activity会非常有用，可以让我们调用到客户端的Binder对象
+     */
     private class ApplicationThread extends IApplicationThread.Stub {
         private static final String DB_INFO_FORMAT = "  %8s %8s %14s %14s  %s";
 

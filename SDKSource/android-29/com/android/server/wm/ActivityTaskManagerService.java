@@ -700,6 +700,7 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
             mAssistUtils = new AssistUtils(mContext);
             mVrController.onSystemReady();
             mRecentTasks.onSystemReadyLocked();
+            // onSysytemReady的调用到onSystemReady
             mStackSupervisor.onSystemReady();
         }
     }
@@ -1072,6 +1073,8 @@ public class ActivityTaskManagerService extends IActivityTaskManager.Stub {
                 .setStartFlags(startFlags)
                 .setProfilerInfo(profilerInfo)
                 .setActivityOptions(bOptions)
+                // 这个地方的逻辑，我们需要注意下，我们在这个地方设置setMayWait
+                // 所以我们在调用ActivityStarter的execute()方法的时候，标志变量就为true了。
                 .setMayWait(userId)
                 .execute();
 

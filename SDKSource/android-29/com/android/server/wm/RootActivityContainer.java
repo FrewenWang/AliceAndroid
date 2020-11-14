@@ -1141,6 +1141,12 @@ class RootActivityContainer extends ConfigurationContainer
         return finishedTask != null ? finishedTask.taskId : INVALID_TASK_ID;
     }
 
+    /**
+     * ActivityStack的resumeTopActivityUncheckedLocked方法，ActivityStack应该算是任务栈的描述，
+     * 它管理者一个应用的所有TaskRecord和他们的状态，
+     * 接着看到它的resumeTopActivityUncheckedLocked方法
+     * @return
+     */
     boolean resumeFocusedStacksTopActivities() {
         return resumeFocusedStacksTopActivities(null, null, null);
     }
@@ -1155,6 +1161,7 @@ class RootActivityContainer extends ConfigurationContainer
         boolean result = false;
         if (targetStack != null && (targetStack.isTopStackOnDisplay()
                 || getTopDisplayFocusedStack() == targetStack)) {
+            //其实调用的是ActivityStack的resumeTopActivityInnerLocked方法
             result = targetStack.resumeTopActivityUncheckedLocked(target, targetOptions);
         }
 

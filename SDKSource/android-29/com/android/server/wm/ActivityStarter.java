@@ -655,7 +655,7 @@ class ActivityStarter {
         }
         /// 创建即将要启动的Activity的描述类ActivityRecord
         // ProcessRecord用于描述一个应用程序进程。
-        // 同样地，ActivityRecord用于描述一个Activity，用来记录一个Activity 的所有信息。
+        // 同样地，ActivityRecord用于描述一个Activity，用来记录一个Activity的所有信息。
         ActivityRecord sourceRecord = null;
         ActivityRecord resultRecord = null;
         if (resultTo != null) {
@@ -944,7 +944,7 @@ class ActivityStarter {
 
         mService.onStartActivitySetDidAppSwitch();
         mController.doPendingActivityLaunches(false);
-
+        /// 我么看到这个地方还是调用了startActivity
         final int res = startActivity(r, sourceRecord, voiceSession, voiceInteractor, startFlags,
                 true /* doResume */, checkedOptions, inTask, outActivity, restrictedBgActivity);
         mSupervisor.getActivityMetricsLogger().notifyActivityLaunched(res, outActivity[0]);
@@ -1506,6 +1506,20 @@ class ActivityStarter {
         return true;
     }
 
+    /**
+     * startActivity方法紧接着调用了startActivityUnchecked方法：
+     * @param r
+     * @param sourceRecord
+     * @param voiceSession
+     * @param voiceInteractor
+     * @param startFlags
+     * @param doResume
+     * @param options
+     * @param inTask
+     * @param outActivity
+     * @param restrictedBgActivity
+     * @return
+     */
     // Note: This method should only be called from {@link startActivity}.
     private int startActivityUnchecked(final ActivityRecord r, ActivityRecord sourceRecord,
             IVoiceInteractionSession voiceSession, IVoiceInteractor voiceInteractor,
@@ -1558,7 +1572,7 @@ class ActivityStarter {
             final boolean clearTopAndResetStandardLaunchMode =
                     (mLaunchFlags & (FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_RESET_TASK_IF_NEEDED))
                             == (FLAG_ACTIVITY_CLEAR_TOP | FLAG_ACTIVITY_RESET_TASK_IF_NEEDED)
-                    && mLaunchMode == LAUNCH_MULTIPLE;
+                            && mLaunchMode == LAUNCH_MULTIPLE;
 
             // If mStartActivity does not have a task associated with it, associate it with the
             // reused activity's task. Do not do so if we're clearing top and resetting for a
@@ -1711,9 +1725,13 @@ class ActivityStarter {
 
         // Should this be considered a new task?
         int result = START_SUCCESS;
+        // 前面Launcher部分中有提到过设置了Flag为FLAG_ACTIVITY_NEW_TASK，
+        // 所以注意判断条件成立，则调用setTaskFromReuseOrCreateNewTask
         if (mStartActivity.resultTo == null && mInTask == null && !mAddingToTask
                 && (mLaunchFlags & FLAG_ACTIVITY_NEW_TASK) != 0) {
             newTask = true;
+            // 它内部会创建的TaskRecord（代表Activity的任务栈），
+            // 并将传入的TaskRecord对象设置给代表启动的Activity的ActivityRecord
             result = setTaskFromReuseOrCreateNewTask(taskToAffiliate);
         } else if (mSourceRecord != null) {
             result = setTaskFromSourceRecord();
@@ -1772,6 +1790,10 @@ class ActivityStarter {
                         && !mRootActivityContainer.isTopDisplayFocusedStack(mTargetStack)) {
                     mTargetStack.moveToFront("startActivityUnchecked");
                 }
+                //接着在注释3调用了RootActivityContainer的resumeFocusedStacksTopActivities方法，
+                // RootActivityContainer 将一些东西从ActivityStackSupervisor中分离出来。
+                // 目的是将其与RootWindowContainer合并，
+                // 作为统一层次结构的一部分，接着看它的resumeFocusedStacksTopActivities方法
                 mRootActivityContainer.resumeFocusedStacksTopActivities(
                         mTargetStack, mStartActivity, mOptions);
             }

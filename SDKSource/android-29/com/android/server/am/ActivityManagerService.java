@@ -3488,14 +3488,27 @@ public class ActivityManagerService extends IActivityManager.Stub
         }
 
     }
+
     /**
-     * 这里面调用的就是AMS进行启动Activity的逻辑流程
-     * 注意这个启动的业务逻辑是运行在SystemServer进程中？？
+     * 这里面调用的就是AMS进行启动启动的逻辑流程
+     * 注意这个启动的业务逻辑是运行在SystemServer进程中
+     *
+     * @param caller
+     * @param callingPackage
+     * @param intent
+     * @param resolvedType
+     * @param resultTo
+     * @param resultWho
+     * @param requestCode
+     * @param startFlags
+     * @param profilerInfo
+     * @param bOptions
      */
     @Override
     public int startActivity(IApplicationThread caller, String callingPackage,
             Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode,
             int startFlags, ProfilerInfo profilerInfo, Bundle bOptions) {
+        /// 我们可以看到
         return mActivityTaskManager.startActivity(caller, callingPackage, intent, resolvedType,
                 resultTo, resultWho, requestCode, startFlags, profilerInfo, bOptions);
     }
@@ -8980,6 +8993,7 @@ public class ActivityManagerService extends IActivityManager.Stub
 
             mLocalDeviceIdleController
                     = LocalServices.getService(DeviceIdleController.LocalService.class);
+            // 调用这个ActivityTaskManagerService
             mActivityTaskManager.onSystemReady();
             // Make sure we have the current profile info, since it is needed for security checks.
             mUserController.onSystemReady();

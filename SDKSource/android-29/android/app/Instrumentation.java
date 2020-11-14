@@ -1678,7 +1678,7 @@ public class Instrumentation {
     public ActivityResult execStartActivity(
             Context who, IBinder contextThread, IBinder token, Activity target,
             Intent intent, int requestCode, Bundle options) {
-        // 获取ApplicationThread
+        // 获取ApplicationThread。这个其实就是我们客户端的进程的IApplicationThread的Binder对象
         IApplicationThread whoThread = (IApplicationThread) contextThread;
         Uri referrer = target != null ? target.onProvideReferrer() : null;
         if (referrer != null) {

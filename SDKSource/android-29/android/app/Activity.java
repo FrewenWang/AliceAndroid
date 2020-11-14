@@ -5215,6 +5215,8 @@ public class Activity extends ContextThemeWrapper
             options = transferSpringboardActivityOptions(options);
             // mInstrumentation 执行启动Activity.这个Instrumentation是Activity的成员变量
             // 可以作为我们Hook技术的Hook点。用代理的Instrumentation来替代原始的Instrumentation
+            /// 我们重点注意以下：第二个参数：mMainThread.getApplicationThread()
+            // 这个参数的是一个Binder对象，
             Instrumentation.ActivityResult ar =
                 mInstrumentation.execStartActivity(
                     this, mMainThread.getApplicationThread(), mToken, this,

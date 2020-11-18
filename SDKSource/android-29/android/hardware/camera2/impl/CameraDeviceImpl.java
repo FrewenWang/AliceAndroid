@@ -286,7 +286,7 @@ public class CameraDeviceImpl extends CameraDevice
             // TODO: Move from decorator to direct binder-mediated exceptions
             // If setRemoteFailure already called, do nothing
             if (mInError) return;
-
+            // 我们针对远程remoteDevice的包装类，
             mRemoteDevice = new ICameraDeviceUserWrapper(remoteDevice);
 
             IBinder remoteDeviceBinder = remoteDevice.asBinder();

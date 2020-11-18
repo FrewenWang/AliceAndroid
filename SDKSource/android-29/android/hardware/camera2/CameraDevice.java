@@ -61,7 +61,7 @@ import java.lang.annotation.RetentionPolicy;
  * API. If your application requires a full-level device for
  * proper operation, declare the "android.hardware.camera.level.full" feature in your
  * manifest.</p>
- *
+ * 我们可以看到CameraDevice是一个抽象对象，实现了AutoCloseable的接口
  * @see CameraManager#openCamera
  * @see android.Manifest.permission#CAMERA
  * @see CameraCharacteristics#INFO_SUPPORTED_HARDWARE_LEVEL

@@ -202,8 +202,14 @@ public class ThreadLocal<T> {
         // ThreadLocalMap是什么，getMap方法又是如何实现的。
         // 使用当前的线程Thread.currentThread()获取ThreadLocalMap.
         // 其实就是获取thread.threadLocals对象
+
+        // 这个地方，我我们可以好好分析一下。
+        // 我们使用当前线程来获取ThreadLocalMap
         ThreadLocalMap map = getMap(t);
         if (map != null)
+            // 着重你看一下，ThreadLocal对象里面获取ThreadLocalMap对象存储的Key-Value对象
+            // Key其实就是当前ThreadLocal对象。说明什么？？
+            // 说明每个ThreadLocal对象只能存储一个变量值
             map.set(this, value);
         else
             createMap(t, value);
@@ -229,7 +235,7 @@ public class ThreadLocal<T> {
     /**
      * Get the map associated with a ThreadLocal. Overridden in
      * InheritableThreadLocal.
-     *
+     * 获取与ThreadLocal关联的地图。在* InheritableThreadLocal中重写。
      * @param  t the current thread
      * @return the map
      */
@@ -245,6 +251,8 @@ public class ThreadLocal<T> {
      * @param firstValue value for the initial entry of the map
      */
     void createMap(Thread t, T firstValue) {
+        // 没有这个ThreadLocals的关联对象
+        // 则我们进行第一次进行创建
         t.threadLocals = new ThreadLocalMap(this, firstValue);
     }
 
@@ -298,6 +306,9 @@ public class ThreadLocal<T> {
      * WeakReferences for keys. However, since reference queues are not
      * used, stale entries are guaranteed to be removed only when
      * the table starts running out of space.
+     *
+     * 我们研究一下这个ThreadLocalMap的数据结构
+     * 由于ThreadLocalMap的生命周期跟Thread一样长，如果没有手动删除对应key就会导致内存泄漏，我觉得是这种数据结构导致，会产生内存溢出的问题
      */
     static class ThreadLocalMap {
 
@@ -308,6 +319,16 @@ public class ThreadLocal<T> {
          * == null) mean that the key is no longer referenced, so the
          * entry can be expunged from table.  Such entries are referred to
          * as "stale entries" in the code that follows.
+         *
+         * 为了应对非常大和长时间的用途，哈希表使用弱引用的 key。
+         *
+         * ThreadLocal为什么会内存泄漏？？？
+         * ThreadLocalMap使用ThreadLocal的弱引用作为key，如果一个ThreadLocal没有外部强引用来引用它，
+         * 那么系统 GC 的时候，这个ThreadLocal势必会被回收，
+         * 这样一来，ThreadLocalMap中就会出现key为null的Entry，就没有办法访问这些key为null的Entry的value，
+         * 如果当前线程再迟迟不结束的话，
+         * 这些key为null的Entry的value就会一直存在一条强引用链：Thread Ref -> Thread -> ThreaLocalMap -> Entry -> value永远无法回收，
+         * 造成内存泄漏。
          */
         static class Entry extends WeakReference<ThreadLocal<?>> {
             /** The value associated with this ThreadLocal. */
@@ -426,6 +447,10 @@ public class ThreadLocal<T> {
         /**
          * Version of getEntry method for use when key is not found in
          * its direct hash slot.
+         *  ThreadLocalMap中考虑到可能造成内存泄露问题：
+         *  加上了一些防护措施：在ThreadLocal的get(),set(),remove()的时候都会清除线程ThreadLocalMap里所有key为null的value。
+         *  但是这些被动的预防措施并不能保证不会内存泄漏：
+         *
          *
          * @param  key the thread local object
          * @param  i the table index for key's hash code
@@ -462,6 +487,7 @@ public class ThreadLocal<T> {
             // it is to replace existing ones, in which case, a fast
             // path would fail more often than not.
 
+            // Table是ThreadLocalMap的entry数组
             Entry[] tab = table;
             int len = tab.length;
             int i = key.threadLocalHashCode & (len-1);

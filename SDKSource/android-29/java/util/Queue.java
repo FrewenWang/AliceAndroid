@@ -149,6 +149,8 @@ public interface Queue<E> extends Collection<E> {
      *         this queue does not permit null elements
      * @throws IllegalArgumentException if some property of this element
      *         prevents it from being added to this queue
+     * 将指定的元素插入到此队列的尾部（如果立即可行且不会超过该队列的容量）
+     * 在成功时返回 true，如果此队列已满，则抛IllegalStateException。
      */
     boolean add(E e);
 
@@ -160,14 +162,20 @@ public interface Queue<E> extends Collection<E> {
      * by throwing an exception.
      *
      * @param e the element to add
+     *
      * @return {@code true} if the element was added to this queue, else
      *         {@code false}
-     * @throws ClassCastException if the class of the specified element
-     *         prevents it from being added to this queue
-     * @throws NullPointerException if the specified element is null and
-     *         this queue does not permit null elements
+     *
+     * @throws ClassCastException       if the class of the specified element
+     *                                  prevents it from being added to this queue
+     * @throws NullPointerException     if the specified element is null and
+     *                                  this queue does not permit null elements
      * @throws IllegalArgumentException if some property of this element
-     *         prevents it from being added to this queue
+     *                                  prevents it from being added to this queue
+     *
+     * 将指定的元素插入到此队列的尾部（如果没有超出容量限制，则立即执行）
+     * 将指定的元素插入此队列的尾部，如果该队列已满，插入失败，则返回false
+     *  当使用容量受限的队列时，此方法通常比{@link #add}更可取，add方法可能会因抛出异常而仅无法插入元素。
      */
     boolean offer(E e);
 

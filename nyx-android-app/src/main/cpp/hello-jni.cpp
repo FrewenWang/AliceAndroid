@@ -1,7 +1,8 @@
 #include <jni.h>
 #include <string>
 
-#define JNI_CLASS_PATH "com/frewen/android/demo/samples/jni/HelloJNIActivity"
+// 定义JNI的Class的Path
+#define JNI_CLASS_PATH "com/frewen/android/demo/logic/samples/jni/HelloJNIActivity"
 
 extern "C" JNIEXPORT jstring JNICALL
 /**
@@ -85,7 +86,7 @@ jint JNI_OnLoad(JavaVM *vm, void *revered) {
 
 
 // ===============C/C++ 调用Java的方法=================
-#define JNI_USER_PATH  "com/frewen/android/demo/bean/User"
+#define JNI_USER_PATH  "com/frewen/android/demo/logic/model/User"
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_frewen_android_demo_samples_jni_HelloJNIActivity_stringFromJNIUser(JNIEnv *env,
                                                                             jobject thiz,

@@ -48,10 +48,6 @@ public final class MessageQueue {
     private final boolean mQuitAllowed;
 
     @UnsupportedAppUsage
-    @SuppressWarnings("unused")
-    private long mPtr; // used by native code
-
-    @UnsupportedAppUsage
     Message mMessages;
     @UnsupportedAppUsage
     private final ArrayList<IdleHandler> mIdleHandlers = new ArrayList<IdleHandler>();
@@ -66,7 +62,13 @@ public final class MessageQueue {
     // Barriers are indicated by messages with a null target whose arg1 field carries the token.
     @UnsupportedAppUsage
     private int mNextBarrierToken;
-
+    // 下面这些就是MessageQueue中的Native方法：
+    // 调用了nativeInit方法，在native层创建了native层的MessageQueue,
+    @UnsupportedAppUsage
+    @SuppressWarnings("unused")
+    private long mPtr; // used by native code
+    //mPtr是保存了NativeMessageQueue的指针
+    // 后续的线程挂起和线程的唤醒都要通过这个指针来完成，其实就是通过Native层的MessageQueue来完成。
     private native static long nativeInit();
     private native static void nativeDestroy(long ptr);
     @UnsupportedAppUsage
@@ -332,12 +334,13 @@ public final class MessageQueue {
         // native层用到的变量 ，如果消息尚未到达处理时间，则表示为距离该消息处理事件的总时长，
         // 表明Native Looper只需要block到消息需要处理的时间就行了。 所以nextPollTimeoutMillis>0表示还有消息待处理
         int nextPollTimeoutMillis = 0;
-        for (;;) {
+        for (; ; ) {
             if (nextPollTimeoutMillis != 0) {
                 // 刷新下Binder命令，一般在阻塞前调用
                 Binder.flushPendingCommands();
             }
             // 调用native层进行消息标示，nextPollTimeoutMillis 为0立即返回，为-1则阻塞等待。
+            // 就是这行代码进行消息阻塞的
             nativePollOnce(ptr, nextPollTimeoutMillis);
             // 加上同步锁
             synchronized (this) {
@@ -347,6 +350,8 @@ public final class MessageQueue {
                 Message prevMsg = null;
                 // 获取MessageQueue的链表表头的第一个元素
                 Message msg = mMessages;
+
+
                 // 如果msg不为空并且target为空，说明是一个同步屏障消息
                 // 关于同步屏障的问题，我们可以参考#ViewRootImpl#scheduleTraversals的方法
                 // 如果是则执行循环，拦截所有同步消息，直到取到第一个异步消息为止
@@ -612,14 +617,13 @@ public final class MessageQueue {
             // 获取当前的消息队列.这个消息Message对象他是一个队列性质的对象
             Message p = mMessages;
 
-            // 判断是否触发唤醒。判断是否需要唤醒
+            // 判断是否触发唤醒。判断是否需要唤醒,默认为false
             boolean needWake;
 
             // 如果p==null则说明消息队列中的链表的头部元素为null；
             // when == 0 表示立即执行；
             // when< p.when 表示 msg的执行时间早与链表中的头部元素的时间
-            // 所以上面三个条件，那个条件成立，都要把msg设置成消息队列中链表的头部是元素
-            // 所以下面这个代码逻辑是如果消息队列为空，或者消息是立即执行，或者这个延迟的消息早于消息队列头部执行的时间
+            // 所以上面三个条件，无论哪个条件条件成立，都要把msg设置成消息队列中链表的头部是元素
             // 那么这个消息就应该插入队列的头部。
             if (p == null || when == 0 || when < p.when) {
                 // New head, wake up the event queue if blocked.
@@ -629,18 +633,13 @@ public final class MessageQueue {
             } else {
                 /// 否则。则执行下面的逻辑。
                 // 如果上面三个条件都不满足则说明要把msg插入到中间的位置，不需要插入到头部
-
-                // Inserted within the middle of the queue.  Usually we don't have to wake
-                // up the event queue unless there is a barrier at the head of the queue
-                // and the message is the earliest asynchronous message in the queue.
-
                 //  如果头部元素不是障栅(barrier)或者异步消息，而且还是插入中间的位置，我们是不唤醒消息队列的。
                 needWake = mBlocked && p.target == null && msg.isAsynchronous();
 
                 // 其实将延迟消息插入到中间的位置的话，也是进入到一个死循环之内
                 // 将p的值赋值给prev
                 Message prev;
-                // 又是一个死循环，这个死循环是进行遍历这个消息队列。然后看这个消息查到哪里比较合适
+                // 又是一个死循环，这个死循环是进行遍历这个消息队列。然后看这个消息插入到哪里比较合适
                 // 进入一个死循环，将p的值赋值给prev，前面的带我们知道，p指向的是mMessage，所以这里是将prev指向了mMessage，
                 // 在下一次循环的时候，prev则指向了第一个message，一次类推。接着讲p指向了p.next也就是mMessage.next，
                 // 也就是消息队列链表中的第二个元素。这一步骤实现了消息指针的移动，此时p表示的消息队列中第二个元素。
@@ -666,6 +665,11 @@ public final class MessageQueue {
             }
 
             // We can assume mPtr != 0 because mQuitting is false.
+            // 在最后nativeWake(mPtr);这行代码进行了唤醒。
+            // 不过必须neekWake为true的时候才会唤醒，那么neekWake什么时候才是True呢？
+            // 两种情况会唤醒线程：
+            //1、（队列为空 || 消息无需延时 || 或消息执行时间比队列头部消息早) && (线程处于挂起状态时（mBlocked = true）)
+            //2、 线程挂起（mBlocked = true）&& 消息循环处于同步屏障状态】，这时如果插入的是一个异步消息，则需要唤醒。
             if (needWake) {
                 nativeWake(mPtr);
             }

@@ -195,9 +195,11 @@ class Thread implements Runnable {
     private static synchronized int nextThreadNum() {
         return threadInitNumber++;
     }
-
-    /* ThreadLocal values pertaining to this thread. This map is maintained
-     * by the ThreadLocal class. */
+    /**
+     * 与此线程有关的ThreadLocal值。该映射对象由ThreadLocal类维护。
+     * 所以说，从这里我们就看到，每个现成对象都会有一个ThreadLocalMap对象。
+     * 这个其实就是ThreadLocal继续进行维护
+     */
     ThreadLocal.ThreadLocalMap threadLocals = null;
 
     /*
@@ -307,11 +309,9 @@ class Thread implements Runnable {
      * The maximum priority that a thread can have.
      */
     public final static int MAX_PRIORITY = 10;
-
     /**
-     * Returns a reference to the currently executing thread object.
-     *
-     * @return  the currently executing thread.
+     * 这个是一个Native方法，用来返回当前线程的对象应用
+     * @return 当前的现成
      */
     @FastNative
     public static native Thread currentThread();

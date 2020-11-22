@@ -916,8 +916,8 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public final void scheduleReceiver(Intent intent, ActivityInfo info,
-                CompatibilityInfo compatInfo, int resultCode, String data, Bundle extras,
-                boolean sync, int sendingUser, int processState) {
+                                           CompatibilityInfo compatInfo, int resultCode, String data, Bundle extras,
+                                           boolean sync, int sendingUser, int processState) {
             updateProcessState(processState, false);
             ReceiverData r = new ReceiverData(intent, resultCode, data, extras,
                     sync, false, mAppThread.asBinder(), sendingUser);
@@ -927,7 +927,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public final void scheduleCreateBackupAgent(ApplicationInfo app,
-                CompatibilityInfo compatInfo, int backupMode, int userId) {
+                                                    CompatibilityInfo compatInfo, int backupMode, int userId) {
             CreateBackupAgentData d = new CreateBackupAgentData();
             d.appInfo = app;
             d.compatInfo = compatInfo;
@@ -938,7 +938,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public final void scheduleDestroyBackupAgent(ApplicationInfo app,
-                CompatibilityInfo compatInfo, int userId) {
+                                                     CompatibilityInfo compatInfo, int userId) {
             CreateBackupAgentData d = new CreateBackupAgentData();
             d.appInfo = app;
             d.compatInfo = compatInfo;
@@ -948,7 +948,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public final void scheduleCreateService(IBinder token,
-                ServiceInfo info, CompatibilityInfo compatInfo, int processState) {
+                                                ServiceInfo info, CompatibilityInfo compatInfo, int processState) {
             updateProcessState(processState, false);
             CreateServiceData s = new CreateServiceData();
             s.token = token;
@@ -959,7 +959,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public final void scheduleBindService(IBinder token, Intent intent,
-                boolean rebind, int processState) {
+                                              boolean rebind, int processState) {
             updateProcessState(processState, false);
             BindServiceData s = new BindServiceData();
             s.token = token;
@@ -1001,15 +1001,15 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public final void bindApplication(String processName, ApplicationInfo appInfo,
-                List<ProviderInfo> providers, ComponentName instrumentationName,
-                ProfilerInfo profilerInfo, Bundle instrumentationArgs,
-                IInstrumentationWatcher instrumentationWatcher,
-                IUiAutomationConnection instrumentationUiConnection, int debugMode,
-                boolean enableBinderTracking, boolean trackAllocation,
-                boolean isRestrictedBackupMode, boolean persistent, Configuration config,
-                CompatibilityInfo compatInfo, Map services, Bundle coreSettings,
-                String buildSerial, AutofillOptions autofillOptions,
-                ContentCaptureOptions contentCaptureOptions) {
+                                          List<ProviderInfo> providers, ComponentName instrumentationName,
+                                          ProfilerInfo profilerInfo, Bundle instrumentationArgs,
+                                          IInstrumentationWatcher instrumentationWatcher,
+                                          IUiAutomationConnection instrumentationUiConnection, int debugMode,
+                                          boolean enableBinderTracking, boolean trackAllocation,
+                                          boolean isRestrictedBackupMode, boolean persistent, Configuration config,
+                                          CompatibilityInfo compatInfo, Map services, Bundle coreSettings,
+                                          String buildSerial, AutofillOptions autofillOptions,
+                                          ContentCaptureOptions contentCaptureOptions) {
             if (services != null) {
                 if (false) {
                     // Test code to make sure the app could see the passed-in services.
@@ -1120,8 +1120,8 @@ public final class ActivityThread extends ClientTransactionHandler {
         // correctly ordered, since these are one-way calls and the binder driver
         // applies transaction ordering per object for such calls.
         public void scheduleRegisteredReceiver(IIntentReceiver receiver, Intent intent,
-                int resultCode, String dataStr, Bundle extras, boolean ordered,
-                boolean sticky, int sendingUser, int processState) throws RemoteException {
+                                               int resultCode, String dataStr, Bundle extras, boolean ordered,
+                                               boolean sticky, int sendingUser, int processState) throws RemoteException {
             updateProcessState(processState, false);
             receiver.performReceive(intent, resultCode, dataStr, extras, ordered,
                     sticky, sendingUser);
@@ -1139,7 +1139,7 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         @Override
         public void dumpHeap(boolean managed, boolean mallocInfo, boolean runGc, String path,
-                ParcelFileDescriptor fd, RemoteCallback finishCallback) {
+                             ParcelFileDescriptor fd, RemoteCallback finishCallback) {
             DumpHeapData dhd = new DumpHeapData();
             dhd.managed = managed;
             dhd.mallocInfo = mallocInfo;
@@ -1182,7 +1182,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public void dumpActivity(ParcelFileDescriptor pfd, IBinder activitytoken,
-                String prefix, String[] args) {
+                                 String prefix, String[] args) {
             DumpComponentInfo data = new DumpComponentInfo();
             try {
                 data.fd = pfd.dup();
@@ -1198,7 +1198,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         public void dumpProvider(ParcelFileDescriptor pfd, IBinder providertoken,
-                String[] args) {
+                                 String[] args) {
             DumpComponentInfo data = new DumpComponentInfo();
             try {
                 data.fd = pfd.dup();
@@ -1214,8 +1214,8 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         @Override
         public void dumpMemInfo(ParcelFileDescriptor pfd, Debug.MemoryInfo mem, boolean checkin,
-                boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly,
-                boolean dumpUnreachable, String[] args) {
+                                boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly,
+                                boolean dumpUnreachable, String[] args) {
             FileOutputStream fout = new FileOutputStream(pfd.getFileDescriptor());
             PrintWriter pw = new FastPrintWriter(fout);
             try {
@@ -1227,7 +1227,7 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         private void dumpMemInfo(PrintWriter pw, Debug.MemoryInfo memInfo, boolean checkin,
-                boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly, boolean dumpUnreachable) {
+                                 boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly, boolean dumpUnreachable) {
             long nativeMax = Debug.getNativeHeapSize() / 1024;
             long nativeAllocated = Debug.getNativeHeapAllocatedSize() / 1024;
             long nativeFree = Debug.getNativeHeapFreeSize() / 1024;
@@ -1238,7 +1238,7 @@ public final class ActivityThread extends ClientTransactionHandler {
             long dalvikFree = runtime.freeMemory() / 1024;
             long dalvikAllocated = dalvikMax - dalvikFree;
 
-            Class[] classesToCount = new Class[] {
+            Class[] classesToCount = new Class[]{
                     ContextImpl.class,
                     Activity.class,
                     WebView.class,
@@ -1272,32 +1272,51 @@ public final class ActivityThread extends ClientTransactionHandler {
                 // ACTIVITY_THREAD_CHECKIN_VERSION.
 
                 // Object counts
-                pw.print(viewInstanceCount); pw.print(',');
-                pw.print(viewRootInstanceCount); pw.print(',');
-                pw.print(appContextInstanceCount); pw.print(',');
-                pw.print(activityInstanceCount); pw.print(',');
+                pw.print(viewInstanceCount);
+                pw.print(',');
+                pw.print(viewRootInstanceCount);
+                pw.print(',');
+                pw.print(appContextInstanceCount);
+                pw.print(',');
+                pw.print(activityInstanceCount);
+                pw.print(',');
 
-                pw.print(globalAssetCount); pw.print(',');
-                pw.print(globalAssetManagerCount); pw.print(',');
-                pw.print(binderLocalObjectCount); pw.print(',');
-                pw.print(binderProxyObjectCount); pw.print(',');
+                pw.print(globalAssetCount);
+                pw.print(',');
+                pw.print(globalAssetManagerCount);
+                pw.print(',');
+                pw.print(binderLocalObjectCount);
+                pw.print(',');
+                pw.print(binderProxyObjectCount);
+                pw.print(',');
 
-                pw.print(binderDeathObjectCount); pw.print(',');
-                pw.print(openSslSocketCount); pw.print(',');
+                pw.print(binderDeathObjectCount);
+                pw.print(',');
+                pw.print(openSslSocketCount);
+                pw.print(',');
 
                 // SQL
-                pw.print(stats.memoryUsed / 1024); pw.print(',');
-                pw.print(stats.memoryUsed / 1024); pw.print(',');
-                pw.print(stats.pageCacheOverflow / 1024); pw.print(',');
+                pw.print(stats.memoryUsed / 1024);
+                pw.print(',');
+                pw.print(stats.memoryUsed / 1024);
+                pw.print(',');
+                pw.print(stats.pageCacheOverflow / 1024);
+                pw.print(',');
                 pw.print(stats.largestMemAlloc / 1024);
                 for (int i = 0; i < stats.dbStats.size(); i++) {
                     DbStats dbStats = stats.dbStats.get(i);
-                    pw.print(','); pw.print(dbStats.dbName);
-                    pw.print(','); pw.print(dbStats.pageSize);
-                    pw.print(','); pw.print(dbStats.dbSize);
-                    pw.print(','); pw.print(dbStats.lookaside);
-                    pw.print(','); pw.print(dbStats.cache);
-                    pw.print(','); pw.print(dbStats.cache);
+                    pw.print(',');
+                    pw.print(dbStats.dbName);
+                    pw.print(',');
+                    pw.print(dbStats.pageSize);
+                    pw.print(',');
+                    pw.print(dbStats.dbSize);
+                    pw.print(',');
+                    pw.print(dbStats.lookaside);
+                    pw.print(',');
+                    pw.print(dbStats.cache);
+                    pw.print(',');
+                    pw.print(dbStats.cache);
                 }
                 pw.println();
 
@@ -1317,7 +1336,7 @@ public final class ActivityThread extends ClientTransactionHandler {
 
             printRow(pw, TWO_COUNT_COLUMNS, "Local Binders:", binderLocalObjectCount,
                     "Proxy Binders:", binderProxyObjectCount);
-            printRow(pw, TWO_COUNT_COLUMNS, "Parcel memory:", parcelSize/1024,
+            printRow(pw, TWO_COUNT_COLUMNS, "Parcel memory:", parcelSize / 1024,
                     "Parcel count:", parcelCount);
             printRow(pw, TWO_COUNT_COLUMNS, "Death Recipients:", binderDeathObjectCount,
                     "OpenSSL Sockets:", openSslSocketCount);
@@ -1356,8 +1375,8 @@ public final class ActivityThread extends ClientTransactionHandler {
             // Unreachable native memory
             if (dumpUnreachable) {
                 boolean showContents = ((mBoundApplication != null)
-                    && ((mBoundApplication.appInfo.flags&ApplicationInfo.FLAG_DEBUGGABLE) != 0))
-                    || android.os.Build.IS_DEBUGGABLE;
+                        && ((mBoundApplication.appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0))
+                        || android.os.Build.IS_DEBUGGABLE;
                 pw.println(" ");
                 pw.println(" Unreachable memory");
                 pw.print(Debug.getUnreachableMemory(100, showContents));
@@ -1366,8 +1385,8 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         @Override
         public void dumpMemInfoProto(ParcelFileDescriptor pfd, Debug.MemoryInfo mem,
-                boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly,
-                boolean dumpUnreachable, String[] args) {
+                                     boolean dumpFullInfo, boolean dumpDalvik, boolean dumpSummaryOnly,
+                                     boolean dumpUnreachable, String[] args) {
             ProtoOutputStream proto = new ProtoOutputStream(pfd.getFileDescriptor());
             try {
                 dumpMemInfo(proto, mem, dumpFullInfo, dumpDalvik, dumpSummaryOnly, dumpUnreachable);
@@ -1378,8 +1397,8 @@ public final class ActivityThread extends ClientTransactionHandler {
         }
 
         private void dumpMemInfo(ProtoOutputStream proto, Debug.MemoryInfo memInfo,
-                boolean dumpFullInfo, boolean dumpDalvik,
-                boolean dumpSummaryOnly, boolean dumpUnreachable) {
+                                 boolean dumpFullInfo, boolean dumpDalvik,
+                                 boolean dumpSummaryOnly, boolean dumpUnreachable) {
             long nativeMax = Debug.getNativeHeapSize() / 1024;
             long nativeAllocated = Debug.getNativeHeapAllocatedSize() / 1024;
             long nativeFree = Debug.getNativeHeapFreeSize() / 1024;
@@ -1390,7 +1409,7 @@ public final class ActivityThread extends ClientTransactionHandler {
             long dalvikFree = runtime.freeMemory() / 1024;
             long dalvikAllocated = dalvikMax - dalvikFree;
 
-            Class[] classesToCount = new Class[] {
+            Class[] classesToCount = new Class[]{
                     ContextImpl.class,
                     Activity.class,
                     WebView.class,
@@ -1548,7 +1567,7 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         @Override
         public void requestAssistContextExtras(IBinder activityToken, IBinder requestToken,
-                int requestType, int sessionId, int flags) {
+                                               int requestType, int sessionId, int flags) {
             RequestAssistContextExtras cmd = new RequestAssistContextExtras();
             cmd.activityToken = activityToken;
             cmd.requestToken = requestToken;
@@ -1656,7 +1675,7 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         @Override
         public void scheduleLocalVoiceInteractionStarted(IBinder token,
-                IVoiceInteractor voiceInteractor) throws RemoteException {
+                                                         IVoiceInteractor voiceInteractor) throws RemoteException {
             SomeArgs args = SomeArgs.obtain();
             args.arg1 = token;
             args.arg2 = voiceInteractor;
@@ -1675,8 +1694,8 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         @Override
         public void requestDirectActions(@NonNull IBinder activityToken,
-                @NonNull IVoiceInteractor interactor, @Nullable RemoteCallback cancellationCallback,
-                @NonNull RemoteCallback callback) {
+                                         @NonNull IVoiceInteractor interactor, @Nullable RemoteCallback cancellationCallback,
+                                         @NonNull RemoteCallback callback) {
             final CancellationSignal cancellationSignal = new CancellationSignal();
             if (cancellationCallback != null) {
                 final ICancellationSignal transport = createSafeCancellationTransport(
@@ -1692,8 +1711,8 @@ public final class ActivityThread extends ClientTransactionHandler {
 
         @Override
         public void performDirectAction(@NonNull IBinder activityToken, @NonNull String actionId,
-                @Nullable Bundle arguments, @Nullable RemoteCallback cancellationCallback,
-                @NonNull RemoteCallback resultCallback) {
+                                        @Nullable Bundle arguments, @Nullable RemoteCallback cancellationCallback,
+                                        @NonNull RemoteCallback resultCallback) {
             final CancellationSignal cancellationSignal = new CancellationSignal();
             if (cancellationCallback != null) {
                 final ICancellationSignal transport = createSafeCancellationTransport(

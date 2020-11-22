@@ -19,7 +19,7 @@ import com.frewen.aura.framework.mvvm.vm.BaseViewModel
 import kotlinx.android.synthetic.main.activity_error.*
 import kotlinx.android.synthetic.main.layout_tool_bar_common.*
 
-class ErrorActivity : BaseVMDataBindingActivity<BaseViewModel, ActivityErrorBinding>() {
+class ErrorActivity : BaseVMDataBindingActivity<ErrorViewModel, ActivityErrorBinding>() {
 
     companion object {
         const val TAG = "ErrorActivity"

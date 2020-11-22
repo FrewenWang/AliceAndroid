@@ -10,6 +10,7 @@ import android.view.animation.*
 import android.widget.ImageView
 import butterknife.BindView
 import com.frewen.android.demo.R
+import com.frewen.android.demo.logic.samples.jni.HelloJNIActivity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.android.demo.performance.PerformanceActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
@@ -49,6 +50,14 @@ class SplashActivity : BaseButterKnifeActivity() {
             get() = SharedPrefUtils.getBoolean("is_first_entry_app", true)
             set(value) = SharedPrefUtils.putBoolean("is_first_entry_app", value)
     }
+
+
+    private fun startHomeActivity() {
+        // When animation set ended, intent to the MainActivity.
+        val intent = Intent(this@SplashActivity, HelloJNIActivity::class.java)
+        startActivity(intent)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // java.lang.RuntimeException: Unable to start activity
@@ -126,15 +135,11 @@ class SplashActivity : BaseButterKnifeActivity() {
         /// 使用协程延迟3秒，进入首页
         CoroutineScope(job).launch {
             delay(splashDuration)
-            // When animation set ended, intent to the MainActivity.
-            val intent = Intent(this@SplashActivity, PerformanceActivity::class.java)
-            startActivity(intent)
-            // It's IMPORTANT to finish the SplashActivity, so user won't reach it afterwards.
+            startHomeActivity()
             finish()
         }
         isFirstEntryApp = false
     }
-
     /**
      * 展示中心Logo的展示动画序列
      */

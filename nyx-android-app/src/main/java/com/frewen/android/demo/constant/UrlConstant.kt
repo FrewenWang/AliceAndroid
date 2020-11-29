@@ -1,7 +1,5 @@
 package com.frewen.android.demo.constant
 
-import com.frewen.android.demo.logic.samples.network.Constant.BASE_URL
-import com.frewen.android.demo.network.NyxNetworkApi
 
 /**
  * @filename: UrlConstant

@@ -44,4 +44,5 @@
     <!-- ListView、RecyclerView、GridView的分割线-->
     <color name="colorDividerListViewDark">#adadad</color>
 
+
 </resources>

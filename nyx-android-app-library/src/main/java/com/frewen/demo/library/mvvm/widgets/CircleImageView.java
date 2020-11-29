@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestBuilder;
@@ -25,6 +26,8 @@ import androidx.databinding.BindingAdapter;
  * @time: 2020/11/7 14:06
  * @version: 1.0.0
  * @introduction: Class File Init
+ * @version: 1.0.1
+ * @introduction: TODO 后续我们再进行梳理这个类的具体实现
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class CircleImageView extends AppCompatImageView {
@@ -67,6 +70,15 @@ public class CircleImageView extends AppCompatImageView {
     }
 
     /**
+     * 给这个ImageView设置URL
+     *
+     * @param imageUrl
+     */
+    public void setImageUrl(String imageUrl) {
+        setImageUrl(this, imageUrl, false);
+    }
+
+    /**
      * 进行ImageView的数据绑定
      *
      * @param widthPx
@@ -89,4 +101,26 @@ public class CircleImageView extends AppCompatImageView {
             });
         }
     }
+
+    /**
+     * 设置高斯模糊的图像URL
+     *
+     * @param imageView
+     * @param blurUrl
+     * @param radius
+     */
+    @BindingAdapter(value = {"blur_url", "radius"})
+    public static void setBlurImageUrl(CircleImageView imageView, String blurUrl, int radius) {
+        // Glide.with(imageView).load(blurUrl).override(radius)
+        //         .transform(new BlurTransformation())
+        //         .dontAnimate()
+        //         .into(new SimpleTarget<Drawable>() {
+        //             @Override
+        //             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+        //                 imageView.setBackground(resource);
+        //             }
+        //         });
+    }
+
+
 }

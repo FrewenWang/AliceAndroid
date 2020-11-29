@@ -178,10 +178,10 @@ public class ConcurrentLinkedQueue<E> extends AbstractQueue<E>
      * optimization.
      */
 
-    private static class Node<E> {
-        volatile E item;
-        volatile Node<E> next;
-    }
+        private static class Node<E> {
+            volatile E item;
+            volatile Node<E> next;
+        }
 
     /**
      * Returns a new node holding item.  Uses relaxed write because item
@@ -301,16 +301,18 @@ public class ConcurrentLinkedQueue<E> extends AbstractQueue<E>
     }
 
     /**
-     * Inserts the specified element at the tail of this queue.
-     * As the queue is unbounded, this method will never return {@code false}.
-     *
+     * 将指定的元素插入此队列的末尾。如果队列不受限制，因此此方法将永远不会返回{@code false}。
      * @return {@code true} (as specified by {@link Queue#offer})
      * @throws NullPointerException if the specified element is null
      */
     public boolean offer(E e) {
+        // 新建一个Node节点。这个新建Node节点也是保证CAS同步的
         final Node<E> newNode = newNode(Objects.requireNonNull(e));
-
+        // 下面其实我们就通过一个for循环将这个新建的Node节点插入队列中
+        // 为什么要使用for循环呢？
+        // 声明一个t节点指向尾指针，再声明一个p节点，指向t节点
         for (Node<E> t = tail, p = t;;) {
+            // q指向p.next 如果此时p为尾指针节点，那么q肯定为null
             Node<E> q = p.next;
             if (q == null) {
                 // p is last node

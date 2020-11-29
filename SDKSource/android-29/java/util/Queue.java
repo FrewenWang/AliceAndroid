@@ -180,37 +180,27 @@ public interface Queue<E> extends Collection<E> {
     boolean offer(E e);
 
     /**
-     * Retrieves and removes the head of this queue.  This method differs
-     * from {@link #poll poll} only in that it throws an exception if this
-     * queue is empty.
-     *
+     * 检索并删除队列的头部元素。此方法与{@link #poll poll}的不同之处仅在于，如果此队列为空，它将引发异常。
      * @return the head of this queue
-     * @throws NoSuchElementException if this queue is empty
+     * @throws 抛出NoSuchElementException
      */
     E remove();
 
     /**
-     * Retrieves and removes the head of this queue,
-     * or returns {@code null} if this queue is empty.
-     *
-     * @return the head of this queue, or {@code null} if this queue is empty
+     * 检索并删除队列的头部元素。如果此队列为空，则返回null
      */
     E poll();
 
     /**
-     * Retrieves, but does not remove, the head of this queue.  This method
-     * differs from {@link #peek peek} only in that it throws an exception
-     * if this queue is empty.
-     *
+     * 检索但不删除此队列的头。他的方法*与{@link #peek peek}的不同之处仅在于，
+     * 如果此队列为空，这个方法将跑出异常。
      * @return the head of this queue
-     * @throws NoSuchElementException if this queue is empty
+     * @throws 如果队列为空，则抛出NoSuchElementException
      */
     E element();
 
     /**
-     * Retrieves, but does not remove, the head of this queue,
-     * or returns {@code null} if this queue is empty.
-     *
+     * 检索但不删除此队列的开头，如果此队列为空，则返回null。
      * @return the head of this queue, or {@code null} if this queue is empty
      */
     E peek();

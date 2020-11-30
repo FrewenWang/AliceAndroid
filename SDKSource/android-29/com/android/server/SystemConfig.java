@@ -405,6 +405,12 @@ public class SystemConfig {
                 Environment.getProductServicesDirectory(), "etc", "permissions"), ALLOW_ALL);
     }
 
+    /**
+     * 解析指定目录下所有的具有可读权限的，且以xml后缀的文件
+     *
+     * @param libraryDir
+     * @param permissionFlag
+     */
     void readPermissions(File libraryDir, int permissionFlag) {
         // Read permissions from given directory.
         if (!libraryDir.exists() || !libraryDir.isDirectory()) {
@@ -427,7 +433,7 @@ public class SystemConfig {
 
             // We'll read platform.xml last
             if (f.getPath().endsWith("etc/permissions/platform.xml")) {
-                platformFile = f;
+                platformFile = f;  //platform.xml文件
                 continue;
             }
 

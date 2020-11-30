@@ -752,6 +752,8 @@ public final class SystemServer {
                     (int) SystemClock.elapsedRealtime());
         }
         traceBeginAndSlog("StartPackageManagerService");
+        
+        //
         try {
             Watchdog.getInstance().pauseWatchingCurrentThread("packagemanagermain");
             mPackageManagerService = PackageManagerService.main(mSystemContext, installer,
@@ -759,6 +761,7 @@ public final class SystemServer {
         } finally {
             Watchdog.getInstance().resumeWatchingCurrentThread("packagemanagermain");
         }
+        // 判断PackageManagerService是否是手气启动
         mFirstBoot = mPackageManagerService.isFirstBoot();
         mPackageManager = mSystemContext.getPackageManager();
         traceEnd();

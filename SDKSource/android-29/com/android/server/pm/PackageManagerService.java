@@ -2291,10 +2291,11 @@ public class PackageManagerService extends IPackageManager.Stub
             boolean factoryTest, boolean onlyCore) {
         // Self-check for initial settings.
         PackageManagerServiceCompilerMapping.checkProperties();
-
+        // 主要功能创建 PKMS 对象，并将其注册到 ServiceManager 中
         PackageManagerService m = new PackageManagerService(context, installer,
                 factoryTest, onlyCore);
         m.enableSystemUserPackages();
+        // 并将其注入到ServiceManager中
         ServiceManager.addService("package", m);
         final PackageManagerNative pmn = m.new PackageManagerNative();
         ServiceManager.addService("package_native", pmn);
@@ -2384,13 +2385,21 @@ public class PackageManagerService extends IPackageManager.Stub
         }
     }
 
+    /**
+     * 这个是PackageManagerService的构造方法
+     * @param context
+     * @param installer
+     * @param factoryTest
+     * @param onlyCore
+     */
     public PackageManagerService(Context context, Installer installer,
             boolean factoryTest, boolean onlyCore) {
         LockGuard.installLock(mPackages, LockGuard.INDEX_PACKAGES);
         Trace.traceBegin(TRACE_TAG_PACKAGE_MANAGER, "create package manager");
+        // PackageManagerService 启动开始
         EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_PMS_START,
                 SystemClock.uptimeMillis());
-
+        //SDK 版本检查
         if (mSdkVersion <= 0) {
             Slog.w(TAG, "**** ro.build.version.sdk not set!");
         }
@@ -2545,7 +2554,7 @@ public class PackageManagerService extends IPackageManager.Stub
             }
 
             long startTime = SystemClock.uptimeMillis();
-
+            // PackageManagerService的系统扫描开始
             EventLog.writeEvent(EventLogTags.BOOT_PROGRESS_PMS_SYSTEM_SCAN_START,
                     startTime);
 

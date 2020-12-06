@@ -62,9 +62,9 @@ public class KeepAliveHelper {
             boolean defaultProcess = processName.equals(context.getPackageName());
             if (defaultProcess) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context.startForegroundService(new Intent(context, KeepALiveService.class));
+                    // context.startForegroundService(new Intent(context, KeepALiveService.class));
                 } else {
-                    context.startService(new Intent(context, KeepALiveService.class));
+                    // context.startService(new Intent(context, KeepALiveService.class));
                 }
             } else if (processName.contains(":live")) {
                 Log.i(TAG, "FMsg:attach() called : ");

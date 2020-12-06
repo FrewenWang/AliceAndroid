@@ -22,7 +22,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-
+/**
+ * 学习Window的基础知识
+ */
 public class WindowDemoActivity extends AppCompatActivity implements View.OnTouchListener {
     private static final String TAG = "WindowDemoActivity";
     private Button mCreateWindowButton;
@@ -53,11 +55,13 @@ public class WindowDemoActivity extends AppCompatActivity implements View.OnTouc
         requestOverlayPermission();
     }
 
+    /**
+     * 动态申请
+     */
     private void requestOverlayPermission() {
         if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
             return;
         }
-
         Intent myIntent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
         myIntent.setData(Uri.parse("package:" + getPackageName()));
         startActivityForResult(myIntent, 1000);
@@ -77,11 +81,8 @@ public class WindowDemoActivity extends AppCompatActivity implements View.OnTouc
      * @param view
      */
     public void createWindow(View view) {
-
         /// 将一个Button添加到屏幕坐标为（500,800）的位置上。
         // WindowManager.LayoutParams中的flags和type这两个参数比较重要，下面对其进行说明。
-
-
         if (view == mCreateWindowButton) {
             mFloatingButton = new Button(this);
             mFloatingButton.setText("WindowButton");

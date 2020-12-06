@@ -30,6 +30,12 @@
             app:tabTextColor="@color/color_common_black" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ImageView
+        android:id="@+id/iv_loading"
+        android:layout_width="70px"
+        android:layout_height="70px"
+        android:layout_gravity="center" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.frewen.android.demo.logic.samples.animation;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import com.frewen.android.demo.R;
@@ -11,10 +12,14 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
+import android.widget.ImageView;
 
 import com.frewen.android.demo.logic.samples.animation.ui.main.SectionsPagerAdapter;
 
 public class AnimationDemoActivity extends AppCompatActivity {
+
+    private AnimationDrawable animationDrawable;
+    private ImageView mLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +39,14 @@ public class AnimationDemoActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        initLoading();
+
+    }
+
+    private void initLoading() {
+        mLoading = findViewById(R.id.iv_loading);
+        animationDrawable = (AnimationDrawable) getResources().getDrawable(R.drawable.anim_loading, null);
+        mLoading.setImageDrawable(animationDrawable);
     }
 }

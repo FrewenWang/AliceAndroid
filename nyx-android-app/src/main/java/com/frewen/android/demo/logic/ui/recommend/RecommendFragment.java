@@ -21,7 +21,7 @@ import androidx.fragment.app.Fragment;
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-@FragmentDestination(pageUrl = "main/tabs/recommend", asStarter = false)
+@FragmentDestination(pageUrl = "main/tabs/recommend")
 public class RecommendFragment extends BaseViewPager2Fragment {
 
     @NotNull
@@ -30,15 +30,21 @@ public class RecommendFragment extends BaseViewPager2Fragment {
         ArrayList list = new ArrayList();
         list.add(new RecommendTabEntity("推荐", 0, 0));
         list.add(new RecommendTabEntity("关注", 0, 0));
+        list.add(new RecommendTabEntity("视频", 0, 0));
+        list.add(new RecommendTabEntity("文字", 0, 0));
+        list.add(new RecommendTabEntity("图片", 0, 0));
         return list;
     }
 
     @NotNull
     @Override
     public Fragment[] getContentFragments() {
-        Fragment[] fragments = new Fragment[2];
+        Fragment[] fragments = new Fragment[5];
         fragments[0] = EyeRecommendFragment.Companion.newInstance();
         fragments[1] = EyeRecommendFragment.Companion.newInstance();
+        fragments[2] = EyeRecommendFragment.Companion.newInstance();
+        fragments[3] = EyeRecommendFragment.Companion.newInstance();
+        fragments[4] = EyeRecommendFragment.Companion.newInstance();
         return fragments;
     }
 }

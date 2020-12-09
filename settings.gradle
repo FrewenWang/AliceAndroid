@@ -18,3 +18,4 @@ if (gitBranch == "dev") {
 
 
 include ':nyx-android-app-library'
+include ':openCVLibrary3412'

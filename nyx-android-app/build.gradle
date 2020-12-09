@@ -202,6 +202,7 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation project(path: ':openCVLibrary3412')
 
     //==========<editor-folder desc = "Dependence:添加单元测试相关的依赖">=============================
     testImplementation 'junit:junit:4.12'

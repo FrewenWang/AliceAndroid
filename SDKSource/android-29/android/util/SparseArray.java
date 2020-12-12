@@ -202,40 +202,43 @@ public class SparseArray<E> implements Cloneable {
         }
     }
 
-    private void gc() {
-        // Log.e("SparseArray", "gc start with " + mSize);
-
-        int n = mSize;
-        int o = 0;
-        int[] keys = mKeys;
-        Object[] values = mValues;
-
-        for (int i = 0; i < n; i++) {
-            Object val = values[i];
-
-            if (val != DELETED) {
-                if (i != o) {
-                    keys[o] = keys[i];
-                    values[o] = val;
-                    values[i] = null;
+        /**
+         * 我们看一下这个gc操作
+         * 通过代码很容易分析得出，这里的 gc ，实际就是压缩存储，简单点说就是让元素挨得紧一点。
+         * 而 gc() 完之后，下标 i 可能会发生变化，因此需要重新查找一次，以得到一个新的下标 i。
+         */
+        private void gc() {
+            // Log.e("SparseArray", "gc start with " + mSize);
+            int n = mSize;
+            int o = 0;
+            int[] keys = mKeys;
+            Object[] values = mValues;
+            // 我们计算当前的n的数组带线哦啊
+            for (int i = 0; i < n; i++) {
+                // 依次遍历Value
+                Object val = values[i];
+                // 如果当前Value不是被删除的
+                if (val != DELETED) {
+                    // 如果i不等于o，其实也就是过滤掉那些被DELETED原理
+                    // 其他的重新赋值
+                    if (i != o) {
+                        keys[o] = keys[i];
+                        values[o] = val;
+                        values[i] = null;
+                    }
+                    o++;
                 }
-
-                o++;
             }
+            mGarbage = false;
+            mSize = o;
         }
-
-        mGarbage = false;
-        mSize = o;
-
-        // Log.e("SparseArray", "gc end with " + mSize);
-    }
 
     /**
      * 添加从指定键到指定值的映射，如果键值相同则会进行映射Value的替换
      */
     public void put(int key, E value) {
         // 1.先进行二分查找。 把所有的Keys来进行还有对应的Key然后来进行二分查找
-        // 查找到的索引的Index
+        // 查找到对应Key的索引的Index
         int i = ContainerHelpers.binarySearch(mKeys, mSize, key);
 
         // 2. 如果找到了，则 i 必大于等于 0
@@ -244,6 +247,8 @@ public class SparseArray<E> implements Cloneable {
             mValues[i] = value;
         } else {
             // 3. 没找到，则找一个正确的位置再插入
+            // 这里如果 i 是在大小 mSizes 的范围内的，且其对应的 values[i] 又刚是被标记为删除的对象，
+            // 那么就可以复用这个对象，否则就还是要依当前的 i 值进一步寻找要插入的位置，再插入相应的 value。
             i = ~i;
             if (i < mSize && mValues[i] == DELETED) {
                 mKeys[i] = key;
@@ -251,13 +256,15 @@ public class SparseArray<E> implements Cloneable {
                 return;
             }
 
+            //
             if (mGarbage && mSize >= mKeys.length) {
                 gc();
 
                 // Search again because indices may have changed.
                 i = ~ContainerHelpers.binarySearch(mKeys, mSize, key);
             }
-
+            // 最后就是通过 GrowingArrayUtils.insert() 来进行 key 和 value 的插入。
+            // 这个 insert() 根据数组类型重载了多个，这里只分析 int[] 类型的即可。
             mKeys = GrowingArrayUtils.insert(mKeys, mSize, i, key);
             mValues = GrowingArrayUtils.insert(mValues, mSize, i, value);
             mSize++;

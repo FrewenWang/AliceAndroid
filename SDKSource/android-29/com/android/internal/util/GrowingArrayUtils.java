@@ -145,20 +145,33 @@ public final class GrowingArrayUtils {
     }
 
     /**
-     * Primitive int version of {@link #insert(Object[], int, int, Object)}.
+     * @param array       当前的数组列表
+     * @param currentSize 当前的数组大小
+     * @param index       插入的索引值
+     * @param element     插入的元素
      */
     public static int[] insert(int[] array, int currentSize, int index, int element) {
         assert currentSize <= array.length;
 
+        // 不需要扩容
         if (currentSize + 1 <= array.length) {
+            // 进行一次数组拷贝
+            // 将array数组内从index移到index + 1，即后移一个元素。共移了 currentSize - index 个，
+            // 也就是说将index之后的所有元素都后移一个位置
+            // 即从index开始后移一位，那么就留出 index 的位置来插入新的值。
             System.arraycopy(array, index, array, index + 1, currentSize - index);
+            // 然后将现在数组的index的位置处元素存储为element
             array[index] = element;
             return array;
         }
-
+        //需要扩容，构建新的数组，新的数组大小由growSize() 计算得到
         int[] newArray = ArrayUtils.newUnpaddedIntArray(growSize(currentSize));
+        // //这里再分 3 段赋值。首先将原数组中 index 之前的数据复制到新数组中
+        // 1:将index之前的元素都拷贝到新的数组中
         System.arraycopy(array, 0, newArray, 0, index);
+        // 2:将index索引处的元素设置为element
         newArray[index] = element;
+        // 将Index索引之后的元素拷贝到新的数组中
         System.arraycopy(array, index, newArray, index + 1, array.length - index);
         return newArray;
     }
@@ -205,6 +218,7 @@ public final class GrowingArrayUtils {
      * Given the current size of an array, returns an ideal size to which the array should grow.
      * This is typically double the given size, but should not be relied upon to do so in the
      * future.
+     * 扩容为8，或者当前容量的2倍
      */
     public static int growSize(int currentSize) {
         return currentSize <= 4 ? 8 : currentSize * 2;

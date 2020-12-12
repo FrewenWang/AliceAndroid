@@ -27,6 +27,11 @@
         android:visibility="visible"
         tools:text="虽然什么也没有,要不下拉刷新看看" />
 
+    <!-- Caused by: android.view.InflateException:
+    Binary XML file line #30 in com.frewen.android.demo.debug:layout/layout_refresh_empty_view:
+    Error inflating class com.google.android.material.button.MaterialButton
+    Caused by: java.lang.reflect.InvocationTargetException-->
+    <!--The style on this component requires your app theme to be Theme.MaterialComponents (or a descendant).-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/empty_action"
         android:layout_width="wrap_content"

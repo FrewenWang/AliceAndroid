@@ -1,8 +1,12 @@
 package com.frewen.android.demo.logic.samples.tiktok.fragments
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.paging.DataSource
+import androidx.paging.ItemKeyedDataSource
+import androidx.paging.PagedList
+import com.frewen.android.demo.logic.model.Post
+import com.frewen.aura.framework.mvvm.vm.BasePagedListViewModel
 import javax.inject.Inject
 
 /**
@@ -15,7 +19,22 @@ import javax.inject.Inject
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class HomeViewModel @Inject constructor() : ViewModel() {
+class HomeViewModel @Inject constructor() : BasePagedListViewModel<Post>() {
+
+    /**
+     * Kotlin中，我们使用TAG 一般使用伴生对象
+     */
+    companion object {
+        private const val TAG = "HomeViewModel"
+    }
+    private lateinit var mFeedType: String
+
+    /**
+     * 是否是缓存的标志变量
+     */
+    @Volatile
+    private var withCache: Boolean = false
+
     /**
      * 由于LiveData和MutableLiveData都是一个概念的东西(只是作用范围不同)所以就不重复解释了,直接理解LiveData就可以明白MutableLiveData
      * 直接理解LiveData的字面意思是前台数据,其实这其实是很准确的表达.下面我们来说说LiveData的几个特征:
@@ -30,7 +49,57 @@ class HomeViewModel @Inject constructor() : ViewModel() {
      * 2.LiveData在实体类里可以通知指定某个字段的数据更新.
      * 3.MutableLiveData则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
      */
-    private val _text = MutableLiveData<String>().apply { value = "首页" }
+    private val cacheLiveData: MutableLiveData<PagedList<Post?>?>? = null
 
-    val text: LiveData<String> = _text
+
+
+    fun getCacheLiveData(): MutableLiveData<PagedList<Post?>?>? {
+        return cacheLiveData
+    }
+    fun setFeedType(feedType: String) {
+        mFeedType = feedType
+    }
+
+    /**
+     * 创建PagedList的DataSource
+     */
+    override fun createDataSource(): DataSource<Integer, Post> {
+        return PostDataSource()
+    }
+
+    /**
+     *
+     */
+    inner class PostDataSource : ItemKeyedDataSource<Integer, Post>() {
+        override fun getKey(item: Post): Integer {
+            TODO("Not yet implemented")
+        }
+
+        override fun loadInitial(params: LoadInitialParams<Integer>, callback: LoadInitialCallback<Post>) {
+            Log.d(Companion.TAG, "loadInitial() called with: params = $params, callback = $callback")
+            // 进行ViewModel里面页面逻辑实现的数据请求
+            loadData(0, params.requestedLoadSize, callback)
+            withCache = false
+        }
+
+        override fun loadAfter(params: LoadParams<Integer>, callback: LoadCallback<Post>) {
+            Log.d(TAG, "loadAfter() called with: params = $params, callback = $callback")
+            loadData(params.key.toInt(), params.requestedLoadSize, callback as LoadInitialCallback<Post>)
+        }
+
+        override fun loadBefore(params: LoadParams<Integer>, callback: LoadCallback<Post>) {
+            Log.d(TAG, "loadBefore() called with: params = $params, callback = $callback")
+            callback.onResult(emptyList<Any>() as MutableList<Post>)
+        }
+
+    }
+
+
+    /**
+     * ViewModel里面进行数据的逻辑请求的具体方法
+     */
+    private fun loadData(key: Int, requestedLoadSize: Int, callback: ItemKeyedDataSource.LoadInitialCallback<Post>) {
+
+
+    }
 }

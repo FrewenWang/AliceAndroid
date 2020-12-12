@@ -49,7 +49,6 @@ public abstract class BaseRecyclerViewDataBindingFragment<Data, VM extends BaseP
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         //getRoot() 返回与绑定关联的布局文件中最外面的View。
         getBinding().getRoot().setFitsSystemWindows(true);
 
@@ -127,6 +126,9 @@ public abstract class BaseRecyclerViewDataBindingFragment<Data, VM extends BaseP
         }
     }
 
+    /**
+     * 所有继承自BaseRecyclerView的Fragment都是使用的这个布局
+     */
     @Override
     public int getLayoutId() {
         return R.layout.fragment_refresh_recyler_view;

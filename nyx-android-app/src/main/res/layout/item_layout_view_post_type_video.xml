@@ -36,7 +36,12 @@
             app:lines="@{3}" />
 
         <!-- 第三层主体视频区域-->
-        <!-- TODO 待添加视频播放区域 -->
+        <com.frewen.android.demo.views.PostListPlayerView
+            android:id="@+id/list_player_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10" />
+
 
         <!-- 第四层底部布局的帖子标签布局-->
         <include

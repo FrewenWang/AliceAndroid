@@ -43,7 +43,8 @@
 
 
     <!-- 定义全屏的AppTheme -->
-    <style name="AppTheme.FullScreen" parent="AppTheme.NoActionBar">
+    <!--这个是包含Material风格的Theme主题-->
+    <style name="AppTheme.FullScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
 

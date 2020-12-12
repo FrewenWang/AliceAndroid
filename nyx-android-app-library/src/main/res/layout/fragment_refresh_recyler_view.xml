@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content" />
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-        <!---->
+        <!--这个页面没有任何内容的布局View-->
         <com.frewen.demo.library.widgets.RefreshEmptyView
             android:id="@+id/empty_view"
             android:layout_width="match_parent"

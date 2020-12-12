@@ -8,9 +8,7 @@ import android.widget.Toast
 import com.frewen.android.aura.annotations.ActivityDestination
 import com.frewen.android.demo.R
 
-@ActivityDestination(pageUrl = "main/tabs/publish", needLogin = true)
 class SQLiteDemoActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

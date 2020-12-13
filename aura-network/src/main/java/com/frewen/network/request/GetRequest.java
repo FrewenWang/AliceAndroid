@@ -33,9 +33,9 @@ public class GetRequest extends Request<GetRequest> {
     }
 
     public <T> Observable<T> execute(CallClazzProxy<? extends Response<T>, T> proxy) {
-        return build().generateRequest()   // 调用Retrofit2的方法返回一个ResponseBody被监听者对象
-                .map(new ApiResultFunction<>());
+        // return build().generateRequest().map(new ApiResultFunction<>(proxy.getType()));
         // .compose(isSyncRequest ? RxIOUtils.<Data>_main() : RxIOUtils.<Data>_io_main());
+        return null;
     }
 
     /**

@@ -49,11 +49,6 @@ public class ApiResultFunction<T> implements Function<ResponseBody, Response<T>>
         this.type = type;
     }
 
-    public ApiResultFunction() {
-
-    }
-
-
     @Override
     public Response<T> apply(@NonNull ResponseBody responseBody) throws Exception {
         Response<T> apiResult = new Response<>();

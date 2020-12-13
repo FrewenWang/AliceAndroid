@@ -150,7 +150,7 @@ public final class AuraRxHttp {
      * getContext方法
      */
     public Application getContext() {
-        CommonUtils.checkNotNull(mContext);
+        CommonUtils.checkNotNull(mContext, "you should init AuraRxHttp First");
         return mContext;
     }
 

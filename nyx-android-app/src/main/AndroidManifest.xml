@@ -31,9 +31,6 @@
         android:name="android.permission.BLUETOOTH_PRIVILEGED"
         tools:ignore="ProtectedPermissions" />
 
-
-    <!--android:allowBackup="false" 是否支持系统备份，我们为了隐私安全，最好不要支持-->
-    <!--android:largeHeap="true" 分配大内存-->
     <application
         android:name=".app.NyxAndroidApp"
         android:allowBackup="false"
@@ -45,7 +42,8 @@
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".logic.samples.FrameAnimationActivity"></activity>
+        <activity android:name=".logic.samples.network.aura.AuraNetWorkDemoActivity"></activity>
+        <activity android:name=".logic.samples.FrameAnimationActivity" />
         <activity
             android:name=".logic.ui.SplashActivity"
             android:theme="@style/AppTheme.Splash">
@@ -169,17 +167,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".logic.samples.broadcastreceiver.CommonBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.COMMON_BROADCAST" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>

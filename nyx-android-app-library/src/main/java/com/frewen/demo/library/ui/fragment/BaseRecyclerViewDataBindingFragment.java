@@ -35,7 +35,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public abstract class BaseRecyclerViewDataBindingFragment<Data, VM extends BasePagedListViewModel<Data>>
         extends BaseDataBindingFragment<FragmentRefreshRecylerViewBinding, VM> implements OnRefreshListener, OnLoadMoreListener {
 
-    private RecyclerView mRecyclerView;
+    protected RecyclerView mRecyclerView;
     private SmartRefreshLayout mRefreshLayout;
     private RefreshEmptyView mEmptyView;
     private PagedListAdapter adapter;

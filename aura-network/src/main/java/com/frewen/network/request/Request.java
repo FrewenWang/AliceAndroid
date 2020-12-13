@@ -3,17 +3,19 @@ package com.frewen.network.request;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.frewen.aura.toolkits.utils.AssertionsUtils;
 import com.frewen.network.api.BaseApiService;
 import com.frewen.network.cache.CacheStrategy;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.network.interceptor.HeadersInterceptor;
-import com.frewen.network.listener.ResponseCallback;
 import com.frewen.network.model.HttpHeaders;
 import com.frewen.network.model.HttpParams;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import okhttp3.HttpUrl;
@@ -27,23 +29,26 @@ import retrofit2.Retrofit;
 import static com.frewen.network.core.AuraRxHttp.getRetrofitBuilder;
 
 /**
- * @filename: BaseRequest
- * @introduction:
+ * @filename: Request
  * @author: Frewen.Wong
- * @time: 2019/4/15 0015 下午4:39
- * Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ * @time: 12/12/20 8:22 PM
+ * @version: 1.0.0
+ * @introduction: Class File Init
+ * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public abstract class Request<R extends Request> {
+public abstract class Request<R extends Request> implements Cloneable {
 
     private Context mContext;
-    protected String baseUrl;                                              //BaseUrl
-    protected String url;                                                  //请求url
+
+    protected String baseUrl;                                              //Http请求BaseUrl
+    protected String pathUrl;                                              //Http请求路径url
+    private HttpUrl httpUrl;                                               //Http请求的URL封装对象
+
     protected long readTimeOut;                                            //读超时
     protected long writeTimeOut;                                           //写超时
     protected long connectTimeout;                                         //链接超时
     protected int retryCount;                                              //重试次数默认3次
 
-    private HttpUrl httpUrl;
     protected HttpHeaders headers = new HttpHeaders();
     protected HttpParams params = new HttpParams();                        //添加的param
     /**
@@ -61,28 +66,19 @@ public abstract class Request<R extends Request> {
      */
     protected List<Converter.Factory> converterFactories = new ArrayList<>();
     protected List<CallAdapter.Factory> adapterFactories = new ArrayList<>();
-    protected final List<Interceptor> interceptors = new ArrayList<>();
+
+    protected final List<Interceptor> interceptors = new ArrayList<>();                 // 拦截器列表
+    protected final List<Interceptor> networkInterceptors = new ArrayList<>();          // 网络拦截器列表
+
+
     private String cacheKey;
     private CacheStrategy cacheStrategy;
-    private boolean isSyncRequest;
+    protected boolean isSyncRequest;
 
     public Request(String url) {
-        this.url = url;
         mContext = AuraRxHttp.getInstance().getContext();
-
         AuraRxHttp auraRxHttp = AuraRxHttp.getInstance();
-
-        this.baseUrl = auraRxHttp.getBaseUrl();
-
-        if (!TextUtils.isEmpty(this.baseUrl)) {
-            httpUrl = HttpUrl.parse(baseUrl);
-        }
-
-        if (null == this.baseUrl && !TextUtils.isEmpty(this.url)
-                && (url.startsWith("http://") || url.startsWith("https://"))) {
-            httpUrl = HttpUrl.parse(url);
-            baseUrl = httpUrl.url().getProtocol() + "://" + httpUrl.url().getHost() + "/";
-        }
+        initRequestUrl(url);
         //超时重试次数
         retryCount = auraRxHttp.getRetryCount();
 
@@ -107,36 +103,22 @@ public abstract class Request<R extends Request> {
         }
     }
 
-    /**
-     * 根据Request请求的参数
-     * 构建生成的OkHttpClientBuilder
-     */
-    private OkHttpClient.Builder createOkHttpClientBuilder() {
-        // 如果Request没有指定自定义的请求配置参数，
-        // 我们就直接属于我们默认初始化OkHttpClient.Builder
-        if (readTimeOut <= 0 && writeTimeOut <= 0 && connectTimeout <= 0 && headers.isEmpty()) {
-            OkHttpClient.Builder builder = AuraRxHttp.getInstance().getOkHttpClientBuilder();
-            return builder;
-        } else {
-            final OkHttpClient.Builder newClientBuilder = AuraRxHttp.getInstance().getOkHttpClientBuilder().build().newBuilder();
-            //添加头  头添加放在最前面方便其他拦截器可能会用到
-            newClientBuilder.addInterceptor(new HeadersInterceptor(headers));
-            return newClientBuilder;
+    private void initRequestUrl(String url) {
+        if (TextUtils.isEmpty(url)) {
+            throw new NullPointerException("request url should not be null");
         }
-    }
-
-    private Retrofit.Builder generateRetrofit() {
-        if (converterFactories.isEmpty() && adapterFactories.isEmpty()) {
-            Retrofit.Builder builder = getRetrofitBuilder();
-            if (!TextUtils.isEmpty(baseUrl)) {
-                builder.baseUrl(baseUrl);
-            }
-            return builder;
+        AuraRxHttp auraRxHttp = AuraRxHttp.getInstance();
+        // 再进行处理我们传入的pathUrl地址
+        if (url.startsWith("http://") || url.startsWith("https://")) {
+            this.httpUrl = HttpUrl.parse(url);
+            this.baseUrl = httpUrl.url().getProtocol() + "://" + httpUrl.url().getHost() + "/";
+            this.pathUrl = "";
         } else {
-
+            // 获取RxHttp里面设置的BaseUrl
+            this.baseUrl = auraRxHttp.getBaseUrl();
+            this.httpUrl = HttpUrl.parse(baseUrl);
+            this.pathUrl = url;
         }
-        Retrofit.Builder builder = getRetrofitBuilder();
-        return builder;
     }
 
     /**
@@ -159,6 +141,25 @@ public abstract class Request<R extends Request> {
     }
 
     /**
+     * 添加头信息
+     *
+     * @param key   HeaderKey
+     * @param value HeaderValue
+     */
+    public R addHeaders(String key, String value) {
+        headers.put(key, value);
+        return (R) this;
+    }
+
+    /**
+     * 添加头信息
+     */
+    public R headers(HttpHeaders headers) {
+        this.headers.put(headers);
+        return (R) this;
+    }
+
+    /**
      * 添加参数键值对
      *
      * @param key
@@ -175,9 +176,8 @@ public abstract class Request<R extends Request> {
      * 设置是否是同步请求
      *
      * @param syncRequest
-     * @return
      */
-    public R syncRequest(boolean syncRequest) {
+    public R setSyncRequest(boolean syncRequest) {
         this.isSyncRequest = syncRequest;
         return (R) this;
     }
@@ -202,9 +202,84 @@ public abstract class Request<R extends Request> {
         return (R) this;
     }
 
+    /**
+     * 设置超时时间
+     *
+     * @param readTimeOut
+     */
+    public R readTimeOut(long readTimeOut) {
+        this.readTimeOut = readTimeOut;
+        return (R) this;
+    }
+
+    /**
+     * 设置超时时间
+     *
+     * @param writeTimeOut
+     */
+    public R writeTimeOut(long writeTimeOut) {
+        this.writeTimeOut = writeTimeOut;
+        return (R) this;
+    }
+
+    /**
+     * 设置超时时间
+     *
+     * @param connectTimeout
+     */
+    public R connectTimeout(long connectTimeout) {
+        this.connectTimeout = connectTimeout;
+        return (R) this;
+    }
+
+    /**
+     * ====================================设置参数==================================================
+     */
+    public R addParams(HttpParams params) {
+        this.params.put(params);
+        return (R) this;
+    }
+
+    public R addParams(Map<String, String> keyValues) {
+        params.put(keyValues);
+        return (R) this;
+    }
+
+    public R addParam(String key, String value) {
+        params.put(key, value);
+        return (R) this;
+    }
+
+    public R removeParam(String key) {
+        params.remove(key);
+        return (R) this;
+    }
+
+    public R removeAllParams() {
+        params.clear();
+        return (R) this;
+    }
+
+    /**
+     * ========================================网络请求设置拦截器=====================================
+     */
+    public R addInterceptor(Interceptor interceptor) {
+        interceptors.add(AssertionsUtils.assertNotNull(interceptor, "interceptor == null"));
+        return (R) this;
+    }
+
+    public R addNetworkInterceptor(Interceptor interceptor) {
+        networkInterceptors.add(AssertionsUtils.assertNotNull(interceptor, "interceptor == null"));
+        return (R) this;
+    }
+
+    /**
+     * =============================创建Request请求的路基=============================================
+     */
     protected R build() {
         OkHttpClient.Builder okHttpClientBuilder = createOkHttpClientBuilder();
         final Retrofit.Builder retrofitBuilder = generateRetrofit();
+        // 重新创建okHttpClient对象
         okHttpClient = okHttpClientBuilder.build();
         retrofitBuilder.client(okHttpClient);
         retrofit = retrofitBuilder.build();
@@ -214,18 +289,83 @@ public abstract class Request<R extends Request> {
 
 
     /**
+     * 根据Request请求的参数
+     * 构建生成的OkHttpClientBuilder
+     */
+    private OkHttpClient.Builder createOkHttpClientBuilder() {
+        // 如果Request没有指定自定义的请求配置参数，
+        // 我们就直接使用我们AuraRxHttp默认初始化OkHttpClient.Builder
+        if (readTimeOut <= 0 && writeTimeOut <= 0 && connectTimeout <= 0 && headers.isEmpty()) {
+            OkHttpClient.Builder builder = AuraRxHttp.getInstance().getOkHttpClientBuilder();
+            return builder;
+        } else {
+            final OkHttpClient.Builder newClientBuilder =
+                    AuraRxHttp.getInstance().getOkHttpClientBuilder().build().newBuilder();
+            if (readTimeOut > 0)
+                newClientBuilder.readTimeout(readTimeOut, TimeUnit.MILLISECONDS);
+            if (writeTimeOut > 0)
+                newClientBuilder.writeTimeout(writeTimeOut, TimeUnit.MILLISECONDS);
+            if (connectTimeout > 0)
+                newClientBuilder.connectTimeout(connectTimeout, TimeUnit.MILLISECONDS);
+            //添加头  头添加放在最前面方便其他拦截器可能会用到
+            newClientBuilder.addInterceptor(new HeadersInterceptor(headers));
+            return newClientBuilder;
+        }
+    }
+
+
+    private Retrofit.Builder generateRetrofit() {
+        // 如果转换器工厂或者适配器工厂都是空的，那么我们就没有必要再去实例化自己的Retrofit.Builder
+        if (converterFactories.isEmpty() && adapterFactories.isEmpty()) {
+            Retrofit.Builder builder = getRetrofitBuilder();
+            if (!TextUtils.isEmpty(baseUrl)) {
+                builder.baseUrl(baseUrl);
+            }
+            return builder;
+        } else {
+            // w我们来实例化自己的Retrofit.Builder()
+            final Retrofit.Builder retrofitBuilder = new Retrofit.Builder();
+            if (!TextUtils.isEmpty(baseUrl)) retrofitBuilder.baseUrl(baseUrl);
+
+            // 如果转换器工厂不是控
+            if (!converterFactories.isEmpty()) {
+                // 添加所有的转换器工厂
+                for (Converter.Factory converterFactory : converterFactories) {
+                    retrofitBuilder.addConverterFactory(converterFactory);
+                }
+            } else {
+                //如果转换器工厂是空的，那么我们就获取AuraRxHttp中的Retrofit的转换器工厂
+                Retrofit.Builder newBuilder = getRetrofitBuilder();
+                if (!TextUtils.isEmpty(baseUrl)) {
+                    newBuilder.baseUrl(baseUrl);
+                }
+                List<Converter.Factory> listConverterFactory = newBuilder.build().converterFactories();
+                for (Converter.Factory factory : listConverterFactory) {
+                    retrofitBuilder.addConverterFactory(factory);
+                }
+            }
+            if (!adapterFactories.isEmpty()) {
+                for (CallAdapter.Factory adapterFactory : adapterFactories) {
+                    retrofitBuilder.addCallAdapterFactory(adapterFactory);
+                }
+            } else {
+                //获取全局的对象重新设置
+                Retrofit.Builder newBuilder = getRetrofitBuilder();
+                List<CallAdapter.Factory> listAdapterFactory =
+                        newBuilder.baseUrl(baseUrl).build().callAdapterFactories();
+                for (CallAdapter.Factory factory : listAdapterFactory) {
+                    retrofitBuilder.addCallAdapterFactory(factory);
+                }
+            }
+            return retrofitBuilder;
+        }
+    }
+
+
+    /**
      * 创建Request。不同的Request对应各自实现他们的generateRequest方法
      */
     protected abstract Observable<ResponseBody> generateRequest();
-
-    // ==============Request的执行的两个请求=========================
-    public <Data> void execute(ResponseCallback<Data> callbackListener) {
-
-    }
-
-    public <Data> void execute() {
-
-    }
 
     public boolean isSyncRequest() {
         return isSyncRequest;

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.text.TextUtils;
 
 import com.frewen.aura.toolkits.core.AuraToolKits;
+import com.frewen.aura.toolkits.utils.AssertionsUtils;
 import com.frewen.network.api.BaseApiService;
 import com.frewen.network.interceptor.HttpLoggingInterceptor;
 import com.frewen.network.logger.Logger;
@@ -11,6 +12,7 @@ import com.frewen.network.model.HttpHeaders;
 import com.frewen.network.model.HttpParams;
 import com.frewen.network.request.GetRequest;
 import com.frewen.network.utils.CommonUtils;
+import com.frewen.network.verifier.DefaultHostnameVerifier;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -74,6 +76,8 @@ public final class AuraRxHttp {
     private AuraRxHttp() {
         // okHttpClient的Builder
         okHttpClientBuilder = new OkHttpClient.Builder();
+        okHttpClientBuilder.hostnameVerifier(new DefaultHostnameVerifier());
+        // 设置OKHttpClient的三超时时间
         okHttpClientBuilder.connectTimeout(DEFAULT_TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
         okHttpClientBuilder.readTimeout(DEFAULT_TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
         okHttpClientBuilder.writeTimeout(DEFAULT_TIMEOUT_MILLISECONDS, TimeUnit.MILLISECONDS);
@@ -81,12 +85,12 @@ public final class AuraRxHttp {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(TAG);
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpClientBuilder.addInterceptor(interceptor);
+        // 创建OKHttpClient的对象
         mOkHttpClient = okHttpClientBuilder.build();
 
         retrofitBuilder = new Retrofit.Builder();
         //增加RxJava2CallAdapterFactory
         retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
-
 
         initTrustManager();
 
@@ -129,14 +133,14 @@ public final class AuraRxHttp {
     }
 
     /**
-     * 对外暴露 OkHttpClient,方便自定义
+     * 对外暴露 OkHttpClient.Builder,方便自定义
      */
     public OkHttpClient.Builder getOkHttpClientBuilder() {
         return this.okHttpClientBuilder;
     }
 
     /**
-     * 对外暴露 Retrofit,方便自定义
+     * 对外暴露 Retrofit.Builder,方便自定义
      */
     public static Retrofit.Builder getRetrofitBuilder() {
         return getInstance().retrofitBuilder;
@@ -170,7 +174,7 @@ public final class AuraRxHttp {
      * 获取单例对象的方法
      */
     public static AuraRxHttp getInstance() {
-        CommonUtils.checkNotNull(mContext, "you should init AuraRxHttp First");
+        AssertionsUtils.assertNotNull(mContext, "you should init AuraRxHttp First");
         if (mInstance == null) {
             synchronized (AuraRxHttp.class) {
                 if (mInstance == null) {
@@ -331,6 +335,8 @@ public final class AuraRxHttp {
         mCommonHeaders.put(commonHeaders);
         return this;
     }
+
+    // ========================网络请求相关的逻辑=====================================================
 
     /**
      * get请求

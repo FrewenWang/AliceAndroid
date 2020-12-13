@@ -27,13 +27,6 @@ class HomeViewModel @Inject constructor() : BasePagedListViewModel<Post>() {
     companion object {
         private const val TAG = "HomeViewModel"
     }
-    private lateinit var mFeedType: String
-
-    /**
-     * 是否是缓存的标志变量
-     */
-    @Volatile
-    private var withCache: Boolean = false
 
     /**
      * 由于LiveData和MutableLiveData都是一个概念的东西(只是作用范围不同)所以就不重复解释了,直接理解LiveData就可以明白MutableLiveData
@@ -49,45 +42,53 @@ class HomeViewModel @Inject constructor() : BasePagedListViewModel<Post>() {
      * 2.LiveData在实体类里可以通知指定某个字段的数据更新.
      * 3.MutableLiveData则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
      */
-    private val cacheLiveData: MutableLiveData<PagedList<Post?>?>? = null
+    private val cacheLiveData: MutableLiveData<PagedList<Post>> = MutableLiveData()
+
+    private var mFeedType: String? = null
+
+    /**
+     * 是否是缓存的标志变量
+     */
+    @Volatile
+    private var withCache: Boolean = false
 
 
-
-    fun getCacheLiveData(): MutableLiveData<PagedList<Post?>?>? {
+    fun getCacheLiveData(): MutableLiveData<PagedList<Post>> {
         return cacheLiveData
     }
-    fun setFeedType(feedType: String) {
+
+    fun setFeedType(feedType: String?) {
         mFeedType = feedType
     }
 
     /**
      * 创建PagedList的DataSource
      */
-    override fun createDataSource(): DataSource<Integer, Post> {
+    override fun createDataSource(): DataSource<Int, Post> {
         return PostDataSource()
     }
 
     /**
      *
      */
-    inner class PostDataSource : ItemKeyedDataSource<Integer, Post>() {
-        override fun getKey(item: Post): Integer {
-            TODO("Not yet implemented")
+    inner class PostDataSource : ItemKeyedDataSource<Int, Post>() {
+        override fun getKey(item: Post): Int {
+            return item.id
         }
 
-        override fun loadInitial(params: LoadInitialParams<Integer>, callback: LoadInitialCallback<Post>) {
+        override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Post>) {
             Log.d(Companion.TAG, "loadInitial() called with: params = $params, callback = $callback")
             // 进行ViewModel里面页面逻辑实现的数据请求
             loadData(0, params.requestedLoadSize, callback)
             withCache = false
         }
 
-        override fun loadAfter(params: LoadParams<Integer>, callback: LoadCallback<Post>) {
+        override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Post>) {
             Log.d(TAG, "loadAfter() called with: params = $params, callback = $callback")
-            loadData(params.key.toInt(), params.requestedLoadSize, callback as LoadInitialCallback<Post>)
+            loadData(params.key, params.requestedLoadSize, callback as LoadInitialCallback<Post>)
         }
 
-        override fun loadBefore(params: LoadParams<Integer>, callback: LoadCallback<Post>) {
+        override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Post>) {
             Log.d(TAG, "loadBefore() called with: params = $params, callback = $callback")
             callback.onResult(emptyList<Any>() as MutableList<Post>)
         }

@@ -7,7 +7,7 @@ package com.frewen.network.response;
  * @time: 2019/4/14 10:07
  * @copyright: Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
-public class Response<Data> {
+public class Response<T> {
 
     /**
      * 返回码
@@ -20,11 +20,11 @@ public class Response<Data> {
     /**
      * 返回数据
      */
-    private Data data;
+    private T data;
     /**
      * 请求是否成功
      */
-    public boolean isSuccess;
+    private boolean isSuccess;
 
     public boolean isSuccess() {
         this.isSuccess = code == 0 && data != null;
@@ -47,7 +47,7 @@ public class Response<Data> {
         this.msg = msg;
     }
 
-    public Data getData() {
+    public T getData() {
         return data;
     }
 
@@ -60,7 +60,7 @@ public class Response<Data> {
                 '}';
     }
 
-    public void setData(Data data) {
+    public void setData(T data) {
         this.data = data;
     }
 }

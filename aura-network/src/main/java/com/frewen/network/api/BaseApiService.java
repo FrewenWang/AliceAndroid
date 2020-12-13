@@ -29,7 +29,6 @@ import retrofit2.http.Url;
  * @copyright: Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
 public interface BaseApiService {
-
     /**
      * Get网络请求
      *

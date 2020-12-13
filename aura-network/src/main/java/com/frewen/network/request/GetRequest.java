@@ -1,6 +1,8 @@
 package com.frewen.network.request;
 
 import com.frewen.network.callback.CallClazzProxy;
+import com.frewen.network.function.ApiResultFunction;
+import com.frewen.network.listener.AbsResponseCallback;
 import com.frewen.network.response.Response;
 
 import io.reactivex.Observable;
@@ -19,14 +21,21 @@ public class GetRequest extends Request<GetRequest> {
         super(url);
     }
 
-    public <Data> Observable<Data> execute(Class<Data> clazz) {
-        return execute(new CallClazzProxy<Response<Data>, Data>(clazz) {
+    /**
+     * 执行网络请求的Get请求
+     *
+     * @param listener 传入参数的是响应结果监听回调
+     * @param <T>
+     */
+    public <T> Observable<T> execute(AbsResponseCallback listener) {
+        return execute(new CallClazzProxy<Response<T>, T>(listener) {
         });
     }
 
-    public <Data> Observable<Data> execute(CallClazzProxy<? extends Response<Data>, Data> proxy) {
-        return null;
-//        return build().generateRequest().map(new ApiResponseFunction<>(proxy.getType())).compose(isSyncRequest() ? RxIOUtils._main() : RxIOUtils._io_main());
+    public <T> Observable<T> execute(CallClazzProxy<? extends Response<T>, T> proxy) {
+        return build().generateRequest()   // 调用Retrofit2的方法返回一个ResponseBody被监听者对象
+                .map(new ApiResultFunction<>());
+        // .compose(isSyncRequest ? RxIOUtils.<Data>_main() : RxIOUtils.<Data>_io_main());
     }
 
     /**
@@ -34,6 +43,6 @@ public class GetRequest extends Request<GetRequest> {
      */
     @Override
     protected Observable<ResponseBody> generateRequest() {
-        return mApiService.get(url, params.urlParamsMap);
+        return mApiService.get(pathUrl, params.urlParamsMap);
     }
 }

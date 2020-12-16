@@ -355,6 +355,7 @@ public class Dialog implements DialogInterface, Window.Callback,
         }
 
         onStart();
+        //1.得到通过setContentView方法封装好的DecorView
         mDecor = mWindow.getDecorView();
 
         if (mActionBar == null && mWindow.hasFeature(Window.FEATURE_ACTION_BAR)) {
@@ -363,7 +364,7 @@ public class Dialog implements DialogInterface, Window.Callback,
             mWindow.setDefaultLogo(info.logo);
             mActionBar = new WindowDecorActionBar(this);
         }
-
+        //2.得到创建PhoneWindow时已经初始化的成员变量WindowManager.LayoutParams
         WindowManager.LayoutParams l = mWindow.getAttributes();
         boolean restoreSoftInputMode = false;
         if ((l.softInputMode

@@ -7758,10 +7758,11 @@ public class Activity extends ContextThemeWrapper
     }
 
     /**
-     * 在Activity启动过程中会调用ActivityThread的performLaunchActivity 方法，
-     * 在ActivityThread的performLaunchActivity方法，
+     * 在Activity启动过程中:
+     * 1、会调用ActivityThread的performLaunchActivity 方法，
+     * 2、在ActivityThread的performLaunchActivity方法，
      * 会通过仪表盘来进行Instrumentation.newActivity反射回去Activity的实例
-     * performLaunchActivity方法中又会调用Activity的attach方法，
+     * 3、performLaunchActivity方法中又会调用Activity的attach方法，
      * PhoneWindow就是在Activity的attach方法中创建的
      *
      * 这里先总结下得到的信息：
@@ -7827,8 +7828,9 @@ public class Activity extends ContextThemeWrapper
 
 
         /// 然后在这个方法，我们给这个PhoneWindow来设置WindowManager
-        // 那么WindowManager的实例是怎么得到的呢？
-        //  (WindowManager)context.getSystemService(Context.WINDOW_SERVICE)
+        // 参数一： WindowManager 那么WindowManager的实例是怎么得到的呢？
+        // 1、 (WindowManager)context.getSystemService(Context.WINDOW_SERVICE)
+        // 参数二：Token 就是我们说的令牌，这个令牌是
         mWindow.setWindowManager(
                 (WindowManager)context.getSystemService(Context.WINDOW_SERVICE),
                 mToken, mComponent.flattenToString(),

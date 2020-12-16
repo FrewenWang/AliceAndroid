@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.samples.animation.v1.IFrameAnimView;
 import com.frewen.aura.framework.fragment.BaseViewFragment;
 
 import androidx.annotation.Nullable;
@@ -13,16 +12,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 /**
- * A placeholder fragment containing a simple view.
+ * 帧动画的实现页面
  */
-public class PlaceholderViewFragment extends BaseViewFragment {
+public class FrameAnimationFragment extends BaseViewFragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
 
-    public static PlaceholderViewFragment newInstance(int index) {
-        PlaceholderViewFragment fragment = new PlaceholderViewFragment();
+    public static FrameAnimationFragment newInstance(int index) {
+        FrameAnimationFragment fragment = new FrameAnimationFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -40,7 +39,6 @@ public class PlaceholderViewFragment extends BaseViewFragment {
         pageViewModel.setIndex(index);
     }
 
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_animation_demo;
@@ -50,10 +48,6 @@ public class PlaceholderViewFragment extends BaseViewFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final TextView textView = view.findViewById(R.id.section_label);
-        IFrameAnimView frameAnimView = view.findViewById(R.id.frameAnimView);
-        frameAnimView.startAnimal("pay_scan");
-
-
         pageViewModel.getText().observe(getActivity(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

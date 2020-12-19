@@ -1,5 +1,6 @@
 package com.frewen.network.request;
 
+import com.frewen.network.callback.CallBackProxy;
 import com.frewen.network.callback.CallClazzProxy;
 import com.frewen.network.function.ApiResultFunction;
 import com.frewen.network.listener.AbsResponseCallback;
@@ -22,20 +23,19 @@ public class GetRequest extends Request<GetRequest> {
     }
 
     /**
-     * 执行网络请求的Get请求
+     * 传入返回结果对象的Class对象
      *
-     * @param listener 传入参数的是响应结果监听回调
+     * @param clazz
      * @param <T>
      */
-    public <T> Observable<T> execute(AbsResponseCallback listener) {
-        return execute(new CallClazzProxy<Response<T>, T>(listener) {
+    public <T> Observable<T> execute(Class<T> clazz) {
+        return execute(new CallClazzProxy<Response<T>, T>(clazz) {
         });
     }
 
     public <T> Observable<T> execute(CallClazzProxy<? extends Response<T>, T> proxy) {
-        // return build().generateRequest().map(new ApiResultFunction<>(proxy.getType()));
-        // .compose(isSyncRequest ? RxIOUtils.<Data>_main() : RxIOUtils.<Data>_io_main());
-        return null;
+        return build().generateRequest()
+                .map(new ApiResultFunction(proxy.getType()));
     }
 
     /**

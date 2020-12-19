@@ -1,15 +1,11 @@
 package com.frewen.network.callback;
 
-import com.frewen.network.R;
-import com.frewen.network.listener.AbsResponseCallback;
 import com.frewen.network.response.Response;
 import com.frewen.network.utils.CommonUtils;
 import com.google.gson.internal.$Gson$Types;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 
@@ -21,41 +17,29 @@ import okhttp3.ResponseBody;
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class CallClazzProxy<T extends Response<R>, R> implements IType<T>  {
-    /**
-     * 网络请求响应监听回调
-     */
-    AbsResponseCallback<T> mCallBack;
+public class CallClazzProxy<T extends Response<R>, R> implements IType {
 
-    public CallClazzProxy(AbsResponseCallback<T> callBack) {
-        mCallBack = callBack;
+    private Type type;
+
+
+    public CallClazzProxy(Type type) {
+        this.type = type;
     }
 
-    public AbsResponseCallback getResponseCallBack() {
-        return mCallBack;
+    public Type getCallType() {
+        return type;
     }
 
-    /**
-     * CallClazz代理方式，获取需要解析的Type
-     */
+
     @Override
-    public Type getType() {
+    public Type getType() {//CallClazz代理方式，获取需要解析的Type
         Type typeArguments = null;
-        if (mCallBack != null) {
-            Type rawType = mCallBack.getRawType();//如果用户的信息是返回List需单独处理
-            if (List.class.isAssignableFrom(CommonUtils.getClass(rawType, 0))
-                    || Map.class.isAssignableFrom(CommonUtils.getClass(rawType, 0))) {
-                typeArguments = mCallBack.getType();
-            } else {
-                Type type = mCallBack.getType();
-                typeArguments = CommonUtils.getClass(type, 0);
-            }
+        if (type != null) {
+            typeArguments = type;
         }
-
         if (typeArguments == null) {
             typeArguments = ResponseBody.class;
         }
-
         Type rawType = CommonUtils.findNeedType(getClass());
         if (rawType instanceof ParameterizedType) {
             rawType = ((ParameterizedType) rawType).getRawType();

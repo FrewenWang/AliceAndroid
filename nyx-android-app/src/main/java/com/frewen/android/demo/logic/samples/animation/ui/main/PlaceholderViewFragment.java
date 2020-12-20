@@ -49,17 +49,6 @@ public class PlaceholderViewFragment extends BaseViewFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final TextView textView = view.findViewById(R.id.section_label);
-        IFrameAnimView frameAnimView = view.findViewById(R.id.frameAnimView);
-        frameAnimView.startAnimal("pay_scan");
-
-
-        pageViewModel.getText().observe(getActivity(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
 
     }
 }

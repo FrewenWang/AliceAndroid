@@ -5,61 +5,53 @@ import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
+import android.os.Message;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 public abstract class BaseSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
-    /**
-     * SurfaceView的刷新帧率
-     */
     public static final int DEFAULT_FRAME_DURATION_MILLISECOND = 50;
 
-    //用于计算帧数据的线程
     private HandlerThread handlerThread;
-    private Handler handler;
-
-    //帧刷新频率
-    private int frameDuration = DEFAULT_FRAME_DURATION_MILLISECOND;
-
-    //用于绘制帧的画布
+    private SurfaceViewHandler handler;
+    protected int frameDuration = DEFAULT_FRAME_DURATION_MILLISECOND;
     private Canvas canvas;
-    protected SurfaceHolder mSurfaceHolder;
-
     private boolean isAlive;
 
     public BaseSurfaceView(Context context) {
-        this(context, null);
+        super(context);
+        init();
     }
 
     public BaseSurfaceView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        init();
     }
 
     public BaseSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        intiView();
+        init();
     }
 
-    /**
-     *
-     */
-    private void intiView() {
-        mSurfaceHolder = getHolder();
-        mSurfaceHolder.addCallback(this);
-        //设置透明背景，否则SurfaceView背景是黑的
+    protected int getFrameDuration() {
+        return frameDuration;
+    }
+
+    protected void setFrameDuration(int frameDuration) {
+        this.frameDuration = frameDuration;
+    }
+
+    protected void init() {
+        getHolder().addCallback(this);
         setBackgroundTransparent();
     }
 
     private void setBackgroundTransparent() {
-        // 通过SurfaceHolder来设置透明背景，否则是黑色的
-        mSurfaceHolder.setFormat(PixelFormat.TRANSLUCENT);
+        getHolder().setFormat(PixelFormat.TRANSLUCENT);
         setZOrderOnTop(true);
-    }
-
-
-    protected void setFrameDuration(int frameDuration) {
-        this.frameDuration = frameDuration;
     }
 
     @Override
@@ -70,6 +62,7 @@ public abstract class BaseSurfaceView extends SurfaceView implements SurfaceHold
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
     }
 
     @Override
@@ -78,54 +71,91 @@ public abstract class BaseSurfaceView extends SurfaceView implements SurfaceHold
         isAlive = false;
     }
 
-    /**
-     * 用HandlerThread作为独立帧绘制线程，
-     * 好处是可以通过与其绑定的Handler方便地实现“每隔一段时间刷新”，
-     * 而且在Surface被销毁的时候可以方便的调用HandlerThread.quit()来结束线程执行的逻辑。
-     */
+    private void stopDrawThread() {
+        handlerThread.quit();
+        handler = null;
+    }
+
     private void startDrawThread() {
         handlerThread = new HandlerThread("SurfaceViewThread");
         handlerThread.start();
-        handler = new Handler(handlerThread.getLooper());
-        handler.post(new DrawTask());
+        handler = new SurfaceViewHandler(handlerThread.getLooper());
+        handler.post(new DrawRunnable());
     }
 
-    private void stopDrawThread() {
-        if (handlerThread != null) {
-            handlerThread.quit();
-            handler.removeCallbacksAndMessages(null);
-            handler = null;
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int originWidth = getMeasuredWidth();
+        int originHeight = getMeasuredHeight();
+        int width = widthMode == MeasureSpec.AT_MOST ? getDefaultWidth() : originWidth;
+        int height = heightMode == MeasureSpec.AT_MOST ? getDefaultHeight() : originHeight;
+        setMeasuredDimension(width, height);
+        Log.v("ttaylor", "BaseSurfaceView.onMeasure()" + "  default Width=" + getDefaultWidth() + " default height=" + getDefaultHeight());
+    }
+
+    /**
+     * the width is used when wrap_content is set to layout_width
+     * the child knows how big it should be
+     *
+     * @return
+     */
+    protected abstract int getDefaultWidth();
+
+    /**
+     * the height is used when wrap_content is set to layout_height
+     * the child knows how big it should be
+     *
+     * @return
+     */
+    protected abstract int getDefaultHeight();
+
+
+    private class SurfaceViewHandler extends Handler {
+
+        public SurfaceViewHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
         }
     }
 
-    private class DrawTask implements Runnable {
+    private class DrawRunnable implements Runnable {
+
         @Override
         public void run() {
             if (!isAlive) {
                 return;
             }
             try {
-                //1.获取画布
                 canvas = getHolder().lockCanvas();
-                //2.绘制一帧
                 onFrameDraw(canvas);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                if (null != canvas && null != mSurfaceHolder) {
-                    //3.将帧数据提交
-                    mSurfaceHolder.unlockCanvasAndPost(canvas);
-                    //4.一帧绘制结束
-                    onFrameDrawFinish();
-                }
+                getHolder().unlockCanvasAndPost(canvas);
+                onFrameDrawFinish();
             }
 
-            //不停的将自己推送到绘制线程的消息队列以实现帧刷新
+            // TODO: 2019-05-08 stop the drawing thread
             handler.postDelayed(this, frameDuration);
         }
     }
 
+    /**
+     * it is will be invoked after one frame is drawn
+     */
     protected abstract void onFrameDrawFinish();
 
+    /**
+     * draw one frame to the surface by canvas
+     *
+     * @param canvas
+     */
     protected abstract void onFrameDraw(Canvas canvas);
 }

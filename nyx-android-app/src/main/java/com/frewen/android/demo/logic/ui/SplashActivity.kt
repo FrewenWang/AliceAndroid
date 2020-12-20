@@ -56,7 +56,7 @@ class SplashActivity : BaseButterKnifeActivity() {
 
     private fun startHomeActivity() {
         // When animation set ended, intent to the MainActivity.
-        val intent = Intent(this@SplashActivity, AuraNetWorkDemoActivity::class.java)
+        val intent = Intent(this@SplashActivity, AnimationDemoActivity::class.java)
         startActivity(intent)
     }
 

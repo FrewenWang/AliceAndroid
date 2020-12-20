@@ -10,8 +10,16 @@ package com.frewen.android.demo.logic.samples.animation.v1;
  */
 public interface IFrameAnimView {
 
-    void startAnimal(String assertPath);
+    void startAnim(String assertPath);
 
     void stop();
+
+    void setAnimCount(int count);
+
+    void setOnAnimationCallback(AnimationCallback callback);
+
+    interface AnimationCallback {
+        void onFinished();
+    }
 
 }

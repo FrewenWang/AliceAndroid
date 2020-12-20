@@ -185,9 +185,9 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
         anrWatchDog.setANRListener(new ANRWatchDog.ANRListener() {
             @Override
             public void onAppNotResponding(ANRError error) {
-                Log.d(TAG, "FMsg:onAppNotResponding() called with: error = [" + error + "]");
+                //Log.d(TAG, "FMsg:onAppNotResponding() called with: error = [" + error + "]");
                 // TODO 异常的上报和恢复
-                throw error;
+                //throw error;
             }
         });
         anrWatchDog.start();

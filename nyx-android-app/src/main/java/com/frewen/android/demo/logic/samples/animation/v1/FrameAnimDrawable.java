@@ -4,15 +4,18 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
 import androidx.appcompat.widget.AppCompatImageView;
 
 /**
@@ -25,12 +28,17 @@ import androidx.appcompat.widget.AppCompatImageView;
  */
 public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimView {
     private static final String TAG = "FrameAnimDrawable";
-    public static final int MODE_REPEAT = 0;
-    public static final int MODE_ONCE = 1;
+    public static final int COUNT_ANIM_REPEAT = -1;
+
+    private static final int DURATION_FRAME = 25;
     private String mAssertPath;
     private AssetManager assetManager;
-    private AnimationDrawable animationDrawable;
-    private Context context;
+    private AnimationDrawable mAnimDrawable;
+    private int mAnimCount = COUNT_ANIM_REPEAT;
+    private AnimationCallback mAnimCallback;
+    private int curIndex;
+    private Handler mHandler;
+
 
     public FrameAnimDrawable(Context context) {
         this(context, null);
@@ -46,12 +54,24 @@ public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimV
     }
 
     private void intiView(Context context) {
-        this.context = context;
         assetManager = context.getAssets();
+        mHandler = new Handler();
     }
 
     @Override
-    public void startAnimal(String assertPath) {
+    public void setAnimCount(int count) {
+        mAnimCount = count;
+    }
+
+    @Override
+    public void setOnAnimationCallback(AnimationCallback callback) {
+        mAnimCallback = callback;
+    }
+
+
+    @UiThread
+    @Override
+    public void startAnim(String assertPath) {
         mAssertPath = assertPath;
         Log.d(TAG, "startAnimal assertPath: " + mAssertPath);
         setVisibility(View.VISIBLE);
@@ -70,28 +90,59 @@ public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimV
      * 开始Animation的动画播放
      */
     private void startDraw() {
-        animationDrawable.setOneShot(false);
-        animationDrawable.start();
+        if (mAnimCount == COUNT_ANIM_REPEAT) {
+            mAnimDrawable.setOneShot(false);
+            mAnimDrawable.start();
+        } else {
+            curIndex = 0;
+            mAnimDrawable.start();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ++curIndex;
+                    Log.d(TAG, "FMsg:run() called curIndex =" + curIndex);
+                    if (curIndex >= mAnimCount) {
+                        stop();
+                        if (null != mAnimCallback) {
+                            mAnimCallback.onFinished();
+                        }
+                    } else {
+                        mHandler.postDelayed(this::run, DURATION_FRAME * mAnimDrawable.getNumberOfFrames());
+                    }
+
+                }
+            }, DURATION_FRAME * mAnimDrawable.getNumberOfFrames());
+        }
     }
 
     private void initPathList(List<String> images) {
-        if (null == animationDrawable) {
-            animationDrawable = new AnimationDrawable();
+        if (null == mAnimDrawable) {
+            mAnimDrawable = new AnimationDrawable();
         }
         for (int i = 0; i < images.size(); i++) {
             try {
-                Drawable d = Drawable.createFromStream(assetManager.open(mAssertPath + images.get(i)), null);
-                animationDrawable.addFrame(d, 200);
+                Drawable d = Drawable.createFromStream(assetManager.open(
+                        mAssertPath + File.separator + images.get(i)), null);
+                mAnimDrawable.addFrame(d, DURATION_FRAME);
             } catch (IOException e) {
                 Log.d(TAG, "IOException: " + e.getMessage());
             }
         }
-
-        setImageDrawable(animationDrawable);
+        setImageDrawable(mAnimDrawable);
     }
 
     @Override
     public void stop() {
+        mHandler.removeCallbacksAndMessages(null);
+        if (null != mAnimDrawable && mAnimDrawable.isRunning()) {
+            mAnimDrawable.stop();
+        }
+        mAnimDrawable = null;
+    }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        stop();
     }
 }

@@ -1,31 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.samples.animation.ui.main.PlaceholderViewFragment">
+    tools:context=".logic.samples.animation.AnimationDemoActivity">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_vertical_margin_16"
-        android:layout_marginTop="@dimen/dp_vertical_margin_16"
-        android:layout_marginEnd="@dimen/dp_vertical_margin_16"
-        android:layout_marginBottom="@dimen/dp_vertical_margin_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
+    <com.frewen.android.demo.logic.samples.animation.surface.FrameSurfaceView
+        android:id="@+id/sv_frame"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.frewen.android.demo.logic.samples.animation.v1.FrameAnimDrawable
-        android:id="@+id/frameAnimView"
-        android:layout_width="match_parent"
+        android:id="@+id/ivFrameAnimation"
+        android:layout_width="200dp"
         android:layout_height="200dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/section_label" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sv_frame" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/sv_frame">
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="start frame animtion by FrameSurfaceView"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_start_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="start frame animtion by AnimationDrawable"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_decode_stream"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="decode bitmap by stream"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_decode_resource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="decode bitmap by resource"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_rapid_decode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="decode bitmap by rapid decode"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_decode_asset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="decode bitmap from assets"
+            android:textAllCaps="false" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

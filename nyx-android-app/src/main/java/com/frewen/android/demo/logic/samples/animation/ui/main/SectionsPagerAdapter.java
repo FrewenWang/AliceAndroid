@@ -8,15 +8,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private static final String TAG = "SectionsPagerAdapter";
-    private static final String[] TAB_TITLES = new String[]{"补间动画", "逐帧动画", "属性动画"};
-    private static final Fragment[] TAB_FRAGMENT_PAGES = new Fragment[]{PlaceholderViewFragment.newInstance(1), PlaceholderViewFragment.newInstance(2), PropertyAnimationViewFragment.newInstance(3)};
+    private static final String[] TAB_TITLES = new String[]{"帧动画", "补间动画", "属性动画"};
+    private static final Fragment[] TAB_FRAGMENT_PAGES = new Fragment[]{
+            FrameAnimationFragment.newInstance(1),
+            PlaceholderViewFragment.newInstance(2),
+            PropertyAnimationViewFragment.newInstance(3)};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {

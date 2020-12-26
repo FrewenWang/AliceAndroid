@@ -13,6 +13,7 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.logic.samples.animation.AnimationDemoActivity
 import com.frewen.android.demo.logic.samples.jni.HelloJNIActivity
 import com.frewen.android.demo.logic.samples.network.aura.AuraNetWorkDemoActivity
+import com.frewen.android.demo.logic.samples.opencv.OpenCVActivity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.android.demo.performance.PerformanceActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
@@ -56,7 +57,7 @@ class SplashActivity : BaseButterKnifeActivity() {
 
     private fun startHomeActivity() {
         // When animation set ended, intent to the MainActivity.
-        val intent = Intent(this@SplashActivity, AnimationDemoActivity::class.java)
+        val intent = Intent(this@SplashActivity, OpenCVActivity::class.java)
         startActivity(intent)
     }
 

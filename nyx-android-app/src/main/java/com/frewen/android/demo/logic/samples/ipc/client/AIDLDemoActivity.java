@@ -8,6 +8,7 @@ import android.content.ServiceConnection;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,80 @@ public class AIDLDemoActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_aidl_demo);
+
+        //第一步：通过intent来绑定远程的Service
+        Intent intent = new Intent(this, RemoteService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+
+        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        Log.e(TAG,"App begin nativeCall");
+        boolean bool = powerManager.isInteractive();
+        Log.e(TAG,"App end nativeCall");
+        Log.e(TAG,"" + bool);
+    }
+
+    /**
+     * 绑定远程Service之后的ServiceConnection回调
+     *
+     * ServiceConnection是我们来进行绑定远程Service的时候的结果回调
+     * 需要主要的是。onServiceConnected、onServiceDisconnected的方法都是运行在客户端的UI主线程中的
+     * 所以在这个方法我们我们也不能调用mRemoteServiceInterface的耗时方法，因为这个时候客户端的主线程会被挂起。
+     *
+     * AIDL通信中最重要的通信句柄是IBinder对象
+     * 而针对这个对象，我们需要重点看，客户端是怎么拿到这个对象的。然后服务端是怎么提供这个对象。
+     *
+     * 1、这里我们看客户端是怎么拿到的。 这个地方是通过ServiceConnection的回调中onServiceConnected。也就是说客户端必须先Bind服务端的Service
+     * 然后在服务端的onServiceConnected的回调中，来获取IRemoteServiceInterface.Stub.asInterface(service);
+     */
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.d(TAG, "FMsg:onServiceConnected called with: name = [" + name.getShortClassName()
+                    + "], service = [" + service
+                    + "], threadName = [" + Thread.currentThread().getName()
+                    + "]");
+            // 获取远程Service接口对象
+            IRemoteServiceInterface serviceInterface = IRemoteServiceInterface.Stub.asInterface(service);
+            mRemoteServiceInterface = serviceInterface;
+
+            try {
+                mRemoteServiceInterface.asBinder().linkToDeath(mDeathRecipient, 0);
+                // 我们通过Binder对象注册监听新票的出来的逻辑
+                mRemoteServiceInterface.registerListener(mOnNewBookArrivedListener);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            /**
+             * 从Binder接口对象里面获取购票列表
+             * 请注意：下面这个方法如果是一个耗时任务的话。则需要再子线程里面完成
+             */
+            getAllTicketList();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //远程Service接口对象置为null
+            mRemoteServiceInterface = null;
+            Log.d(TAG, "FMsg:onServiceDisconnected() called with: name = [" + name + "],thread = " + Thread.currentThread().getName());
+        }
+
+        @Override
+        public void onBindingDied(ComponentName name) {
+            Log.d(TAG, "FMsg:onBindingDied() called with: name = [" + name + "]");
+        }
+
+        @Override
+        public void onNullBinding(ComponentName name) {
+            Log.d(TAG, "FMsg:onNullBinding() called with: name = [" + name + "]");
+        }
+    };
+
 
     /**
      * Binder是可能意外死亡的，这往往是由于服务端进程意外停止了，这时我们需要重新连接服务
@@ -134,74 +209,6 @@ public class AIDLDemoActivity extends AppCompatActivity {
         public IBinder asBinder() {
             return null;
         }*/
-    };
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aidl_demo);
-
-        //第一步：通过intent来绑定远程的Service
-        Intent intent = new Intent(this, RemoteService.class);
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-    }
-
-
-    /**
-     * 绑定远程Service之后的ServiceConnection回调
-     *
-     * ServiceConnection是我们来进行绑定远程Service的时候的结果回调
-     * 需要主要的是。onServiceConnected、onServiceDisconnected的方法都是运行在客户端的UI主线程中的
-     * 所以在这个方法我们我们也不能调用mRemoteServiceInterface的耗时方法，因为这个时候客户端的主线程会被挂起。
-     *
-     * AIDL通信中最重要的通信句柄是IBinder对象
-     * 而针对这个对象，我们需要重点看，客户端是怎么拿到这个对象的。然后服务端是怎么提供这个对象。
-     *
-     * 1、这里我们看客户端是怎么拿到的。 这个地方是通过ServiceConnection的回调中onServiceConnected。也就是说客户端必须先Bind服务端的Service
-     * 然后在服务端的onServiceConnected的回调中，来获取IRemoteServiceInterface.Stub.asInterface(service);
-     */
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            Log.d(TAG, "FMsg:onServiceConnected called with: name = [" + name.getShortClassName()
-                    + "], service = [" + service
-                    + "], threadName = [" + Thread.currentThread().getName()
-                    + "]");
-            // 获取远程Service接口对象
-            IRemoteServiceInterface serviceInterface = IRemoteServiceInterface.Stub.asInterface(service);
-            mRemoteServiceInterface = serviceInterface;
-
-            try {
-                mRemoteServiceInterface.asBinder().linkToDeath(mDeathRecipient, 0);
-                // 我们通过Binder对象注册监听新票的出来的逻辑
-                mRemoteServiceInterface.registerListener(mOnNewBookArrivedListener);
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            /**
-             * 从Binder接口对象里面获取购票列表
-             * 请注意：下面这个方法如果是一个耗时任务的话。则需要再子线程里面完成
-             */
-            getAllTicketList();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            //远程Service接口对象置为null
-            mRemoteServiceInterface = null;
-            Log.d(TAG, "FMsg:onServiceDisconnected() called with: name = [" + name + "],thread = " + Thread.currentThread().getName());
-        }
-
-        @Override
-        public void onBindingDied(ComponentName name) {
-            Log.d(TAG, "FMsg:onBindingDied() called with: name = [" + name + "]");
-        }
-
-        @Override
-        public void onNullBinding(ComponentName name) {
-            Log.d(TAG, "FMsg:onNullBinding() called with: name = [" + name + "]");
-        }
     };
 
     @Override

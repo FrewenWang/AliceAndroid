@@ -42,7 +42,8 @@
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".logic.samples.opencv.OpenCVActivity"></activity>
+        <activity android:name=".logic.samples.media.camera2.Camera2Activity"></activity>
+        <activity android:name=".logic.samples.opencv.OpenCVActivity" />
         <activity android:name=".logic.samples.network.aura.AuraNetWorkDemoActivity" />
         <activity android:name=".logic.samples.FrameAnimationActivity" />
         <activity

@@ -8,22 +8,22 @@ buildscript {
 
     /**
      * 这个闭包里面传入的插件依赖的仓库。
-     * 该闭包中声明了jcenter()和google()的配置，其中jcenter是一个代码托管仓库，
-     * 上面托管了很多Android开源项目，在这里配置了jcenter后我们可以在项目中方便引用jcenter上的开源项目，
+     * 该闭包中声明了jCenter()和google()的配置，其中jCenter是一个代码托管仓库，
+     * 上面托管了很多Android开源项目，在这里配置了jCenter后我们可以在项目中方便引用jCenter上的开源项目，
      * 从Android Studio3.0后新增了google()配置，可以引用google上的开源项目。
      * 我们在dev分支进行引用我们本地的插件依赖仓库
      */
     repositories {
         String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
-//        if (gitBranch == "dev") {
-//            // 这个闭包里面传入的插件依赖的仓库。注意：使用本地依赖库，首先要启动artifactory
-//            // 具体见：/tool_kits/artifactory-start.sh
-//            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
-//        } else {
+        //        if (gitBranch == "dev") {
+        //            // 这个闭包里面传入的插件依赖的仓库。注意：使用本地依赖库，首先要启动artifactory
+        //            // 具体见：/tool_kits/artifactory-start.sh
+        //            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
+        //        } else {
         google()
         jcenter()
+        //        }
         maven { url 'https://oss.sonatype.org/content/repositories/public' }
-//        }
         // 设置仓库
         maven { url "https://chaquo.com/maven" }
     }
@@ -38,6 +38,8 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // Navigation开源框架，应用Fragment的安全的参数传递
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2"
         // 导入Chaquopy框架的包
         classpath 'com.chaquo.python:gradle:8.0.0'
 
@@ -50,13 +52,12 @@ buildscript {
         // https://github.com/google/protobuf-gradle-plugin
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
 
-//        classpath 'me.ele:lancet-plugin:1.0.6'
+        //classpath 'me.ele:lancet-plugin:1.0.6'
 
     }
 }
 
 allprojects {
-//    parseLocalProperties()
     repositories {
         String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
         println("allprojects repositories gitBranch = " + gitBranch)
@@ -65,13 +66,16 @@ allprojects {
 //        } else {
         google()
         jcenter()
+        mavenLocal()
 //        }
         maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
         maven { url 'https://jitpack.io' }
     }
 }
 /**
- * gradle主工程执行的clean的task.就是删除rootProject.buildDir 工程根目录下的build文件夹
+ * gradle主工程执行的clean的task.
+ * 就是删除rootProject.buildDir
+ * 工程根目录下的build文件夹
  * */
 task clean(type: Delete) {
     delete rootProject.buildDir

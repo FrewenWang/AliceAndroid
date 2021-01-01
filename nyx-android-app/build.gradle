@@ -1,7 +1,3 @@
-// 声明是Android程序，
-//com.android.application 表示这是一个应用程序模块
-//com.android.library 标识这是一个库模块
-//而这区别：前者可以直接运行，后着是依附别的应用程序运行
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -13,6 +9,7 @@ apply plugin: 'com.chaquo.python'
 //apply plugin: 'com.hujiang.android-aspectjx'
 apply plugin: 'com.google.protobuf'
 //apply plugin: 'me.ele.lancet'
+apply plugin: "androidx.navigation.safeargs"
 
 
 android {

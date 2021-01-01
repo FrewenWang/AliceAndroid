@@ -55,7 +55,7 @@ import java.util.concurrent.Executor;
  * PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
  * PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "My Tag");
  * wl.acquire();
- *   ..screen will stay on during this section..
+ * ..screen will stay on during this section..
  * wl.release();
  * }
  * </p><p>
@@ -143,9 +143,9 @@ public final class PowerManager {
      * </p>
      *
      * @deprecated Most applications should use
-     * {@link android.view.WindowManager.LayoutParams#FLAG_KEEP_SCREEN_ON} instead
-     * of this type of wake lock, as it will be correctly managed by the platform
-     * as the user moves between applications and doesn't require a special permission.
+     *         {@link android.view.WindowManager.LayoutParams#FLAG_KEEP_SCREEN_ON} instead
+     *         of this type of wake lock, as it will be correctly managed by the platform
+     *         as the user moves between applications and doesn't require a special permission.
      */
     @Deprecated
     public static final int SCREEN_DIM_WAKE_LOCK = OsProtoEnums.SCREEN_DIM_WAKE_LOCK; // 0x00000006
@@ -160,9 +160,9 @@ public final class PowerManager {
      * </p>
      *
      * @deprecated Most applications should use
-     * {@link android.view.WindowManager.LayoutParams#FLAG_KEEP_SCREEN_ON} instead
-     * of this type of wake lock, as it will be correctly managed by the platform
-     * as the user moves between applications and doesn't require a special permission.
+     *         {@link android.view.WindowManager.LayoutParams#FLAG_KEEP_SCREEN_ON} instead
+     *         of this type of wake lock, as it will be correctly managed by the platform
+     *         as the user moves between applications and doesn't require a special permission.
      */
     @Deprecated
     public static final int SCREEN_BRIGHT_WAKE_LOCK =
@@ -178,9 +178,9 @@ public final class PowerManager {
      * </p>
      *
      * @deprecated Most applications should use
-     * {@link android.view.WindowManager.LayoutParams#FLAG_KEEP_SCREEN_ON} instead
-     * of this type of wake lock, as it will be correctly managed by the platform
-     * as the user moves between applications and doesn't require a special permission.
+     *         {@link android.view.WindowManager.LayoutParams#FLAG_KEEP_SCREEN_ON} instead
+     *         of this type of wake lock, as it will be correctly managed by the platform
+     *         as the user moves between applications and doesn't require a special permission.
      */
     @Deprecated
     public static final int FULL_WAKE_LOCK = OsProtoEnums.FULL_WAKE_LOCK; // 0x0000001a
@@ -270,6 +270,7 @@ public final class PowerManager {
     /**
      * Wake lock flag: This wake lock is not important for logging events.  If a later
      * wake lock is acquired that is important, it will be considered the one to log.
+     *
      * @hide
      */
     public static final int UNIMPORTANT_FOR_LOGGING = 0x40000000;
@@ -283,12 +284,14 @@ public final class PowerManager {
 
     /**
      * Flag for {@link WakeLock#release(int)} when called due to timeout.
+     *
      * @hide
      */
     public static final int RELEASE_FLAG_TIMEOUT = 1 << 16;
 
     /**
      * Brightness value for fully on.
+     *
      * @hide
      */
     @UnsupportedAppUsage
@@ -296,12 +299,14 @@ public final class PowerManager {
 
     /**
      * Brightness value for fully off.
+     *
      * @hide
      */
     public static final int BRIGHTNESS_OFF = 0;
 
     /**
      * Brightness value for default policy handling by the system.
+     *
      * @hide
      */
     public static final int BRIGHTNESS_DEFAULT = -1;
@@ -311,6 +316,7 @@ public final class PowerManager {
 
     /**
      * User activity event type: Unspecified event type.
+     *
      * @hide
      */
     @SystemApi
@@ -318,6 +324,7 @@ public final class PowerManager {
 
     /**
      * User activity event type: Button or key pressed or released.
+     *
      * @hide
      */
     @SystemApi
@@ -325,6 +332,7 @@ public final class PowerManager {
 
     /**
      * User activity event type: Touch down, move or up.
+     *
      * @hide
      */
     @SystemApi
@@ -332,6 +340,7 @@ public final class PowerManager {
 
     /**
      * User activity event type: Accessibility taking action on behalf of user.
+     *
      * @hide
      */
     @SystemApi
@@ -340,6 +349,7 @@ public final class PowerManager {
     /**
      * User activity event type: {@link android.service.attention.AttentionService} taking action
      * on behalf of user.
+     *
      * @hide
      */
     public static final int USER_ACTIVITY_EVENT_ATTENTION = 4;
@@ -349,6 +359,7 @@ public final class PowerManager {
      * but do not brighten.  This flag is useful for keeping the screen on
      * a little longer without causing a visible change such as when
      * the power key is pressed.
+     *
      * @hide
      */
     @SystemApi
@@ -359,6 +370,7 @@ public final class PowerManager {
      * reset the user activity timeout.  This flag is useful for applying
      * user activity power hints when interacting with the device indirectly
      * on a secondary screen while allowing the primary screen to go to sleep.
+     *
      * @hide
      */
     @SystemApi
@@ -371,6 +383,7 @@ public final class PowerManager {
 
     /**
      * Go to sleep reason code: Going to sleep due by application request.
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_REASON_APPLICATION = GO_TO_SLEEP_REASON_MIN;
@@ -378,12 +391,14 @@ public final class PowerManager {
     /**
      * Go to sleep reason code: Going to sleep due by request of the
      * device administration policy.
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_REASON_DEVICE_ADMIN = 1;
 
     /**
      * Go to sleep reason code: Going to sleep due to a screen timeout.
+     *
      * @hide
      */
     @UnsupportedAppUsage
@@ -391,36 +406,42 @@ public final class PowerManager {
 
     /**
      * Go to sleep reason code: Going to sleep due to the lid switch being closed.
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_REASON_LID_SWITCH = 3;
 
     /**
      * Go to sleep reason code: Going to sleep due to the power button being pressed.
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_REASON_POWER_BUTTON = 4;
 
     /**
      * Go to sleep reason code: Going to sleep due to HDMI.
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_REASON_HDMI = 5;
 
     /**
      * Go to sleep reason code: Going to sleep due to the sleep button being pressed.
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_REASON_SLEEP_BUTTON = 6;
 
     /**
      * Go to sleep reason code: Going to sleep by request of an accessibility service
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_REASON_ACCESSIBILITY = 7;
 
     /**
      * Go to sleep reason code: Going to sleep due to force-suspend.
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_REASON_FORCE_SUSPEND = 8;
@@ -435,21 +456,32 @@ public final class PowerManager {
      */
     public static String sleepReasonToString(int sleepReason) {
         switch (sleepReason) {
-            case GO_TO_SLEEP_REASON_APPLICATION: return "application";
-            case GO_TO_SLEEP_REASON_DEVICE_ADMIN: return "device_admin";
-            case GO_TO_SLEEP_REASON_TIMEOUT: return "timeout";
-            case GO_TO_SLEEP_REASON_LID_SWITCH: return "lid_switch";
-            case GO_TO_SLEEP_REASON_POWER_BUTTON: return "power_button";
-            case GO_TO_SLEEP_REASON_HDMI: return "hdmi";
-            case GO_TO_SLEEP_REASON_SLEEP_BUTTON: return "sleep_button";
-            case GO_TO_SLEEP_REASON_ACCESSIBILITY: return "accessibility";
-            case GO_TO_SLEEP_REASON_FORCE_SUSPEND: return "force_suspend";
-            default: return Integer.toString(sleepReason);
+            case GO_TO_SLEEP_REASON_APPLICATION:
+                return "application";
+            case GO_TO_SLEEP_REASON_DEVICE_ADMIN:
+                return "device_admin";
+            case GO_TO_SLEEP_REASON_TIMEOUT:
+                return "timeout";
+            case GO_TO_SLEEP_REASON_LID_SWITCH:
+                return "lid_switch";
+            case GO_TO_SLEEP_REASON_POWER_BUTTON:
+                return "power_button";
+            case GO_TO_SLEEP_REASON_HDMI:
+                return "hdmi";
+            case GO_TO_SLEEP_REASON_SLEEP_BUTTON:
+                return "sleep_button";
+            case GO_TO_SLEEP_REASON_ACCESSIBILITY:
+                return "accessibility";
+            case GO_TO_SLEEP_REASON_FORCE_SUSPEND:
+                return "force_suspend";
+            default:
+                return Integer.toString(sleepReason);
         }
     }
 
     /**
      * Go to sleep flag: Skip dozing state and directly go to full sleep.
+     *
      * @hide
      */
     public static final int GO_TO_SLEEP_FLAG_NO_DOZE = 1 << 0;
@@ -457,7 +489,7 @@ public final class PowerManager {
     /**
      * @hide
      */
-    @IntDef(prefix = { "WAKE_REASON_" }, value = {
+    @IntDef(prefix = {"WAKE_REASON_"}, value = {
             WAKE_REASON_UNKNOWN,
             WAKE_REASON_POWER_BUTTON,
             WAKE_REASON_APPLICATION,
@@ -469,28 +501,33 @@ public final class PowerManager {
             WAKE_REASON_HDMI,
     })
     @Retention(RetentionPolicy.SOURCE)
-    public @interface WakeReason{}
+    public @interface WakeReason {
+    }
 
     /**
      * Wake up reason code: Waking for an unknown reason.
+     *
      * @hide
      */
     public static final int WAKE_REASON_UNKNOWN = 0;
 
     /**
      * Wake up reason code: Waking up due to power button press.
+     *
      * @hide
      */
     public static final int WAKE_REASON_POWER_BUTTON = 1;
 
     /**
      * Wake up reason code: Waking up because an application requested it.
+     *
      * @hide
      */
     public static final int WAKE_REASON_APPLICATION = 2;
 
     /**
      * Wake up reason code: Waking up due to being plugged in or docked on a wireless charger.
+     *
      * @hide
      */
     public static final int WAKE_REASON_PLUGGED_IN = 3;
@@ -498,18 +535,21 @@ public final class PowerManager {
     /**
      * Wake up reason code: Waking up due to a user performed gesture (e.g. douple tapping on the
      * screen).
+     *
      * @hide
      */
     public static final int WAKE_REASON_GESTURE = 4;
 
     /**
      * Wake up reason code: Waking up due to the camera being launched.
+     *
      * @hide
      */
     public static final int WAKE_REASON_CAMERA_LAUNCH = 5;
 
     /**
      * Wake up reason code: Waking up because a wake key other than power was pressed.
+     *
      * @hide
      */
     public static final int WAKE_REASON_WAKE_KEY = 6;
@@ -518,39 +558,54 @@ public final class PowerManager {
      * Wake up reason code: Waking up because a wake motion was performed.
      *
      * For example, a trackball that was set to wake the device up was spun.
+     *
      * @hide
      */
     public static final int WAKE_REASON_WAKE_MOTION = 7;
 
     /**
      * Wake up reason code: Waking due to HDMI.
+     *
      * @hide
      */
     public static final int WAKE_REASON_HDMI = 8;
 
     /**
      * Wake up reason code: Waking due to the lid being opened.
+     *
      * @hide
      */
     public static final int WAKE_REASON_LID = 9;
 
     /**
      * Convert the wake reason to a string for debugging purposes.
+     *
      * @hide
      */
     public static String wakeReasonToString(@WakeReason int wakeReason) {
         switch (wakeReason) {
-            case WAKE_REASON_UNKNOWN: return "WAKE_REASON_UNKNOWN";
-            case WAKE_REASON_POWER_BUTTON: return "WAKE_REASON_POWER_BUTTON";
-            case WAKE_REASON_APPLICATION: return "WAKE_REASON_APPLICATION";
-            case WAKE_REASON_PLUGGED_IN: return "WAKE_REASON_PLUGGED_IN";
-            case WAKE_REASON_GESTURE: return "WAKE_REASON_GESTURE";
-            case WAKE_REASON_CAMERA_LAUNCH: return "WAKE_REASON_CAMERA_LAUNCH";
-            case WAKE_REASON_WAKE_KEY: return "WAKE_REASON_WAKE_KEY";
-            case WAKE_REASON_WAKE_MOTION: return "WAKE_REASON_WAKE_MOTION";
-            case WAKE_REASON_HDMI: return "WAKE_REASON_HDMI";
-            case WAKE_REASON_LID: return "WAKE_REASON_LID";
-            default: return Integer.toString(wakeReason);
+            case WAKE_REASON_UNKNOWN:
+                return "WAKE_REASON_UNKNOWN";
+            case WAKE_REASON_POWER_BUTTON:
+                return "WAKE_REASON_POWER_BUTTON";
+            case WAKE_REASON_APPLICATION:
+                return "WAKE_REASON_APPLICATION";
+            case WAKE_REASON_PLUGGED_IN:
+                return "WAKE_REASON_PLUGGED_IN";
+            case WAKE_REASON_GESTURE:
+                return "WAKE_REASON_GESTURE";
+            case WAKE_REASON_CAMERA_LAUNCH:
+                return "WAKE_REASON_CAMERA_LAUNCH";
+            case WAKE_REASON_WAKE_KEY:
+                return "WAKE_REASON_WAKE_KEY";
+            case WAKE_REASON_WAKE_MOTION:
+                return "WAKE_REASON_WAKE_MOTION";
+            case WAKE_REASON_HDMI:
+                return "WAKE_REASON_HDMI";
+            case WAKE_REASON_LID:
+                return "WAKE_REASON_LID";
+            default:
+                return Integer.toString(wakeReason);
         }
     }
 
@@ -562,8 +617,10 @@ public final class PowerManager {
             this.wakeTime = wakeTime;
             this.wakeReason = wakeReason;
         }
+
         public long wakeTime;
-        public @WakeReason int wakeReason;
+        public @WakeReason
+        int wakeReason;
     }
 
     /**
@@ -575,6 +632,7 @@ public final class PowerManager {
      * permission (in addition to
      * {@link android.Manifest.permission#REBOOT}).
      * </p>
+     *
      * @hide
      */
     public static final String REBOOT_RECOVERY = "recovery";
@@ -587,6 +645,7 @@ public final class PowerManager {
      * permission (in addition to
      * {@link android.Manifest.permission#REBOOT}).
      * </p>
+     *
      * @hide
      */
     public static final String REBOOT_RECOVERY_UPDATE = "recovery-update";
@@ -594,24 +653,28 @@ public final class PowerManager {
     /**
      * The value to pass as the 'reason' argument to reboot() when device owner requests a reboot on
      * the device.
+     *
      * @hide
      */
     public static final String REBOOT_REQUESTED_BY_DEVICE_OWNER = "deviceowner";
 
     /**
      * The 'reason' value used when rebooting in safe mode
+     *
      * @hide
      */
     public static final String REBOOT_SAFE_MODE = "safemode";
 
     /**
      * The 'reason' value used when rebooting the device without turning on the screen.
+     *
      * @hide
      */
     public static final String REBOOT_QUIESCENT = "quiescent";
 
     /**
      * The value to pass as the 'reason' argument to android_reboot().
+     *
      * @hide
      */
     public static final String SHUTDOWN_USER_REQUESTED = "userrequested";
@@ -619,6 +682,7 @@ public final class PowerManager {
     /**
      * The value to pass as the 'reason' argument to android_reboot() when battery temperature
      * is too high.
+     *
      * @hide
      */
     public static final String SHUTDOWN_BATTERY_THERMAL_STATE = "thermal,battery";
@@ -626,6 +690,7 @@ public final class PowerManager {
     /**
      * The value to pass as the 'reason' argument to android_reboot() when device temperature
      * is too high.
+     *
      * @hide
      */
     public static final String SHUTDOWN_THERMAL_STATE = "thermal";
@@ -633,6 +698,7 @@ public final class PowerManager {
     /**
      * The value to pass as the 'reason' argument to android_reboot() when device is running
      * critically low on battery.
+     *
      * @hide
      */
     public static final String SHUTDOWN_LOW_BATTERY = "battery";
@@ -641,7 +707,7 @@ public final class PowerManager {
      * @hide
      */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef(prefix = { "SHUTDOWN_REASON_" }, value = {
+    @IntDef(prefix = {"SHUTDOWN_REASON_"}, value = {
             SHUTDOWN_REASON_UNKNOWN,
             SHUTDOWN_REASON_SHUTDOWN,
             SHUTDOWN_REASON_REBOOT,
@@ -650,46 +716,54 @@ public final class PowerManager {
             SHUTDOWN_REASON_LOW_BATTERY,
             SHUTDOWN_REASON_BATTERY_THERMAL
     })
-    public @interface ShutdownReason {}
+    public @interface ShutdownReason {
+    }
 
     /**
      * constant for shutdown reason being unknown.
+     *
      * @hide
      */
     public static final int SHUTDOWN_REASON_UNKNOWN = 0;
 
     /**
      * constant for shutdown reason being normal shutdown.
+     *
      * @hide
      */
     public static final int SHUTDOWN_REASON_SHUTDOWN = 1;
 
     /**
      * constant for shutdown reason being reboot.
+     *
      * @hide
      */
     public static final int SHUTDOWN_REASON_REBOOT = 2;
 
     /**
      * constant for shutdown reason being user requested.
+     *
      * @hide
      */
     public static final int SHUTDOWN_REASON_USER_REQUESTED = 3;
 
     /**
      * constant for shutdown reason being overheating.
+     *
      * @hide
      */
     public static final int SHUTDOWN_REASON_THERMAL_SHUTDOWN = 4;
 
     /**
      * constant for shutdown reason being low battery.
+     *
      * @hide
      */
     public static final int SHUTDOWN_REASON_LOW_BATTERY = 5;
 
     /**
      * constant for shutdown reason being critical battery thermal state.
+     *
      * @hide
      */
     public static final int SHUTDOWN_REASON_BATTERY_THERMAL = 6;
@@ -801,7 +875,8 @@ public final class PowerManager {
             LOCATION_MODE_FOREGROUND_ONLY,
             LOCATION_MODE_THROTTLE_REQUESTS_WHEN_SCREEN_OFF,
     })
-    public @interface LocationPowerSaveMode {}
+    public @interface LocationPowerSaveMode {
+    }
 
     /** @hide */
     public static String locationPowerSaveModeToString(@LocationPowerSaveMode int mode) {
@@ -834,6 +909,8 @@ public final class PowerManager {
 
     /**
      * {@hide}
+     * 名字叫service的IPowerManager的对象是通过构造函数传入的
+     * 那么我们需要看看，构造函数是什么时候传入IPowerManager的对象
      */
     public PowerManager(Context context, IPowerManager service, Handler handler) {
         mContext = context;
@@ -845,6 +922,7 @@ public final class PowerManager {
      * Gets the minimum supported screen brightness setting.
      * The screen may be allowed to become dimmer than this value but
      * this is the minimum value that can be set by the user.
+     *
      * @hide
      */
     @UnsupportedAppUsage
@@ -857,6 +935,7 @@ public final class PowerManager {
      * Gets the maximum supported screen brightness setting.
      * The screen may be allowed to become dimmer than this value but
      * this is the maximum value that can be set by the user.
+     *
      * @hide
      */
     @UnsupportedAppUsage
@@ -867,6 +946,7 @@ public final class PowerManager {
 
     /**
      * Gets the default screen brightness setting.
+     *
      * @hide
      */
     @UnsupportedAppUsage
@@ -877,6 +957,7 @@ public final class PowerManager {
 
     /**
      * Gets the minimum supported screen brightness setting for VR Mode.
+     *
      * @hide
      */
     public int getMinimumScreenBrightnessForVrSetting() {
@@ -888,6 +969,7 @@ public final class PowerManager {
      * Gets the maximum supported screen brightness setting for VR Mode.
      * The screen may be allowed to become dimmer than this value but
      * this is the maximum value that can be set by the user.
+     *
      * @hide
      */
     public int getMaximumScreenBrightnessForVrSetting() {
@@ -897,6 +979,7 @@ public final class PowerManager {
 
     /**
      * Gets the default screen brightness for VR setting.
+     *
      * @hide
      */
     public int getDefaultScreenBrightnessForVrSetting() {
@@ -924,11 +1007,11 @@ public final class PowerManager {
      * </p><p>
      * {@samplecode
      * PowerManager pm = (PowerManager)mContext.getSystemService(
-     *                                          Context.POWER_SERVICE);
+     * Context.POWER_SERVICE);
      * PowerManager.WakeLock wl = pm.newWakeLock(
-     *                                      PowerManager.SCREEN_DIM_WAKE_LOCK
-     *                                      | PowerManager.ON_AFTER_RELEASE,
-     *                                      TAG);
+     * PowerManager.SCREEN_DIM_WAKE_LOCK
+     * | PowerManager.ON_AFTER_RELEASE,
+     * TAG);
      * wl.acquire();
      * // ... do work...
      * wl.release();
@@ -965,8 +1048,8 @@ public final class PowerManager {
      * </p>
      *
      * @param levelAndFlags Combination of wake lock level and flag values defining
-     * the requested behavior of the WakeLock.
-     * @param tag Your class name (or other tag) for debugging purposes.
+     *                      the requested behavior of the WakeLock.
+     * @param tag           Your class name (or other tag) for debugging purposes.
      *
      * @see WakeLock#acquire()
      * @see WakeLock#release()
@@ -1014,20 +1097,19 @@ public final class PowerManager {
      * Requires the {@link android.Manifest.permission#DEVICE_POWER} permission.
      * </p>
      *
-     * @param when The time of the user activity, in the {@link SystemClock#uptimeMillis()}
-     * time base.  This timestamp is used to correctly order the user activity request with
-     * other power management functions.  It should be set
-     * to the timestamp of the input event that caused the user activity.
+     * @param when           The time of the user activity, in the {@link SystemClock#uptimeMillis()}
+     *                       time base.  This timestamp is used to correctly order the user activity request with
+     *                       other power management functions.  It should be set
+     *                       to the timestamp of the input event that caused the user activity.
      * @param noChangeLights If true, does not cause the keyboard backlight to turn on
-     * because of this event.  This is set when the power key is pressed.
-     * We want the device to stay on while the button is down, but we're about
-     * to turn off the screen so we don't want the keyboard backlight to turn on again.
-     * Otherwise the lights flash on and then off and it looks weird.
-     *
-     * @see #wakeUp
-     * @see #goToSleep
+     *                       because of this event.  This is set when the power key is pressed.
+     *                       We want the device to stay on while the button is down, but we're about
+     *                       to turn off the screen so we don't want the keyboard backlight to turn on again.
+     *                       Otherwise the lights flash on and then off and it looks weird.
      *
      * @removed Requires signature or system permission.
+     * @see #wakeUp
+     * @see #goToSleep
      * @deprecated Use {@link #userActivity(long, int, int)}.
      */
     @Deprecated
@@ -1048,17 +1130,16 @@ public final class PowerManager {
      * {@link android.Manifest.permission#USER_ACTIVITY} permission.
      * </p>
      *
-     * @param when The time of the user activity, in the {@link SystemClock#uptimeMillis()}
-     * time base.  This timestamp is used to correctly order the user activity request with
-     * other power management functions.  It should be set
-     * to the timestamp of the input event that caused the user activity.
+     * @param when  The time of the user activity, in the {@link SystemClock#uptimeMillis()}
+     *              time base.  This timestamp is used to correctly order the user activity request with
+     *              other power management functions.  It should be set
+     *              to the timestamp of the input event that caused the user activity.
      * @param event The user activity event.
      * @param flags Optional user activity flags.
      *
+     * @hide Requires signature or system permission.
      * @see #wakeUp
      * @see #goToSleep
-     *
-     * @hide Requires signature or system permission.
      */
     @SystemApi
     @RequiresPermission(anyOf = {
@@ -1073,7 +1154,7 @@ public final class PowerManager {
         }
     }
 
-   /**
+    /**
      * Forces the device to go to sleep.
      * <p>
      * Overrides all the wake locks that are held.
@@ -1083,14 +1164,13 @@ public final class PowerManager {
      * </p>
      *
      * @param time The time when the request to go to sleep was issued, in the
-     * {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
-     * order the go to sleep request with other power management functions.  It should be set
-     * to the timestamp of the input event that caused the request to go to sleep.
-     *
-     * @see #userActivity
-     * @see #wakeUp
+     *             {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
+     *             order the go to sleep request with other power management functions.  It should be set
+     *             to the timestamp of the input event that caused the request to go to sleep.
      *
      * @removed Requires signature permission.
+     * @see #userActivity
+     * @see #wakeUp
      */
     public void goToSleep(long time) {
         goToSleep(time, GO_TO_SLEEP_REASON_APPLICATION, 0);
@@ -1105,17 +1185,16 @@ public final class PowerManager {
      * Requires the {@link android.Manifest.permission#DEVICE_POWER} permission.
      * </p>
      *
-     * @param time The time when the request to go to sleep was issued, in the
-     * {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
-     * order the go to sleep request with other power management functions.  It should be set
-     * to the timestamp of the input event that caused the request to go to sleep.
+     * @param time   The time when the request to go to sleep was issued, in the
+     *               {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
+     *               order the go to sleep request with other power management functions.  It should be set
+     *               to the timestamp of the input event that caused the request to go to sleep.
      * @param reason The reason the device is going to sleep.
-     * @param flags Optional flags to apply when going to sleep.
-     *
-     * @see #userActivity
-     * @see #wakeUp
+     * @param flags  Optional flags to apply when going to sleep.
      *
      * @hide Requires signature permission.
+     * @see #userActivity
+     * @see #wakeUp
      */
     @UnsupportedAppUsage
     public void goToSleep(long time, int reason, int flags) {
@@ -1136,15 +1215,14 @@ public final class PowerManager {
      * </p>
      *
      * @param time The time when the request to wake up was issued, in the
-     * {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
-     * order the wake up request with other power management functions.  It should be set
-     * to the timestamp of the input event that caused the request to wake up.
+     *             {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
+     *             order the wake up request with other power management functions.  It should be set
+     *             to the timestamp of the input event that caused the request to wake up.
      *
+     * @removed Requires signature permission.
      * @see #userActivity
      * @see #goToSleep
-     *
      * @deprecated Use {@link #wakeUp(long, int, String)} instead.
-     * @removed Requires signature permission.
      */
     @Deprecated
     public void wakeUp(long time) {
@@ -1160,19 +1238,17 @@ public final class PowerManager {
      * Requires the {@link android.Manifest.permission#DEVICE_POWER} permission.
      * </p>
      *
-     * @param time The time when the request to wake up was issued, in the
-     * {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
-     * order the wake up request with other power management functions.  It should be set
-     * to the timestamp of the input event that caused the request to wake up.
-     *
+     * @param time    The time when the request to wake up was issued, in the
+     *                {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
+     *                order the wake up request with other power management functions.  It should be set
+     *                to the timestamp of the input event that caused the request to wake up.
      * @param details A free form string to explain the specific details behind the wake up for
      *                debugging purposes.
      *
+     * @hide
      * @see #userActivity
      * @see #goToSleep
-     *
      * @deprecated Use {@link #wakeUp(long, int, String)} instead.
-     * @hide
      */
     @UnsupportedAppUsage
     @Deprecated
@@ -1189,19 +1265,17 @@ public final class PowerManager {
      * Requires the {@link android.Manifest.permission#DEVICE_POWER} permission.
      * </p>
      *
-     * @param time The time when the request to wake up was issued, in the
-     * {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
-     * order the wake up request with other power management functions.  It should be set
-     * to the timestamp of the input event that caused the request to wake up.
-     *
-     * @param reason The reason for the wake up.
-     *
+     * @param time    The time when the request to wake up was issued, in the
+     *                {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
+     *                order the wake up request with other power management functions.  It should be set
+     *                to the timestamp of the input event that caused the request to wake up.
+     * @param reason  The reason for the wake up.
      * @param details A free form string to explain the specific details behind the wake up for
      *                debugging purposes.
      *
+     * @hide
      * @see #userActivity
      * @see #goToSleep
-     * @hide
      */
     public void wakeUp(long time, @WakeReason int reason, String details) {
         try {
@@ -1223,14 +1297,13 @@ public final class PowerManager {
      * </p>
      *
      * @param time The time when the request to nap was issued, in the
-     * {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
-     * order the nap request with other power management functions.  It should be set
-     * to the timestamp of the input event that caused the request to nap.
-     *
-     * @see #wakeUp
-     * @see #goToSleep
+     *             {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
+     *             order the nap request with other power management functions.  It should be set
+     *             to the timestamp of the input event that caused the request to nap.
      *
      * @hide Requires signature permission.
+     * @see #wakeUp
+     * @see #goToSleep
      */
     public void nap(long time) {
         try {
@@ -1252,16 +1325,16 @@ public final class PowerManager {
      * </p>
      *
      * @param time The time when the request to nap was issued, in the
-     * {@link SystemClock#uptimeMillis()} time base.  This timestamp may be used to correctly
-     * order the dream request with other power management functions.  It should be set
-     * to the timestamp of the input event that caused the request to dream.
+     *             {@link SystemClock#uptimeMillis()} time base.  This timestamp may be used to correctly
+     *             order the dream request with other power management functions.  It should be set
+     *             to the timestamp of the input event that caused the request to dream.
      *
      * @hide
      */
     @SystemApi
     @RequiresPermission(allOf = {
             android.Manifest.permission.READ_DREAM_STATE,
-            android.Manifest.permission.WRITE_DREAM_STATE })
+            android.Manifest.permission.WRITE_DREAM_STATE})
     public void dream(long time) {
         Sandman.startDreamByUserRequest(mContext);
     }
@@ -1275,9 +1348,9 @@ public final class PowerManager {
      * </p>
      *
      * @param time The time when the request to boost was issued, in the
-     * {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
-     * order the boost request with other power management functions.  It should be set
-     * to the timestamp of the input event that caused the request to boost.
+     *             {@link SystemClock#uptimeMillis()} time base.  This timestamp is used to correctly
+     *             order the boost request with other power management functions.  It should be set
+     *             to the timestamp of the input event that caused the request to boost.
      *
      * @hide Requires signature permission.
      */
@@ -1292,21 +1365,24 @@ public final class PowerManager {
     /**
      * Returns whether the screen brightness is currently boosted to maximum, caused by a call
      * to {@link #boostScreenBrightness(long)}.
+     *
      * @return {@code True} if the screen brightness is currently boosted. {@code False} otherwise.
      *
-     * @deprecated This call is rarely used and will be phased out soon.
      * @hide
      * @removed
+     * @deprecated This call is rarely used and will be phased out soon.
      */
-    @SystemApi @Deprecated
+    @SystemApi
+    @Deprecated
     public boolean isScreenBrightnessBoosted() {
         return false;
     }
 
-   /**
+    /**
      * Returns true if the specified wake lock level is supported.
      *
      * @param level The wake lock level to check.
+     *
      * @return True if the specified wake lock level is supported.
      */
     public boolean isWakeLockLevelSupported(int level) {
@@ -1318,22 +1394,22 @@ public final class PowerManager {
     }
 
     /**
-      * Returns true if the device is in an interactive state.
-      * <p>
-      * For historical reasons, the name of this method refers to the power state of
-      * the screen but it actually describes the overall interactive state of
-      * the device.  This method has been replaced by {@link #isInteractive}.
-      * </p><p>
-      * The value returned by this method only indicates whether the device is
-      * in an interactive state which may have nothing to do with the screen being
-      * on or off.  To determine the actual state of the screen,
-      * use {@link android.view.Display#getState}.
-      * </p>
-      *
-      * @return True if the device is in an interactive state.
-      *
-      * @deprecated Use {@link #isInteractive} instead.
-      */
+     * Returns true if the device is in an interactive state.
+     * <p>
+     * For historical reasons, the name of this method refers to the power state of
+     * the screen but it actually describes the overall interactive state of
+     * the device.  This method has been replaced by {@link #isInteractive}.
+     * </p><p>
+     * The value returned by this method only indicates whether the device is
+     * in an interactive state which may have nothing to do with the screen being
+     * on or off.  To determine the actual state of the screen,
+     * use {@link android.view.Display#getState}.
+     * </p>
+     *
+     * @return True if the device is in an interactive state.
+     *
+     * @deprecated Use {@link #isInteractive} instead.
+     */
     @Deprecated
     public boolean isScreenOn() {
         return isInteractive();
@@ -1370,11 +1446,16 @@ public final class PowerManager {
      *
      * @return True if the device is in an interactive state.
      *
+     * PowerManger.java中的isScreenOn最终会调用 mService.isInteractive()；这里的mService是什么呢？？？
+     *
+     *
      * @see android.content.Intent#ACTION_SCREEN_ON
      * @see android.content.Intent#ACTION_SCREEN_OFF
      */
     public boolean isInteractive() {
         try {
+            // mService 是IPowerManager 对象；
+            // 这里根据名字我们就知道IPowerManager是通过AIDL生成的代码，可以在Android Studio中查找；找到：
             return mService.isInteractive();
         } catch (RemoteException e) {
             throw e.rethrowFromSystemServer();
@@ -1403,6 +1484,7 @@ public final class PowerManager {
      * <p>
      * Requires the {@link android.Manifest.permission#REBOOT} permission.
      * </p>
+     *
      * @hide
      */
     public void rebootSafeMode() {
@@ -1472,14 +1554,15 @@ public final class PowerManager {
      * <p>The threshold is meant to set an explicit stopping point for dynamic power savings
      * functionality so that the dynamic power savings itself remains a signal rather than becoming
      * an on/off switch for a subset of features.
-     * @hide
      *
-     * @param powerSaveHint A signal indicating to the system if it believes the
-     * dynamic power savings behaviors should be activated.
+     * @param powerSaveHint    A signal indicating to the system if it believes the
+     *                         dynamic power savings behaviors should be activated.
      * @param disableThreshold When the suggesting app believes it would be safe to disable dynamic
-     * power savings behaviors.
+     *                         power savings behaviors.
+     *
      * @return True if the update was allowed and succeeded.
      *
+     * @hide
      * @hide
      */
     @SystemApi
@@ -1497,7 +1580,7 @@ public final class PowerManager {
      * Sets the policy for adaptive power save.
      *
      * @return true if there was an effectual change. If full battery saver is enabled or the
-     * adaptive policy is not enabled, then this will return false.
+     *         adaptive policy is not enabled, then this will return false.
      *
      * @hide
      */
@@ -1518,7 +1601,7 @@ public final class PowerManager {
      * Enables or disables adaptive power save.
      *
      * @return true if there was an effectual change. If full battery saver is enabled, then this
-     * will return false.
+     *         will return false.
      *
      * @hide
      */
@@ -1538,9 +1621,8 @@ public final class PowerManager {
     /**
      * Indicates automatic battery saver toggling by the system will be based on percentage.
      *
+     * @hide
      * @see PowerManager#getPowerSaveModeTrigger()
-     *
-     *  @hide
      */
     @SystemApi
     @TestApi
@@ -1550,10 +1632,9 @@ public final class PowerManager {
      * Indicates automatic battery saver toggling by the system will be based on the state
      * of the dynamic power savings signal.
      *
+     * @hide
      * @see PowerManager#setDynamicPowerSaveHint(boolean, int)
      * @see PowerManager#getPowerSaveModeTrigger()
-     *
-     *  @hide
      */
     @SystemApi
     @TestApi
@@ -1562,11 +1643,12 @@ public final class PowerManager {
     /** @hide */
     @Retention(RetentionPolicy.SOURCE)
     @IntDef(value = {
-        POWER_SAVE_MODE_TRIGGER_PERCENTAGE,
-        POWER_SAVE_MODE_TRIGGER_DYNAMIC
+            POWER_SAVE_MODE_TRIGGER_PERCENTAGE,
+            POWER_SAVE_MODE_TRIGGER_DYNAMIC
 
     })
-    public @interface AutoPowerSaveModeTriggers {}
+    public @interface AutoPowerSaveModeTriggers {
+    }
 
 
     /**
@@ -1575,9 +1657,9 @@ public final class PowerManager {
      *
      * @return The current value power saver mode for the system.
      *
+     * @hide
      * @see AutoPowerSaveModeTriggers
      * @see PowerManager#getPowerSaveModeTrigger()
-     * @hide
      */
     @AutoPowerSaveModeTriggers
     @SystemApi
@@ -1593,7 +1675,9 @@ public final class PowerManager {
 
     /**
      * Get data about the battery saver mode for a specific service
+     *
      * @param serviceType unique key for the service, one of {@link ServiceType}
+     *
      * @return Battery saver state data.
      *
      * @hide
@@ -1634,9 +1718,9 @@ public final class PowerManager {
      * {@link #ACTION_DEVICE_IDLE_MODE_CHANGED}.
      *
      * @return Returns true if currently in active device idle mode, else false.  This is
-     * when idle mode restrictions are being actively applied; it will return false if the
-     * device is in a long-term idle mode but currently running a maintenance window where
-     * restrictions have been lifted.
+     *         when idle mode restrictions are being actively applied; it will return false if the
+     *         device is in a long-term idle mode but currently running a maintenance window where
+     *         restrictions have been lifted.
      */
     public boolean isDeviceIdleMode() {
         try {
@@ -1653,9 +1737,10 @@ public final class PowerManager {
      * this state with {@link #ACTION_LIGHT_DEVICE_IDLE_MODE_CHANGED}.
      *
      * @return Returns true if currently in active light device idle mode, else false.  This is
-     * when light idle mode restrictions are being actively applied; it will return false if the
-     * device is in a long-term idle mode but currently running a maintenance window where
-     * restrictions have been lifted.
+     *         when light idle mode restrictions are being actively applied; it will return false if the
+     *         device is in a long-term idle mode but currently running a maintenance window where
+     *         restrictions have been lifted.
+     *
      * @hide
      */
     @UnsupportedAppUsage
@@ -1690,8 +1775,8 @@ public final class PowerManager {
      * Turn off the device.
      *
      * @param confirm If true, shows a shutdown confirmation dialog.
-     * @param reason code to pass to android_reboot() (e.g. "userrequested"), or null.
-     * @param wait If true, this call waits for the shutdown to complete and does not return.
+     * @param reason  code to pass to android_reboot() (e.g. "userrequested"), or null.
+     * @param wait    If true, this call waits for the shutdown to complete and does not return.
      *
      * @hide
      */
@@ -1760,7 +1845,7 @@ public final class PowerManager {
     public static final int THERMAL_STATUS_SHUTDOWN = Temperature.THROTTLING_SHUTDOWN;
 
     /** @hide */
-    @IntDef(prefix = { "THERMAL_STATUS_" }, value = {
+    @IntDef(prefix = {"THERMAL_STATUS_"}, value = {
             THERMAL_STATUS_NONE,
             THERMAL_STATUS_LIGHT,
             THERMAL_STATUS_MODERATE,
@@ -1770,15 +1855,17 @@ public final class PowerManager {
             THERMAL_STATUS_SHUTDOWN,
     })
     @Retention(RetentionPolicy.SOURCE)
-    public @interface ThermalStatus {}
+    public @interface ThermalStatus {
+    }
 
     /**
      * This function returns the current thermal status of the device.
      *
      * @return thermal status as int, {@link #THERMAL_STATUS_NONE} if device in not under
-     * thermal throttling.
+     *         thermal throttling.
      */
-    public @ThermalStatus int getCurrentThermalStatus() {
+    public @ThermalStatus
+    int getCurrentThermalStatus() {
         synchronized (this) {
             if (mThermalService == null) {
                 mThermalService = IThermalService.Stub.asInterface(
@@ -1803,6 +1890,7 @@ public final class PowerManager {
 
         /**
          * Called when overall thermal throttling status changed.
+         *
          * @param status defined in {@link android.os.Temperature}.
          */
         void onThermalStatusChanged(@ThermalStatus int status);
@@ -1833,7 +1921,7 @@ public final class PowerManager {
      * @param listener listener to be added.
      */
     public void addThermalStatusListener(@NonNull @CallbackExecutor Executor executor,
-            @NonNull OnThermalStatusChangedListener listener) {
+                                         @NonNull OnThermalStatusChangedListener listener) {
         Preconditions.checkNotNull(listener, "listener cannot be null");
         Preconditions.checkNotNull(executor, "executor cannot be null");
         synchronized (this) {
@@ -1897,6 +1985,7 @@ public final class PowerManager {
     /**
      * If true, the doze component is not started until after the screen has been
      * turned off and the screen off animation has been performed.
+     *
      * @hide
      */
     public void setDozeAfterScreenOff(boolean dozeAfterScreenOf) {
@@ -1910,8 +1999,10 @@ public final class PowerManager {
     /**
      * Returns the reason the phone was last shutdown. Calling app must have the
      * {@link android.Manifest.permission#DEVICE_POWER} permission to request this information.
+     *
      * @return Reason for shutdown as an int, {@link #SHUTDOWN_REASON_UNKNOWN} if the file could
-     * not be accessed.
+     *         not be accessed.
+     *
      * @hide
      */
     @ShutdownReason
@@ -1953,6 +2044,7 @@ public final class PowerManager {
      * </p>
      *
      * @return true on success, false otherwise.
+     *
      * @hide
      */
     @SystemApi
@@ -1975,6 +2067,7 @@ public final class PowerManager {
 
     /**
      * Intent that is broadcast when the state of {@link #isPowerSaveMode()} changes.
+     *
      * @hide
      */
     @SdkConstant(SdkConstant.SdkConstantType.BROADCAST_INTENT_ACTION)
@@ -1992,6 +2085,7 @@ public final class PowerManager {
     /**
      * Intent that is broadcast when the state of {@link #isLightDeviceIdleMode()} changes.
      * This broadcast is only sent to registered receivers.
+     *
      * @hide
      */
     @UnsupportedAppUsage
@@ -2001,7 +2095,7 @@ public final class PowerManager {
 
     /**
      * @hide Intent that is broadcast when the set of power save whitelist apps has changed.
-     * This broadcast is only sent to registered receivers.
+     *         This broadcast is only sent to registered receivers.
      */
     @SdkConstant(SdkConstant.SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_POWER_SAVE_WHITELIST_CHANGED
@@ -2009,7 +2103,7 @@ public final class PowerManager {
 
     /**
      * @hide Intent that is broadcast when the set of temporarily whitelisted apps has changed.
-     * This broadcast is only sent to registered receivers.
+     *         This broadcast is only sent to registered receivers.
      */
     @SdkConstant(SdkConstant.SdkConstantType.BROADCAST_INTENT_ACTION)
     public static final String ACTION_POWER_SAVE_TEMP_WHITELIST_CHANGED
@@ -2034,16 +2128,18 @@ public final class PowerManager {
      * Intent that is broadcast when the state of {@link #isScreenBrightnessBoosted()} has changed.
      * This broadcast is only sent to registered receivers.
      *
-     * @deprecated This intent is rarely used and will be phased out soon.
      * @hide
      * @removed
+     * @deprecated This intent is rarely used and will be phased out soon.
      **/
-    @SystemApi @Deprecated
+    @SystemApi
+    @Deprecated
     public static final String ACTION_SCREEN_BRIGHTNESS_BOOST_CHANGED
             = "android.os.action.SCREEN_BRIGHTNESS_BOOST_CHANGED";
 
     /**
      * Constant for PreIdleTimeout normal mode (default mode, not short nor extend timeout) .
+     *
      * @hide
      */
     public static final int PRE_IDLE_TIMEOUT_MODE_NORMAL = 0;
@@ -2051,12 +2147,14 @@ public final class PowerManager {
     /**
      * Constant for PreIdleTimeout long mode (extend timeout to keep in inactive mode
      * longer).
+     *
      * @hide
      */
     public static final int PRE_IDLE_TIMEOUT_MODE_LONG = 1;
 
     /**
      * Constant for PreIdleTimeout short mode (short timeout to go to doze mode quickly)
+     *
      * @hide
      */
     public static final int PRE_IDLE_TIMEOUT_MODE_SHORT = 2;
@@ -2132,7 +2230,7 @@ public final class PowerManager {
          * </p>
          *
          * @param value True to make the wake lock reference counted, false to
-         * make the wake lock non-reference counted.
+         *              make the wake lock non-reference counted.
          */
         public void setReferenceCounted(boolean value) {
             synchronized (mToken) {
@@ -2213,8 +2311,8 @@ public final class PowerManager {
          * </p>
          *
          * @param flags Combination of flag values to modify the release behavior.
-         * Currently only {@link #RELEASE_FLAG_WAIT_FOR_NO_PROXIMITY} is supported.
-         * Passing 0 is equivalent to calling {@link #release()}.
+         *              Currently only {@link #RELEASE_FLAG_WAIT_FOR_NO_PROXIMITY} is supported.
+         *              Passing 0 is equivalent to calling {@link #release()}.
          */
         public void release(int flags) {
             synchronized (mToken) {
@@ -2328,8 +2426,8 @@ public final class PowerManager {
         public String toString() {
             synchronized (mToken) {
                 return "WakeLock{"
-                    + Integer.toHexString(System.identityHashCode(this))
-                    + " held=" + mHeld + ", refCount=" + mInternalCount + "}";
+                        + Integer.toHexString(System.identityHashCode(this))
+                        + " held=" + mHeld + ", refCount=" + mInternalCount + "}";
             }
         }
 
@@ -2362,7 +2460,7 @@ public final class PowerManager {
          * </pre>
          *
          * <p>Note: you must make sure that the Runnable eventually gets executed, otherwise you'll
-         *    leak the wakelock!
+         * leak the wakelock!
          *
          * @hide
          */

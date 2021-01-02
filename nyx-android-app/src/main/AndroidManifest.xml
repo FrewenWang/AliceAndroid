@@ -82,7 +82,9 @@
         <activity android:name=".logic.samples.view.CollapsingToolbarLayoutActivity" />
         <activity android:name=".logic.samples.view.CoordinatorLayoutActivity" />
         <activity android:name=".logic.samples.gson.GsonDemoActivity" />
-        <activity android:name=".logic.samples.androidapi.SecondActivity" />
+        <activity
+            android:name=".logic.samples.androidapi.SecondActivity"
+            android:theme="@style/AppTheme.NotFullScreenActivity" />
         <activity android:name=".logic.samples.androidapi.ActivityDemoActivity" />
         <activity android:name=".logic.samples.view.ConstraintLayoutDemoActivity" />
         <activity android:name=".logic.samples.view.RecyclerViewDemoActivity" />

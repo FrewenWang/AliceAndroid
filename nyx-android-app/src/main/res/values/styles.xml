@@ -48,6 +48,17 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <!-- 定义这个是非全屏的Activity的主题 -->
+    <!--android:windowCloseOnTouchOutside：点击activity窗口之外时，是否关闭activity-->
+    <!--android:windowNoTitle：是否有标题栏；-->
+    <!--android:windowIsFloating：是否悬浮在其他activity之上；这里必须要设置为true，-->
+    <!--否则activity显示的时候，窗口虽然不是全屏，但是背景窗口任然是全屏的；-->
+    <style name="AppTheme.NotFullScreenActivity" parent="android:style/Theme.Dialog">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
     <!--启动页面的布局Style。主要解决启动速度过慢的问题-->
     <style name="AppTheme.Splash" parent="AppTheme.FullScreen">
         <item name="android:windowBackground">@color/color_common_bg</item>

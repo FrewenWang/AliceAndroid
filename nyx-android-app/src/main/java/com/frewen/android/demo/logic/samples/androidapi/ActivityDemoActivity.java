@@ -1,15 +1,14 @@
 package com.frewen.android.demo.logic.samples.androidapi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.frewen.android.demo.R;
+import com.frewen.aura.framework.ui.BaseActivity;
 
-public class ActivityDemoActivity extends AppCompatActivity {
+public class ActivityDemoActivity extends BaseActivity {
 
     private static final int REQUEST_CODE = 10000;
     private TextView mTvShow;

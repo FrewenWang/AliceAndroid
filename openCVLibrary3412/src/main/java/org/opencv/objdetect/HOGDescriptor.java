@@ -271,7 +271,7 @@ public class HOGDescriptor {
     //
 
     /**
-     * Returns coefficients of the classifier trained for people detection (for 48x96 windows).
+     * Returns coefficients of the classifier trained for People detection (for 48x96 windows).
      * @return automatically generated
      */
     public static MatOfFloat getDaimlerPeopleDetector() {
@@ -284,7 +284,7 @@ public class HOGDescriptor {
     //
 
     /**
-     * Returns coefficients of the classifier trained for people detection (for 64x128 windows).
+     * Returns coefficients of the classifier trained for People detection (for 64x128 windows).
      * @return automatically generated
      */
     public static MatOfFloat getDefaultPeopleDetector() {

@@ -26,7 +26,7 @@ SCRIPT_ABS_PATH=`cd "$SCRIPT_DIR"; pwd`
 echo "enter pre-commit dir:$SCRIPT_DIR"
 
 # 执行脚本 gradlew -P checkCommit="true" checkstyle --stacktrace
-${SCRIPT_ABS_PATH}/../../gradlew  -P checkCommit="true" checkstyle
+# ${SCRIPT_ABS_PATH}/../../gradlew  -P checkCommit="true" checkstyle
 
 # 进入这个目录.-e 是开启转义。执行换行操作
 # echo -e "\n check commit result:$?"

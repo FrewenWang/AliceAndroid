@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.frewen.android.demo.R;
 
@@ -28,8 +30,10 @@ public class HelloJNIActivity extends AppCompatActivity {
     /**
      * 加载loadLibrary
      * 用于在应用程序启动时加载“ hello-jni”库。
+     * 用于在应用程序启动时加载"dynamic-register-jni"库。
      */
     static {
+        System.loadLibrary("dynamic-register-jni");
         System.loadLibrary("hello-jni");
     }
 
@@ -38,11 +42,21 @@ public class HelloJNIActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hello_jni);
 
+        TextView basicTv = findViewById(R.id.jniBasicType);
+        basicTv.setText("基础数据类型：jint:" + JniBasicType.callNativeInt(1)
+                + ", jbyte:" + JniBasicType.callNativeByte((byte) 2)
+                + ", jchar:" + JniBasicType.callNativeChar((char) 3)
+                + ", jshort:" + JniBasicType.callNativeShort((short) 4)
+                + ", jlong:" + JniBasicType.callNativeLong(5)
+                + ", jfloat:" + JniBasicType.callNativeFloat(6.0f)
+                + ", jdouble:" + JniBasicType.callNativeDouble(7.0)
+                + ", jboolean:" + JniBasicType.callNativeBoolean(true));
+
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
         String msg = stringFromJNI();
         Log.d("HelloJNIActivity", msg);
-        tv.setText(secondStringFromJNI2("hello"));
+        tv.setText(stringFromJNI2("hello"));
 
         TextView tv2 = findViewById(R.id.textView2);
         tv2.setText(stringFromJNIUser("hello"));
@@ -50,7 +64,7 @@ public class HelloJNIActivity extends AppCompatActivity {
 
 
     /**
-     * A native method that is implemented by the 'native-lib' native library,
+     * A native method that is implemented by the 'hello-jni' native library,
      * which is packaged with this application.
      * 创建本地方法，标记这个一个C或者C++方法
      */
@@ -58,18 +72,23 @@ public class HelloJNIActivity extends AppCompatActivity {
 
     public native String stringFromJNI2(String msg);
 
-
     /**
-     * 第二种Java调用C/C++的方法
-     *
-     * RegisterNative
-     */
-    public native String secondStringFromJNI2(String msg);
-
-    /**
-     *
      * @param msg
      */
     public native String stringFromJNIUser(String msg);
 
+    // =======================动态加载NativeMethods ============================================
+    public void dynamicLoadMethods(View view) {
+        int result = nativeAddVariable(2, 3);
+        String msg = getDynamicMsg();
+        Toast.makeText(this, msg + ", 结果：" + result, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 通过使用env->RegisterNatives(jClazz, methods, nMethods)
+     * 来进行动态注册的NativeMethods
+     */
+    public native int nativeAddVariable(int x, int y);
+
+    public native String getDynamicMsg();
 }

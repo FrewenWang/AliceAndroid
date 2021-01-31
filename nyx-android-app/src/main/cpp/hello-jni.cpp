@@ -1,24 +1,33 @@
 #include <jni.h>
 #include <string>
 
+// 双引号是从相对路径进行搜索
+//#include "people/People.h"
+// 而尖括号是从全局搜索路径进行搜索.因为我们已经通过
+// include_directories(people/) 将其加入到全局搜索目录下面，所以就可以直接使用尖括号
+# include <People.h>
+
 // 定义JNI的Class的Path
 #define JNI_CLASS_PATH "com/frewen/android/demo/logic/samples/jni/HelloJNIActivity"
 
-extern "C" JNIEXPORT jstring JNICALL
+
+// ==============================Java调用C++的方法，静态加载方法=============================================
+//静态的方法弊端就是每个方法都要记上尝尝的包名限定
 /**
  * Java虚拟机调用Native方法，会传入两个对象
  * 命名规则：Java_包名_类名_方法名
  * @param env
- * @return
  */
-Java_com_frewen_android_demo_samples_jni_HelloJNIActivity_stringFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+extern "C"   //添加这句话表示我们想让这个方法按照C编译的方法进行编译
+JNIEXPORT jstring JNICALL   //
+Java_com_frewen_android_demo_logic_samples_jni_HelloJNIActivity_stringFromJNI(JNIEnv *env,
+                                                                              jobject /* this */) {
+    // 实例化一个Hello的字符串
+    // std::string hello = "Hello from C++";
+    // 我们这个HelloJni和Native的People关联之后，我们就可以访问C++的代码
+    People people;
+    return env->NewStringUTF(people.getStringMsg().c_str());
 }
-
-extern "C" JNIEXPORT jstring JNICALL
 
 /**
  * Java虚拟机调用Native方法，会传入两个对象
@@ -28,69 +37,21 @@ extern "C" JNIEXPORT jstring JNICALL
  * @param msg   入参，Msg消息
  * @return
  */
-Java_com_frewen_android_demo_samples_jni_HelloJNIActivity_stringFromJNI2(JNIEnv *env, jobject thiz,
-                                                                         jstring msg) {
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_frewen_android_demo_logic_samples_jni_HelloJNIActivity_stringFromJNI2(JNIEnv *env, jobject thiz,
+                                                                               jstring msg) {
     const char *str = env->GetStringUTFChars(msg, 0);
 
     return env->NewStringUTF(str);
 }
 
-
-
-extern "C" JNIEXPORT jstring JNICALL
-second_StringFromJNI2(JNIEnv *env, jobject thiz, jstring msg) {
-    // TODO: implement secondStringFromJNI2()
-
-    return env->NewStringUTF("this is the second method to call JNI");
-}
-
-// // 括号里面是输入参数，括号外面是输出参数
-/**
- * 什么是signature??
- * Java与C或者C++相互调用的时候的表示函数的参数的描述符
- * 输入参数放在括号()中,出书参数放在括号外边
- * 多个参数之前顺序存放，使用分号隔开
- *
- * 原始类型的Signature
- * boolean      Z
- * byte         B
- * char         C
- * short        S
- * int          I
- * long         L
- * float        F
- * double       D
- * void         V
- *
- * 类的Signature
- * Java对象参数 "L包路径/类名"  举例：(Ljava/lang/String;)Ljava/lang/String;
- * Java数组    "["   举例：([Student;)[Lstudent;  -> Student[]  Xxx(Student[])
- */
-static JNINativeMethod g_methods[] = {
-        {
-                "secondStringFromJNI2",
-                "(Ljava/lang/String;)Ljava/lang/String;",
-                (void *) second_StringFromJNI2
-        }
-};
-
-jint JNI_OnLoad(JavaVM *vm, void *revered) {
-    JNIEnv *env = NULL;
-    vm->GetEnv((void **) &env, JNI_VERSION_1_6);
-    // 找到Java层的类对象
-    jclass clazz = env->FindClass(JNI_CLASS_PATH);
-    // 方法映射表
-    env->RegisterNatives(clazz, g_methods, sizeof(g_methods) / sizeof(g_methods[0]));
-    return JNI_VERSION_1_6;
-}
-
-
 // ===============C/C++ 调用Java的方法=================
 #define JNI_USER_PATH  "com/frewen/android/demo/logic/model/User"
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_frewen_android_demo_samples_jni_HelloJNIActivity_stringFromJNIUser(JNIEnv *env,
-                                                                            jobject thiz,
-                                                                            jstring msg) {
+Java_com_frewen_android_demo_logic_samples_jni_HelloJNIActivity_stringFromJNIUser(JNIEnv *env,
+                                                                                  jobject thiz,
+                                                                                  jstring msg) {
     //步骤一： 找到User类的全路径名获取Class
     jclass userClass = env->FindClass(JNI_USER_PATH);
     // 步骤二：获取User类的构造方法
@@ -118,6 +79,3 @@ Java_com_frewen_android_demo_samples_jni_HelloJNIActivity_stringFromJNIUser(JNIE
     hello.append(tmp);
     return env->NewStringUTF(hello.c_str());
 }
-
-
-

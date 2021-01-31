@@ -62,10 +62,10 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
-        // 导入CMake构建
+        // 导入CMake构建。声明C++的版本号
         externalNativeBuild {
             cmake {
-                cppFlags ""
+                cppFlags "-std=c++17"
             }
         }
 
@@ -108,10 +108,13 @@ android {
             versionNameSuffix '-debug'//versionName 中添加了一个后缀，一般使用的不多
         }
 
+        // 其实这个地方就是告知Gradle的进行Cmake编译的路径和版本号
+        // 具体怎么编译是CMakeList的事情
         externalNativeBuild {
             cmake {
                 path "src/main/cpp/CMakeLists.txt"  //构建脚本的路径
-                version "3.10.2"                    //CMake的版本
+                // version "3.10.2"                    //CMake的版本
+                version "3.6.0"                    //CMake的版本
             }
         }
     }

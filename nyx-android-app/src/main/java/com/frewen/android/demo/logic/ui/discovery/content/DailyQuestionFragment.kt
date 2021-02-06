@@ -21,27 +21,25 @@ import kotlinx.android.synthetic.main.layout_include_common_recyclerview.*
  *      每日一答的Fragment的实现逻辑。
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class DailyQuestionFragment : BaseDataBindingFragment<FragmentMainMyProfileBinding, DailyQuestionViewModel>() {
-
+class DailyQuestionFragment : BaseDataBindingFragment<DailyQuestionViewModel, FragmentMainMyProfileBinding>() {
+    
     private val dailyQuestionAdapter: DailyQuestionAdapter by lazy {
         DailyQuestionAdapter(
                 arrayListOf(), showTag = true
         )
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         initView(savedInstanceState)
     }
-
-    override fun getViewModelClass(): Class<DailyQuestionViewModel> = DailyQuestionViewModel::class.java
-
+    
     override fun getLayoutId(): Int {
         return R.layout.fragment_daily_question
     }
-
-
+    
+    
     /**
      * 初始化View的相关逻辑
      */
@@ -50,8 +48,8 @@ class DailyQuestionFragment : BaseDataBindingFragment<FragmentMainMyProfileBindi
         recyclerView.init(LinearLayoutManager(context), dailyQuestionAdapter)?.let {
             it.addItemDecoration(DividerItemDecoration(0, DisplayHelper.dip2px(8f)))
         }
-
+        
         viewModel.requestDailyQuestionData();
     }
-
+    
 }

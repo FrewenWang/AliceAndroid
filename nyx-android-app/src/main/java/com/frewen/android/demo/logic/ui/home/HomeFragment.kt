@@ -31,33 +31,27 @@ class HomeFragment() : BaseRecyclerViewDataBindingFragment<Post, HomeViewModel>(
      */
     private lateinit var playDetector: PageListPlayerDetector
     private var feedType: String? = null
-
-
+    
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         playDetector = PageListPlayerDetector(this, mRecyclerView)
         viewModel.setFeedType(feedType)
-
+        
         // 这个地方直接传入this.在Kotlin里面是不行的
         // 后面是我们实例化的Observer对象
         viewModel.getCacheLiveData().observe(viewLifecycleOwner, Observer<PagedList<Post>> { posts ->
             submitList(posts)
         })
     }
-
-
-    override fun getViewModelClass(): Class<HomeViewModel> {
-        return HomeViewModel::class.java
-    }
-
-
+    
     override fun onRefresh(refreshLayout: RefreshLayout) {
         TODO("Not yet implemented")
     }
-
+    
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         TODO("Not yet implemented")
     }
-
+    
     /**
      * 获取PagedList的Adapter
      */

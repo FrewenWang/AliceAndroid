@@ -28,23 +28,23 @@ import javax.inject.Inject
  *
  */
 class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavigationView.OnNavigationItemSelectedListener {
-
+    
     companion object {
         private const val TAG = "HomeActivity"
     }
-
+    
     private lateinit var navController: NavController
-
-
+    
+    
     private var lastBackClickTime: Long = 0
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        
         // setContentView(R.layout.activity_home)
         // 如果，这个页面也使用DataBinding的的布局,则使用下面的布局setContentView方式
         DataBindingUtil.setContentView<ActivityHomeBinding>(this, R.layout.activity_home)
-
+        
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navController = findNavController(R.id.nav_host_fragment)
         // 配置AppBar的配置
@@ -54,34 +54,27 @@ class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavi
         //       R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_profile))
         // setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
+        
         navView.setOnNavigationItemSelectedListener(this)
         // 使用我们自己的NavGraph
         NavGraphBuilder.build(navController, this, R.id.nav_host_fragment)
-
-        // 这个是测试BlockCanary的卡顿问题的解决
-//        try {
-//            Thread.sleep(600)
-//        } catch (e: InterruptedException) {
-//            e.printStackTrace()
-//        }
     }
-
+    
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Log.i(TAG, "item == " + item.itemId)
         navController.navigate(item.itemId)
         return !TextUtils.isEmpty(item.title)
     }
-
-
+    
+    
     /**
      * 表明有Fragment需要注入
      */
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
+    
     override fun supportFragmentInjector() = dispatchingAndroidInjector
-
+    
     /**
      * 点击HomeActivity的的返回键的点击两次退出页面
      */

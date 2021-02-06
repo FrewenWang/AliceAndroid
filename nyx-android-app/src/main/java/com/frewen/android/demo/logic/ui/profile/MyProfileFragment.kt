@@ -7,12 +7,8 @@ import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 
 @FragmentDestination(pageUrl = "main/tabs/myProfile", asStarter = false)
-class MyProfileFragment : BaseDataBindingFragment<FragmentMainMyProfileBinding, MyProfileViewModel>(), Injectable {
-
-    override fun getViewModelClass(): Class<MyProfileViewModel> {
-        return MyProfileViewModel::class.java
-    }
-
+class MyProfileFragment : BaseDataBindingFragment<MyProfileViewModel, FragmentMainMyProfileBinding>(), Injectable {
+    
     override fun getLayoutId(): Int {
         return R.layout.fragment_main_my_profile
     }

@@ -33,7 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public abstract class BaseRecyclerViewDataBindingFragment<Data, VM extends BasePagedListViewModel<Data>>
-        extends BaseDataBindingFragment<FragmentRefreshRecylerViewBinding, VM> implements OnRefreshListener, OnLoadMoreListener {
+        extends BaseDataBindingFragment<VM,FragmentRefreshRecylerViewBinding> implements OnRefreshListener, OnLoadMoreListener {
 
     protected RecyclerView mRecyclerView;
     private SmartRefreshLayout mRefreshLayout;

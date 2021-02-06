@@ -4,10 +4,10 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import com.frewen.aura.framework.mvvm.vm.BaseViewModel
 import com.frewen.aura.framework.ui.BaseActivity
 import com.frewen.demo.library.mvvm.viewmodel.getViewModelClass
 import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
-import com.frewen.demo.library.viewmodel.BaseViewModel
 
 /**
  * @filename: BaseDataBindingFragment
@@ -19,13 +19,13 @@ import com.frewen.demo.library.viewmodel.BaseViewModel
  * @version: 1.0.1
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-abstract class BaseDataBindingActivity<VDB : ViewDataBinding, VM : BaseViewModel> : BaseActivity() {
-
+abstract class BaseDataBindingActivity<VM : BaseViewModel, VDB : ViewDataBinding> : BaseActivity() {
+    
     lateinit var mViewModel: VM
-
+    
     lateinit var mDataBinding: VDB
-
-
+    
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 创建ViewDataBinding
@@ -33,25 +33,26 @@ abstract class BaseDataBindingActivity<VDB : ViewDataBinding, VM : BaseViewModel
         // 实例化ViewModel
         mViewModel = createViewModel()
     }
-
+    
+    /**
+     * BaseDataBindingActivity中的createViewModel调用的是
+     */
     private fun createViewModel(): VM {
-        return ViewModelProvider(
-                this,
-                ViewModelProvider.AndroidViewModelFactory(application)
-        ).get(getViewModelClass(this, 1))
+        return ViewModelProvider(this).get(getViewModelClass(this, 0))
     }
-
-
+    
+    
     private fun createViewDataBinding() {
         // 通过DataBindingUtil来实例化mDataBinding对象
+        // TODO 我们需要好好学习一下AuraDataBindingComponent
         mDataBinding = DataBindingUtil.setContentView(this, getContentViewId(), AuraDataBindingComponent())
         mDataBinding.lifecycleOwner = this
     }
-
+    
     /**
      *
      */
     abstract fun getContentViewId(): Int
-
-
+    
+    
 }

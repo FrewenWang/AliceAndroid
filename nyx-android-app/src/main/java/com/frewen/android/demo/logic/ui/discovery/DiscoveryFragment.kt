@@ -17,30 +17,25 @@ import kotlinx.android.synthetic.main.fragment_main_discovery.*
  * 首页的发现页面的Fragment
  */
 @FragmentDestination(pageUrl = "main/tabs/discovery", asStarter = false)
-class DiscoveryFragment : BaseDataBindingFragment<FragmentMainDiscoveryBinding, MyProfileViewModel>(), Injectable {
-
+class DiscoveryFragment : BaseDataBindingFragment<MyProfileViewModel, FragmentMainDiscoveryBinding>(), Injectable {
+    
     var titleData = arrayListOf("广场", "每日一问", "体系", "导航")
-
+    
     /**
      * 用来存放我们这个Tab下面的Fragment列表的容器List
      */
     private var fragments: Array<Fragment> = arrayOf()
-
-
-    override fun getViewModelClass(): Class<MyProfileViewModel> {
-        return MyProfileViewModel::class.java
-    }
-
+    
     override fun getLayoutId(): Int {
         return R.layout.fragment_main_discovery
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initData()
         initObserver()
     }
-
+    
     /**
      * 初始化数据
      */
@@ -52,19 +47,19 @@ class DiscoveryFragment : BaseDataBindingFragment<FragmentMainDiscoveryBinding, 
             if (it != 0) {
                 include_viewpager_toolbar.menu.clear()
             } else {
-
+            
             }
         }
     }
-
-
+    
+    
     /**
      * 创建监听者
      */
     private fun initObserver() {
-
+    
     }
-
-
+    
+    
 }
 

@@ -8,7 +8,7 @@ import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.frewen.aura.framework.fragment.BaseViewFragment
 import com.frewen.demo.library.R
-import com.frewen.demo.library.extention.initOnFragment
+import com.frewen.demo.library.ktx.extention.initOnFragment
 import kotlinx.android.synthetic.main.fragment_view_pager2.*
 import kotlinx.android.synthetic.main.include_layout_main_page_title_bar.*
 

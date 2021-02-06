@@ -24,7 +24,7 @@ class TikTokActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_profile))
+                R.id.navigation_home, R.id.navigation_recommend, R.id.navigation_discovery, R.id.navigation_profile))
         //根据navController和appBarConfiguration 设置ActionBar的显示标题
         /// 注意，这里有个坑，加入你的主题是NoActionBar的话。这个地方会报错
 //        Caused by: java.lang.NullPointerException: Attempt to invoke virtual method 'void androidx.appcompat.app.ActionBar.setTitle(java.lang.CharSequence)' on a null object reference

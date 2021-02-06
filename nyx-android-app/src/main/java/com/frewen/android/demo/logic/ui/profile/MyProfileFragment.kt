@@ -1,5 +1,7 @@
 package com.frewen.android.demo.logic.ui.profile
 
+import android.os.Bundle
+import android.view.View
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainMyProfileBinding
@@ -11,5 +13,9 @@ class MyProfileFragment : BaseDataBindingFragment<MyProfileViewModel, FragmentMa
     
     override fun getLayoutId(): Int {
         return R.layout.fragment_main_my_profile
+    }
+    
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
     }
 }

@@ -19,13 +19,13 @@
         tools:layout="@layout/fragment_main_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_recommend"
         android:name="com.frewen.android.demo.logic.samples.tiktok.fragments.MsgViewFragment"
         android:label="@string/title_recommend"
         tools:layout="@layout/fragment_main_recommend" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_discovery"
         android:name="com.frewen.android.demo.logic.samples.tiktok.fragments.RecommendViewFragment"
         android:label="@string/title_discovery"
         tools:layout="@layout/fragment_main_discovery" />

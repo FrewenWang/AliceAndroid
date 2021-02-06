@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     style="@style/NyxAppTheme.ToolbarStyle"
-    android:background="@color/color_common_blue_dark"
+    android:background="@color/colorPrimary"
     app:layout_scrollFlags="scroll|enterAlways"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 

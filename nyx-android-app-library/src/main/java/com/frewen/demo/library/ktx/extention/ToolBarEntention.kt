@@ -1,4 +1,4 @@
-package com.frewen.demo.library.extention
+package com.frewen.demo.library.ktx.extention
 
 import androidx.appcompat.widget.Toolbar
 

@@ -56,6 +56,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".logic.main.MainPageActivity"/>
+        <activity
             android:name=".logic.ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />
         <activity android:name=".logic.samples.view.custom.recyclerview.AuraRecyclerViewActivity" />

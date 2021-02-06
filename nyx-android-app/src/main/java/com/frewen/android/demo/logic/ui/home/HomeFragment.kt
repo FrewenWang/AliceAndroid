@@ -62,4 +62,8 @@ class HomeFragment() : BaseRecyclerViewDataBindingFragment<Post, HomeViewModel>(
         feedType = if (arguments == null) "all" else requireArguments().getString("feedType")
         return PostAdapter(context, feedType)
     }
+    
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
+    }
 }

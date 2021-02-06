@@ -7,10 +7,10 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainMyProfileBinding
 import com.frewen.android.demo.logic.ui.discovery.adapter.DailyQuestionAdapter
 import com.frewen.aura.toolkits.display.DisplayHelper
-import com.frewen.demo.library.extention.init
+import com.frewen.demo.library.ktx.extention.init
 import com.frewen.demo.library.recyclerview.decoration.DividerItemDecoration
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
-import kotlinx.android.synthetic.main.layout_include_common_recyclerview.*
+import kotlinx.android.synthetic.main.layout_include_recyclerview_common.*
 
 /**
  * @filename: DailyQuestionFragment
@@ -50,6 +50,10 @@ class DailyQuestionFragment : BaseDataBindingFragment<DailyQuestionViewModel, Fr
         }
         
         viewModel.requestDailyQuestionData();
+    }
+    
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
     }
     
 }

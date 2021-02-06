@@ -13,7 +13,7 @@
         tools:context="com.frewen.android.demo.error.ErrorActivity">
 
         <!-- 顶部的ToolBar-->
-        <include layout="@layout/layout_tool_bar_common" />
+        <include layout="@layout/layout_include_top_toolbar_common" />
 
         <ScrollView
             android:layout_width="match_parent"

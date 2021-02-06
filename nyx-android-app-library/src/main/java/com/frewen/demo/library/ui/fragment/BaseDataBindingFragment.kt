@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.frewen.aura.framework.fragment.BaseFragment
 import com.frewen.aura.toolkits.kotlin.ext.autoCleared
 import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.mvvm.viewmodel.getViewModelClass
@@ -22,14 +23,12 @@ import javax.inject.Inject
  * @author: Frewen.Wong
  * @time: 2020/7/23 07:54
  * @version: 1.0.0
- *      完成基础功能设计
- * @version: 1.0.1
- *      因为这个BaseDataBindingFragment使用了Dagger2来进行ViewModelProvider.Factory的依赖注入。
- *      所以这个类实现了Injectable接口
- *
+ *      完成基础功能设计的DataBinding的逻辑
+ *      主要是是调用DataBindingUtil.inflate的方法来进行布局控件绑定
+ * @version:
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : Fragment(), Injectable {
+abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : BaseFragment() {
     /**
      * 根据Fragment动态清理和获取binding对象
      */
@@ -51,6 +50,17 @@ abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : 
         
         return binding?.root
     }
+    
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        
+        initView(view, savedInstanceState)
+    }
+    
+    /**
+     * 定义View初始化完成之后的逻辑
+     */
+    abstract fun initView(view: View, savedInstanceState: Bundle?)
     
     
     /**

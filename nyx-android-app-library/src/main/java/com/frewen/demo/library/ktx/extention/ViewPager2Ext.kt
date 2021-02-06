@@ -1,4 +1,4 @@
-package com.frewen.demo.library.extention
+package com.frewen.demo.library.ktx.extention
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -15,8 +15,10 @@ import androidx.viewpager2.widget.ViewPager2
 fun ViewPager2.initOnFragment(
         fragment: Fragment,
         fragments: Array<Fragment>,
-        isUserInputEnabled: Boolean = true
+        offscreenPageLimit: Int = 1,
+        isUserInputEnabled: Boolean = false
 ): ViewPager2 {
+    this.offscreenPageLimit = offscreenPageLimit
     //是否可滑动
     this.isUserInputEnabled = isUserInputEnabled
     adapter = object : FragmentStateAdapter(fragment) {

@@ -4,6 +4,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
 import com.frewen.android.demo.R;
+import com.frewen.aura.framework.ui.BaseActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
@@ -16,7 +17,7 @@ import android.widget.ImageView;
 
 import com.frewen.android.demo.logic.samples.animation.ui.main.SectionsPagerAdapter;
 
-public class AnimationDemoActivity extends AppCompatActivity {
+public class AnimationDemoActivity extends BaseActivity {
 
     private AnimationDrawable animationDrawable;
     private ImageView mLoading;

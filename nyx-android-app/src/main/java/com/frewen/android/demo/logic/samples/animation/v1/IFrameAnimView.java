@@ -1,5 +1,7 @@
 package com.frewen.android.demo.logic.samples.animation.v1;
 
+import com.frewen.android.demo.logic.samples.animation.surface.FrameSurfaceView;
+
 /**
  * @filename: IFrameAnimView
  * @author: Frewen.Wong
@@ -10,13 +12,19 @@ package com.frewen.android.demo.logic.samples.animation.v1;
  */
 public interface IFrameAnimView {
 
+    void startAnimalByTheme(String assertPath);
+
     void startAnim(String assertPath);
 
     void stop();
 
-    void setAnimCount(int count);
+    void setRepeatMode(int repeatMode);
 
-    void setOnAnimationCallback(AnimationCallback callback);
+    void setCounts(int count);
+
+    void setAnimationCallback(AnimationCallback cb);
+
+    void release();
 
     interface AnimationCallback {
         void onFinished();

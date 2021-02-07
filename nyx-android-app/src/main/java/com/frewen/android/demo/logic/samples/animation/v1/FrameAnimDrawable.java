@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.frewen.android.demo.logic.samples.animation.surface.FrameSurfaceView;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -17,6 +19,8 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
 import androidx.appcompat.widget.AppCompatImageView;
+
+import static com.frewen.android.demo.logic.samples.animation.v1.FrameSurfaceViewV1.MODE_REPEAT;
 
 /**
  * @filename: FrameAnimDrawable
@@ -27,10 +31,11 @@ import androidx.appcompat.widget.AppCompatImageView;
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimView {
+
     private static final String TAG = "FrameAnimDrawable";
     public static final int COUNT_ANIM_REPEAT = -1;
 
-    private static final int DURATION_FRAME = 25;
+    private static final int DURATION_FRAME = 45;
     private String mAssertPath;
     private AssetManager assetManager;
     private AnimationDrawable mAnimDrawable;
@@ -38,7 +43,7 @@ public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimV
     private AnimationCallback mAnimCallback;
     private int curIndex;
     private Handler mHandler;
-
+    private int mRepeatMode;
 
     public FrameAnimDrawable(Context context) {
         this(context, null);
@@ -53,27 +58,23 @@ public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimV
         intiView(context);
     }
 
+
     private void intiView(Context context) {
         assetManager = context.getAssets();
         mHandler = new Handler();
     }
 
+    @UiThread
     @Override
-    public void setAnimCount(int count) {
-        mAnimCount = count;
+    public void startAnimalByTheme(String assertPath) {
+        // 获取当前的主题
+        startAnim(assertPath);
     }
-
-    @Override
-    public void setOnAnimationCallback(AnimationCallback callback) {
-        mAnimCallback = callback;
-    }
-
 
     @UiThread
     @Override
     public void startAnim(String assertPath) {
         mAssertPath = assertPath;
-        Log.d(TAG, "startAnimal assertPath: " + mAssertPath);
         setVisibility(View.VISIBLE);
         try {
             stop();
@@ -90,24 +91,27 @@ public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimV
      * 开始Animation的动画播放
      */
     private void startDraw() {
-        if (mAnimCount == COUNT_ANIM_REPEAT) {
+        if (mAnimCount == COUNT_ANIM_REPEAT || mRepeatMode == MODE_REPEAT) {
             mAnimDrawable.setOneShot(false);
             mAnimDrawable.start();
         } else {
             curIndex = 0;
             mAnimDrawable.start();
+            if (null == mHandler) {
+                mHandler = new Handler();
+            }
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     ++curIndex;
-                    Log.d(TAG, "FMsg:run() called curIndex =" + curIndex);
                     if (curIndex >= mAnimCount) {
                         stop();
                         if (null != mAnimCallback) {
                             mAnimCallback.onFinished();
                         }
                     } else {
-                        mHandler.postDelayed(this::run, DURATION_FRAME * mAnimDrawable.getNumberOfFrames());
+                        mHandler.postDelayed(this,
+                                DURATION_FRAME * mAnimDrawable.getNumberOfFrames());
                     }
 
                 }
@@ -133,7 +137,10 @@ public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimV
 
     @Override
     public void stop() {
-        mHandler.removeCallbacksAndMessages(null);
+        if (null != mHandler) {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
+        }
         if (null != mAnimDrawable && mAnimDrawable.isRunning()) {
             mAnimDrawable.stop();
         }
@@ -141,8 +148,38 @@ public class FrameAnimDrawable extends AppCompatImageView implements IFrameAnimV
     }
 
     @Override
+    public void setRepeatMode(int repeatMode) {
+        Log.i(TAG, "setRepeatMode:" + repeatMode);
+        mRepeatMode = repeatMode;
+    }
+
+    @Override
+    public void setCounts(int count) {
+        mAnimCount = count;
+    }
+
+    @Override
+    public void setAnimationCallback(AnimationCallback cb) {
+        mAnimCallback = cb;
+    }
+
+    @Override
+    public void release() {
+        setVisibility(INVISIBLE);
+        stop();
+    }
+
+    @Override
+    public void setVisibility(int visibility) {
+        super.setVisibility(visibility);
+        if (GONE == visibility || INVISIBLE == visibility) {
+            stop();
+        }
+    }
+
+    @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        stop();
+        release();
     }
 }

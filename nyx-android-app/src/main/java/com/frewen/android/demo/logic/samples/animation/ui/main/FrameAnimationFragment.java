@@ -211,9 +211,9 @@ public class FrameAnimationFragment extends BaseViewFragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                frameAnimDrawable.setAnimCount(2);
+                frameAnimDrawable.setCounts(2);
                 frameAnimDrawable.startAnim("pay_success");
-                frameAnimDrawable.setOnAnimationCallback(new IFrameAnimView.AnimationCallback() {
+                frameAnimDrawable.setAnimationCallback(new IFrameAnimView.AnimationCallback() {
                     @Override
                     public void onFinished() {
                         Log.d(TAG, "FMsg:onFinished() called");

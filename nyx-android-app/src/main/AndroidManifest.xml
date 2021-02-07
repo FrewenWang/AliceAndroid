@@ -42,7 +42,8 @@
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".logic.samples.media.camera2.Camera2Activity"></activity>
+        <activity android:name=".logic.samples.AnimationDrawableActivity"></activity>
+        <activity android:name=".logic.samples.media.camera2.Camera2Activity" />
         <activity android:name=".logic.samples.opencv.OpenCVActivity" />
         <activity android:name=".logic.samples.network.aura.AuraNetWorkDemoActivity" />
         <activity android:name=".logic.samples.FrameAnimationActivity" />
@@ -55,8 +56,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".logic.main.MainPageActivity"/>
+        <activity android:name=".logic.main.MainPageActivity" />
         <activity
             android:name=".logic.ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />

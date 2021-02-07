@@ -46,11 +46,15 @@ public class OpenCVActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
+       // startRGBToGray();
+        
+    }
+
+    private void startRGBToGray() {
         Bitmap bitmap = BitmapFactory.decodeResource(
                 OpenCVActivity.this.getResources(), R.drawable.test_avatar);
         Mat src = new Mat();
         Mat dst = new Mat();
-        Log.d(TAG, "FMsg:onClick() called with: bitmap = [" + bitmap + "]");
         Utils.bitmapToMat(bitmap, src);
         Imgproc.cvtColor(src, dst, Imgproc.COLOR_BGRA2GRAY);
         Utils.matToBitmap(dst, bitmap);

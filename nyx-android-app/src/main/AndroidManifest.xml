@@ -44,6 +44,7 @@
         tools:replace="android:allowBackup">
         <activity android:name=".logic.samples.AnimationDrawableActivity"></activity>
         <activity android:name=".logic.samples.media.camera2.Camera2Activity" />
+        <activity android:name=".logic.samples.opencv.TesseractActivity"></activity>
         <activity android:name=".logic.samples.opencv.OpenCVActivity" />
         <activity android:name=".logic.samples.network.aura.AuraNetWorkDemoActivity" />
         <activity android:name=".logic.samples.FrameAnimationActivity" />

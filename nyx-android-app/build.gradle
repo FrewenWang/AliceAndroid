@@ -202,7 +202,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation project(path: ':openCVLibrary3412')
 
     //==========<editor-folder desc = "Dependence:添加单元测试相关的依赖">=============================
     testImplementation 'junit:junit:4.12'
@@ -367,6 +366,13 @@ dependencies {
     //================= </editor-folder desc = "Dependence:PngDecoder框架依赖">======================
 
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+
+
+    //==========<editor-folder desc = "Dependence:OpenCV的相关依赖">=============================
+    implementation project(path: ':openCVLibrary3412')
+    // Tesseract是一个兼容各种操作系统平台的开源OCR识别引擎:https://github.com/rmtheis/tess-two
+    implementation 'com.rmtheis:tess-two:8.0.0' //
+    //==========</editor-folder desc = "Dependence:OpenCV的相关依赖">============================
 }
 
 

@@ -164,4 +164,6 @@
     <string name="load_error_retry">点击重试</string>
 
 
+    <string name="align_text_view">Content description    for \r\d\n the header / hero image that is show at the top of the plant detail screen. \r\n Content description     for the header / hero image that is show at the top of the plant detail screen.</string>
+
 </resources>

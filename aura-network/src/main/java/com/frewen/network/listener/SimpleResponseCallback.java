@@ -1,6 +1,6 @@
 package com.frewen.network.listener;
 
-import com.frewen.network.response.Response;
+import com.frewen.network.response.AuraNetResponse;
 
 /**
  * @filename: SimpleResponseCallback
@@ -23,7 +23,7 @@ public abstract class SimpleResponseCallback<T> extends AbsResponseCallback<T> {
     }
 
     @Override
-    public void onCacheSuccess(Response<T> response) {
+    public void onCacheSuccess(AuraNetResponse<T> response) {
 
     }
 }

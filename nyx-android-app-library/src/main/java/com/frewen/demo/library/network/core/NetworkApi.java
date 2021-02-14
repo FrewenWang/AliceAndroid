@@ -1,6 +1,8 @@
 package com.frewen.demo.library.network.core;
 
-import com.frewen.aura.toolkits.utils.AssertionsUtils;
+import android.util.Log;
+
+import com.frewen.aura.toolkits.utils.AssertUtils;
 import com.frewen.demo.library.network.env.AbsProgramEnv;
 import com.frewen.demo.library.network.env.Env;
 import com.frewen.demo.library.network.interceptor.RequestInterceptor;
@@ -25,7 +27,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public abstract class NetworkApi implements AbsProgramEnv {
-
+    private static final String TAG = "NetworkApi";
     private static Map<String, Retrofit> retrofitHashMap = new HashMap<>();
     private static AbsNetworkConfig networkConfig;
     private String mBaseUrl;
@@ -49,7 +51,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
     }
 
     protected Retrofit getRetrofit(Class service) {
-        AssertionsUtils.assertNotNull(mBaseUrl);
+        AssertUtils.notNull(mBaseUrl);
         if (retrofitHashMap.get(mBaseUrl + service.getName()) != null) {
             return retrofitHashMap.get(mBaseUrl + service.getName());
         }
@@ -60,12 +62,13 @@ public abstract class NetworkApi implements AbsProgramEnv {
         retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         Retrofit retrofit = retrofitBuilder.build();
         retrofitHashMap.put(mBaseUrl + service.getName(), retrofit);
+        Log.d(TAG, "FMsg:getRetrofit() called with: service = [" + retrofit.baseUrl() + "]");
         return retrofit;
     }
 
 
     private String getHttpBaseUrl(AbsNetworkConfig config) {
-        AssertionsUtils.assertNotNull(config);
+        AssertUtils.notNull(config);
         Env env = config.switchProgramEnv();
         switch (env) {
             case DEV:
@@ -110,7 +113,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
     public abstract Interceptor getInterceptor();
 
     public String getBaseUrl() {
-        AssertionsUtils.assertNotNull(mBaseUrl);
+        AssertUtils.notNull(mBaseUrl);
         return mBaseUrl;
     }
 

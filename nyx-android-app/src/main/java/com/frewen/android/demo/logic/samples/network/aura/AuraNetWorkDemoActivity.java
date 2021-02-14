@@ -3,8 +3,6 @@ package com.frewen.android.demo.logic.samples.network.aura;
 import androidx.appcompat.app.AppCompatActivity;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.reactivex.internal.observers.DisposableLambdaObserver;
 import io.reactivex.observers.DisposableObserver;
 
 import android.os.Bundle;
@@ -15,9 +13,6 @@ import android.widget.Toast;
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.logic.model.Post;
 import com.frewen.network.core.AuraRxHttp;
-import com.frewen.network.listener.SimpleResponseCallback;
-import com.frewen.network.response.Response;
-import com.frewen.network.response.exception.AuraException;
 
 public class AuraNetWorkDemoActivity extends AppCompatActivity {
     private static final String TAG = "AuraNetWorkDemoActivity";

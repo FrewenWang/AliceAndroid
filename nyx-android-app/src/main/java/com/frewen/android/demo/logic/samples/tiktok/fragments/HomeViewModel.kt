@@ -6,7 +6,7 @@ import androidx.paging.DataSource
 import androidx.paging.ItemKeyedDataSource
 import androidx.paging.PagedList
 import com.frewen.android.demo.logic.model.Post
-import com.frewen.aura.framework.mvvm.vm.BasePagedListViewModel
+import com.frewen.aura.framework.mvvm.vm.AbsPagedListViewModel
 import javax.inject.Inject
 
 /**
@@ -19,7 +19,7 @@ import javax.inject.Inject
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class HomeViewModel @Inject constructor() : BasePagedListViewModel<Post>() {
+class HomeViewModel @Inject constructor() : AbsPagedListViewModel<Post>() {
 
     /**
      * Kotlin中，我们使用TAG 一般使用伴生对象

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
+import com.frewen.android.demo.databinding.FragmentMainRecommendBinding
 import com.frewen.android.demo.logic.ui.recommend.content.EyeRecommendFragment
 import com.frewen.android.demo.mvvm.viewmodel.MainHomeViewModel
 import com.frewen.aura.framework.fragment.BaseFragment
@@ -17,7 +18,7 @@ import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
  * @introduction:  Class File Init
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-class MainRecommendFragment(): BaseDataBindingFragment<MainHomeViewModel, FragmentMainHomeBinding>() {
+class MainRecommendFragment() : BaseDataBindingFragment<MainHomeViewModel, FragmentMainRecommendBinding>() {
     
     
     companion object {
@@ -26,13 +27,19 @@ class MainRecommendFragment(): BaseDataBindingFragment<MainHomeViewModel, Fragme
          * 需要加上@JvmStatic
          */
         @JvmStatic
-        fun newInstance() = MainProfileFragment()
+        fun newInstance() = MainRecommendFragment()
     }
     
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
+    
     }
     
-    override fun getLayoutId() = R.layout.fragment_main_home
+    override fun getLayoutId() = R.layout.fragment_main_recommend
+    override fun initData(savedInstanceState: Bundle?) {
+    
+    }
+    
+    override fun initObserver(savedInstanceState: Bundle?) {
+    }
     
 }

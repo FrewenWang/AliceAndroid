@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:paddingStart="14dp"
     android:paddingEnd="14dp"
-    tools:background="@color/color_common_black_alpha50"
+    tools:background="@color/color_black_alpha50"
     tools:visibility="visible">
     <!--自定义字体的类型的TextView -->
     <com.frewen.aura.ui.textview.TypefaceTextView
@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="6dp"
-        android:textColor="@color/color_common_black"
+        android:textColor="@color/color_black"
         android:textSize="14sp"
         app:typeface="fzdb1Typeface"
         tools:text="相关推荐" />

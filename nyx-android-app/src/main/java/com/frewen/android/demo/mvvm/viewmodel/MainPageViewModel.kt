@@ -1,6 +1,6 @@
 package com.frewen.android.demo.mvvm.viewmodel
 
-import com.frewen.aura.framework.mvvm.vm.BaseViewModel
+import com.frewen.aura.framework.mvvm.vm.AbsViewModel
 
 
 /**
@@ -10,6 +10,6 @@ import com.frewen.aura.framework.mvvm.vm.BaseViewModel
  * @time: 2020/4/14 19:20
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class MainPageViewModel : BaseViewModel() {
+class MainPageViewModel : AbsViewModel() {
 
 }

@@ -62,7 +62,7 @@
         android:visibility="gone"
         app:civ_border_color="@color/white"
         app:civ_border_width="1.5dp"
-        app:civ_circle_background_color="@color/color_common_black_alpha80"
+        app:civ_circle_background_color="@color/color_black_alpha80"
         tools:visibility="visible" />
 
     <com.frewen.aura.ui.textview.TypefaceTextView

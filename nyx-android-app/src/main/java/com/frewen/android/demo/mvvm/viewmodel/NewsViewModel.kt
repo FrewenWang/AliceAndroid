@@ -1,7 +1,7 @@
 package com.frewen.android.demo.mvvm.viewmodel
 
 import android.app.Application
-import com.frewen.demo.library.viewmodel.BaseListViewModel
+import com.frewen.demo.library.mvvm.vm.BaseListViewModel
 import javax.inject.Inject
 
 /**

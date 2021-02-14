@@ -3,7 +3,7 @@ package com.frewen.network.function;
 
 import android.text.TextUtils;
 
-import com.frewen.network.response.Response;
+import com.frewen.network.response.AuraNetResponse;
 import com.frewen.network.utils.CommonUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,7 +36,7 @@ import okhttp3.ResponseBody;
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 @SuppressWarnings("unchecked")
-public class ApiResultFunction<T> implements Function<ResponseBody, Response<T>> {
+public class ApiResultFunction<T> implements Function<ResponseBody, AuraNetResponse<T>> {
 
     protected Type type;
     protected Gson gson;
@@ -50,12 +50,12 @@ public class ApiResultFunction<T> implements Function<ResponseBody, Response<T>>
     }
 
     @Override
-    public Response<T> apply(@NonNull ResponseBody responseBody) throws Exception {
-        Response<T> apiResult = new Response<>();
+    public AuraNetResponse<T> apply(@NonNull ResponseBody responseBody) throws Exception {
+        AuraNetResponse<T> apiResult = new AuraNetResponse<>();
         apiResult.setCode(-1);
         if (type instanceof ParameterizedType) {//自定义ApiResult
             final Class<T> cls = (Class) ((ParameterizedType) type).getRawType();
-            if (Response.class.isAssignableFrom(cls)) {
+            if (AuraNetResponse.class.isAssignableFrom(cls)) {
                 final Type[] params = ((ParameterizedType) type).getActualTypeArguments();
                 final Class clazz = CommonUtils.getClass(params[0], 0);
                 final Class rawType = CommonUtils.getClass(type, 0);
@@ -74,7 +74,7 @@ public class ApiResultFunction<T> implements Function<ResponseBody, Response<T>>
                             apiResult.setMsg("json is null");
                         }*/
                     } else {
-                        Response result = gson.fromJson(json, type);
+                        AuraNetResponse result = gson.fromJson(json, type);
                         if (result != null) {
                             apiResult = result;
                         } else {
@@ -97,7 +97,7 @@ public class ApiResultFunction<T> implements Function<ResponseBody, Response<T>>
                 if (clazz.equals(String.class)) {
                     //apiResult.setData((T) json);
                     //apiResult.setCode(0);
-                    final Response result = parseApiResult(json, apiResult);
+                    final AuraNetResponse result = parseApiResult(json, apiResult);
                     if (result != null) {
                         apiResult = result;
                         apiResult.setData((T) json);
@@ -105,7 +105,7 @@ public class ApiResultFunction<T> implements Function<ResponseBody, Response<T>>
                         apiResult.setMsg("json is null");
                     }
                 } else {
-                    final Response result = parseApiResult(json, apiResult);
+                    final AuraNetResponse result = parseApiResult(json, apiResult);
                     if (result != null) {
                         apiResult = result;
                         if (apiResult.getData() != null) {
@@ -136,14 +136,14 @@ public class ApiResultFunction<T> implements Function<ResponseBody, Response<T>>
      *
      * @param response
      */
-    private Response<T> parseResponseWithCache(Response<T> response) {
+    private AuraNetResponse<T> parseResponseWithCache(AuraNetResponse<T> response) {
         if (response.isSuccess() && response.getData() != null) {
 
         }
         return null;
     }
 
-    private Response parseApiResult(String json, Response apiResult) throws JSONException {
+    private AuraNetResponse parseApiResult(String json, AuraNetResponse apiResult) throws JSONException {
         if (TextUtils.isEmpty(json))
             return null;
         JSONObject jsonObject = new JSONObject(json);

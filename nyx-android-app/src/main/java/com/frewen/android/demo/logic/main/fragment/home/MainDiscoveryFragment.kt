@@ -34,6 +34,13 @@ class MainDiscoveryFragment() : BaseDataBindingFragment<MainHomeViewModel, Fragm
         Log.d(TAG, "initView() called with: view = $view, savedInstanceState = $savedInstanceState")
     }
     
-    override fun getLayoutId() = R.layout.fragment_main_home
+    override fun getLayoutId() = R.layout.fragment_main_discovery
+    override fun initData(savedInstanceState: Bundle?) {
+        Log.d(TAG, "initData() called with: savedInstanceState = $savedInstanceState")
+    }
+    
+    override fun initObserver(savedInstanceState: Bundle?) {
+        Log.d(TAG, "initObserver() called with: savedInstanceState = $savedInstanceState")
+    }
     
 }

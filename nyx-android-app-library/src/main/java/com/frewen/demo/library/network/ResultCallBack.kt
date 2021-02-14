@@ -8,19 +8,19 @@ package com.frewen.demo.library.network
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 interface ResultCallBack<T> {
-
+    
     fun onPage(first: Int, current: Int, last: Int) {
-
+    
     }
-
+    
     fun onSuccess(result: T?)
-
+    
     fun onCacheSuccess(result: T?) {
-
+    
     }
-
+    
     fun onFailure() {
-
+    
     }
-
+    
 }

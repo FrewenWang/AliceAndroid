@@ -1,7 +1,7 @@
 package com.frewen.network.function;
 
-import com.frewen.network.response.Response;
-import com.frewen.network.response.exception.AuraException;
+import com.frewen.network.response.AuraNetResponse;
+import com.frewen.network.response.exception.AuraNetException;
 
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -14,14 +14,14 @@ import io.reactivex.functions.Function;
  * @introduction: Class File Init
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class ApiResultParserFunction<Data> implements Function<Response<Data>, Data> {
+public class ApiResultParserFunction<Data> implements Function<AuraNetResponse<Data>, Data> {
 
     @Override
-    public Data apply(@NonNull Response<Data> response) throws Exception {
-        if (AuraException.isResponseOk(response)) {
+    public Data apply(@NonNull AuraNetResponse<Data> response) throws Exception {
+        if (AuraNetException.isResponseOk(response)) {
             return response.getData();// == null ? Optional.ofNullable(tApiResult.getData()).orElse(null) : tApiResult.getData();
         } else {
-            throw new AuraException(response.getCode(), response.getMsg());
+            throw new AuraNetException(response.getCode(), response.getMsg());
         }
     }
 }

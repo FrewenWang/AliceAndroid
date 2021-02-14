@@ -30,7 +30,7 @@
         android:paddingBottom="0dp"
         android:stateListAnimator="@null"
         android:text="@{tagText}"
-        android:textColor="@color/color_common_black_alpha45"
+        android:textColor="@color/color_black_alpha45"
         android:textSize="10sp"
         android:visibility="@{TextUtils.isEmpty(tagText)?View.GONE:View.VISIBLE}"
         app:backgroundTint="@color/color_gray"

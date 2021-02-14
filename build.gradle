@@ -86,9 +86,9 @@ apply from: 'toolkits/quality/quality.gradle'
 //添加工程根目录下外部的的'dependencies.gradle'文件依赖。master分支使用在线的依赖配置
 String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
 if (gitBranch == "dev") {
-    apply from: rootProject.file('../GradleDependence/app_dependence.gradle')
-} else {
     apply from: 'https://gitee.com/frewen1225/GradleDependence/raw/master/app_dependence.gradle'
+//    apply from: rootProject.file('../GradleDependence/app_dependence.gradle')
+} else {
 }
 
 

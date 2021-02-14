@@ -7,7 +7,7 @@ package com.frewen.network.response;
  * @time: 2019/4/14 10:07
  * @copyright: Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
-public class Response<T> {
+public class AuraNetResponse<T> {
 
     /**
      * 返回码

@@ -11,6 +11,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发现"></TextView>
+
         <FrameLayout
             android:id="@+id/viewpager_linear"
             android:layout_width="match_parent"

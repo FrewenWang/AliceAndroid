@@ -30,16 +30,16 @@
         app:layout_constraintTop_toBottomOf="@id/button" />
 
 
-    <com.frewen.aura.ui.textview.AlignTextView
-        android:id="@+id/alignTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="50dp"
-        android:text="@string/align_text_view"
-        android:background="@color/blue"
-        android:textColor="@color/color_common_white_alpha10"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/root" />
+    <!--<com.frewen.aura.ui.textview.AlignTextView-->
+    <!--    android:id="@+id/alignTextView"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="wrap_content"-->
+    <!--    android:layout_margin="50dp"-->
+    <!--    android:background="@color/blue"-->
+    <!--    android:text="@string/align_text_view"-->
+    <!--    android:textColor="@color/color_common_white_alpha10"-->
+    <!--    app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--    app:layout_constraintRight_toRightOf="parent"-->
+    <!--    app:layout_constraintTop_toBottomOf="@id/root" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,8 +35,8 @@
                 <com.frewen.aura.ui.textview.TypefaceTextView
                     android:id="@+id/tvFollow"
                     style="@style/NyxAppTheme.MineTextView"
-                    android:paddingStart="13dp"
                     android:onClick="@{() -> myProfileViewModel.login()}"
+                    android:paddingStart="13dp"
                     android:paddingEnd="13dp"
                     android:text="@string/my_follow" />
 
@@ -152,8 +152,8 @@
             android:id="@+id/ivAvatar"
             android:layout_width="76dp"
             android:layout_height="76dp"
-            android:onClick="@{() -> myProfileViewModel.login()}"
             android:layout_gravity="center_horizontal"
+            android:onClick="@{() -> myProfileViewModel.login()}"
             android:src="@drawable/ic_logo_black_76dp"
             app:civ_border_color="#cdcdcd"
             app:civ_border_width="1dp"

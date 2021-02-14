@@ -1,8 +1,8 @@
 package com.frewen.network.listener;
 
 import com.frewen.network.callback.IType;
-import com.frewen.network.response.Response;
-import com.frewen.network.response.exception.AuraException;
+import com.frewen.network.response.AuraNetResponse;
+import com.frewen.network.response.exception.AuraNetException;
 import com.frewen.network.utils.CommonUtils;
 
 import java.lang.reflect.Type;
@@ -30,21 +30,21 @@ public abstract class AbsResponseCallback<Data> implements IType {
      *
      * @param response
      */
-    public abstract void onSuccess(Response<Data> response);
+    public abstract void onSuccess(AuraNetResponse<Data> response);
 
     /**
      * 请求出现异常
      *
      * @param exception
      */
-    public abstract void onError(AuraException exception);
+    public abstract void onError(AuraNetException exception);
 
     /**
      * 缓存请求成功
      *
      * @param response
      */
-    public abstract void onCacheSuccess(Response<Data> response);
+    public abstract void onCacheSuccess(AuraNetResponse<Data> response);
 
     @Override
     public Type getType() {

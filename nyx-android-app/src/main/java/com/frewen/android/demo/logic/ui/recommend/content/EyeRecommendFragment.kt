@@ -26,51 +26,51 @@ import javax.inject.Inject
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 class EyeRecommendFragment : BaseViewFragment(), Injectable {
-
+    
     /**
      * 是否已经加载过数据
      */
     private var mHasLoadedData = false
-
+    
     /**
      * 列表左or右间距
      */
     val bothSideSpace = ResourcesUtils.getDimension(R.dimen.listSpaceSize)
-
+    
     /**
      * 列表中间内间距，左or右。
      */
     val middleSpace = DisplayHelper.dip2px(3f)
-
-
+    
+    
     private lateinit var adapter: EyeCommendAdapter
-
+    
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
+    
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory).get(EyeRecommendViewModel::class.java)
     }
-
+    
     companion object {
         fun newInstance() = EyeRecommendFragment()
     }
-
+    
     override fun getLayoutId() = R.layout.layout_container_refresh_recyclerview
-
+    
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
-
+    
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         adapter = context?.let {
             EyeCommendAdapter(it, viewModel.dataList)
-
+            
         }!!
         /// 瀑布流
         val mainLayoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-
+        
         mainLayoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         recyclerView.layoutManager = mainLayoutManager
         recyclerView.adapter = adapter
@@ -81,7 +81,7 @@ class EyeRecommendFragment : BaseViewFragment(), Injectable {
         refreshLayout.setOnLoadMoreListener { viewModel.onLoadMore() }
         observeData()
     }
-
+    
     override fun onResume() {
         super.onResume()
         //当Fragment在屏幕上可见并且没有加载过数据时调用
@@ -90,46 +90,15 @@ class EyeRecommendFragment : BaseViewFragment(), Injectable {
             mHasLoadedData = true
         }
     }
-
+    
     private fun loadDataOnce() {
         viewModel.onRefresh()
     }
-
+    
     private fun observeData() {
-        viewModel.dataListLiveData.observe(viewLifecycleOwner, Observer { result ->
-            val response = result.getOrNull()
-            if (response == null) {
-                refreshLayout.closeHeaderOrFooter()
-                return@Observer
-            }
-            viewModel.nextPageUrl = response.nextPageUrl
-
-            if (response.itemList.isNullOrEmpty() && viewModel.dataList.isEmpty()) {
-                refreshLayout.closeHeaderOrFooter()
-                return@Observer
-            }
-            if (response.itemList.isNullOrEmpty() && viewModel.dataList.isNotEmpty()) {
-                refreshLayout.finishLoadMoreWithNoMoreData()
-                return@Observer
-            }
-
-            when (refreshLayout.state) {
-                RefreshState.None, RefreshState.Refreshing -> {
-                    viewModel.dataList.clear()
-                    viewModel.dataList.addAll(response.itemList)
-                    adapter.notifyDataSetChanged()
-                }
-                RefreshState.Loading -> {
-                    val itemCount = viewModel.dataList.size
-                    viewModel.dataList.addAll(response.itemList)
-                    adapter.notifyItemRangeInserted(itemCount, response.itemList.size)
-                }
-                else -> {
-                }
-            }
-        })
-
+    
+    
     }
-
-
+    
+    
 }

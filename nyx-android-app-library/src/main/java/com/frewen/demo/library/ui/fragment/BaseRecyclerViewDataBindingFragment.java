@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.frewen.aura.framework.mvvm.vm.BasePagedListViewModel;
+import com.frewen.aura.framework.mvvm.vm.AbsPagedListViewModel;
 import com.frewen.demo.library.R;
 import com.frewen.demo.library.databinding.FragmentRefreshRecylerViewBinding;
 import com.frewen.demo.library.widgets.RefreshEmptyView;
@@ -32,7 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @introduction: 这个的布局是使用RecyclerView+下拉刷新和DataBinding功能的Fragment
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public abstract class BaseRecyclerViewDataBindingFragment<Data, VM extends BasePagedListViewModel<Data>>
+public abstract class BaseRecyclerViewDataBindingFragment<Data, VM extends AbsPagedListViewModel<Data>>
         extends BaseDataBindingFragment<VM,FragmentRefreshRecylerViewBinding> implements OnRefreshListener, OnLoadMoreListener {
 
     protected RecyclerView mRecyclerView;

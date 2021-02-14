@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
-import com.frewen.aura.framework.mvvm.vm.BaseViewModel
+import com.frewen.aura.framework.mvvm.vm.AbsViewModel
 import com.frewen.aura.framework.ui.BaseActivity
 import com.frewen.demo.library.mvvm.viewmodel.getViewModelClass
 import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
@@ -19,7 +19,7 @@ import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
  * @version: 1.0.1
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-abstract class BaseDataBindingActivity<VM : BaseViewModel, VDB : ViewDataBinding> : BaseActivity() {
+abstract class BaseDataBindingActivity<VM : AbsViewModel, VDB : ViewDataBinding> : BaseActivity() {
     
     lateinit var mViewModel: VM
     

@@ -1,4 +1,13 @@
 <resources>
+
+    <!--通用模块文案-->
+    <string name="title_home">首页</string>
+    <string name="title_recommend">推荐</string>
+    <string name="title_discovery">发现</string>
+    <string name="title_profile">我的</string>
+    <string name="request_permission_storage">应用需要申请存储权限</string>
+
+
     <plurals name="watering_needs_suffix">
         <item quantity="one" translation_description="Suffix for the text describing how often a plant should be watered, singular. Used in combination with watering_needs_prefix: 'Watering needs: every day'.">every day</item>
         <item quantity="other" translation_description="Suffix for the text describing how often a plant should be watered, plural. Used in combination with watering_needs_prefix: 'Watering needs: every 8 days'.">every %d days</item>
@@ -67,15 +76,6 @@
 
     <!-- Accessibility -->
     <string name="a11y_plant_item_image" translation_description="Accessibility text for each of the plant images shown in the 'My garden' and 'Plant list' screens.">Picture of plant</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="title_home">首页</string>
-
-    <string name="title_recommend">推荐</string>
-    <string name="title_discovery">发现</string>
-    <string name="title_profile">我的</string>
-    <string name="request_permission_storage">应用需要申请存储权限</string>
 
     <!--SplashActivity 应用启动的闪屏相关逻辑 -->
     <string name="request_permission_access_phone_info">应用需要访问手机识别码等信息</string>

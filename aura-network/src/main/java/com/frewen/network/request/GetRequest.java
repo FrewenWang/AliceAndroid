@@ -1,10 +1,8 @@
 package com.frewen.network.request;
 
-import com.frewen.network.callback.CallBackProxy;
 import com.frewen.network.callback.CallClazzProxy;
 import com.frewen.network.function.ApiResultFunction;
-import com.frewen.network.listener.AbsResponseCallback;
-import com.frewen.network.response.Response;
+import com.frewen.network.response.AuraNetResponse;
 
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
@@ -29,11 +27,11 @@ public class GetRequest extends Request<GetRequest> {
      * @param <T>
      */
     public <T> Observable<T> execute(Class<T> clazz) {
-        return execute(new CallClazzProxy<Response<T>, T>(clazz) {
+        return execute(new CallClazzProxy<AuraNetResponse<T>, T>(clazz) {
         });
     }
 
-    public <T> Observable<T> execute(CallClazzProxy<? extends Response<T>, T> proxy) {
+    public <T> Observable<T> execute(CallClazzProxy<? extends AuraNetResponse<T>, T> proxy) {
         return build().generateRequest()
                 .map(new ApiResultFunction(proxy.getType()));
     }

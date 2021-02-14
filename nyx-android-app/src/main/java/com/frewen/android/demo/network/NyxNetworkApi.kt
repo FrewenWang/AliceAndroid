@@ -1,9 +1,12 @@
 package com.frewen.android.demo.network
 
 import android.util.Log
+import com.frewen.android.demo.logic.model.ArticleBean
+import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.demo.library.network.core.NetworkApi
 import com.frewen.demo.library.utils.TencentUtils.getAuthorization
 import com.frewen.demo.library.utils.TencentUtils.timeStr
+import com.frewen.network.response.AuraNetResponse
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Call
@@ -21,7 +24,7 @@ import kotlin.coroutines.suspendCoroutine
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 class NyxNetworkApi : NetworkApi() {
-
+    
     override fun getInterceptor(): Interceptor {
         /**
          * 匿名内部类的实现
@@ -38,23 +41,23 @@ class NyxNetworkApi : NetworkApi() {
             }
         }
     }
-
+    
     override fun getProdUrl(): String {
-        return "http://baobab.kaiyanapp.com/"
+        return "https://wanandroid.com/"
     }
-
+    
     override fun getPreUrl(): String {
-        return "http://baobab.kaiyanapp.com/"
+        return "https://wanandroid.com/"
     }
-
+    
     override fun getTestUrl(): String {
-        return "http://baobab.kaiyanapp.com/"
+        return "https://wanandroid.com/"
     }
-
+    
     override fun getDevUrl(): String {
-        return "http://baobab.kaiyanapp.com/"
+        return "https://wanandroid.com/"
     }
-
+    
     /**
      * 我们给Call增加一个扩展函数，来处理我们的协程逻辑
      */
@@ -65,7 +68,7 @@ class NyxNetworkApi : NetworkApi() {
                     Log.d(Companion.TAG, "onFailure() called with: call = $call, t = $t")
                     continuation.resumeWithException(t)
                 }
-
+    
                 override fun onResponse(call: Call<T>, response: retrofit2.Response<T>) {
                     Log.d(TAG, "onResponse() called with: call = $call, response = $response")
                     val body = response.body()
@@ -75,16 +78,16 @@ class NyxNetworkApi : NetworkApi() {
             })
         }
     }
-
+    
     /**
      * 这个是DoubleCheck的单例模式的Kotlin实现方法
      */
     companion object {
         private const val TAG = "NyxNetworkApi"
-
+        
         @Volatile
         private var sInstance: NyxNetworkApi? = null
-        val instance: NyxNetworkApi?
+        val instance: NyxNetworkApi
             get() {
                 if (sInstance == null) {
                     synchronized(NyxNetworkApi::class.java) {
@@ -93,17 +96,25 @@ class NyxNetworkApi : NetworkApi() {
                         }
                     }
                 }
-                return sInstance
+                return sInstance!!
             }
-
-        fun <T> getService(service: Class<T>?): T {
-            return instance!!.getRetrofit(service).create(service)
+        
+        fun <T> getService(service: Class<T>): T {
+            return instance.getRetrofit(service).create(service)
         }
     }
-
-    /**
-     * 请求推荐页面的推荐列表
-     */
-    suspend fun requestCommunityRecommend(url: String) = getService(NyxApiService::class.java).getCommunityRecommend(url).await()
-
+    
+    
+    suspend fun getBanner(): AuraNetResponse<ArrayList<BannerModel>> {
+        return getService(NyxApiService::class.java).getBanner()
+    }
+    
+    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleBean>> {
+        return getService(NyxApiService::class.java).getTopArticleList()
+    }
+    
+    fun requestCommunityRecommend(url: String): Any {
+        return Any()
+    }
+    
 }

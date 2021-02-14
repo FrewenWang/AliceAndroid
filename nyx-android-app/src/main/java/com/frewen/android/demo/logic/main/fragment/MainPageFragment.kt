@@ -47,4 +47,10 @@ class MainPageFragment : BaseDataBindingFragment<MainPageViewModel, FragmentMain
                 R.id.navigation_discovery,
                 R.id.navigation_profile)
     }
+    
+    override fun initData(savedInstanceState: Bundle?) {
+    }
+    
+    override fun initObserver(savedInstanceState: Bundle?) {
+    }
 }

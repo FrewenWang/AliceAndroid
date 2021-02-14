@@ -3,7 +3,7 @@ package com.frewen.network.utils;
 import com.frewen.network.function.ApiHttpErrorFunction;
 import com.frewen.network.function.ApiResultParserFunction;
 import com.frewen.network.logger.Logger;
-import com.frewen.network.response.Response;
+import com.frewen.network.response.AuraNetResponse;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -26,11 +26,11 @@ import io.reactivex.schedulers.Schedulers;
 public class RxIOUtils {
     private static final String TAG = "RxIOUtils";
 
-    public static <Data> ObservableTransformer<Response<Data>, Data> _io_main() {
-        return new ObservableTransformer<Response<Data>, Data>() {
+    public static <Data> ObservableTransformer<AuraNetResponse<Data>, Data> _io_main() {
+        return new ObservableTransformer<AuraNetResponse<Data>, Data>() {
             @NonNull
             @Override
-            public ObservableSource<Data> apply(@NonNull Observable<Response<Data>> upstream) {
+            public ObservableSource<Data> apply(@NonNull Observable<AuraNetResponse<Data>> upstream) {
                 return upstream
                         .subscribeOn(Schedulers.io())
                         .unsubscribeOn(Schedulers.io())
@@ -53,11 +53,11 @@ public class RxIOUtils {
     }
 
 
-    public static <Data> ObservableTransformer<Response<Data>, Data> _main() {
-        return new ObservableTransformer<Response<Data>, Data>() {
+    public static <Data> ObservableTransformer<AuraNetResponse<Data>, Data> _main() {
+        return new ObservableTransformer<AuraNetResponse<Data>, Data>() {
             @NonNull
             @Override
-            public ObservableSource<Data> apply(@NonNull Observable<Response<Data>> upstream) {
+            public ObservableSource<Data> apply(@NonNull Observable<AuraNetResponse<Data>> upstream) {
                 return upstream.map(new ApiResultParserFunction<Data>())
                         .doOnSubscribe(new Consumer<Disposable>() {
                             @Override

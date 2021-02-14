@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             app:tabSelectedTextColor="@color/color_white"
-            app:tabTextColor="@color/color_common_black" />
+            app:tabTextColor="@color/color_black" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ImageView

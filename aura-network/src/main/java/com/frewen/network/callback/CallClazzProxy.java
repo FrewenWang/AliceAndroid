@@ -1,6 +1,6 @@
 package com.frewen.network.callback;
 
-import com.frewen.network.response.Response;
+import com.frewen.network.response.AuraNetResponse;
 import com.frewen.network.utils.CommonUtils;
 import com.google.gson.internal.$Gson$Types;
 
@@ -17,7 +17,7 @@ import okhttp3.ResponseBody;
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class CallClazzProxy<T extends Response<R>, R> implements IType {
+public class CallClazzProxy<T extends AuraNetResponse<R>, R> implements IType {
 
     private Type type;
 

@@ -34,6 +34,12 @@ class MainProfileFragment() : BaseDataBindingFragment<MainHomeViewModel, Fragmen
         Log.d(TAG, "initView() called with: view = $view, savedInstanceState = $savedInstanceState")
     }
     
-    override fun getLayoutId() = R.layout.fragment_main_home
+    override fun getLayoutId() = R.layout.fragment_main_my_profile
+    override fun initData(savedInstanceState: Bundle?) {
+    
+    }
+    
+    override fun initObserver(savedInstanceState: Bundle?) {
+    }
     
 }

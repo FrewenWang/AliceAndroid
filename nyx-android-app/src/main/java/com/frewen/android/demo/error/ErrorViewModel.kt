@@ -1,6 +1,6 @@
 package com.frewen.android.demo.error
 
-import com.frewen.aura.framework.mvvm.vm.BaseViewModel
+import com.frewen.aura.framework.mvvm.vm.AbsViewModel
 
 
 /**
@@ -11,6 +11,6 @@ import com.frewen.aura.framework.mvvm.vm.BaseViewModel
  * @version 1.0.0
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class ErrorViewModel : BaseViewModel() {
+class ErrorViewModel : AbsViewModel() {
 
 }

@@ -2,7 +2,7 @@ package com.frewen.network.response.exception;
 
 import android.net.ParseException;
 
-import com.frewen.network.response.Response;
+import com.frewen.network.response.AuraNetResponse;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonSyntaxException;
@@ -23,7 +23,7 @@ import retrofit2.HttpException;
  * @time: 2020/6/20 22:17
  *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class AuraException extends Exception {
+public class AuraNetException extends Exception {
 
     private static final int BAD_REQUEST = 400;
     private static final int UNAUTHORIZED = 401;
@@ -94,19 +94,19 @@ public class AuraException extends Exception {
     private final int errorCode;
     private final String errorMessage;
 
-    public AuraException(int errorCode, Throwable throwable) {
+    public AuraNetException(int errorCode, Throwable throwable) {
         super(throwable);
         this.errorCode = errorCode;
         this.errorMessage = throwable.getMessage();
     }
 
-    public AuraException(int errorCode, String errorMsg) {
+    public AuraNetException(int errorCode, String errorMsg) {
         super(errorMsg);
         this.errorCode = errorCode;
         this.errorMessage = errorMsg;
     }
 
-    public AuraException(int errorCode, String errorMsg, Throwable throwable) {
+    public AuraNetException(int errorCode, String errorMsg, Throwable throwable) {
         super(throwable);
         this.errorCode = errorCode;
         this.errorMessage = errorMsg;
@@ -125,7 +125,7 @@ public class AuraException extends Exception {
      *
      * @param response
      */
-    public static boolean isResponseOk(Response response) {
+    public static boolean isResponseOk(AuraNetResponse response) {
         if (response == null)
             return false;
         if (response.isSuccess() /*|| ignoreSomeIssue(apiResult.getCode())*/)
@@ -135,34 +135,34 @@ public class AuraException extends Exception {
     }
 
 
-    public static AuraException handleException(Throwable throwable) {
-        AuraException exception;
+    public static AuraNetException handleException(Throwable throwable) {
+        AuraNetException exception;
         if (throwable instanceof HttpException) {
             HttpException httpException = (HttpException) throwable;
-            exception = new AuraException(httpException.code(), httpException);
+            exception = new AuraNetException(httpException.code(), httpException);
         } else if (throwable instanceof JsonParseException
                 || throwable instanceof JSONException
                 || throwable instanceof JsonSyntaxException
                 || throwable instanceof JsonSerializer
                 || throwable instanceof NotSerializableException
                 || throwable instanceof ParseException) {
-            exception = new AuraException(ErrorCode.PARSE_ERROR, "解析错误", throwable);
+            exception = new AuraNetException(ErrorCode.PARSE_ERROR, "解析错误", throwable);
         } else if (throwable instanceof ClassCastException) {
-            exception = new AuraException(ErrorCode.CAST_ERROR, "类型转换错误", throwable);
+            exception = new AuraNetException(ErrorCode.CAST_ERROR, "类型转换错误", throwable);
         } else if (throwable instanceof ConnectException) {
-            exception = new AuraException(ErrorCode.NETWORD_ERROR, "连接失败", throwable);
+            exception = new AuraNetException(ErrorCode.NETWORD_ERROR, "连接失败", throwable);
         } else if (throwable instanceof javax.net.ssl.SSLHandshakeException) {
-            exception = new AuraException(ErrorCode.SSL_ERROR, "证书验证失败", throwable);
+            exception = new AuraNetException(ErrorCode.SSL_ERROR, "证书验证失败", throwable);
         } else if (throwable instanceof ConnectTimeoutException) {
-            exception = new AuraException(ErrorCode.TIMEOUT_ERROR, "连接超时", throwable);
+            exception = new AuraNetException(ErrorCode.TIMEOUT_ERROR, "连接超时", throwable);
         } else if (throwable instanceof java.net.SocketTimeoutException) {
-            exception = new AuraException(ErrorCode.TIMEOUT_ERROR, "连接超时", throwable);
+            exception = new AuraNetException(ErrorCode.TIMEOUT_ERROR, "连接超时", throwable);
         } else if (throwable instanceof UnknownHostException) {
-            exception = new AuraException(ErrorCode.UNKNOWNHOST_ERROR, "无法解析该域名", throwable);
+            exception = new AuraNetException(ErrorCode.UNKNOWNHOST_ERROR, "无法解析该域名", throwable);
         } else if (throwable instanceof NullPointerException) {
-            exception = new AuraException(ErrorCode.NULLPOINTER_EXCEPTION, "NullPointerException", throwable);
+            exception = new AuraNetException(ErrorCode.NULLPOINTER_EXCEPTION, "NullPointerException", throwable);
         } else {
-            exception = new AuraException(ErrorCode.UNKNOWN, "未知错误", throwable);
+            exception = new AuraNetException(ErrorCode.UNKNOWN, "未知错误", throwable);
         }
         return exception;
     }

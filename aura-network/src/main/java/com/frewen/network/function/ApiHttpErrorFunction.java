@@ -1,6 +1,6 @@
 package com.frewen.network.function;
 
-import com.frewen.network.response.exception.AuraException;
+import com.frewen.network.response.exception.AuraNetException;
 
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
@@ -17,6 +17,6 @@ import io.reactivex.functions.Function;
 public class ApiHttpErrorFunction<Data> implements Function<Throwable, Observable<Data>> {
     @Override
     public Observable<Data> apply(@NonNull Throwable throwable) throws Exception {
-        return Observable.error(AuraException.handleException(throwable));
+        return Observable.error(AuraNetException.handleException(throwable));
     }
 }

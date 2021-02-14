@@ -4,9 +4,9 @@
     <!-- 标签边线-->
     <stroke
         android:width="2dp"
-        android:color="@color/color_common_black_alpha50" />
+        android:color="@color/color_black_alpha50" />
     <!-- 内部填充颜色-->
-    <solid android:color="@color/color_common_black_alpha55" />
+    <solid android:color="@color/color_black_alpha55" />
     <!-- 标签角弧度-->
     <corners android:radius="2dp" />
 

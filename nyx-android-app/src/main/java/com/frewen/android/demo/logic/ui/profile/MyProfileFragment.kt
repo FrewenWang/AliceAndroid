@@ -18,4 +18,12 @@ class MyProfileFragment : BaseDataBindingFragment<MyProfileViewModel, FragmentMa
     override fun initView(view: View, savedInstanceState: Bundle?) {
         TODO("Not yet implemented")
     }
+    
+    override fun initData(savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
+    }
+    
+    override fun initObserver(savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
+    }
 }

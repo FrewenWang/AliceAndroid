@@ -1,6 +1,11 @@
 package com.frewen.android.demo.mvvm.viewmodel
 
-import com.frewen.aura.framework.mvvm.vm.BaseViewModel
+import androidx.lifecycle.MutableLiveData
+import com.frewen.android.demo.logic.model.ArticleBean
+import com.frewen.android.demo.logic.model.BannerModel
+import com.frewen.android.demo.network.NyxNetworkApi
+import com.frewen.demo.library.mvvm.vm.BaseViewModel
+import com.frewen.demo.library.network.ResultState
 
 
 /**
@@ -11,5 +16,21 @@ import com.frewen.aura.framework.mvvm.vm.BaseViewModel
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 class MainHomeViewModel : BaseViewModel() {
-
+    
+    //页码 首页数据页码从0开始
+    var pageNo = 0
+    
+    var homeDataState: MutableLiveData<ArticleBean> = MutableLiveData()
+    
+    //首页轮播图数据
+    var bannerData: MutableLiveData<ResultState<ArrayList<BannerModel>>> = MutableLiveData()
+    var articleData: MutableLiveData<ResultState<ArrayList<ArticleBean>>> = MutableLiveData()
+    
+    
+    /**
+     * 获取轮播图数据
+     */
+    fun getBannerData() {
+        request({ NyxNetworkApi.instance.getTopArticleList() }, articleData)
+    }
 }

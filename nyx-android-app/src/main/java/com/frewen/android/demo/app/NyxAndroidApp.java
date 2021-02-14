@@ -31,6 +31,7 @@ import com.github.anrwatchdog.ANRError;
 import com.github.anrwatchdog.ANRWatchDog;
 import com.github.moduth.blockcanary.BlockCanary;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.mmkv.MMKV;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -114,6 +115,7 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
 
         initX5Browser();
 
+        initMMKV();
 
         initNetworkApi();
         //Application级别注入
@@ -138,6 +140,11 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
         // 执行结束的时候录制TraceView的相关信息
         // Debug.stopMethodTracing();
         TraceCompat.endSection();
+    }
+
+    private void initMMKV() {
+        String rootDir = MMKV.initialize(this.getFilesDir().getAbsolutePath() + "/mmkv");
+        System.out.println("mmkv root: " + rootDir);
     }
 
     private void initModuleTaskDispatcher() {
@@ -174,9 +181,9 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
     private void initPerformanceDetector() {
         initBlockCanary();
         initAnrWatchDog();
-        StrictModeHelper.init();
+        // StrictModeHelper.init();
         // 初始化Bugly
-        initBugly();
+        // initBugly();
     }
 
     private void initAnrWatchDog() {

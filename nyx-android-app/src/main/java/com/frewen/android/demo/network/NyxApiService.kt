@@ -1,10 +1,10 @@
 package com.frewen.android.demo.network
 
-import com.frewen.android.demo.logic.model.data.CommunityRecommendModel
-import com.frewen.network.api.BaseApiService
-import retrofit2.Call
+import com.frewen.android.demo.logic.model.ArticleBean
+import com.frewen.android.demo.logic.model.BannerModel
+import com.frewen.network.response.AuraNetResponse
 import retrofit2.http.GET
-import retrofit2.http.Url
+
 
 /**
  * @filename: VideoApiService
@@ -15,7 +15,18 @@ import retrofit2.http.Url
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 interface NyxApiService {
-
-    @GET
-    fun getCommunityRecommend(@Url url: String): Call<CommunityRecommendModel>
+    
+    
+    /**
+     * 获取banner数据
+     */
+    @GET("banner/json")
+    suspend fun getBanner(): AuraNetResponse<ArrayList<BannerModel>>
+    
+    /**
+     * 获取置顶文章集合数据
+     */
+    @GET("article/top/json")
+    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleBean>>
+    
 }

@@ -6,16 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.frewen.aura.framework.fragment.BaseFragment
 import com.frewen.aura.toolkits.kotlin.ext.autoCleared
-import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.mvvm.viewmodel.getViewModelClass
 import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
-import javax.inject.Inject
 
 /**
  * @filename: BaseDataBindingFragment
@@ -55,7 +51,21 @@ abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : 
         super.onViewCreated(view, savedInstanceState)
         
         initView(view, savedInstanceState)
+        
+        initObserver(savedInstanceState)
+        
+        initData(savedInstanceState)
     }
+    
+    /**
+     * 初始化数据
+     */
+    abstract fun initData(savedInstanceState: Bundle?)
+    
+    /**
+     * 初始化ViewModel的监听器的逻辑
+     */
+    abstract fun initObserver(savedInstanceState: Bundle?)
     
     /**
      * 定义View初始化完成之后的逻辑

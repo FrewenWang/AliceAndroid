@@ -33,7 +33,7 @@ class DiscoveryFragment : BaseDataBindingFragment<MyProfileViewModel, FragmentMa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initData()
-        initObserver()
+        initObserver(savedInstanceState)
     }
     
     /**
@@ -56,11 +56,15 @@ class DiscoveryFragment : BaseDataBindingFragment<MyProfileViewModel, FragmentMa
     /**
      * 创建监听者
      */
-    private fun initObserver() {
+    override fun initObserver(savedInstanceState: Bundle?) {
     
     }
     
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
+    }
+    
+    override fun initData(savedInstanceState: Bundle?) {
         TODO("Not yet implemented")
     }
     

@@ -1,4 +1,4 @@
-package com.frewen.demo.library.viewmodel
+package com.frewen.demo.library.mvvm.vm
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

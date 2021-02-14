@@ -80,10 +80,14 @@ dependencies {
     // https://github.com/H07000223/FlycoTabLayout
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
-    /////////////////////////////////////////////////////////////////////////////////
+    //======<editor-folder desc = "Dependence:Tencent的开源框架依赖">================================
     // 文章参考：https://x5.tencent.com/docs/access.html
     // 第一步：集成X5内核浏览器的依赖
     api 'com.tencent.tbs.tbssdk:sdk:43903'
+    // https://github.com/Tencent/MMKV
+    //
+    api 'com.tencent:mmkv-static:1.2.7'
+    //======</editor-folder desc = "Dependence:Tencent的开源框架依赖">===============================
 
 
     //=================<editor-folder desc = "Dependence:腾讯崩溃收集库Bugly">========================

@@ -71,13 +71,13 @@ public class TesseractActivity extends AppCompatActivity {
     }
 
     private void recognizeTextImage() {
-        if (fileUri == null) return;
-        Bitmap bmp = BitmapFactory.decodeFile(fileUri.getPath());
-        baseApi.setImage(bmp);
-        String recognizedText = baseApi.getUTF8Text();
-        TextView txtView = findViewById(R.id.text_result_id);
-        if (!recognizedText.isEmpty()) {
-            txtView.append("识别结果：\n" + recognizedText);
-        }
+        // if (fileUri == null) return;
+        // Bitmap bmp = BitmapFactory.decodeFile(fileUri.getPath());
+        // baseApi.setImage(bmp);
+        // String recognizedText = baseApi.getUTF8Text();
+        // TextView txtView = findViewById(R.id.text_result_id);
+        // if (!recognizedText.isEmpty()) {
+        //     txtView.append("识别结果：\n" + recognizedText);
+        // }
     }
 }

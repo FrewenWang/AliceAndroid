@@ -4,7 +4,7 @@ import android.app.Application;
 import android.text.TextUtils;
 
 import com.frewen.aura.toolkits.core.AuraToolKits;
-import com.frewen.aura.toolkits.utils.AssertionsUtils;
+import com.frewen.aura.toolkits.utils.AssertUtils;
 import com.frewen.network.api.BaseApiService;
 import com.frewen.network.interceptor.HttpLoggingInterceptor;
 import com.frewen.network.logger.Logger;
@@ -174,7 +174,7 @@ public final class AuraRxHttp {
      * 获取单例对象的方法
      */
     public static AuraRxHttp getInstance() {
-        AssertionsUtils.assertNotNull(mContext, "you should init AuraRxHttp First");
+        AssertUtils.notNull(mContext, "you should init AuraRxHttp First");
         if (mInstance == null) {
             synchronized (AuraRxHttp.class) {
                 if (mInstance == null) {

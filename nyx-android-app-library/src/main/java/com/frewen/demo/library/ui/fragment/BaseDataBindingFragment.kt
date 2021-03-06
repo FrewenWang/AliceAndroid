@@ -11,7 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.frewen.aura.framework.fragment.BaseFragment
 import com.frewen.aura.toolkits.kotlin.ext.autoCleared
 import com.frewen.demo.library.mvvm.viewmodel.getViewModelClass
+import com.frewen.demo.library.network.ResultState
 import com.frewen.demo.library.ui.holder.AuraDataBindingComponent
+import com.frewen.network.response.exception.AuraNetException
 
 /**
  * @filename: BaseDataBindingFragment
@@ -77,5 +79,14 @@ abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : 
      * 抽象方法，供子类传入LayoutID
      */
     abstract fun getLayoutId(): Int
+    
+    /**
+     *
+     */
+    fun showLoading(loadingMessage: String) {
+    
+    
+    }
+    
     
 }

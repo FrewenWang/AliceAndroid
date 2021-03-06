@@ -17,12 +17,11 @@ sealed class ResultState<out T> {
         fun <T> onSuccess(data: T): ResultState<T> = Success(data)
         fun <T> onLoading(loadingMessage: String): ResultState<T> = Loading(loadingMessage)
         fun <T> onError(error: AuraNetException): ResultState<T> = Error(error)
-        
-        
-        data class Loading(val loadingMessage: String) : ResultState<Nothing>()
-        data class Success<out T>(val data: T) : ResultState<T>()
-        data class Error(val error: AuraNetException) : ResultState<Nothing>()
     }
+    
+    data class Loading(val loadingMessage: String) : ResultState<Nothing>()
+    data class Success<out T>(val data: T) : ResultState<T>()
+    data class Error(val error: AuraNetException) : ResultState<Nothing>()
 }
 
 /**
@@ -46,3 +45,4 @@ fun <T> MutableLiveData<ResultState<T>>.paresResult(result: AuraNetResponse<T>) 
 fun <T> MutableLiveData<ResultState<T>>.paresException(e: Throwable) {
     this.value = ResultState.onError(AuraNetException.handleException(e))
 }
+

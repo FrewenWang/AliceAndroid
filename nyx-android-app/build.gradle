@@ -203,11 +203,23 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
 
+
+    //=====================<editor-folder desc = "Kotlin标准库的依赖">===============================
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    //=====================</editor-folder desc = "Kotlin标准库的依赖">===============================
+
     //==========<editor-folder desc = "Dependence:添加单元测试相关的依赖">=============================
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     //==========</editor-folder desc = "Dependence:添加单元测试相关的依赖">============================
+
+    //==============<editor-folder desc = "Dependence:ConstraintLayout依赖">=========================
+    // https://developer.android.google.cn/training/constraint-layout?hl=zh_cn
+    // https://developer.android.google.cn/reference/androidx/constraintlayout/widget/ConstraintLayout
+    // 2.0集成了MotionLayout
+    implementation "androidx.constraintlayout:constraintlayout:2.0.2"
+    //==============</editor-folder desc = "Dependence:ConstraintLayout依赖">=========================
 
     //======<editor-folder desc = "Dependence:性能监控方面的依赖">====================================
     //======<editor-folder desc = "Dependence:Android Performance Monitor依赖">======================
@@ -239,28 +251,11 @@ dependencies {
 
     //======</editor-folder desc = "Dependence:性能监控方面的依赖">====================================
 
-    //=====================<editor-folder desc = "Kotlin标准库的依赖">===============================
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //=====================</editor-folder desc = "Kotlin标准库的依赖">===============================
-
     //======<editor-folder desc = "Dependence:ExoPlayer的相关依赖">===================================
     implementation 'com.google.android.exoplayer:exoplayer-core:2.11.7'
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.11.7'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.7'
     //======</editor-folder desc = "Dependence:ExoPlayer的相关依赖">==================================
-
-    //========================添加constraintlayout相关的依赖==========================================
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    //========================添加constraintlayout相关的依赖==========================================
-
-    //==================constraintlayout============================================================
-    // 2.0集成了MotionLayout
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-rc1'
-    //==================constraintlayout============================================================
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     implementation project(path: ':nyx-android-app-library')
 

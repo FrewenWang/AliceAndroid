@@ -59,6 +59,17 @@ abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : 
         initData(savedInstanceState)
     }
     
+    
+    /**
+     * 抽象方法，供子类传入LayoutID
+     */
+    abstract fun getLayoutId(): Int
+    
+    /**
+     * 定义View初始化完成之后的逻辑
+     */
+    abstract fun initView(view: View, savedInstanceState: Bundle?)
+    
     /**
      * 初始化数据
      */
@@ -69,22 +80,11 @@ abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : 
      */
     abstract fun initObserver(savedInstanceState: Bundle?)
     
-    /**
-     * 定义View初始化完成之后的逻辑
-     */
-    abstract fun initView(view: View, savedInstanceState: Bundle?)
-    
-    
-    /**
-     * 抽象方法，供子类传入LayoutID
-     */
-    abstract fun getLayoutId(): Int
     
     /**
      *
      */
     fun showLoading(loadingMessage: String) {
-    
     
     }
     

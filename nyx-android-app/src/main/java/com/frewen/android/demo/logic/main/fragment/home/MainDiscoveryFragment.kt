@@ -3,11 +3,11 @@ package com.frewen.android.demo.logic.main.fragment.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import com.frewen.android.demo.R
-import com.frewen.android.demo.databinding.FragmentMainHomeBinding
-import com.frewen.android.demo.logic.ui.recommend.content.EyeRecommendFragment
-import com.frewen.android.demo.mvvm.viewmodel.MainHomeViewModel
-import com.frewen.aura.framework.fragment.BaseFragment
+import com.frewen.android.demo.databinding.FragmentMainDiscoveryBinding
+import com.frewen.android.demo.ktx.ext.parseState
+import com.frewen.android.demo.mvvm.viewmodel.MainDiscoveryViewModel
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 
 /**
@@ -18,8 +18,12 @@ import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
  * @introduction:  Class File Init
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-class MainDiscoveryFragment() : BaseDataBindingFragment<MainHomeViewModel, FragmentMainHomeBinding>() {
+class MainDiscoveryFragment : BaseDataBindingFragment<MainDiscoveryViewModel, FragmentMainDiscoveryBinding>() {
     
+    /**
+     * 微信公众号的集合对象，通过arrayListOf()来实例化一个空集合
+     */
+    private var mWXArticleList: ArrayList<String> = arrayListOf()
     
     companion object {
         /**
@@ -30,17 +34,28 @@ class MainDiscoveryFragment() : BaseDataBindingFragment<MainHomeViewModel, Fragm
         fun newInstance() = MainDiscoveryFragment()
     }
     
+    
+    override fun getLayoutId() = R.layout.fragment_main_discovery
+    
     override fun initView(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG, "initView() called with: view = $view, savedInstanceState = $savedInstanceState")
     }
     
-    override fun getLayoutId() = R.layout.fragment_main_discovery
     override fun initData(savedInstanceState: Bundle?) {
-        Log.d(TAG, "initData() called with: savedInstanceState = $savedInstanceState")
+        Log.d(TAG, "initData() called")
+        viewModel.requestDiscoveryTitleData()
     }
     
     override fun initObserver(savedInstanceState: Bundle?) {
-        Log.d(TAG, "initObserver() called with: savedInstanceState = $savedInstanceState")
+        Log.d(TAG, "initObserver() called ")
+        viewModel.wxArticleTitleData.observe(viewLifecycleOwner, Observer() { data ->
+            Log.d(TAG, "initObserver() called with: data = $data")
+            parseState(data, {
+        
+            }, {
+        
+            })
+        })
     }
     
 }

@@ -2,6 +2,7 @@ package com.frewen.android.demo.network
 
 import com.frewen.android.demo.logic.model.ArticleBean
 import com.frewen.android.demo.logic.model.BannerModel
+import com.frewen.android.demo.logic.model.WXArticleModel
 import com.frewen.network.response.AuraNetResponse
 import retrofit2.http.GET
 
@@ -28,5 +29,13 @@ interface NyxApiService {
      */
     @GET("article/top/json")
     suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleBean>>
+    
+    
+    /**
+     * 公众号分类
+     */
+    @GET("wxarticle/chapters/json")
+    suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleModel>>
+    
     
 }

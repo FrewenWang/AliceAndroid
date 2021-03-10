@@ -12,6 +12,8 @@ import com.frewen.android.demo.logic.ui.profile.MyProfileViewModel
 import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import kotlinx.android.synthetic.main.fragment_main_discovery.*
+import kotlinx.android.synthetic.main.layout_include_top_indicator_view_pager2.*
+import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.*
 
 /**
  * 首页的发现页面的Fragment
@@ -41,11 +43,11 @@ class DiscoveryFragment : BaseDataBindingFragment<MyProfileViewModel, FragmentMa
      */
     private fun initData() {
         //初始化viewpager2
-        viewPager2.initOnFragment(this, fragments).offscreenPageLimit = 1
+        view_pager2.initOnFragment(this, fragments).offscreenPageLimit = 1
         //初始化 magic_indicator
-        magicIndicator.bindViewPager2(viewPager2, mStringList = titleData) {
+        magic_indicator.bindViewPager2(view_pager2, mStringList = titleData) {
             if (it != 0) {
-                include_viewpager_toolbar.menu.clear()
+                toolbar.menu.clear()
             } else {
             
             }

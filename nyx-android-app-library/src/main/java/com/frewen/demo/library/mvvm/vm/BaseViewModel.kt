@@ -19,14 +19,13 @@ import kotlinx.coroutines.launch
  */
 abstract class BaseViewModel() : AbsViewModel() {
     
-    private val eventString: MutableLiveData<String> = MutableLiveData<String>()
+    private val eventString: MutableLiveData<String> = MutableLiveData()
     
     fun <T> request(
             block: suspend () -> AuraNetResponse<T>,
             resultState: MutableLiveData<ResultState<T>>,
             isShowDialog: Boolean = false,
-            loadingMessage: String = "请求网络中..."
-    ): Job {
+            loadingMessage: String = "请求网络中..."): Job {
         return viewModelScope.launch {
             runCatching {
                 if (isShowDialog) {

@@ -33,11 +33,11 @@ fun <T> BaseDataBindingFragment<*, *>.parseState(
             onLoading?.invoke()
         }
         is ResultState.Success -> {
-            dismissLoading()
+//            dismissLoading()
             onSuccess(resultState.data)
         }
         is ResultState.Error -> {
-            dismissLoading()
+//            dismissLoading()
             onError?.run { this(resultState.error) }
         }
         else -> {

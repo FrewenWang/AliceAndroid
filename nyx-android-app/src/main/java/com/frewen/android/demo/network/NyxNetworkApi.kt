@@ -3,6 +3,7 @@ package com.frewen.android.demo.network
 import android.util.Log
 import com.frewen.android.demo.logic.model.ArticleBean
 import com.frewen.android.demo.logic.model.BannerModel
+import com.frewen.android.demo.logic.model.WXArticleModel
 import com.frewen.demo.library.network.core.NetworkApi
 import com.frewen.demo.library.utils.TencentUtils.getAuthorization
 import com.frewen.demo.library.utils.TencentUtils.timeStr
@@ -111,6 +112,11 @@ class NyxNetworkApi : NetworkApi() {
     
     suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleBean>> {
         return getService(NyxApiService::class.java).getTopArticleList()
+    }
+    
+    
+    suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleModel>> {
+        return getService(NyxApiService::class.java).getWXArticleTitle()
     }
     
     fun requestCommunityRecommend(url: String): Any {

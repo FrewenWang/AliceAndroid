@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.frewen.android.demo.R
 import com.frewen.android.demo.logic.model.ArticleBean
 import com.frewen.android.demo.utils.SettingsUtils
-import com.frewen.aura.toolkits.kotlin.ext.toHtml
+import com.frewen.aura.toolkits.ktx.ext.toHtml
 
 /**
  * @filename: HomeArticleAdapter

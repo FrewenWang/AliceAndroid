@@ -72,8 +72,6 @@ class FirstFragment : Fragment() {
         view.findViewById<Button>(R.id.delete_logs).setOnClickListener {
             logger.removeLogs()
         }
-
-
         /**
          *
          */

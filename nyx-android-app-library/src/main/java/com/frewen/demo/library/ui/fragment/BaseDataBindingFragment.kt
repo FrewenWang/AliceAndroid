@@ -9,7 +9,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.frewen.aura.framework.fragment.BaseFragment
-import com.frewen.aura.toolkits.kotlin.ext.autoCleared
+import com.frewen.aura.toolkits.ktx.ext.autoCleared
 import com.frewen.demo.library.mvvm.viewmodel.getViewModelClass
 import com.frewen.demo.library.network.ResultState
 import com.frewen.demo.library.ui.holder.AuraDataBindingComponent

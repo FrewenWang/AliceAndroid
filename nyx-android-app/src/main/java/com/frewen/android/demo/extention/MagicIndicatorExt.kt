@@ -7,7 +7,7 @@ import android.view.animation.DecelerateInterpolator
 import androidx.viewpager2.widget.ViewPager2
 import com.frewen.android.demo.app.NyxAndroidApp
 import com.frewen.android.demo.widgets.ScaleTransitionPagerTitleView
-import com.frewen.aura.toolkits.kotlin.ext.toHtml
+import com.frewen.aura.toolkits.ktx.ext.toHtml
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator

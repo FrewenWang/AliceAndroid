@@ -18,9 +18,9 @@ import kotlinx.coroutines.launch
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 abstract class BaseViewModel() : AbsViewModel() {
-    
-    private val eventString: MutableLiveData<String> = MutableLiveData()
-    
+
+    private val eventString: MutableLiveData<String> = MutableLiveData<String>()
+
     fun <T> request(
             block: suspend () -> AuraNetResponse<T>,
             resultState: MutableLiveData<ResultState<T>>,
@@ -40,6 +40,6 @@ abstract class BaseViewModel() : AbsViewModel() {
             }
         }
     }
-    
-    
+
+
 }

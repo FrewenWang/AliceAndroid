@@ -17,8 +17,8 @@
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
+            <!--TODO 添加第三方的RecyclerView的依赖,待学习-->
+            <com.yanzhenjie.recyclerview.SwipeRecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

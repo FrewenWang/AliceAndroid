@@ -20,19 +20,21 @@ import kotlinx.android.synthetic.main.fragment_main_page.*
  * 主页面的Fragment页面
  */
 class MainPageFragment : BaseDataBindingFragment<MainPageViewModel, FragmentMainPageBinding>() {
-    
+
     override fun getLayoutId() = R.layout.fragment_main_page
+
     val fragments: Array<Fragment> = arrayOf(
             MainHomeFragment.newInstance(),
             MainRecommendFragment.newInstance(),
             MainDiscoveryFragment.newInstance(),
             MainProfileFragment.newInstance()
     )
-    
-    
+
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         //初始化viewpager2，减少模板代码，使用扩展函数类初始化ViewPager2
         mainViewpager.initOnFragment(this, fragments)
+
         mainBottom.init {
             when (it) {
                 R.id.navigation_home -> mainViewpager.setCurrentItem(0, false)
@@ -47,10 +49,10 @@ class MainPageFragment : BaseDataBindingFragment<MainPageViewModel, FragmentMain
                 R.id.navigation_discovery,
                 R.id.navigation_profile)
     }
-    
+
     override fun initData(savedInstanceState: Bundle?) {
     }
-    
+
     override fun initObserver(savedInstanceState: Bundle?) {
     }
 }

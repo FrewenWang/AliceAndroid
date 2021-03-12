@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <!--底层的Toolbar布局-->
-        <include layout="@layout/layout_include_top_toolbar_common" />
 
+        <!--顶部的Toolbar顶层include布局-->
+        <include layout="@layout/layout_include_top_toolbar_common" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <!--    merge标签主要用于辅助include标签,在使用include后可能导致布局嵌套过多,-->
+    <!--    多余的layout节点或导致解析变慢(可通过hierarchy viewer工具查看布局的嵌套情况)-->
+    <!--    官方文档说明:merge用于消除视图层次结构中的冗余视图,例如根布局是LinearLayout,-->
+    <!--    那么我们又include一个LinerLayout布局就没意义了,反而会减慢UI加载速度-->
+    <!--    merge标签常用场景:-->
+    <merge>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_include_recyclerview_common" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="图像描述"
+                android:scaleType="center"
+                android:src="@mipmap/ic_arrow_up"
+                android:visibility="invisible"
+                app:elevation="5dp"
+                app:fabSize="mini"
+                app:layout_behavior=".views.behavior.FloatingActionBtnBehavior" />
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </merge>
+
+</layout>

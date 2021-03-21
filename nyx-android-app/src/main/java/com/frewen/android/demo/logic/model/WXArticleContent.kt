@@ -5,21 +5,16 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 /**
- * @filename: ArticleResponse
- * @author: Frewen.Wong
- * @time: 2/12/21 3:44 PM
- * @version: 1.0.0
- * @introduction:  首页的文章的内容的实体
- * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
+ * 文章
  */
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class ArticleBean(
-        var apkLink: String,
-        var author: String,
+data class WXArticleContent(
+        var apkLink: String,                            //
+        var author: String,                             //  作者
         var chapterId: Int,
         var chapterName: String,
-        var collect: Boolean,
+        var collect: Boolean,                           //  是否收藏
         var courseId: Int,
         var desc: String,
         var envelopePic: String,
@@ -34,9 +29,10 @@ data class ArticleBean(
         var superChapterId: Int,
         var superChapterName: String,
         var shareUser: String,
-        var tags: List<ArticleTagsBean>,
+        var tags: List<TagsResponse>,
         var title: String,
         var type: Int,
         var userId: Int,
         var visible: Int,
-        var zan: Int) : Parcelable
+        var zan: Int
+) : Parcelable

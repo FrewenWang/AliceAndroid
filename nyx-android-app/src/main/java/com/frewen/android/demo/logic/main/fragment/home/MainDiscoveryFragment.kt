@@ -3,12 +3,17 @@ package com.frewen.android.demo.logic.main.fragment.home
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainDiscoveryBinding
+import com.frewen.android.demo.extention.bindViewPager2
 import com.frewen.android.demo.ktx.ext.parseState
+import com.frewen.android.demo.logic.main.fragment.discovery.MainDiscoveryPageFragment
 import com.frewen.android.demo.mvvm.viewmodel.MainDiscoveryViewModel
+import com.frewen.demo.library.ktx.ext.initOnFragment
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
+import kotlinx.android.synthetic.main.layout_include_top_indicator_view_pager2.*
 
 /**
  * @filename: MainHomeFragment
@@ -25,6 +30,11 @@ class MainDiscoveryFragment : BaseDataBindingFragment<MainDiscoveryViewModel, Fr
      */
     private var mWXArticleList: ArrayList<String> = arrayListOf()
     
+    /**
+     *
+     */
+    private var fragments: ArrayList<Fragment> = arrayListOf()
+    
     companion object {
         /**
          * 如果想要让Java代码也能调用这个伴生对象的方法
@@ -39,6 +49,11 @@ class MainDiscoveryFragment : BaseDataBindingFragment<MainDiscoveryViewModel, Fr
     
     override fun initView(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG, "initView() called with: view = $view, savedInstanceState = $savedInstanceState")
+        
+        //初始化viewpager2
+        view_pager2.initOnFragment(this, fragments)
+        //初始化 magic_indicator
+        magic_indicator.bindViewPager2(view_pager2, mWXArticleList)
     }
     
     override fun initData(savedInstanceState: Bundle?) {
@@ -50,10 +65,15 @@ class MainDiscoveryFragment : BaseDataBindingFragment<MainDiscoveryViewModel, Fr
         Log.d(TAG, "initObserver() called ")
         viewModel.wxArticleTitleData.observe(viewLifecycleOwner, Observer() { data ->
             Log.d(TAG, "initObserver() called with: data = $data")
-            parseState(data, {
-        
-            }, {
-        
+            parseState(data, { it ->
+                mWXArticleList.addAll(it.map { it.name })
+                it.forEach { classify ->
+                    fragments.add(MainDiscoveryPageFragment.newInstance(classify.id))
+                }
+                magic_indicator.navigator.notifyDataSetChanged()
+                // 更新ViewPager的数据
+                view_pager2.adapter?.notifyDataSetChanged()
+                view_pager2.offscreenPageLimit = fragments.size
             })
         })
     }

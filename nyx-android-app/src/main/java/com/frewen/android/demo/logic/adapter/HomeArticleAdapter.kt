@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.frewen.android.demo.R
-import com.frewen.android.demo.logic.model.ArticleBean
+import com.frewen.android.demo.logic.model.WXArticleContent
 import com.frewen.android.demo.utils.SettingsUtils
 import com.frewen.aura.toolkits.ktx.ext.toHtml
 
@@ -20,16 +20,16 @@ import com.frewen.aura.toolkits.ktx.ext.toHtml
  * @introduction:
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-class HomeArticleAdapter(data: MutableList<ArticleBean>?) : BaseDelegateMultiAdapter<ArticleBean, BaseViewHolder>(data) {
+class HomeArticleAdapter(data: MutableList<WXArticleContent>?) : BaseDelegateMultiAdapter<WXArticleContent, BaseViewHolder>(data) {
     private val Article = 1//文章类型
     private val Project = 2//项目类型
     private var showTag = false//是否展示标签 tag 一般主页才用的到
     
-    constructor(data: MutableList<ArticleBean>?, showTag: Boolean) : this(data) {
+    constructor(data: MutableList<WXArticleContent>?, showTag: Boolean) : this(data) {
         this.showTag = showTag
     }
     
-    override fun convert(helper: BaseViewHolder, item: ArticleBean) {
+    override fun convert(helper: BaseViewHolder, item: WXArticleContent) {
         when (helper.itemViewType) {
             Article -> {
                 //文章布局的赋值
@@ -123,8 +123,8 @@ class HomeArticleAdapter(data: MutableList<ArticleBean>?) : BaseDelegateMultiAda
             this.setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[animMode - 1])
         }
         // 第一步，设置代理
-        setMultiTypeDelegate(object : BaseMultiTypeDelegate<ArticleBean>() {
-            override fun getItemType(data: List<ArticleBean>, position: Int): Int {
+        setMultiTypeDelegate(object : BaseMultiTypeDelegate<WXArticleContent>() {
+            override fun getItemType(data: List<WXArticleContent>, position: Int): Int {
                 return if (TextUtils.isEmpty(data[position].envelopePic)) Article else Project
             }
         })

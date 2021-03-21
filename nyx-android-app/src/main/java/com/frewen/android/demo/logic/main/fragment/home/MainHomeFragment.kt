@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.frewen.android.demo.R
@@ -12,18 +11,16 @@ import com.frewen.android.demo.adapter.holder.HomeBannerViewHolder
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
 import com.frewen.android.demo.logic.adapter.HomeArticleAdapter
 import com.frewen.android.demo.logic.adapter.HomeBannerAdapter
-import com.frewen.android.demo.logic.model.ArticleBean
 import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.android.demo.mvvm.viewmodel.MainHomeViewModel
 import com.frewen.aura.toolkits.utils.ToastUtils
-import com.frewen.demo.library.ktx.extention.init
+import com.frewen.demo.library.ktx.ext.init
 import com.frewen.demo.library.network.ResultState
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import com.frewen.network.response.exception.AuraNetException
 import com.zhpan.bannerview.BannerViewPager
 import kotlinx.android.synthetic.main.layout_include_recyclerview_common.*
 import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.*
-import java.util.ArrayList
 
 /**
  * @filename: MainHomeFragment

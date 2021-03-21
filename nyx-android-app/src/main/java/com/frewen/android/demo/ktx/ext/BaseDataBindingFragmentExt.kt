@@ -5,15 +5,6 @@ import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import com.frewen.network.response.exception.AuraNetException
 
 /**
- * @filename: BaseDataBindingFragmentExt
- * @author: Frewen.Wong
- * @time: 2/14/21 10:33 AM
- * @version: 1.0.0
- * @introduction:  Class File Init
- * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
- */
-
-/**
  * 显示页面状态，这里有个技巧，成功回调在第一个，其后两个带默认值的回调可省
  * @param resultState 接口返回值
  * @param onLoading 加载中

@@ -1,4 +1,4 @@
-package com.frewen.demo.library.ktx.extention
+package com.frewen.demo.library.ktx.ext
 
 import android.view.LayoutInflater
 import android.view.View

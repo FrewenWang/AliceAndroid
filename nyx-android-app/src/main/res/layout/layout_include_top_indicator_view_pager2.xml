@@ -13,6 +13,7 @@
 
         <!--顶部的ToolBar的布局Include-->
         <include layout="@layout/layout_include_top_toolbar_common" />
+
         <!--顶部的导航栏-->
         <net.lucode.hackware.magicindicator.MagicIndicator
             android:id="@+id/magic_indicator"

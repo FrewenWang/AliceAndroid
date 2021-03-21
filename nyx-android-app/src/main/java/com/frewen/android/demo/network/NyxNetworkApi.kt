@@ -1,9 +1,10 @@
 package com.frewen.android.demo.network
 
 import android.util.Log
-import com.frewen.android.demo.logic.model.ArticleBean
 import com.frewen.android.demo.logic.model.BannerModel
-import com.frewen.android.demo.logic.model.WXArticleModel
+import com.frewen.android.demo.logic.model.WXArticleContent
+import com.frewen.android.demo.logic.model.WXArticleTitle
+import com.frewen.android.demo.logic.model.wrapper.ApiPagerResponseWrapper
 import com.frewen.demo.library.network.core.NetworkApi
 import com.frewen.demo.library.utils.TencentUtils.getAuthorization
 import com.frewen.demo.library.utils.TencentUtils.timeStr
@@ -110,17 +111,25 @@ class NyxNetworkApi : NetworkApi() {
         return getService(NyxApiService::class.java).getBanner()
     }
     
-    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleBean>> {
+    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<WXArticleContent>> {
         return getService(NyxApiService::class.java).getTopArticleList()
     }
     
     
-    suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleModel>> {
+    suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleTitle>> {
         return getService(NyxApiService::class.java).getWXArticleTitle()
+    }
+    
+    /**
+     * 获取微信公众号的数据
+     */
+    suspend fun getWXContentData(pageNo: Int, cid: Int): AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>> {
+        return getService(NyxApiService::class.java).getWXContentData(pageNo, cid)
     }
     
     fun requestCommunityRecommend(url: String): Any {
         return Any()
     }
+    
     
 }

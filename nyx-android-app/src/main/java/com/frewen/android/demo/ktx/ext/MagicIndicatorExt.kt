@@ -27,9 +27,8 @@ fun MagicIndicator.bindViewPager2(
         viewPager2: ViewPager2,
         mDataList: ArrayList<String> = arrayListOf(),
         mStringList: ArrayList<String> = arrayListOf(),
-        action: (index: Int) -> Unit = {}
-) {
-
+        action: (index: Int) -> Unit = {}) {
+    
     val commonNavigator = CommonNavigator(NyxAndroidApp.getInstance(NyxAndroidApp::class.java))
     // 实例化一个匿名对象，实现CommonNavigatorAdapter抽象类
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
@@ -40,7 +39,7 @@ fun MagicIndicator.bindViewPager2(
                 mDataList.size
             }
         }
-
+        
         override fun getTitleView(context: Context?, index: Int): IPagerTitleView {
             /**
              * 整体作用功能和run函数很像，唯一不同点就是它返回的值是对象本身，
@@ -63,7 +62,7 @@ fun MagicIndicator.bindViewPager2(
                 }
             }
         }
-
+        
         override fun getIndicator(context: Context?): IPagerIndicator {
             return LinePagerIndicator(context).apply {
                 mode = LinePagerIndicator.MODE_EXACTLY
@@ -79,6 +78,29 @@ fun MagicIndicator.bindViewPager2(
             }
         }
     }
-
-
+    
+    this.navigator = commonNavigator
+    
+    viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            this@bindViewPager2.onPageSelected(position)
+            action.invoke(position)
+        }
+    
+        override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            this@bindViewPager2.onPageScrolled(position, positionOffset, positionOffsetPixels)
+        }
+    
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+            this@bindViewPager2.onPageScrollStateChanged(state)
+        }
+    })
+    
 }

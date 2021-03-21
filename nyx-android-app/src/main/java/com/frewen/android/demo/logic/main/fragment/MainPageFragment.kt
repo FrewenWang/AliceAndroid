@@ -10,9 +10,9 @@ import com.frewen.android.demo.logic.main.fragment.home.MainHomeFragment
 import com.frewen.android.demo.logic.main.fragment.home.MainProfileFragment
 import com.frewen.android.demo.logic.main.fragment.home.MainRecommendFragment
 import com.frewen.android.demo.mvvm.viewmodel.MainPageViewModel
-import com.frewen.demo.library.ktx.extention.init
-import com.frewen.demo.library.ktx.extention.initOnFragment
-import com.frewen.demo.library.ktx.extention.interceptLongClick
+import com.frewen.demo.library.ktx.ext.init
+import com.frewen.demo.library.ktx.ext.initOnFragment
+import com.frewen.demo.library.ktx.ext.interceptLongClick
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import kotlinx.android.synthetic.main.fragment_main_page.*
 

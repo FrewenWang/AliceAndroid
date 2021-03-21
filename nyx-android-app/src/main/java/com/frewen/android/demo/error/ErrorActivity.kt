@@ -11,9 +11,9 @@ import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.ActivityErrorBinding
 import com.frewen.aura.toolkits.utils.ToastUtils
-import com.frewen.demo.library.ktx.extention.click
-import com.frewen.demo.library.ktx.extention.init
-import com.frewen.demo.library.ktx.extention.showMessageDialog
+import com.frewen.demo.library.ktx.ext.click
+import com.frewen.demo.library.ktx.ext.init
+import com.frewen.demo.library.ktx.ext.showMessageDialog
 import com.frewen.aura.framework.mvvm.activity.BaseVMDataBindingActivity
 import kotlinx.android.synthetic.main.activity_error.*
 import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.*

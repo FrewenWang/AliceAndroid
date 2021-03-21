@@ -1,10 +1,12 @@
 package com.frewen.android.demo.network
 
-import com.frewen.android.demo.logic.model.ArticleBean
 import com.frewen.android.demo.logic.model.BannerModel
-import com.frewen.android.demo.logic.model.WXArticleModel
+import com.frewen.android.demo.logic.model.WXArticleContent
+import com.frewen.android.demo.logic.model.WXArticleTitle
+import com.frewen.android.demo.logic.model.wrapper.ApiPagerResponseWrapper
 import com.frewen.network.response.AuraNetResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
 /**
@@ -28,14 +30,20 @@ interface NyxApiService {
      * 获取置顶文章集合数据
      */
     @GET("article/top/json")
-    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleBean>>
+    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<WXArticleContent>>
     
     
     /**
      * 公众号分类
      */
     @GET("wxarticle/chapters/json")
-    suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleModel>>
+    suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleTitle>>
+    
+    @GET("wxarticle/list/{id}/{page}/json")
+    suspend fun getWXContentData(
+            @Path("page") pageNo: Int,
+            @Path("id") id: Int
+    ): AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>>
     
     
 }

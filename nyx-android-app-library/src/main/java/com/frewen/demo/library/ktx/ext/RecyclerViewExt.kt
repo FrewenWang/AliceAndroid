@@ -1,6 +1,7 @@
-package com.frewen.demo.library.ktx.extention
+package com.frewen.demo.library.ktx.ext
 
 import androidx.recyclerview.widget.RecyclerView
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 /**
  * @filename: RecyclerViewExtention
@@ -15,6 +16,18 @@ fun RecyclerView.init(
         bindAdapter: RecyclerView.Adapter<*>,
         isScroll: Boolean = true
 ): RecyclerView {
+    layoutManager = layoutManger
+    setHasFixedSize(true)
+    adapter = bindAdapter
+    isNestedScrollingEnabled = isScroll
+    return this
+}
+
+fun SwipeRecyclerView.init(
+        layoutManger: RecyclerView.LayoutManager,
+        bindAdapter: RecyclerView.Adapter<*>,
+        isScroll: Boolean = true
+): SwipeRecyclerView {
     layoutManager = layoutManger
     setHasFixedSize(true)
     adapter = bindAdapter

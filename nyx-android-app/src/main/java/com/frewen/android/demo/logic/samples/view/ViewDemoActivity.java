@@ -1,5 +1,6 @@
 package com.frewen.android.demo.logic.samples.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,8 +89,9 @@ public class ViewDemoActivity extends BaseButterKnifeActivity {
         /**
          * 如果我们想让这个TextView能设置的android:layout_xx属性都能生效的话，我们需要使用下面的方式
          */
-        View insideView = LayoutInflater.from(ViewDemoActivity.this).inflate(R.layout.item_list_textview, root, false);
-        root.addView(insideView);
+        // View insideView = LayoutInflater.from(ViewDemoActivity.this).inflate(R.layout.item_list_textview, root, false);
+        // root.addView(insideView);
+        startActivity(new Intent(this, TranslucentActivity.class));
     }
 
     /**

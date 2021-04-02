@@ -42,9 +42,14 @@
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".logic.samples.AnimationDrawableActivity"></activity>
+        <activity
+            android:name=".logic.samples.view.TranslucentActivity"
+            android:theme="@style/TransparentTheme">
+
+        </activity>
+        <activity android:name=".logic.samples.AnimationDrawableActivity" />
         <activity android:name=".logic.samples.media.camera2.Camera2Activity" />
-        <activity android:name=".logic.samples.opencv.TesseractActivity"></activity>
+        <activity android:name=".logic.samples.opencv.TesseractActivity" />
         <activity android:name=".logic.samples.opencv.OpenCVActivity" />
         <activity android:name=".logic.samples.network.aura.AuraNetWorkDemoActivity" />
         <activity android:name=".logic.samples.FrameAnimationActivity" />

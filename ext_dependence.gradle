@@ -1,0 +1,180 @@
+ext {
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.3'
+    targetSdkVersion = 28
+
+    minSdkVersion = 19
+    minSdkVersion16 = 16
+    minSdkVersion19 = 19
+    minSdkVersion22 = 22
+    minSdkVersion24 = 24
+    minSdkVersion26 = 26
+
+    // App dependencies
+    supportLibraryVersion = '28.0.0'
+
+    // Kotlin Dependencies
+    kotlin_version = '1.3.10'
+    anko_version = '0.10.8'
+
+    //retrolfit相关依赖
+    retrofitVersion = '2.9.0'
+    //okhttp3相关
+    okhttp3Version = '3.14.0'
+    okioVersion = '2.2.2'
+    greendaoVersion = '3.2.2'
+    picassoVersion = '2.5.2'
+    glideVersion = '4.9.0'
+
+    eventbusVersion = '3.0.0'
+    nineoldandroidsVersion = '2.4.0'
+    loggerVersion = '1.15'
+    //ui
+    flexboxVersion = '0.2.6'
+
+    //RxJava RxAndroid dependencies
+    rxJavaVersion = '1.1.0'
+    rxAndroidVersion = '1.1.0'
+    rxJava2Version = '2.2.12'
+    rxAndroid2Version = '2.1.1'
+    // Butterknife Version
+    butterknifeVersion = '10.2.0'
+    stethoVersion = '1.5.0'
+    daggerVersion = '2.23.2'
+    leakcanaryVersion = '1.5.1'
+
+    autovalueVersion = "1.2"
+
+    // JetPack组件依赖版本
+    nav_version = "2.3.3"
+    lifecycle_version = "2.3.0"
+
+    dep = [
+            //==========================android 支持库依赖=========================================
+            appcompatV7              : "com.android.support:appcompat-v7:$supportLibraryVersion",
+            supportV4                : "com.android.support:support-v4:$supportLibraryVersion",
+            supportAnnotations       : "com.android.support:support-annotations:$supportLibraryVersion",
+            design                   : "com.android.support:design:$supportLibraryVersion",
+            vectorDrawable           : "com.android.support:support-vector-drawable:$supportLibraryVersion",
+            vectorAnimate            : "com.android.support:animated-vector-drawable:$supportLibraryVersion",
+            recyclerview             : "com.android.support:recyclerview-v7:$supportLibraryVersion",
+            cardview                 : "com.android.support:cardview-v7:$supportLibraryVersion",
+            support                  : [
+                    multidex: "com.android.support:multidex:1.0.2",
+            ],
+            //==========================android 支持库依赖=========================================
+            kotlin                   : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            //==============================android自有库依赖=========================================
+            constraintLayout         : 'com.android.support.constraint:constraint-layout:1.1.3',
+            //=================================测试相关依赖库=========================================
+            junit                    : "junit:junit:4.12",
+            runner                   : 'com.android.support.test:runner:1.0.2',
+            espresso                 : 'com.android.support.test.espresso:espresso-core:3.0.2',
+            //======================================================================================
+            flexbox                  : "com.google.android:flexbox:$flexboxVersion",
+            //======================================OKHttp3框架依赖================================
+            okhttp3                  : "com.squareup.okhttp3:okhttp:$okhttp3Version",
+            okhttp3Log               : "com.squareup.okhttp3:logging-interceptor:$okhttp3Version",
+            okio                     : "com.squareup.okio:okio:$okioVersion",
+            //======================================Retrolfit框架依赖================================
+            retrofit                 : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+            retrofitGson             : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+            retrofitRxjava           : "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion",
+            retrofitRxjava2          : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+            //======================================Gson============================================
+            gson                     : "com.google.code.gson:gson:2.8.5",
+            pollexor                 : "com.squareup:pollexor:2.0.4",
+            //=========================================图片缓存框架====================================
+            glide                    : "com.github.bumptech.glide:glide:$glideVersion",
+            glideCompiler            : "com.github.bumptech.glide:compiler:$glideVersion",
+            picasso                  : "com.squareup.picasso:picasso:$picassoVersion",
+            picassoOkhttp3           : "com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2",
+            fresco                   : 'com.facebook.fresco:fresco:1.4.0',
+            greenDao                 : "org.greenrobot:greendao:$greendaoVersion",
+            logger                   : "com.orhanobut:logger:$loggerVersion",
+            //=========================================RxJava2======================================
+            rxjava                   : "io.reactivex:rxjava:$rxJavaVersion",
+            rxandroid                : "io.reactivex:rxandroid:$rxAndroidVersion",
+            rxjava2                  : "io.reactivex.rxjava2:rxjava:$rxJava2Version",
+            rxandroid2               : "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
+            //===========================================ButterKnife================================
+            butterknife              : "com.jakewharton:butterknife:$butterknifeVersion",
+            butterknifeCompiler      : "com.jakewharton:butterknife-compiler:$butterknifeVersion",
+            //===========================================Dagger2====================================
+            dagger2                  : "com.google.dagger:dagger:$daggerVersion",
+            dagger2Compiler          : "com.google.dagger:dagger-compiler:$daggerVersion",
+            dagger2Android           : "com.google.dagger:dagger-android:$daggerVersion",
+            dagger2AndroidSupport    : "com.google.dagger:dagger-android-support:$daggerVersion",
+            dagger2AndroidProcessor  : "com.google.dagger:dagger-android-processor:$daggerVersion",
+            //======================================================================================
+            javaxAnnotation          : 'org.glassfish:javax.annotation:10.0-b28',
+            //===========================================Chrome Debug Toools========================
+            stetho                   : "com.facebook.stetho:stetho:$stethoVersion",
+            stethoOkhttp3            : "com.facebook.stetho:stetho-okhttp3:$stethoVersion",
+            //===========================================LeakCanary=================================
+            leakcanaryDebug          : 'com.squareup.leakcanary:leakcanary-android:1.5.4',
+            leakcanaryRelease        : 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4',
+
+            //============================================Auto Value ===============================
+            autovalue                : "com.google.auto.value:auto-value:1.4.1",
+            autovalueAnno            : 'com.jakewharton.auto.value:auto-value-annotations:1.4',
+            autovalueGson            : "com.ryanharter.auto.value:auto-value-gson:0.5.0",
+            autovalueParcel          : "com.ryanharter.auto.value:auto-value-parcel:0.2.5",
+            autovalueParcelAdapter   : "com.ryanharter.auto.value:auto-value-parcel-adapter:0.2.5",
+            //=============================================EventBus=================================
+            eventbus3                : "org.greenrobot:eventbus:3.1.1",
+            eventbus3Compiler        : "org.greenrobot:eventbus-annotation-processor:3.0.1",
+            //======================================================================================
+            //用于方便调试性能问题的打印插件。给访法加上@DebugLog，就能输出该方法的调用参数，以及执行时间；
+            hugo                     : "com.jakewharton.hugo:hugo-plugin:1.2.1",
+
+
+            //=================<editor-folder desc = "Dependence:JetPack开源框架依赖">================
+            //JetPack组件的依赖： https://developer.android.google.cn/jetpack
+            // https://developer.android.com/jetpack/getting-started
+
+            //=================<editor-folder desc = "Dependence:Lifecycle框架依赖">================
+            // Lifecycle组件使用入门:包括LiveData、ViewModel等组件
+            // https://developer.android.google.cn/jetpack/androidx/releases/lifecycle?hl=zh_cn#java
+            // ViewModel
+            viewModel                : "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version",
+            // ViewModel
+            viewModelKTX             : "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version",
+            // LiveData
+            liveDataKTX              : "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version",
+            // Lifecycles only (without ViewModel or LiveData)
+            runTimeKTX               : "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version",
+            // Saved state module for ViewModel
+            viewModelState           : "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version",
+            // Annotation processor
+            lifeCycleCompiler        : "androidx.lifecycle:lifecycle-compiler:$lifecycle_version",
+            // alternately - if using Java8, use the following instead of lifecycle-compiler
+            lifeCycleJava8           : "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version",
+            // optional - helpers for implementing LifecycleOwner in a Service
+            lifeCycleService         : "androidx.lifecycle:lifecycle-service:$lifecycle_version",
+            // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+            lifeCycleProcess         : "androidx.lifecycle:lifecycle-process:$lifecycle_version",
+            //=================</editor-folder desc = "Dependence:LiveData框架依赖">================
+
+            //=================<editor-folder desc = "Dependence:Navigation框架依赖">================
+            // Navigation组件使用入门:
+            // https://developer.android.google.cn/guide/navigation/navigation-getting-started?hl=zh-cn
+            // Java language implementation
+            navigationFragment       : "androidx.navigation:navigation-fragment:$nav_version",
+            navigationUI             : "androidx.navigation:navigation-ui:$nav_version",
+            // Kotlin
+            navigationFragmentKTX    : "androidx.navigation:navigation-fragment-ktx:$nav_version",
+            navigationUIKTX          : "androidx.navigation:navigation-ui-ktx:$nav_version",
+            // Feature module Support
+            navigationDynamicFeatures: "androidx.navigation:navigation-dynamic-features-fragment:$nav_version",
+            // Testing Navigation
+            navigationTest           : "androidx.navigation:navigation-testing:$nav_version",
+            // Jetpack Compose Integration(目前还是alpha07测试版本)
+            navigationCompose        : "androidx.navigation:navigation-compose:1.0.0-alpha07"
+            //=================</editor-folder desc = "Dependence:Navigation框架依赖">================
+
+
+            //=================</editor-folder desc = "Dependence:JetPack开源框架依赖">===============
+    ]
+
+}

@@ -131,23 +131,21 @@ android {
         }
     }
 
-    //使用Java8
-    // Butterknife requires Java 8.
-    // hilt的依赖注入框架使用Java 8的功能
+    //使用Java8 ButterKnife、Hilt等框架使用Java 8的功能
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    // 设置Kotlin也使用1.8
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 
     dexOptions {
         preDexLibraries = false
         javaMaxHeapSize "4g"
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
     repositories {
         flatDir {
             dirs 'libs'   // aar目录
@@ -202,7 +200,6 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.annotation:annotation:1.1.0'
-
 
     //=====================<editor-folder desc = "Kotlin标准库的依赖">===============================
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!--菜鸟教程的导航路由图-->
 <!--这种用的是JetPack的navigation的导航的的框架-->
 <!--这种用的startDestination="@+id/navigation_home"表示第一个启动的Fragment-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,25 +15,27 @@
     <!--我们还可以通过action来进行navigation的跳转Action -->
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.frewen.android.demo.logic.samples.tiktok.fragments.HomeViewFragment"
+        android:name="com.frewen.android.demo.logic.samples.course.fragments.HomeViewFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_main_home" />
 
+    <!--如果需要导航栏的BottomNavigationView和Fragment的绑定的话-->
+    <!--id必须和navigation的id保持一致-->
     <fragment
         android:id="@+id/navigation_recommend"
-        android:name="com.frewen.android.demo.logic.samples.tiktok.fragments.MsgViewFragment"
+        android:name="com.frewen.android.demo.logic.samples.course.fragments.MsgViewFragment"
         android:label="@string/title_recommend"
         tools:layout="@layout/fragment_main_recommend" />
 
     <fragment
         android:id="@+id/navigation_discovery"
-        android:name="com.frewen.android.demo.logic.samples.tiktok.fragments.RecommendViewFragment"
+        android:name="com.frewen.android.demo.logic.samples.course.fragments.RecommendViewFragment"
         android:label="@string/title_discovery"
         tools:layout="@layout/fragment_main_discovery" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.frewen.android.demo.logic.samples.tiktok.fragments.MineViewFragment"
+        android:name="com.frewen.android.demo.logic.samples.course.fragments.MineViewFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_main_my_profile" />
 </navigation>

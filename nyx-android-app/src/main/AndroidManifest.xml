@@ -80,7 +80,7 @@
         <activity android:name=".logic.samples.designpattern.NotificationActivity" />
         <activity android:name=".logic.samples.designpattern.ProxyPatternActivity" />
         <activity
-            android:name=".logic.samples.tiktok.TikTokActivity"
+            android:name=".logic.samples.course.CaiNiaoCourceActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity
             android:name=".logic.ui.login.ui.login.LoginActivity"

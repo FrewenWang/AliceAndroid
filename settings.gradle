@@ -1,4 +1,5 @@
-include ':nyx-demo-hilt'
+include ':nyx-android-app-login'
+include ':nyx-demo-jetpack-sunflower'
 include ':aura-navigation-compiler'
 include ':aura-navigation-annotations'
 include ':nyx-android-app', ':optimusnetwork', ':aura-network'

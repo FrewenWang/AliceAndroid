@@ -1,4 +1,4 @@
-package com.frewen.android.demo.logic.samples.tiktok.fragments
+package com.frewen.android.demo.logic.samples.course.fragments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class MineViewModel : ViewModel() {
+class MsgViewModel : ViewModel() {
     /**
      * 由于LiveData和MutableLiveData都是一个概念的东西(只是作用范围不同)所以就不重复解释了,直接理解LiveData就可以明白MutableLiveData
      * 直接理解LiveData的字面意思是前台数据,其实这其实是很准确的表达.下面我们来说说LiveData的几个特征:
@@ -27,7 +27,7 @@ class MineViewModel : ViewModel() {
      * 2.LiveData在实体类里可以通知指定某个字段的数据更新.
      * 3.MutableLiveData则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
      */
-    private val _text = MutableLiveData<String>().apply { value = "我的" }
+    private val _text = MutableLiveData<String>().apply { value = "消息页面" }
 
     val text: LiveData<String> = _text
 }

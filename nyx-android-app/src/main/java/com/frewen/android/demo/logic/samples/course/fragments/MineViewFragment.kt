@@ -1,4 +1,4 @@
-package com.frewen.android.demo.logic.samples.tiktok.fragments
+package com.frewen.android.demo.logic.samples.course.fragments
 
 import android.os.Bundle
 import android.view.View

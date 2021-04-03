@@ -1,4 +1,4 @@
-package com.frewen.android.demo.logic.samples.tiktok.fragments
+package com.frewen.android.demo.logic.samples.course.fragments
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -17,8 +17,11 @@ class MainDiscoveryViewModel : BaseViewModel() {
     
     /**
      * 实例化可变实时数据的微信公众号标题的数据
+     * 我们使用懒加载的形式来实例化wxArticleTitleData对象
      */
-    var wxArticleTitleData: MutableLiveData<ResultState<ArrayList<WXArticleTitle>>> = MutableLiveData()
+    val wxArticleTitleData: MutableLiveData<ResultState<ArrayList<WXArticleTitle>>> by lazy {
+        MutableLiveData<ResultState<ArrayList<WXArticleTitle>>>()
+    }
     
     var wxArticleContentModel: MutableLiveData<ListDataStateWrapper<WXArticleContent>> = MutableLiveData()
     

@@ -82,4 +82,6 @@ task clean(type: Delete) {
 }
 
 apply from: 'toolkits/quality/quality.gradle'
-apply from: 'https://gitee.com/frewen1225/GradleDependence/raw/master/app_dependence.gradle'
+
+// 添加开源框架依赖
+apply from: 'ext_dependence.gradle'

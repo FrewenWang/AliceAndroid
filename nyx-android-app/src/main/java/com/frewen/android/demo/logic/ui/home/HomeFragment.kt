@@ -8,7 +8,7 @@ import androidx.paging.PagedListAdapter
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.adapter.PostAdapter
 import com.frewen.android.demo.logic.model.Post
-import com.frewen.android.demo.logic.samples.tiktok.fragments.HomeViewModel
+import com.frewen.android.demo.logic.samples.course.fragments.HomeViewModel
 import com.frewen.android.demo.player.exo.PageListPlayerDetector
 import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.fragment.BaseRecyclerViewDataBindingFragment

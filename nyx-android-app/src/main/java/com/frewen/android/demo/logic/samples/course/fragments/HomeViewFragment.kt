@@ -1,4 +1,4 @@
-package com.frewen.android.demo.logic.samples.tiktok.fragments
+package com.frewen.android.demo.logic.samples.course.fragments
 
 import com.frewen.android.demo.R
 import com.frewen.aura.framework.fragment.BaseViewFragment
@@ -11,13 +11,13 @@ import com.frewen.aura.framework.fragment.BaseViewFragment
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class MsgViewFragment : BaseViewFragment() {
+class HomeViewFragment : BaseViewFragment() {
 
-    private lateinit var msgViewModel: MsgViewModel
-
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_tiktok_msg
+    companion object {
+        private const val TAG = "HomeFragment"
     }
+
+    override fun getLayoutId() = R.layout.activity_home
 
 
 }

@@ -61,6 +61,11 @@ class MainDiscoveryFragment : BaseDataBindingFragment<MainDiscoveryViewModel, Fr
         viewModel.requestDiscoveryTitleData()
     }
     
+    /**
+     * 我们在Fragment中创建Observer监听器。
+     * 在这个方法里面。我们调用MutableLiveData数据的observe()方法
+     * 这个方法我们传入viewLifecycleOwner也就是当前生命周期组件。也就是是Fragment
+     */
     override fun initObserver(savedInstanceState: Bundle?) {
         Log.d(TAG, "initObserver() called ")
         viewModel.wxArticleTitleData.observe(viewLifecycleOwner, Observer() { data ->

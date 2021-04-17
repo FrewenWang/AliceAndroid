@@ -96,7 +96,7 @@ class SecondActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hilt_demo)
+        setContentView(R.layout.activity_home)
 
         /**
          * navigator我们原来通过provideNavigator来进行new生成的。

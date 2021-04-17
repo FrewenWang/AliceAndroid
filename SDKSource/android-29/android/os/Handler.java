@@ -116,35 +116,23 @@ public class Handler {
     }
 
     /**
-     * Default constructor associates this handler with the {@link Looper} for the
-     * current thread.
-     *
-     * If this thread does not have a looper, this handler won't be able to receive messages
-     * so an exception is thrown.
-     * 默认无参构造函数
+     * 默认无参构造函数将此处理程序与当前线程的{@link Looper}进行绑定。
+     * 如果此线程没有Looper，则此Handler将无法接收消息，因此将引发异常。
      */
     public Handler() {
         this(null, false);
     }
-
     /**
-     * Constructor associates this handler with the {@link Looper} for the
-     * current thread and takes a callback interface in which you can handle
-     * messages.
-     *
-     * If this thread does not have a looper, this handler won't be able to receive messages
-     * so an exception is thrown.
-     *
-     * @param callback The callback interface in which to handle messages, or null.
-     * 含有参数构造函数
+     * 构造函数将此处理程序与当前线程的{@link Looper}关联，并采用一个回调接口，您可以在其中处理消息。
+     * 如果此线程没有Looper，则此Handler将无法接收消息，因此将引发异常。
+     * @param callback 用于处理消息的回调接口
      */
     public Handler(@Nullable Callback callback) {
         this(callback, false);
     }
 
     /**
-     * Use the provided {@link Looper} instead of the default one.
-     *
+     * 传入looper对象的构造函数.我们自己传入
      * @param looper The looper, must not be null.
      * 传入looper对象的构造函数
      */
@@ -164,19 +152,11 @@ public class Handler {
     }
 
     /**
-     * Use the {@link Looper} for the current thread
-     * and set whether the handler should be asynchronous.
      *
-     * Handlers are synchronous by default unless this constructor is used to make
-     * one that is strictly asynchronous.
-     *
-     * Asynchronous messages represent interrupts or events that do not require global ordering
-     * with respect to synchronous messages.  Asynchronous messages are not subject to
-     * the synchronization barriers introduced by {@link MessageQueue#enqueueSyncBarrier(long)}.
-     *
-     * @param async If true, the handler calls {@link Message#setAsynchronous(boolean)} for
-     * each {@link Message} that is sent to it or {@link Runnable} that is posted to it.
-     *
+     * 默认情况下，处理程序是同步的，除非使用此构造函数来创建严格异步的构造函数。
+     * 异步消息不受{@link MessageQueueenqueueSyncBarrier（long）}引入的同步障碍的约束
+     * @param async如果为true，则Handlerh会针对发送给它的每个Message或发布给它的
+     *                    Runnable程序调用{@link Message#setAsynchronous（boolean）}
      * @hide
      */
     @UnsupportedAppUsage
@@ -616,14 +596,7 @@ public class Handler {
     }
 
     /**
-     * Pushes a message onto the end of the message queue after all pending messages
-     * before the current time. It will be received in {@link #handleMessage},
-     * in the thread attached to this handler.
-     *  
-     * @return Returns true if the message was successfully placed in to the 
-     *         message queue.  Returns false on failure, usually because the
-     *         looper processing the message queue is exiting.
-     * 使用Handler来发送异步消息
+     * 使用Handler来发送消息，这个方法会将所发送的消息添加到所有待处理消息的消息队列的末尾
      * 在当前时间，在所有待处理消息之后，将消息推送到消息队列的末尾。
      * 在和当前线程关联的的Handler里面的handleMessage将收到这条消息，
      */
@@ -695,11 +668,13 @@ public class Handler {
         if (delayMillis < 0) {
             delayMillis = 0;
         }
-        // 其实是在未来某个时间点类处理这个消息
-        // 返回系统启动到现在的毫秒数，不包含休眠时间。就是说统计系统启动到现在的非休眠期时间+delayMillis
-        //以android系统的SystemClock的uptimeMillis()为基准，以毫秒为基本单位的绝对时间下，
+
+        // SystemClock.uptimeMillis() 返回系统启动到现在的毫秒数，不包含休眠时间。就是说统计系统启动到现在的非休眠期时间+delayMillis
+        // 以Android系统的SystemClock.uptimeMillis()为基准，以毫秒为基本单位的绝对时间下进行延迟执行。
+
+        // 其实是在未来某个时间点来处理这个消息
         // 在所有待处理消息后，将消息放到消息队列中。深度睡眠中的时间将会延迟执行的时间，
-        // 你将在和当前线程办的规定的Handler中的handleMessage中收到该消息。
+        // 你将在和当前线程绑定的的Handler中的handleMessage中收到该消息。
         return sendMessageAtTime(msg, SystemClock.uptimeMillis() + delayMillis);
     }
 
@@ -723,7 +698,8 @@ public class Handler {
      *         occurs then the message will be dropped.
      */
     public boolean sendMessageAtTime(@NonNull Message msg, long uptimeMillis) {
-        // 获取Java层的Looper里面消息队列
+        // 获取Java层的Looper里面消息队列。
+        // 这个MessageQueue是Handler绑定的Looper里面MessageQueue
         MessageQueue queue = mQueue;
         if (queue == null) {
             RuntimeException e = new RuntimeException(
@@ -786,9 +762,8 @@ public class Handler {
     private boolean enqueueMessage(@NonNull MessageQueue queue, @NonNull Message msg,
                                    long uptimeMillis) {
         // 为当前消息msg添加target。 这个target其实就是当前这个handler对象
-        // 所以我们想到之前在Looper的对象在loop()方法里面调用
-
-        // 哪个Handler发送的消息，最终这个消息的target就是这个Handler对象
+        // 所以我们想到之前在Looper的对象在loop()方法里面调用message的target来处理当前消息，
+        // 所以最终这个消息的target就是当前这个Handler对象
         msg.target = this;
         msg.workSourceUid = ThreadLocalWorkSource.getUid();
 
@@ -939,6 +914,9 @@ public class Handler {
     final MessageQueue mQueue;
     @UnsupportedAppUsage
     final Callback mCallback;
+    /**
+     * 判断这个Handler发送的消息是不是异步Handler消息
+     */
     final boolean mAsynchronous;
     @UnsupportedAppUsage
     IMessenger mMessenger;

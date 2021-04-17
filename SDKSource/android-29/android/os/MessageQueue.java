@@ -320,10 +320,6 @@ public final class MessageQueue {
 
     @UnsupportedAppUsage
     Message next() {
-        // Return here if the message loop has already quit and been disposed.
-        // This can happen if the application tries to restart a looper after quit
-        // which is not supported.
-
         // 如果消息循环已经退出了。则直接在这里return。因为调用disposed()方法后mPtr=0
         final long ptr = mPtr;
         if (ptr == 0) {
@@ -340,18 +336,15 @@ public final class MessageQueue {
                 Binder.flushPendingCommands();
             }
             // 调用native层进行消息标示，nextPollTimeoutMillis 为0立即返回，为-1则阻塞等待。
-            // 就是这行代码进行消息阻塞的
+            // 就是这行代码进行消息阻塞的。这当代码会调用Native层的Looper的方法
             nativePollOnce(ptr, nextPollTimeoutMillis);
             // 加上同步锁
             synchronized (this) {
-                // Try to retrieve the next message.  Return if found.
                 // 获取开机到现在的时间
                 final long now = SystemClock.uptimeMillis();
                 Message prevMsg = null;
                 // 获取MessageQueue的链表表头的第一个元素
                 Message msg = mMessages;
-
-
                 // 如果msg不为空并且target为空，说明是一个同步屏障消息
                 // 关于同步屏障的问题，我们可以参考#ViewRootImpl#scheduleTraversals的方法
                 // 如果是则执行循环，拦截所有同步消息，直到取到第一个异步消息为止
@@ -510,11 +503,14 @@ public final class MessageQueue {
         // We don't need to wake the queue because the purpose of a barrier is to stall it.
         synchronized (this) {
             final int token = mNextBarrierToken++;
+            // 初始化同步屏障消息。我们可以看到这个消息没有设置target
+            // 这个在Handler里面可是不被允许的！！！！
             final Message msg = Message.obtain();
             msg.markInUse();
             msg.when = when;
             msg.arg1 = token;
 
+            // 将同步屏障消息插到对应的位置
             Message prev = null;
             Message p = mMessages;
             if (when != 0) {
@@ -523,6 +519,7 @@ public final class MessageQueue {
                     p = p.next;
                 }
             }
+            // 插入同步屏障消息
             if (prev != null) { // invariant: p == prev.next
                 msg.next = p;
                 prev.next = msg;
@@ -535,35 +532,39 @@ public final class MessageQueue {
     }
 
     /**
-     * Removes a synchronization barrier.
-     *
-     * @param token The synchronization barrier token that was returned by
-     * {@link #postSyncBarrier}.
-     *
-     * @throws IllegalStateException if the barrier was not found.
-     *
+     * 移除同步屏障消息
+     * @param 传入我们执行 {@link #postSyncBarrier(long)} 添加同步屏障消息时候返回的令牌Token
      * @hide
      */
     @TestApi
     public void removeSyncBarrier(int token) {
-        // Remove a sync barrier token from the queue.
-        // If the queue is no longer stalled by a barrier then wake it.
+        // 从队列中删除同步屏障令牌做标记的同步屏障消息。
+        // 如果队列不再因障碍而停滞，也就是说移除同步屏障消息，之后我们则将其唤醒。
         synchronized (this) {
             Message prev = null;
             Message p = mMessages;
+            // 遍历消息队列，找到p.target = null 并且 p.arg1 = token的消息。也就是我们添加进去的同步屏障消息
             while (p != null && (p.target != null || p.arg1 != token)) {
                 prev = p;
                 p = p.next;
             }
+            // 如果找不到则进行报错
             if (p == null) {
                 throw new IllegalStateException("The specified message queue synchronization "
                         + " barrier token has not been posted or has already been removed.");
             }
+            // 移除同步屏障消息，并判断是否需要唤醒消息队列的next遍历
             final boolean needWake;
+
             if (prev != null) {
+                // 让prev.next 等于同步屏障消息后面的那个消息
                 prev.next = p.next;
+                // 如果同步屏障消息之前有消息，其实不需要唤醒，很好理解，因为这些消息本来就会正常被执行
+                // 不会被同步屏障消息长时间阻塞
                 needWake = false;
             } else {
+                // 如果prev为null 则说明同步屏障消息之前没有消息了。
+                // 则mMessages == null || mMessages.target != null需要执行唤醒。
                 mMessages = p.next;
                 needWake = mMessages == null || mMessages.target != null;
             }
@@ -632,7 +633,7 @@ public final class MessageQueue {
                 needWake = mBlocked;
             } else {
                 /// 否则。则执行下面的逻辑。
-                // 如果上面三个条件都不满足则说明要把msg插入到中间的位置，不需要插入到头部
+                //  如果上面三个条件都不满足则说明要把msg插入到中间的位置，不需要插入到头部
                 //  如果头部元素不是障栅(barrier)或者异步消息，而且还是插入中间的位置，我们是不唤醒消息队列的。
                 needWake = mBlocked && p.target == null && msg.isAsynchronous();
 

@@ -14,30 +14,9 @@ import javax.inject.Inject
 /**
  *
  * 第二步：将依赖项注入 Android 类
- *
- * 在 Application 类中设置了 Hilt 且有了应用级组件后，Hilt 可以为带有 @AndroidEntryPoint 注释的其他 Android 类提供依赖项：
- *
- * Hilt 目前支持以下 Android 类：
- *      Application（通过使用 @HiltAndroidApp）
- *      Activity
- *      Fragment
- *      View
- *      Service
- *      BroadcastReceiver
- *  如果您使用 @AndroidEntryPoint 为某个Android 类添加注释，则还必须为依赖于该类的Android类添加注释。
- *  例如，如果您为某个 Fragment添加注释，则还必须为使用该Fragment的所有Activity 添加注释。
- *      注意：在 Hilt 对 Android 类的支持方面还要注意以下几点：
- *      Hilt 仅支持扩展 ComponentActivity 的 Activity，如 AppCompatActivity。
- *      Hilt 仅支持扩展 androidx.Fragment 的 Fragment。
- *      Hilt 不支持保留的 Fragment。
- *
  *  那这个到底是为什么呢？？ TODO
  *
  *  那么如果不这个干，会出现什么问题呢？？  TODO
- *
- *
- *  @AndroidEntryPoint 会为项目中的每个Android 类生成一个单独的Hilt组件。
- *  这些组件可以从它们各自的父类接收依赖项，如组件层次结构中所述。
  *
  *  那么我们在HiltDemoActivity的中添加AndroidEntryPoint注解。
  *  并且所依赖的组件依赖的UserInfo加上@Inject注解。那么就可以进行依赖注入吗？？
@@ -95,7 +74,7 @@ class HiltDemoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_hilt_demo)
+        setContentView(R.layout.activity_home)
 
         /**
          * navigator我们原来通过provideNavigator来进行new生成的。

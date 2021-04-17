@@ -7,9 +7,11 @@
     <!-- 上面一个Fragment是 fragment_view_pager-->
     <fragment
         android:id="@+id/view_pager_fragment"
-        android:name="com.frewen.android.demo.logic.samples.jetpack.fragment.HomeViewPagerFragment"
-        tools:layout="@layout/fragment_view_pager">
+        android:name="com.frewen.nyx.hilt.demo.fragment.HomeViewPagerFragment"
+        tools:layout="@layout/page_coordinator_view_pager2">
+
         <!-- action的 -->
+        <!--我们设置Fragment的进入和退出动画-->
         <action
             android:id="@+id/action_view_pager_fragment_to_plant_detail_fragment"
             app:destination="@id/flower_detail_fragment"
@@ -19,12 +21,12 @@
             app:popExitAnim="@anim/anim_slide_out_right" />
 
     </fragment>
+
     <!--花朵详情页的Fragment-->
     <fragment
         android:id="@+id/flower_detail_fragment"
-        android:name="com.frewen.android.demo.logic.samples.jetpack.fragment.FlowerDetailFragment"
-        android:label="@string/flower_details_title"
-        tools:layout="@layout/fragment_flower_detail">
+        android:name="com.frewen.nyx.hilt.demo.fragment.GardenDetailFragment"
+        tools:layout="@layout/fragment_plant_detail">
         <!--  DataBinding的数据  -->
         <argument
             android:name="flowerId"

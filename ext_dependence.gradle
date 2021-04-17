@@ -48,6 +48,8 @@ ext {
     // JetPack组件依赖版本
     nav_version = "2.3.3"
     lifecycle_version = "2.3.0"
+    // material
+    material_version = "1.2.0"
 
     dep = [
             //==========================android 支持库依赖=========================================
@@ -128,6 +130,9 @@ ext {
             //用于方便调试性能问题的打印插件。给访法加上@DebugLog，就能输出该方法的调用参数，以及执行时间；
             hugo                     : "com.jakewharton.hugo:hugo-plugin:1.2.1",
 
+            //=================<editor-folder desc = "Dependence:MaterialDesign材料设计">============
+            material                 : "com.google.android.material:material:$material_version",
+            //=================</editor-folder desc = "Dependence:MaterialDesign材料设计">===========
 
             //=================<editor-folder desc = "Dependence:JetPack开源框架依赖">================
             //JetPack组件的依赖： https://developer.android.google.cn/jetpack
@@ -170,9 +175,13 @@ ext {
             // Testing Navigation
             navigationTest           : "androidx.navigation:navigation-testing:$nav_version",
             // Jetpack Compose Integration(目前还是alpha07测试版本)
-            navigationCompose        : "androidx.navigation:navigation-compose:1.0.0-alpha07"
+            navigationCompose        : "androidx.navigation:navigation-compose:1.0.0-alpha07",
             //=================</editor-folder desc = "Dependence:Navigation框架依赖">================
 
+            //=================<editor-folder desc = "Dependence:ViewPager2的依赖">==================
+            // https://developer.android.google.cn/jetpack/androidx/releases/viewpager2?hl=zh_cn
+            viewpager2               : "androidx.viewpager2:viewpager2:1.0.0",
+            //=================</editor-folder desc = "Dependence:ViewPager2的依赖">=================
 
             //=================</editor-folder desc = "Dependence:JetPack开源框架依赖">===============
     ]

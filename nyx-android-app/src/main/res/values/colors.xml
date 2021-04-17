@@ -25,22 +25,6 @@
     <color name="color_gray_dark">#adadad</color>
 
 
-    <!-- 应用层的颜色色值计算  -->
-    <!--主题色为50%的紫色-->
-    <color name="colorPrimary">#BF00FF</color>
-    <!--暗主题色为25%的紫色-->
-    <color name="colorPrimaryDark">#600080</color>
-    <!--亮主题色为75%的紫色-->
-    <color name="colorPrimaryLight">#DF80FF</color>
-    <color name="colorAccent">#BF00FF</color>
-
-    <color name="colorTextPrimary">#666666</color>
-    <color name="colorTextPrimaryDark">#333333</color>
-    <color name="colorTextSecondary">#888888</color>
-    <!-- 设置内容文本的颜色-->
-    <color name="colorTextContent">#666666</color>
-
-
     <!-- ListView、RecyclerView、GridView的分割线-->
     <color name="colorDividerListViewDark">#adadad</color>
 

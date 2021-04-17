@@ -159,20 +159,19 @@ public final class Looper {
     }
 
     /**
-     * Run the message queue in this thread. Be sure to call
-     * {@link #quit()} to end the loop.
-     * 这个方法主要是进行当前线程里面的message queue队列的遍历，来遍历消息，进行消息的分发
+     *
+     * 这个方法主要是进行当前线程里面的message queue队列来遍历消息，进行消息的分发
      * 这个我们自己在线程创建的时候自己类执行以下loop()方法
      */
     public static void loop() {
         // 这个方法就是从TreadLocal里面取得当前的Looper对象。
-        // 也就是我们每个线程实例化的ThreadLocal对象
+        // 也就是我们每个线程实例化的ThreadLocal对象里面取得保存的Looper对象
         final Looper me = myLooper();
         // 毫无疑问，me为null 表示这个线程里面没有进行Looper对象的Looper.prepare()初始化。
         if (me == null) {
             throw new RuntimeException("No Looper; Looper.prepare() wasn't called on this thread.");
         }
-        // 这个queue就是构造函数中实例化的mQueue
+        // 这个queue就是Looper的构造函数中实例化的mQueue
         final MessageQueue queue = me.mQueue;
 
         // Make sure the identity of this thread is that of the local process,
@@ -191,7 +190,7 @@ public final class Looper {
         boolean slowDeliveryDetected = false;
         // Looper的loop方法执行死循环。
         // 我们可以看到这个地方，是执行了一个死循环，在这个死循环中依次遍历queue里面的所有消息
-        for (;;) {
+        for (; ; ) {
             // 从Looper的queue中依次取出消息实体
             // 拿到下一个Message.如果没有消息这个地方就会阻塞掉
             Message msg = queue.next(); // might block

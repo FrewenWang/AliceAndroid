@@ -44,7 +44,7 @@ abstract class BaseViewPager2Fragment : BaseViewFragment() {
     abstract val contentFragments: Array<Fragment>
     
     override fun getLayoutId(): Int {
-        return R.layout.fragment_view_pager2
+        return R.layout.page_coordinator_view_pager2
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -3,20 +3,16 @@ package com.frewen.nyx.hilt.demo.fragment
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.util.Log.i
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.frewen.nyx.hilt.demo.NyxHiltApp
 import com.frewen.nyx.hilt.demo.R
 import com.frewen.nyx.hilt.demo.data.DataSource
-import com.frewen.nyx.hilt.demo.data.LoggerDBDataSource
 import com.frewen.nyx.hilt.demo.db.entity.Log
 import com.frewen.nyx.hilt.demo.module.DatabaseLogger
-import com.frewen.nyx.hilt.demo.module.InMemoryLogger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

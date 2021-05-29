@@ -5172,37 +5172,13 @@ public class Activity extends ContextThemeWrapper
     }
 
     /**
-     * Launch an activity for which you would like a result when it finished.
-     * When this activity exits, your
-     * onActivityResult() method will be called with the given requestCode.
-     * Using a negative requestCode is the same as calling
-     * {@link #startActivity} (the activity is not launched as a sub-activity).
-     *
-     * <p>Note that this method should only be used with Intent protocols
-     * that are defined to return a result.  In other protocols (such as
-     * {@link Intent#ACTION_MAIN} or {@link Intent#ACTION_VIEW}), you may
-     * not get the result when you expect.  For example, if the activity you
-     * are launching uses {@link Intent#FLAG_ACTIVITY_NEW_TASK}, it will not
-     * run in your task and thus you will immediately receive a cancel result.
-     *
-     * <p>As a special case, if you call startActivityForResult() with a requestCode
-     * >= 0 during the initial onCreate(Bundle savedInstanceState)/onResume() of your
-     * activity, then your window will not be displayed until a result is
-     * returned back from the started activity.  This is to avoid visible
-     * flickering when redirecting to another activity.
-     *
-     * <p>This method throws {@link android.content.ActivityNotFoundException}
-     * if there was no Activity found to run the given Intent.
-     *
+     * 启动一个您想要完成的Activity。
      * @param intent The intent to start.
      * @param requestCode If >= 0, this code will be returned in
      *                    onActivityResult() when the activity exits.
      *                    这个方法其实就是比startActivity多了requestCode这个参数，这个参数如果我们设置为>=0.
      *                    那么这个Activity退出的时候会回调onActivityResult。这里我们先不重点关注
-     * @param options Additional options for how the Activity should be started.
-     * See {@link android.content.Context#startActivity(Intent, Bundle)}
-     * Context.startActivity(Intent, Bundle)} for more details.
-     *
+     * @param options Activity启动的配置选项See {@link android.content.Context#startActivity(Intent, Bundle)}
      * @throws android.content.ActivityNotFoundException
      *
      * @see #startActivity
@@ -5210,13 +5186,18 @@ public class Activity extends ContextThemeWrapper
     public void startActivityForResult(@RequiresPermission Intent intent, int requestCode,
             @Nullable Bundle options) {
         // 如果是第一次启动，那么mParent == null 我们先默认第一次，看下面的代码
+        // TODO parent被赋值的时候，是什么时候？？
         if (mParent == null) {
             // 
             options = transferSpringboardActivityOptions(options);
+
             // mInstrumentation 执行启动Activity.这个Instrumentation是Activity的成员变量
             // 可以作为我们Hook技术的Hook点。用代理的Instrumentation来替代原始的Instrumentation
-            /// 我们重点注意以下：第二个参数：mMainThread.getApplicationThread()
-            // 这个参数的是一个Binder对象，
+            // 参数介绍：
+            // 参数一：Context 上下文对象
+            /// 参数二：mMainThread.getApplicationThread() 这个参数的是一个Binder对象，
+            //   是ActivityThread里面的getApplicationThread()
+            // 参数三：mToken。这个方法页面重要。是客户端Activity与服务端AMS交互的令牌Token
             Instrumentation.ActivityResult ar =
                 mInstrumentation.execStartActivity(
                     this, mMainThread.getApplicationThread(), mToken, this,
@@ -5240,6 +5221,7 @@ public class Activity extends ContextThemeWrapper
             cancelInputsAndStartExitTransition(options);
             // TODO Consider clearing/flushing other event sources and events for child windows.
         } else {
+            // 如果mParent不为null.则会调用startActivityFromChild
             if (options != null) {
                 mParent.startActivityFromChild(this, intent, requestCode, options);
             } else {
@@ -5932,6 +5914,7 @@ public class Activity extends ContextThemeWrapper
             mInstrumentation.execStartActivity(
                 this, mMainThread.getApplicationThread(), mToken, who,
                 intent, requestCode, options);
+
         if (ar != null) {
             mMainThread.sendActivityResult(
                 mToken, who, requestCode,

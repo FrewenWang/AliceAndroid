@@ -21991,19 +21991,6 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
-     * Assign a size and position to a view and all of its
-     * descendants
-     *
-     * <p>This is the second phase of the layout mechanism.
-     * (The first is measuring). In this phase, each parent calls
-     * layout on all of its children to position them.
-     * This is typically done using the child measurements
-     * that were stored in the measure pass().</p>
-     *
-     * <p>Derived classes should not override this method.
-     * Derived classes with children should override
-     * onLayout. In that method, they should
-     * call layout on each of their children.</p>
      *  作用：确定View本身的位置，即设置View本身的四个顶点位置
      * @param l Left position, relative to parent
      * @param t Top position, relative to parent
@@ -22013,6 +22000,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     @SuppressWarnings({"unchecked"})
     public void layout(int l, int t, int r, int b) {
 
+        // 判断标记位是否为PFLAG_LAYOUT_REQUIRED，如果有，则对该View进行布局。
         if ((mPrivateFlags3 & PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT) != 0) {
             onMeasure(mOldWidthMeasureSpec, mOldHeightMeasureSpec);
             mPrivateFlags3 &= ~PFLAG3_MEASURE_NEEDED_BEFORE_LAYOUT;
@@ -24600,13 +24588,13 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
 
         // 接着调用mParent.requestLayout方法，这个十分重要，
         // 因为这里是向父容器请求布局，即调用父容器的requestLayout方法，为父容器添加PFLAG_FORCE_LAYOUT标记位，
-        // 而父容器又会调用它的父容器的requestLayout方法，即requestLayout事件层层向上传递，直到DecorView，
-        // 即根View，而根View又会传递给ViewRootImpl，也即是说子View的requestLayout事件，最终会被ViewRootImpl接收并得到处理。
+        // 而父容器又会调用它的父容器的requestLayout方法，即requestLayout事件层层向上传递，直到DecorView，即根View.
+        // 而根View又会传递给ViewRootImpl，也即是说子View的requestLayout事件，最终会被ViewRootImpl接收并得到处理。
         if (mParent != null && !mParent.isLayoutRequested()) {
             // 这里的 mParent.requestLayout()，最终会调用ViewRootImpl的requestLayout方法。
             // 为什么是ViewRootImpl呢？？
             // 我们可以看mParent，他是一个ViewParent的实例
-            //因为根View是DecorView，而DecorView的parent就是ViewRootImpl，
+            // 因为根View是DecorView，而DecorView的parent就是ViewRootImpl，
             // 具体看ViewRootImpl的setView方法里调用view.assignParent(this);
             mParent.requestLayout();
         }
@@ -24628,17 +24616,6 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
-     * <p>
-     * This is called to find out how big a view should be. The parent
-     * supplies constraint information in the width and height parameters.
-     * </p>
-     *
-     * <p>
-     * The actual measurement work of a view is performed in
-     * {@link #onMeasure(int, int)}, called by this method. Therefore, only
-     * {@link #onMeasure(int, int)} can and must be overridden by subclasses.
-     * </p>
-     *
      *
      * @param widthMeasureSpec Horizontal space requirements as imposed by the
      *        parent    由父View施加的水平测量规格
@@ -24661,6 +24638,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
         long key = (long) widthMeasureSpec << 32 | (long) heightMeasureSpec & 0xffffffffL;
         if (mMeasureCache == null) mMeasureCache = new LongSparseLongArray(2);
 
+        // 判断一下标记位，如果当前View的标记位为PFLAG_FORCE_LAYOUT，那么就会进行测量流程，调用onMeasure
         final boolean forceLayout = (mPrivateFlags & PFLAG_FORCE_LAYOUT) == PFLAG_FORCE_LAYOUT;
 
         // Optimize layout by avoiding an extra EXACTLY pass when the view is
@@ -24674,7 +24652,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
                 && getMeasuredHeight() == MeasureSpec.getSize(heightMeasureSpec);
         final boolean needsLayout = specChanged
                 && (sAlwaysRemeasureExactly || !isSpecExactly || !matchesSpecSize);
-
+        // 判断一下标记位，如果当前View的标记位为PFLAG_FORCE_LAYOUT，那么就会进行测量流程，调用onMeasure
         if (forceLayout || needsLayout) {
             // first clears the measured dimension flag
             mPrivateFlags &= ~PFLAG_MEASURED_DIMENSION_SET;

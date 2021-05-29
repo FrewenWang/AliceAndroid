@@ -70,12 +70,6 @@ import java.util.List;
  * 实际上当启动一个app的时候都会实例化一个Instrumentation对象，
  * 且Instrumentation在每个Activity跳转的时候都会用到且其内部类ActivityMonitor会监控activity的。
  * 从而使您可以监视系统与应用程序之间的所有交互。
- * Base class for implementing application instrumentation code.  When running
- * with instrumentation turned on, this class will be instantiated for you
- * before any of the application code, allowing you to monitor all of the
- * interaction the system has with the application.  An Instrumentation
- * implementation is described to the system through an AndroidManifest.xml's
- * &lt;instrumentation&gt; tag.
  */
 public class Instrumentation {
 
@@ -1713,7 +1707,7 @@ public class Instrumentation {
             // 重点在这里：这里是一个IPC的调用，IActivityTaskManager的服务端是ActivityTaskManagerService（ATMS），
             // 所以ActivityTaskManager.getService().startActivity实际上是
             /// 跨进程调用ActivityManagerService启动Activity
-            // 之后就会在ActivityTaskManagerService中去执行Activity 的启动流程。
+            // 之后就会在SysytemServer进程中的ActivityTaskManagerService中去执行Activity 的启动流程。
             // 注意：这个地方和Android之前版本的逻辑已经不一致了。之前都是直接ActivityManager.getService()
             int result = ActivityTaskManager.getService()
                 .startActivity(whoThread, who.getBasePackageName(), intent,

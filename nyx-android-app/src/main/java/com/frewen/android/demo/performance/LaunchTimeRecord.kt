@@ -16,7 +16,7 @@ import java.util.*
  */
 object LaunchTimeRecord {
     private val recordMap: MutableMap<String, Long?> = HashMap()
-
+    
     /**
      * 开始启动事件记录
      */
@@ -24,7 +24,7 @@ object LaunchTimeRecord {
         val startTime = System.currentTimeMillis()
         recordMap[sceneName] = startTime
     }
-
+    
     fun endRecord(sceneName: String?) {
         if (recordMap.containsKey(sceneName)) {
             Log.w("LaunchTimeRecord", "You Record Cost:" + (System.currentTimeMillis() - recordMap[sceneName]!!))

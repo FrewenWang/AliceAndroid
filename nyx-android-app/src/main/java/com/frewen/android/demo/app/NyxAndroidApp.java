@@ -2,6 +2,9 @@ package com.frewen.android.demo.app;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.os.Debug;
+import android.os.Trace;
 import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
@@ -91,11 +94,15 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
 
     @Override
     public void onCreate() {
+        // 使用TraceView生成TraceView的，文件默认存储8M的信息
+        Debug.startMethodTracing("NyxAndroid Start");
 
-        // 生成TraceView的，文件默认存储8M的信息
-        // Debug.startMethodTracing("AndroidSamples");
-        // 使用Systrace进行分析
-        TraceCompat.beginSection("NyxAndroid Start");
+        // 使用SysTrace进行分析
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            Trace.beginSection("NyxAndroid Start");
+        } else {
+            TraceCompat.beginSection("NyxAndroid Start");
+        }
 
         super.onCreate();
 
@@ -132,14 +139,18 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
             e.printStackTrace();
         }
 
-
         initCustomActivityOnCrash();
 
         KeepAliveHelper.init(this);
 
         // 执行结束的时候录制TraceView的相关信息
-        // Debug.stopMethodTracing();
-        TraceCompat.endSection();
+        Debug.stopMethodTracing();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            Trace.endSection();
+        } else {
+            TraceCompat.endSection();
+        }
     }
 
     private void initMMKV() {

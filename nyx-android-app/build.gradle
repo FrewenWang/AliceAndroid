@@ -4,9 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.chaquo.python'
 
+
+//或者这样也可以 https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
 //apply plugin: 'android-aspectjx'
-//或者这样也可以
-//apply plugin: 'com.hujiang.android-aspectjx'
+apply plugin: 'com.hujiang.android-aspectjx'
+
 apply plugin: 'com.google.protobuf'
 //apply plugin: 'me.ele.lancet'
 apply plugin: "androidx.navigation.safeargs"
@@ -245,6 +247,10 @@ dependencies {
     //======<editor-folder desc = "Dependence:lancet的AOP框架依赖">================================
 //    compileOnly 'me.ele:lancet-base:1.0.6'
     //======</editor-folder desc = "Dependence:lancet的AOP框架依赖">===============================
+
+    //======<editor-folder desc = "Dependence:Aspectj的AOP框架依赖">================================
+    implementation 'org.aspectj:aspectjrt:1.8.+'
+    //======</editor-folder desc = "Dependence:Aspectj的AOP框架依赖">================================
 
     //======</editor-folder desc = "Dependence:性能监控方面的依赖">====================================
 

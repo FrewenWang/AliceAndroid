@@ -18,15 +18,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--<data>-->
-    <!--    <import type="com.google.samples.apps.sunflower.data.Plant"/>-->
-    <!--    <variable-->
-    <!--        name="viewModel"-->
-    <!--        type="com.google.samples.apps.sunflower.viewmodels.PlantDetailViewModel" />-->
-    <!--    <variable-->
-    <!--        name="callback"-->
-    <!--        type="com.google.samples.apps.sunflower.PlantDetailFragment.Callback" />-->
-    <!--</data>-->
+    <data>
+        <!--导入类型变量Plant-->
+        <import type="com.frewen.nyx.hilt.demo.db.entity.Plant" />
+        <!--声明变量ViewModel-->
+        <variable
+            name="viewModel"
+            type="com.frewen.nyx.hilt.demo.vm.PlantDetailViewModel" />
+
+        <variable
+            name="callback"
+            type="com.frewen.nyx.hilt.demo.fragment.GardenDetailFragment.Callback" />
+    </data>
 
     <!--第一次接触fitsSystemWindows是在CoordinatorLayout控件。-->
     <!--有时CoordinatorLayout的子控件也会设置fitsSystemWindows属性，而且子控件的fitsSystemWindows也会有作用。-->
@@ -55,7 +58,6 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 app:collapsedTitleGravity="center"
-                app:collapsedTitleTextAppearance="@style/TextAppearance.Sunflower.Toolbar.Text"
                 app:contentScrim="?attr/colorSurface"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:statusBarScrim="?attr/colorSurface"
@@ -67,7 +69,7 @@
                     android:id="@+id/detail_image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/plant_detail_app_bar_height"
-                    android:contentDescription="@string/plant_detail_image_content_description"
+                    android:contentDescription="植物图片详情"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
                     app:imageFromUrl="@{viewModel.plant.imageUrl}"
@@ -99,14 +101,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_normal">
+                android:layout_margin="@dimen/common_margin">
 
                 <TextView
                     android:id="@+id/plant_detail_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/common_margin_small"
+                    android:layout_marginEnd="@dimen/common_margin_small"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_horizontal"
@@ -121,9 +123,9 @@
                     android:id="@+id/plant_watering_header"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/common_margin_small"
+                    android:layout_marginTop="@dimen/common_margin"
+                    android:layout_marginEnd="@dimen/common_margin_small"
                     android:gravity="center_horizontal"
                     android:text="@string/watering_needs_prefix"
                     android:textColor="?attr/colorAccent"
@@ -136,8 +138,8 @@
                     android:id="@+id/plant_watering"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/common_margin_small"
+                    android:layout_marginEnd="@dimen/common_margin_small"
                     android:gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -149,8 +151,8 @@
                     android:id="@+id/gallery_nav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/common_margin"
+                    android:layout_marginEnd="@dimen/common_margin_small"
                     android:clickable="true"
                     android:contentDescription="@string/gallery_content_description"
                     android:focusable="true"
@@ -164,9 +166,9 @@
                     style="?android:attr/textAppearanceMedium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/common_margin_small"
+                    android:layout_marginTop="@dimen/common_margin_small"
+                    android:layout_marginEnd="@dimen/common_margin_small"
                     android:minHeight="@dimen/plant_description_min_height"
                     android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"

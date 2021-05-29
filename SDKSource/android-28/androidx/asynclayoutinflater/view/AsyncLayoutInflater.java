@@ -72,6 +72,14 @@ public final class AsyncLayoutInflater {
     Handler mHandler;
     InflateThread mInflateThread;
 
+    /**
+     * 这个构造函数就干了三件事情：
+     * 创建BasicInflater
+     * 创建Handler
+     * 创建InflateThread
+     *
+     * @param context
+     */
     public AsyncLayoutInflater(@NonNull Context context) {
         mInflater = new BasicInflater(context);
         mHandler = new Handler(mHandlerCallback);

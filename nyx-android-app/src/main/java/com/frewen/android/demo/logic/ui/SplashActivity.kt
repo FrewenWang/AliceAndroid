@@ -3,6 +3,7 @@ package com.frewen.android.demo.logic.ui
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewTreeObserver
 import android.view.Window
 import android.view.WindowManager
@@ -38,7 +39,7 @@ import kotlinx.coroutines.launch
  * @author Frewen.Wong
  */
 class SplashActivity : BaseButterKnifeActivity() {
-    
+    private val TAG = "SplashActivity"
     @JvmField
     @BindView(R.id.ivSplashPicture)
     var splashBg: ImageView? = null
@@ -222,16 +223,27 @@ class SplashActivity : BaseButterKnifeActivity() {
         splashBg!!.viewTreeObserver.addOnPreDrawListener(
                 object : ViewTreeObserver.OnPreDrawListener {
                     override fun onPreDraw(): Boolean {
+                        // 务必需要记得remove掉
                         splashBg!!.viewTreeObserver.removeOnPreDrawListener(this)
                         endRecord("Application")
                         return true
                     }
                 })
 
-//        splashBg!!.doOnPreDraw { endRecord("Application") }
+        //splashBg!!.doOnPreDraw { endRecord("Application") }
         
         splashBg!!.startAnimation(scaleAnimation)
         
+    }
+    
+    /**
+     * onWindowFocusChanged只是首帧的时间的回调。并不代表页面完全展现出来
+     * 在进行打点记录启动的时间的时候，很多时候都是在onWindowFocusChanged里面进行调用。
+     * 其实这是一个误区：onWindowFocusChanged只是首帧的时间
+     */
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        Log.d(TAG, "onWindowFocusChanged() called with: hasFocus = $hasFocus")
     }
     
     /**

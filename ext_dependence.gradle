@@ -50,6 +50,7 @@ ext {
     lifecycle_version = "2.3.0"
     // material
     material_version = "1.2.0"
+    hilt_version = '2.31.2-alpha'
 
     dep = [
             //==========================android 支持库依赖=========================================
@@ -182,6 +183,14 @@ ext {
             // https://developer.android.google.cn/jetpack/androidx/releases/viewpager2?hl=zh_cn
             viewpager2               : "androidx.viewpager2:viewpager2:1.0.0",
             //=================</editor-folder desc = "Dependence:ViewPager2的依赖">=================
+
+
+            //=================<editor-folder desc = "Dependence:添加Hilt依赖注入框架">=======================
+            // https://developer.android.com/training/dependency-injection/hilt-android?hl=zh-cn
+            hilt                     : "com.google.dagger:hilt-android:$hilt_version",
+            hiltCompiler             : "com.google.dagger:hilt-android-compiler:$hilt_version",
+            //=================</editor-folder desc = "Dependence:添加Hilt依赖注入框架">======================
+
 
             //=================</editor-folder desc = "Dependence:JetPack开源框架依赖">===============
     ]

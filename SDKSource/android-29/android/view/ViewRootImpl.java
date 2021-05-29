@@ -1446,8 +1446,7 @@ public final class ViewRootImpl implements ViewParent,
     }
 
     /**
-     * 当子View调用requestLayout的时候。会通过责任链模式进行层层。
-     * 最终调用到ViewRootImpl中的requestLayout
+     * 当子View调用requestLayout的时候。会通过责任链模式进行层层传递。最终调用到ViewRootImpl中的requestLayout
      * 所以我们来看看这个方法
      */
     @Override
@@ -1459,7 +1458,7 @@ public final class ViewRootImpl implements ViewParent,
             checkThread();
             // 标志变量
             mLayoutRequested = true;
-            /// 进行遍历调用了scheduleTraversals方法，
+            ///执行调度方法： 进行遍历调用了scheduleTraversals方法，
             // 这个方法是一个异步方法，最终会调用到ViewRootImpl#performTraversals方法，
             // 这也是View工作流程的核心方法，在这个方法内部
             // 分别调用measure、layout、draw方法来进行View的三大工作流程
@@ -1734,9 +1733,9 @@ public final class ViewRootImpl implements ViewParent,
         //1、注意这个标志位，多次调用 requestLayout，要这个标志位false才有效
         if (!mTraversalScheduled) {
             mTraversalScheduled = true;
-            // 2. 同步屏障
+            // 2. 同步屏障。关于同步屏障，在Handler的学习中我们有所涉及，这里不做详细讲解
             mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();
-            // 3. 向 Choreographer 提交一个任务。然后
+            // 3. 向 Choreographer 提交一个任务。然后开始执行View的三个绘制流程
             mChoreographer.postCallback(
                     Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, null);
             if (!mUnbufferedInputDispatch) {
@@ -2093,8 +2092,8 @@ public final class ViewRootImpl implements ViewParent,
             if (mViewLayoutDirectionInitial == View.LAYOUT_DIRECTION_INHERIT) {
                 host.setLayoutDirection(config.getLayoutDirection());
             }
-            //可以看到mFirst为true时，即准备开始第一次绘制时会调用mHost的dispatchAttachedToWindow函数
-            //经过ViewGroup对各个子View进行dispatchAttachedToWindow事件的层层风发，最终执行到调用post方法的那个view。
+            // 可以看到mFirst为true时，即准备开始第一次绘制时会调用mHost的dispatchAttachedToWindow函数
+            // 经过ViewGroup对各个子View进行dispatchAttachedToWindow事件的层层风发，最终执行到调用post方法的那个view。
             // 其中mHost其实就是在Activity执行setContentView之后经过PhoneWindow最后创建ViewRootImpl并设置进来的DecorView。
             host.dispatchAttachedToWindow(mAttachInfo, 0);
             mAttachInfo.mTreeObserver.dispatchOnWindowAttachedChange(true);

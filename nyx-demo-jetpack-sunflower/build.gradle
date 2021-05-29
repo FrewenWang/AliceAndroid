@@ -47,6 +47,7 @@ dependencies {
     //============<editor-folder desc = "Dependence:依赖AuraFramework框架">=========================
     implementation project(path: ':aura-ui')
     implementation project(path: ':aura-toolkits')
+    implementation project(path: ':aura-framework')
     //============</editor-folder desc = "Dependence:依赖AuraFramework框架">=========================
 
     //============<editor-folder desc = "Dependence:JetPack的Room框架依赖">=========================
@@ -68,16 +69,16 @@ dependencies {
     testImplementation "androidx.room:room-testing:$room_version"
     //==============</editor-folder desc ="Dependence:JetPack的Room框架依赖">========================
 
-    //=================<editor-folder desc = "Dependence:添加Hilt依赖注入框架">=======================
-    // https://developer.android.com/training/dependency-injection/hilt-android?hl=zh-cn
-    implementation "com.google.dagger:hilt-android:2.28-alpha"
-    kapt "com.google.dagger:hilt-android-compiler:2.28-alpha"
-    //=================</editor-folder desc = "Dependence:添加Hilt依赖注入框架">======================
-
     //=================<editor-folder desc = "Dependence:OkHttp相关框架的依赖">=======================
     implementation dep.okhttp3
     implementation dep.okio
     //=================</editor-folder desc = "Dependence:OkHttp相关框架的依赖">======================
+
+    //=================<editor-folder desc = "Dependence:Hilt框架依赖">==============================
+    implementation dep.hilt
+    kapt dep.hiltCompiler
+    //=================</editor-folder desc = "Dependence:Hilt框架依赖">==============================
+
 
     //=================<editor-folder desc = "Dependence:Retrofit的相关依赖">========================
     implementation(dep.retrofit) {

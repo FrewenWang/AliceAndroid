@@ -1,5 +1,7 @@
 apply from: 'toolkits/gradle/parseLocalProperties.gradle'
 
+String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+
 buildscript {
     ext.kotlin_version = '1.4.30' //kotlin的版本
     ext.anko_version = '0.10.8'
@@ -14,7 +16,6 @@ buildscript {
      * 我们在dev分支进行引用我们本地的插件依赖仓库
      */
     repositories {
-        String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
         //        if (gitBranch == "dev") {
         //            // 这个闭包里面传入的插件依赖的仓库。注意：使用本地依赖库，首先要启动artifactory
         //            // 具体见：/tool_kits/artifactory-start.sh
@@ -28,13 +29,13 @@ buildscript {
         maven { url "https://chaquo.com/maven" }
     }
     /**
-     * 该闭包使用classpath声明了一个Gradle插件，
-     * 由于Gradle并不只是用来构建Android项目，因此此处引入相关插件来构建Android项目，
-     * 其中'3.6.3'为该插件的版本号，可以根据最新的版本号来调整。
+     * 该闭包使用classpath声明了一个Gradle插件， 由于Gradle并不只是用来构建Android项目
      */
     dependencies {
         // 应用Gradle插件
-        classpath 'com.android.tools.build:gradle:3.6.1'
+        // https://developer.android.com/studio/releases/gradle-plugin?hl=zh-cn#kts
+        classpath 'com.android.tools.build:gradle:4.0.0'
+
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -48,7 +49,7 @@ buildscript {
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.28-alpha'
         // 面向切面编程的插件，具体怎么用有待学习
         // https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
-        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.8'
+        // classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.10'
         // https://github.com/google/protobuf-gradle-plugin
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
 
@@ -59,7 +60,6 @@ buildscript {
 
 allprojects {
     repositories {
-        String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
         println("allprojects repositories gitBranch = " + gitBranch)
 //        if (gitBranch == "dev") {
 //            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
@@ -73,15 +73,11 @@ allprojects {
     }
 }
 /**
- * gradle主工程执行的clean的task.
- * 就是删除rootProject.buildDir
- * 工程根目录下的build文件夹
+ * gradle主工程执行的clean的task. 就是删除rootProject.buildDir工程根目录下的build文件夹
  * */
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
 apply from: 'toolkits/quality/quality.gradle'
-
 // 添加开源框架依赖
 apply from: 'ext_dependence.gradle'

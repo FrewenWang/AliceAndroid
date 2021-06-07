@@ -23821,10 +23821,7 @@ public class View implements Drawable.Callback, KeyEvent.Callback,
     }
 
     /**
-     * Returns the ViewTreeObserver for this view's hierarchy. The view tree
-     * observer can be used to get notifications when global events, like
-     * layout, happen.
-     *
+     * 返回此视图层次结构的 ViewTreeObserver。视图树观察器可用于在全局事件（如布局）发生时获取通知。
      * The returned ViewTreeObserver observer is not guaranteed to remain
      * valid for the lifetime of this View. If the caller of this method keeps
      * a long-lived reference to ViewTreeObserver, it should always check for

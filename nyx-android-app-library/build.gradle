@@ -112,7 +112,7 @@ dependencies {
 
 
     //====== <editor-folder desc = "Dependence:RecyclerViewAdapter的依赖">==========================
-    api 'com.frewen.wang:free-adapter:1.0.1'
+    // api 'com.frewen.wang:free-adapter:1.0.1'
     // https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
 

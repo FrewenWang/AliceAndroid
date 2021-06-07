@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.frewen.adapter.core.abslistview.BaseAdapter;
-import com.frewen.adapter.core.abslistview.ViewHolder;
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.logic.samples.concurrent.HandlerThreadActivity;
 import com.frewen.android.demo.logic.model.ContentData;
@@ -47,14 +45,6 @@ public class SampleDemoActivity extends AppCompatActivity {
         initData();
 
         contentList = findViewById(R.id.item_list);
-        BaseAdapter<ContentData> adapter = new BaseAdapter<ContentData>(this, R.layout.layout_item, mDatas) {
-            @Override
-            protected void convert(ViewHolder viewHolder, ContentData item, int position) {
-                viewHolder.setText(R.id.tv_item, item.getTitle() + " : " + viewHolder.getItemPosition()
-                        + " , " + viewHolder.getItemPosition());
-            }
-        };
-        contentList.setAdapter(adapter);
         contentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

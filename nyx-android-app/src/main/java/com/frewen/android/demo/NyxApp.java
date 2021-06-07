@@ -1,4 +1,4 @@
-package com.frewen.android.demo.app;
+package com.frewen.android.demo;
 
 import android.app.Activity;
 import android.content.Context;
@@ -59,7 +59,7 @@ import static com.frewen.android.demo.constant.AppKeyConstants.APP_ID_BUGLY;
  * 2、异步优化：
  * 让子线程来分担主线程的任务，通过并行的任务来进行减少执行时间
  */
-public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, ModuleProvider {
+public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModuleProvider {
 
     private static final String TAG = "T:NyxAndroidApp";
     /**
@@ -74,7 +74,10 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
 
     private String processName;
 
-    //// 根据CPU的核心数来进行设置核心线程的数量
+    // 根据CPU的核心数来进行设置核心线程的数量
+    // 这个我们是模仿Android的源码中AsyncTask的实现。我们希望核心池中至少有 2 个线程，最多 4 个线程，
+    // 但是如果CPU的核心数都不超过4个(3个、4个)。则宁愿比 CPU 数量少 1，以避免后台工作使 CPU 饱和
+    // 但是注意。在最新的android-29的源码里面这种设计已经被更优的解决方案替代。我们有空可以学习一下
     private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
     private static final int CORE_POOL_SIZE = Math.max(2, Math.min(CPU_COUNT - 1, 4));
 
@@ -154,6 +157,7 @@ public class NyxAndroidApp extends BaseMVPApp implements HasActivityInjector, Mo
     }
 
     private void initMMKV() {
+        // https://github.com/Tencent/MMKV
         String rootDir = MMKV.initialize(this.getFilesDir().getAbsolutePath() + "/mmkv");
         System.out.println("mmkv root: " + rootDir);
     }

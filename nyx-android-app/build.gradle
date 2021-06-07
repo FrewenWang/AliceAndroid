@@ -5,9 +5,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.chaquo.python'
 
 
-//或者这样也可以 https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
-//apply plugin: 'android-aspectjx'
-apply plugin: 'com.hujiang.android-aspectjx'
+// 或者这样也可以 https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
+// apply plugin: 'android-aspectjx'
+// apply plugin: 'com.hujiang.android-aspectjx'
 
 apply plugin: 'com.google.protobuf'
 //apply plugin: 'me.ele.lancet'

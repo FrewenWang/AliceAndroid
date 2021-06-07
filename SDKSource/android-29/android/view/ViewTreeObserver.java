@@ -620,9 +620,8 @@ public final class ViewTreeObserver {
     }
 
     /**
-     * Register a callback to be invoked when the view tree is about to be drawn
-     *
-     * @param listener The callback to add
+     * 注册一个回调，当视图树即将被绘制时调用
+     * @param 要添加的回调listener
      *
      * @throws IllegalStateException If {@link #isAlive()} returns false
      */

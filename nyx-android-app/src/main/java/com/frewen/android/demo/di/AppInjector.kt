@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.frewen.android.demo.app.NyxAndroidApp
+import com.frewen.android.demo.NyxApp
 import com.frewen.android.demo.di.components.DaggerMyAppComponent
 import com.frewen.demo.library.di.injector.Injectable
 import dagger.android.AndroidInjection
@@ -24,7 +24,7 @@ object AppInjector {
     /**
      * 依赖注入
      */
-    fun inject(app: NyxAndroidApp) {
+    fun inject(app: NyxApp) {
         //通过builder注入application，然后注入app
         DaggerMyAppComponent.builder().application(app)
                 .build().inject(app)

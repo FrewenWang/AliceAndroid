@@ -5,7 +5,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.frewen.android.demo.R
-import com.frewen.android.demo.app.NyxAndroidApp
+import com.frewen.android.demo.NyxApp
 import com.frewen.android.demo.logic.model.BannerModel
 import com.zhpan.bannerview.BaseViewHolder
 
@@ -21,7 +21,9 @@ class HomeBannerViewHolder(view: View) : BaseViewHolder<BannerModel>(view) {
     override fun bindData(data: BannerModel?, position: Int, pageSize: Int) {
         val img = itemView.findViewById<ImageView>(R.id.img_banner_view)
         data?.let {
-            Glide.with(NyxAndroidApp.getInstance(NyxAndroidApp::class.java))
+            Glide.with(
+                NyxApp.getInstance(
+                    NyxApp::class.java))
                     .load(it.imagePath)
                     .transition(DrawableTransitionOptions.withCrossFade(500))
                     .into(img)

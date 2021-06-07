@@ -8,8 +8,8 @@ package com.frewen.android.demo.performance;
  *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
  *
  *         添加依赖之后报错：
- *         java.lang.RuntimeException: Unable to instantiate application com.frewen.android.demo.app.NyxAndroidApp:
- *         java.lang.ClassNotFoundException: Didn't find class "com.frewen.android.demo.app.NyxAndroidApp"
+ *         java.lang.RuntimeException: Unable to instantiate application com.frewen.android.demo.NyxAndroidApp:
+ *         java.lang.ClassNotFoundException: Didn't find class "com.frewen.android.demo.NyxAndroidApp"
  *         on path: DexPathList[[zip file "/data/app/com.frewen.android.demo.debug-KA_ioiR-yZ59fKR3_yfkZg==/base.apk"],
  *         nativeLibraryDirectories=[/data/app/com.frewen.android.demo.debug-KA_ioiR-yZ59fKR3_yfkZg==/lib/x86,
  *         /data/app/com.frewen.android.demo.debug-KA_ioiR-yZ59fKR3_yfkZg==/base.apk!/lib/x86, /system/lib, /system/product/lib, /system/vendor/lib]]
@@ -46,7 +46,7 @@ package com.frewen.android.demo.performance;
 //    /**
 //     * 代码之前和代码执行之后都插入相应的代码
 //     */
-//    @Around("call(* com.frewen.android.demo.app.NyxAndroidApp.**(..))")
+//    @Around("call(* com.frewen.android.demo.NyxAndroidApp.**(..))")
 //    public void getMethodDuration(ProceedingJoinPoint joinPoint) {
 //        long time = System.currentTimeMillis();
 //        Log.e(TAG, "FMsg:getMethodDuration: " + (System.currentTimeMillis() - time));

@@ -5,12 +5,9 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Debug;
 import android.os.Trace;
-import android.util.Log;
 
 import com.androidnetworking.AndroidNetworking;
-import com.frewen.android.demo.BuildConfig;
 import com.frewen.android.demo.app.helper.KeepAliveHelper;
-import com.frewen.android.demo.app.helper.StrictModeHelper;
 import com.frewen.android.demo.app.taskstarter.BuglyInitTask;
 import com.frewen.android.demo.app.taskstarter.DexposedInitTask;
 import com.frewen.android.demo.di.AppInjector;
@@ -24,7 +21,7 @@ import com.frewen.android.demo.logic.samples.network.Constant;
 import com.frewen.android.demo.logic.ui.SplashActivity;
 import com.frewen.aura.framework.app.BaseMVPApp;
 import com.frewen.aura.framework.taskstarter.ModuleProvider;
-import com.frewen.aura.framework.taskstarter.ModuleTaskDispatcher;
+import com.frewen.aura.framework.taskstarter.LaunchTaskDispatcher;
 import com.frewen.aura.toolkits.concurrent.ThreadFactoryImpl;
 import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.network.api.BaseApiService;
@@ -42,6 +39,7 @@ import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.os.TraceCompat;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 import dagger.android.AndroidInjector;
@@ -162,9 +160,10 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
         System.out.println("mmkv root: " + rootDir);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initModuleTaskDispatcher() {
-        ModuleTaskDispatcher.getInstance().init(this);
-        ModuleTaskDispatcher.getInstance()
+        LaunchTaskDispatcher.getInstance().init(this);
+        LaunchTaskDispatcher.getInstance()
                 .addTask(new BuglyInitTask())
                 .addTask(new DexposedInitTask())
                 .start();

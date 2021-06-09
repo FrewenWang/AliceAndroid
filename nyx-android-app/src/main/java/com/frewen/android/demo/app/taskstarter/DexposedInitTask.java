@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
 
-import com.frewen.aura.framework.taskstarter.BaseModuleTask;
+import com.frewen.aura.framework.taskstarter.BaseLaunchTask;
 import com.taobao.android.dexposed.DexposedBridge;
 import com.taobao.android.dexposed.XC_MethodHook;
 import com.taobao.android.dexposed.XposedHelpers;
@@ -21,9 +21,9 @@ import com.taobao.android.dexposed.XposedHelpers;
  *
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class DexposedInitTask extends BaseModuleTask {
+public class DexposedInitTask extends BaseLaunchTask {
     @Override
-    public void run() {
+    public void execute() {
         initDexposed();
     }
 

@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainDiscoveryBinding
-import com.frewen.android.demo.extention.bindViewPager2
+import com.frewen.android.demo.ktx.ext.bindViewPager2
 import com.frewen.android.demo.ktx.ext.parseState
 import com.frewen.android.demo.logic.main.fragment.discovery.MainDiscoveryPageFragment
 import com.frewen.android.demo.mvvm.viewmodel.MainDiscoveryViewModel

@@ -1,4 +1,4 @@
-package com.frewen.android.demo.extention
+package com.frewen.android.demo.ktx.ext
 
 import android.content.Context
 import android.graphics.Color
@@ -6,6 +6,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.viewpager2.widget.ViewPager2
 import com.frewen.android.demo.NyxApp
+import com.frewen.android.demo.widgets.ScaleTransitionPagerTitleView
 import com.frewen.aura.toolkits.ktx.ext.toHtml
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -23,14 +24,17 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.Li
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 fun MagicIndicator.bindViewPager2(
-        viewPager2: ViewPager2,
-        mDataList: ArrayList<String> = arrayListOf(),
-        mStringList: ArrayList<String> = arrayListOf(),
-        action: (index: Int) -> Unit = {}) {
+    viewPager2: ViewPager2,
+    mDataList: ArrayList<String> = arrayListOf(),
+    mStringList: ArrayList<String> = arrayListOf(),
+    action: (index: Int) -> Unit = {}
+) {
     
     val commonNavigator = CommonNavigator(
         NyxApp.getInstance(
-            NyxApp::class.java))
+            NyxApp::class.java
+        )
+    )
     // 实例化一个匿名对象，实现CommonNavigatorAdapter抽象类
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
         override fun getCount(): Int {
@@ -50,7 +54,9 @@ fun MagicIndicator.bindViewPager2(
              */
             return ScaleTransitionPagerTitleView(
                 NyxApp.getInstance(
-                    NyxApp::class.java)).apply {
+                    NyxApp::class.java
+                )
+            ).apply {
                 text = if (mDataList.size != 0) {
                     mDataList[index].toHtml()
                 } else {
@@ -72,14 +78,20 @@ fun MagicIndicator.bindViewPager2(
                 //线条的宽高度
                 lineHeight = UIUtil.dip2px(
                     NyxApp.getInstance(
-                        NyxApp::class.java), 3.0).toFloat()
+                        NyxApp::class.java
+                    ), 3.0
+                ).toFloat()
                 lineWidth = UIUtil.dip2px(
                     NyxApp.getInstance(
-                        NyxApp::class.java), 30.0).toFloat()
+                        NyxApp::class.java
+                    ), 30.0
+                ).toFloat()
                 //线条的圆角
                 roundRadius = UIUtil.dip2px(
                     NyxApp.getInstance(
-                        NyxApp::class.java), 6.0).toFloat()
+                        NyxApp::class.java
+                    ), 6.0
+                ).toFloat()
                 startInterpolator = AccelerateInterpolator()
                 endInterpolator = DecelerateInterpolator(2.0f)
                 //线条的颜色
@@ -96,16 +108,16 @@ fun MagicIndicator.bindViewPager2(
             this@bindViewPager2.onPageSelected(position)
             action.invoke(position)
         }
-    
+        
         override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             this@bindViewPager2.onPageScrolled(position, positionOffset, positionOffsetPixels)
         }
-    
+        
         override fun onPageScrollStateChanged(state: Int) {
             super.onPageScrollStateChanged(state)
             this@bindViewPager2.onPageScrollStateChanged(state)

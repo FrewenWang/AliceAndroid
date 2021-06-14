@@ -6,6 +6,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.frewen.android.demo.R
 import com.frewen.android.demo.adapter.WelcomeBannerAdapter
 import com.frewen.android.demo.databinding.ActivityWelcomeBinding
+import com.frewen.android.demo.mvvm.viewmodel.WelcomeViewModel
 import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.android.demo.utils.MmkvUtil
 import com.frewen.android.demo.widgets.banner.WelcomeBannerViewHolder
@@ -24,10 +25,9 @@ import kotlinx.android.synthetic.main.activity_welcome.*
  * @introduction:  Class File Init
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-class WelcomeActivity : BaseVMDataBindingActivity<BaseViewModel, ActivityWelcomeBinding>() {
+class WelcomeActivity : BaseVMDataBindingActivity<WelcomeViewModel, ActivityWelcomeBinding>() {
     
-    private var resList = arrayOf("唱", "跳", "r a p")
-    
+    private var resList = arrayOf("唱", "跳", "rap")
     
     private lateinit var mViewPager: BannerViewPager<String, WelcomeBannerViewHolder>
     

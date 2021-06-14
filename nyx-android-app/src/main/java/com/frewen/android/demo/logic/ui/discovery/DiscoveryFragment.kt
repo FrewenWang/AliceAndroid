@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainDiscoveryBinding
-import com.frewen.android.demo.extention.bindViewPager2
+import com.frewen.android.demo.ktx.ext.bindViewPager2
 import com.frewen.demo.library.ktx.ext.initOnFragment
 import com.frewen.android.demo.logic.ui.profile.MyProfileViewModel
 import com.frewen.demo.library.di.injector.Injectable

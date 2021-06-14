@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.frewen.android.demo.R
 import com.frewen.android.demo.logic.model.WXArticleContent
-import com.frewen.android.demo.utils.SettingsUtils
+import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.aura.toolkits.ktx.ext.toHtml
 
 /**
@@ -114,7 +114,7 @@ class HomeArticleAdapter(data: MutableList<WXArticleContent>?) : BaseDelegateMul
     
     init {
         // 获取设置里面持久化缓存的列表动画模式
-        val animMode = SettingsUtils.getListAnimMode()
+        val animMode = AppThemeUtil.getListAnimMode()
         //等于0，关闭列表动画 否则开启
         if (animMode == 0) {
             this.animationEnable = false

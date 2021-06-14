@@ -27,7 +27,8 @@ import javax.inject.Inject
  *   没有对应注入器
  *
  */
-class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector, BottomNavigationView.OnNavigationItemSelectedListener {
+class HomeActivity : AppCompatActivity(), HasSupportFragmentInjector,
+    BottomNavigationView.OnNavigationItemSelectedListener {
     
     companion object {
         private const val TAG = "HomeActivity"

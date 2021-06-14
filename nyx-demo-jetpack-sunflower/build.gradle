@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.frewen.nyx.hilt.demo"
+        applicationId "com.frewen.nyx.jetpack.demo"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -67,7 +67,15 @@ dependencies {
     implementation "androidx.room:room-guava:$room_version"
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+
     //==============</editor-folder desc ="Dependence:JetPack的Room框架依赖">========================
+
+
+    //=================<editor-folder desc = "Dependence:WorkManager框架">==========================
+    implementation dep.workManagerKTX
+    testImplementation dep.workManagerTest
+    //=================</editor-folder desc = "Dependence:WorkManager框架">=========================
+
 
     //=================<editor-folder desc = "Dependence:OkHttp相关框架的依赖">=======================
     implementation dep.okhttp3

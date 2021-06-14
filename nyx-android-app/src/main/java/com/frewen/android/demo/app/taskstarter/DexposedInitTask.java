@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Parcel;
 import android.util.Log;
 
-import com.frewen.aura.framework.taskstarter.BaseLaunchTask;
+import com.frewen.aura.framework.taskstarter.AbsLaunchTask;
 import com.taobao.android.dexposed.DexposedBridge;
 import com.taobao.android.dexposed.XC_MethodHook;
 import com.taobao.android.dexposed.XposedHelpers;
@@ -18,20 +18,13 @@ import com.taobao.android.dexposed.XposedHelpers;
  * @version: 1.0.0
  * @introduction: 实例化Dexposed的AOP开源框架初始化的Task
  *         https://github.com/alibaba/dexposed
- *
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class DexposedInitTask extends BaseLaunchTask {
+public class DexposedInitTask extends AbsLaunchTask {
     @Override
     public void execute() {
         initDexposed();
     }
-
-    @Override
-    public boolean needWait() {
-        return false;
-    }
-
 
     /**
      * 我们在使用淘宝的AOP的框架的时候，出现了下面的问题：
@@ -44,15 +37,15 @@ public class DexposedInitTask extends BaseLaunchTask {
      * 从错误信息分析：
      * 是淘宝的Dexposed框架里面设置allowBackup为false,而我们的项目的中allowBackup为true。产生了冲突
      *
-     *  <application
-     *         android:name=".app.NyxAndroidApp"
-     *         android:allowBackup="false"
-     *         android:icon="@mipmap/ic_launcher"
-     *         android:label="@string/app_name"
-     *         android:networkSecurityConfig="@xml/network_security_config"
-     *         android:roundIcon="@mipmap/ic_launcher_round"
-     *         android:supportsRtl="true"
-     *         tools:replace="android:allowBackup"
+     * <application
+     * android:name=".app.NyxAndroidApp"
+     * android:allowBackup="false"
+     * android:icon="@mipmap/ic_launcher"
+     * android:label="@string/app_name"
+     * android:networkSecurityConfig="@xml/network_security_config"
+     * android:roundIcon="@mipmap/ic_launcher_round"
+     * android:supportsRtl="true"
+     * tools:replace="android:allowBackup"
      * 我们
      */
     private void initDexposed() {

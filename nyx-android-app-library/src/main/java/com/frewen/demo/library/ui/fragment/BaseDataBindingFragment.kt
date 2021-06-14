@@ -34,13 +34,18 @@ abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : 
     
     lateinit var viewModel: VM
     
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(
-                inflater,
-                getLayoutId(),
-                container,
-                false,
-                AuraDataBindingComponent())
+            inflater,
+            getLayoutId(),
+            container,
+            false,
+            AuraDataBindingComponent()
+        )
         binding?.lifecycleOwner = this
         // 目前此方法已经过时，我们使用下面实现方法
         //viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())

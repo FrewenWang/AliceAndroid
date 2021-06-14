@@ -1,6 +1,6 @@
 package com.frewen.android.demo.app.taskstarter;
 
-import com.frewen.aura.framework.taskstarter.BaseLaunchTask;
+import com.frewen.aura.framework.taskstarter.AbsLaunchTask;
 
 /**
  * @filename: BuglyInitTask
@@ -9,18 +9,10 @@ import com.frewen.aura.framework.taskstarter.BaseLaunchTask;
  * @time: 2020/9/18 10:27
  *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class BuglyInitTask extends BaseLaunchTask {
-
+public class BuglyInitTask extends AbsLaunchTask {
 
     @Override
     public void execute() {
 
     }
-
-    @Override
-    public boolean needWait() {
-        return false;
-    }
-
-
 }

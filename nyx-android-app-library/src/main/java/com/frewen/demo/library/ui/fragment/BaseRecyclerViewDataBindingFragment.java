@@ -32,8 +32,8 @@ import androidx.recyclerview.widget.RecyclerView;
  * @introduction: 这个的布局是使用RecyclerView+下拉刷新和DataBinding功能的Fragment
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public abstract class BaseRecyclerViewDataBindingFragment<Data, VM extends AbsPagedListViewModel<Data>>
-        extends BaseDataBindingFragment<VM,FragmentRefreshRecylerViewBinding> implements OnRefreshListener, OnLoadMoreListener {
+public abstract class BaseRecyclerViewDataBindingFragment<VM extends AbsPagedListViewModel<Data>, Data>
+        extends BaseDataBindingFragment<VM, FragmentRefreshRecylerViewBinding> implements OnRefreshListener, OnLoadMoreListener {
 
     protected RecyclerView mRecyclerView;
     private SmartRefreshLayout mRefreshLayout;

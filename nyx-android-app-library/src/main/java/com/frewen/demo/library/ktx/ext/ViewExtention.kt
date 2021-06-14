@@ -18,3 +18,17 @@ fun View.click(interval: Long = 200, action: (view: View) -> Unit) {
         action(it)
     }
 }
+
+/**
+ * 设置view隐藏
+ */
+fun View.gone() {
+    visibility = View.GONE
+}
+
+/**
+ * 设置view显示
+ */
+fun View.visible() {
+    visibility = View.VISIBLE
+}

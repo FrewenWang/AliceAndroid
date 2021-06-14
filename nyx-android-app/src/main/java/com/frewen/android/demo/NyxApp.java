@@ -10,6 +10,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.frewen.android.demo.app.helper.KeepAliveHelper;
 import com.frewen.android.demo.app.taskstarter.BuglyInitTask;
 import com.frewen.android.demo.app.taskstarter.DexposedInitTask;
+import com.frewen.android.demo.app.taskstarter.MmkvInitTask;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.error.ErrorActivity;
 import com.frewen.android.demo.network.MyNetworkConfig;
@@ -123,8 +124,6 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
 
         initX5Browser();
 
-        initMMKV();
-
         initNetworkApi();
         //Application级别注入
         AppInjector.INSTANCE.inject(this);
@@ -154,18 +153,12 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
         }
     }
 
-    private void initMMKV() {
-        // https://github.com/Tencent/MMKV
-        String rootDir = MMKV.initialize(this.getFilesDir().getAbsolutePath() + "/mmkv");
-        System.out.println("mmkv root: " + rootDir);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initModuleTaskDispatcher() {
         LaunchTaskDispatcher.getInstance().init(this);
         LaunchTaskDispatcher.getInstance()
                 .addTask(new BuglyInitTask())
                 .addTask(new DexposedInitTask())
+                .addTask(new MmkvInitTask(this))
                 .start();
     }
 

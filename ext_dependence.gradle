@@ -48,6 +48,7 @@ ext {
     // JetPack组件依赖版本
     nav_version = "2.3.3"
     lifecycle_version = "2.3.0"
+    work_version = "2.5.0"
     // material
     material_version = "1.2.0"
     hilt_version = '2.31.2-alpha'
@@ -190,6 +191,22 @@ ext {
             hilt                     : "com.google.dagger:hilt-android:$hilt_version",
             hiltCompiler             : "com.google.dagger:hilt-android-compiler:$hilt_version",
             //=================</editor-folder desc = "Dependence:添加Hilt依赖注入框架">======================
+
+            //=================<editor-folder desc = "Dependence:添加WorkManager框架">===============
+            // https://developer.android.com/topic/libraries/architecture/workmanager?hl=zh-cn
+            // (Java only)
+            workManager              : "androidx.work:work-runtime:$work_version",
+            // Kotlin + coroutines
+            workManagerKTX           : "androidx.work:work-runtime-ktx:$work_version",
+            // optional - RxJava2 support
+            workManagerRxJava        : "androidx.work:work-rxjava2:$work_version",
+            // optional - GCMNetworkManager support
+            workManagerGCM           : "androidx.work:work-gcm:$work_version",
+            // optional - Test helpers
+            workManagerTest          : "androidx.work:work-testing:$work_version",
+            // optional - MultiProcess support
+            workManagerMultiProcess  : "androidx.work:work-multiprocess:$work_version"
+            //=================</editor-folder desc = "Dependence:添加WorkManager框架">==============
 
 
             //=================</editor-folder desc = "Dependence:JetPack开源框架依赖">===============

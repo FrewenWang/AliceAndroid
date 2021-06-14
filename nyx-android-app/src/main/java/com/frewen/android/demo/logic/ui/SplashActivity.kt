@@ -40,6 +40,7 @@ import kotlinx.coroutines.launch
  */
 class SplashActivity : BaseButterKnifeActivity() {
     private val TAG = "SplashActivity"
+    
     @JvmField
     @BindView(R.id.ivSplashPicture)
     var splashBg: ImageView? = null
@@ -63,7 +64,7 @@ class SplashActivity : BaseButterKnifeActivity() {
     
     private fun startHomeActivity() {
         // When animation set ended, intent to the MainActivity.
-        val intent = Intent(this@SplashActivity, ViewDemoActivity::class.java)
+        val intent = Intent(this@SplashActivity, HomeActivity::class.java)
         startActivity(intent)
     }
     
@@ -77,8 +78,10 @@ class SplashActivity : BaseButterKnifeActivity() {
         //去除标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         //去除状态栏
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         // Make sure this is before calling super.onCreate
         // 我们在清单文件里面设置的启动的透明主题，来减少白屏，但是在Activity启动之后，我们要设置回来
         // 我们可以通过代码来设置主题。我们通过设置透明主题,来减少白屏
@@ -107,30 +110,52 @@ class SplashActivity : BaseButterKnifeActivity() {
      */
     private fun requestPermissions() {
         PermissionX.init(this)
-                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .onExplainRequestReason { scope, deniedList ->
-                    val message = ResourcesUtils.getString(R.string.request_permission_storage)
-                    scope.showRequestReasonDialog(deniedList, message, ResourcesUtils.getString(R.string.ok), ResourcesUtils.getString(R.string.cancel))
-                }
-                .onForwardToSettings { scope: ForwardScope, deniedList: List<String?>? ->
-                    val message = ResourcesUtils.getString(R.string.request_permission_storage)
-                    scope.showForwardToSettingsDialog(deniedList, message, ResourcesUtils.getString(R.string.settings), ResourcesUtils.getString(R.string.cancel))
-                }
-                .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? -> requestReadPhoneStatePermission() }
+            .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .onExplainRequestReason { scope, deniedList ->
+                val message = ResourcesUtils.getString(R.string.request_permission_storage)
+                scope.showRequestReasonDialog(
+                    deniedList,
+                    message,
+                    ResourcesUtils.getString(R.string.ok),
+                    ResourcesUtils.getString(R.string.cancel)
+                )
+            }
+            .onForwardToSettings { scope: ForwardScope, deniedList: List<String?>? ->
+                val message = ResourcesUtils.getString(R.string.request_permission_storage)
+                scope.showForwardToSettingsDialog(
+                    deniedList,
+                    message,
+                    ResourcesUtils.getString(R.string.settings),
+                    ResourcesUtils.getString(R.string.cancel)
+                )
+            }
+            .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? -> requestReadPhoneStatePermission() }
     }
     
     private fun requestReadPhoneStatePermission() {
         PermissionX.init(this)
-                .permissions(Manifest.permission.READ_PHONE_STATE)
-                .onExplainRequestReason { scope, deniedList ->
-                    val message = ResourcesUtils.getString(R.string.request_permission_access_phone_info)
-                    scope.showRequestReasonDialog(deniedList, message, ResourcesUtils.getString(R.string.ok), ResourcesUtils.getString(R.string.cancel))
-                }
-                .onForwardToSettings { scope, deniedList ->
-                    val message = ResourcesUtils.getString(R.string.request_permission_access_phone_info)
-                    scope.showForwardToSettingsDialog(deniedList, message, ResourcesUtils.getString(R.string.settings), ResourcesUtils.getString(R.string.cancel))
-                }
-                .request { allGranted, grantedList, deniedList -> initAnimation() }
+            .permissions(Manifest.permission.READ_PHONE_STATE)
+            .onExplainRequestReason { scope, deniedList ->
+                val message =
+                    ResourcesUtils.getString(R.string.request_permission_access_phone_info)
+                scope.showRequestReasonDialog(
+                    deniedList,
+                    message,
+                    ResourcesUtils.getString(R.string.ok),
+                    ResourcesUtils.getString(R.string.cancel)
+                )
+            }
+            .onForwardToSettings { scope, deniedList ->
+                val message =
+                    ResourcesUtils.getString(R.string.request_permission_access_phone_info)
+                scope.showForwardToSettingsDialog(
+                    deniedList,
+                    message,
+                    ResourcesUtils.getString(R.string.settings),
+                    ResourcesUtils.getString(R.string.cancel)
+                )
+            }
+            .request { allGranted, grantedList, deniedList -> initAnimation() }
     }
     
     /**
@@ -161,10 +186,11 @@ class SplashActivity : BaseButterKnifeActivity() {
         
         // Create an animation that make the lens icon move straight left.
         val straightLeftAnimation: Animation = TranslateAnimation(
-                Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, -0.5f,
-                Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f)
+            Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, -0.5f,
+            Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, 0.0f
+        )
         straightLeftAnimation.duration = 3000
         // 将LinearInterpolator设置为动画以统一其播放速度。
         straightLeftAnimation.interpolator = LinearInterpolator()
@@ -182,9 +208,11 @@ class SplashActivity : BaseButterKnifeActivity() {
         secondSemicircleAnimation.duration = 1000
         secondSemicircleAnimation.interpolator = LinearInterpolator()
         // 缩放为原来两倍大小的动画
-        val enlargeAnimation: Animation = ScaleAnimation(1.0f, 2.0f, 1.0f, 2.0f,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f)
+        val enlargeAnimation: Animation = ScaleAnimation(
+            1.0f, 2.0f, 1.0f, 2.0f,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f
+        )
         enlargeAnimation.duration = 1500
         
         // 从半透明到开始进行透明度变换动画
@@ -201,7 +229,7 @@ class SplashActivity : BaseButterKnifeActivity() {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
             }
-    
+            
             override fun onAnimationRepeat(animation: Animation) {}
         })
         ivSlogan!!.startAnimation(animation)
@@ -212,7 +240,16 @@ class SplashActivity : BaseButterKnifeActivity() {
         /// 在动画结束时应用的水平缩放系数
         /// 在动画开始时应用的垂直缩放系数
         /// 在动画结束时应用垂直缩放系数
-        val scaleAnimation = ScaleAnimation(1f, 1.1f, 1f, 1.1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        val scaleAnimation = ScaleAnimation(
+            1f,
+            1.1f,
+            1f,
+            1.1f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
         scaleAnimation.duration = splashDuration
         scaleAnimation.fillAfter = true
         
@@ -221,15 +258,15 @@ class SplashActivity : BaseButterKnifeActivity() {
          * 注意：viewTreeObserver.addOnDrawListener的是最低API要求是16这个需要注意
          */
         splashBg!!.viewTreeObserver.addOnPreDrawListener(
-                object : ViewTreeObserver.OnPreDrawListener {
-                    override fun onPreDraw(): Boolean {
-                        // 务必需要记得remove掉
-                        splashBg!!.viewTreeObserver.removeOnPreDrawListener(this)
-                        endRecord("Application")
-                        return true
-                    }
-                })
-
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    // 务必需要记得remove掉
+                    splashBg!!.viewTreeObserver.removeOnPreDrawListener(this)
+                    endRecord("Application")
+                    return true
+                }
+            })
+        
         //splashBg!!.doOnPreDraw { endRecord("Application") }
         
         splashBg!!.startAnimation(scaleAnimation)
@@ -254,7 +291,10 @@ class SplashActivity : BaseButterKnifeActivity() {
      * 1. The semicircle motion only supports in horizontal direction and always go clockwise.
      * 2. The input parameters always represent as percentage (where 1.0 is 100%).
      */
-    private inner class SemicircleAnimation(private val mFromXValue: Float, private val mToXValue: Float) : Animation() {
+    private inner class SemicircleAnimation(
+        private val mFromXValue: Float,
+        private val mToXValue: Float
+    ) : Animation() {
         private var mRadius = 0f
         override fun initialize(width: Int, height: Int, parentWidth: Int, parentHeight: Int) {
             super.initialize(width, height, parentWidth, parentHeight)

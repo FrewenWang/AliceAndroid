@@ -121,4 +121,12 @@ dependencies {
     //====== </editor-folder desc = "Dependence:RecyclerViewAdapter的依赖">==========================
 
 
+    //=================<editor-folder desc = "Dependence:各种自定义View控件">===================
+    api 'com.github.hackware1993:MagicIndicator:1.5.0'
+    // https://github.com/zhpanvip/BannerViewPagers
+    api 'com.github.zhpanvip:BannerViewPager:3.1.5'
+    // implementation 'com.github.zhpanvip:BannerViewPager:3.5.0'
+    //================= </editor-folder desc = "Dependence:各种自定义View控件">=================
+
+
 }

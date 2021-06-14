@@ -14,9 +14,8 @@ import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.demo.library.ui.fragment.BaseRecyclerViewDataBindingFragment
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 
-
 @FragmentDestination(pageUrl = "main/tabs/home", asStarter = true)
-class HomeFragment() : BaseRecyclerViewDataBindingFragment<Post, HomeViewModel>(), Injectable {
+class HomeFragment : BaseRecyclerViewDataBindingFragment<HomeViewModel, Post>(), Injectable {
     /**
      * 顾名思义，这是指一个延迟初始化的变量。在kotlin里面，如果在类型声明之后没有使用符号?，则表示该变量不会为null。
      * 但是这个时候会要求我们初始化一个值。
@@ -30,6 +29,7 @@ class HomeFragment() : BaseRecyclerViewDataBindingFragment<Post, HomeViewModel>(
      * 因为Kotlin会使用null来对每一个用lateinit修饰的属性做初始化，而基础类型是没有null类型，所以无法使用lateinit。
      */
     private lateinit var playDetector: PageListPlayerDetector
+    
     private var feedType: String? = null
     
     
@@ -39,9 +39,10 @@ class HomeFragment() : BaseRecyclerViewDataBindingFragment<Post, HomeViewModel>(
         
         // 这个地方直接传入this.在Kotlin里面是不行的
         // 后面是我们实例化的Observer对象
-        viewModel.getCacheLiveData().observe(viewLifecycleOwner, Observer<PagedList<Post>> { posts ->
-            submitList(posts)
-        })
+        viewModel.getCacheLiveData()
+            .observe(viewLifecycleOwner, Observer<PagedList<Post>> { posts ->
+                submitList(posts)
+            })
     }
     
     override fun onRefresh(refreshLayout: RefreshLayout) {

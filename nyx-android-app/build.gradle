@@ -357,15 +357,6 @@ dependencies {
     // implementation 'rapid.decoder:png-decoder:0.3.0'
     //================= </editor-folder desc = "Dependence:PngDecoder框架依赖">======================
 
-
-    //=================<editor-folder desc = "Dependence:各种自定义View控件">===================
-    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
-    // https://github.com/zhpanvip/BannerViewPagers
-    implementation 'com.github.zhpanvip:BannerViewPager:3.1.5'
-    // implementation 'com.github.zhpanvip:BannerViewPager:3.5.0'
-    //================= </editor-folder desc = "Dependence:各种自定义View控件">=================
-
-
     //==========<editor-folder desc = "Dependence:OpenCV的相关依赖">=============================
     implementation project(path: ':openCVLibrary3412')
     // Tesseract是一个兼容各种操作系统平台的开源OCR识别引擎:https://github.com/rmtheis/tess-two

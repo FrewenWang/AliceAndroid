@@ -1,5 +1,7 @@
 package com.frewen.network.response;
 
+import java.io.Serializable;
+
 /**
  * @filename: BaseResponse
  * @introduction:
@@ -7,7 +9,7 @@ package com.frewen.network.response;
  * @time: 2019/4/14 10:07
  * @copyright: Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
-public class AuraNetResponse<T> {
+public class AuraNetResponse<T> implements Serializable {
 
     /**
      * 返回码

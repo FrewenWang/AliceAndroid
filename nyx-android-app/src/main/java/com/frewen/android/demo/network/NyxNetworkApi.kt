@@ -1,6 +1,7 @@
 package com.frewen.android.demo.network
 
 import android.util.Log
+import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.android.demo.logic.model.WXArticleContent
 import com.frewen.android.demo.logic.model.WXArticleTitle
@@ -8,7 +9,11 @@ import com.frewen.android.demo.logic.model.wrapper.ApiPagerResponseWrapper
 import com.frewen.demo.library.network.core.NetworkApi
 import com.frewen.demo.library.utils.TencentUtils.getAuthorization
 import com.frewen.demo.library.utils.TencentUtils.timeStr
+import com.frewen.network.response.BasePagerResponseData
 import com.frewen.network.response.AuraNetResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Call
@@ -70,7 +75,7 @@ class NyxNetworkApi : NetworkApi() {
                     Log.d(Companion.TAG, "onFailure() called with: call = $call, t = $t")
                     continuation.resumeWithException(t)
                 }
-    
+                
                 override fun onResponse(call: Call<T>, response: retrofit2.Response<T>) {
                     Log.d(TAG, "onResponse() called with: call = $call, response = $response")
                     val body = response.body()
@@ -111,7 +116,21 @@ class NyxNetworkApi : NetworkApi() {
         return getService(NyxApiService::class.java).getBanner()
     }
     
-    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<WXArticleContent>> {
+    suspend fun getHomeData(pageNo: Int): AuraNetResponse<BasePagerResponseData<ArrayList<ArticleModel>>> {
+        return withContext(Dispatchers.IO) {
+            val listData = async { getService(NyxApiService::class.java).getArticleList(pageNo) }
+            if (pageNo == 0) {
+                val topData = async { getService(NyxApiService::class.java).getTopArticleList() }
+                listData.await().data.dataList.addAll(0, topData.await().data)
+                listData.await()
+            } else {
+                listData.await()
+            }
+        }
+    }
+    
+    
+    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleModel>> {
         return getService(NyxApiService::class.java).getTopArticleList()
     }
     
@@ -123,7 +142,10 @@ class NyxNetworkApi : NetworkApi() {
     /**
      * 获取微信公众号的数据
      */
-    suspend fun getWXContentData(pageNo: Int, cid: Int): AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>> {
+    suspend fun getWXContentData(
+        pageNo: Int,
+        cid: Int
+    ): AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>> {
         return getService(NyxApiService::class.java).getWXContentData(pageNo, cid)
     }
     

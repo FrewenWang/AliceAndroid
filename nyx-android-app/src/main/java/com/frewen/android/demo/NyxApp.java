@@ -10,6 +10,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.frewen.android.demo.app.helper.KeepAliveHelper;
 import com.frewen.android.demo.app.taskstarter.BuglyInitTask;
 import com.frewen.android.demo.app.taskstarter.DexposedInitTask;
+import com.frewen.android.demo.app.taskstarter.LoadStateServiceTask;
 import com.frewen.android.demo.app.taskstarter.MmkvInitTask;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.error.ErrorActivity;
@@ -159,6 +160,7 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
                 .addTask(new BuglyInitTask())
                 .addTask(new DexposedInitTask())
                 .addTask(new MmkvInitTask(this))
+                .addTask(new LoadStateServiceTask())
                 .start();
     }
 

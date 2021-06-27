@@ -1,6 +1,7 @@
 package com.frewen.android.demo.mvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
+import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.android.demo.logic.model.WXArticleContent
 import com.frewen.android.demo.network.NyxNetworkApi
@@ -25,7 +26,7 @@ class MainHomeViewModel : BaseViewModel() {
     
     //首页轮播图数据
     var bannerData: MutableLiveData<ResultState<ArrayList<BannerModel>>> = MutableLiveData()
-    var articleData: MutableLiveData<ResultState<ArrayList<WXArticleContent>>> = MutableLiveData()
+    var articleData: MutableLiveData<ResultState<ArrayList<ArticleModel>>> = MutableLiveData()
     
     
     /**

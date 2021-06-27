@@ -13,10 +13,10 @@ import com.frewen.network.response.exception.AuraNetException
  *
  */
 fun <T> BaseDataBindingFragment<*, *>.parseState(
-        resultState: ResultState<T>,
-        onSuccess: (T) -> Unit,
-        onError: ((AuraNetException) -> Unit)? = null,
-        onLoading: (() -> Unit)? = null
+    resultState: ResultState<T>,
+    onSuccess: (T) -> Unit,
+    onError: ((AuraNetException) -> Unit)? = null,
+    onLoading: (() -> Unit)? = null
 ) {
     when (resultState) {
         is ResultState.Loading -> {

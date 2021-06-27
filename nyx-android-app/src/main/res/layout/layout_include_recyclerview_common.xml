@@ -14,7 +14,7 @@
     <merge>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefresh"
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <!--TODO 添加第三方的RecyclerView的依赖,待学习-->

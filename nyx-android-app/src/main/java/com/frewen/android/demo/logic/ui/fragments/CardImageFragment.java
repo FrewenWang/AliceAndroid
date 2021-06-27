@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.logic.adapter.CardImageAdapter;
-import com.frewen.android.demo.logic.model.ArticleCommonBean;
+import com.frewen.android.demo.logic.model.ArticleModel;
 import com.frewen.aura.framework.fragment.BaseButterKnifeFragment;
 import com.frewen.aura.toolkits.common.FileUtils;
 import com.google.gson.Gson;
@@ -55,7 +55,7 @@ public class CardImageFragment extends BaseButterKnifeFragment {
 
         String json = FileUtils.readFromAsset(getContext(), "message.json");
         // 针对Json生成List对象的泛型对象处理
-        List<ArticleCommonBean> articleBeans = new Gson().fromJson(json, new TypeToken<List<ArticleCommonBean>>() {
+        List<ArticleModel> articleBeans = new Gson().fromJson(json, new TypeToken<List<ArticleModel>>() {
         }.getType());
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -9,6 +9,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainDiscoveryPageBinding
 import com.frewen.android.demo.logic.adapter.HomeArticleAdapter
+import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.ListDataStateWrapper
 import com.frewen.android.demo.logic.model.WXArticleContent
 import com.frewen.android.demo.mvvm.viewmodel.MainDiscoveryViewModel
@@ -19,7 +20,8 @@ import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.layout_include_recyclerview_common.*
 
-class MainDiscoveryPageFragment : BaseDataBindingFragment<MainDiscoveryViewModel, FragmentMainDiscoveryPageBinding>() {
+class MainDiscoveryPageFragment :
+    BaseDataBindingFragment<MainDiscoveryViewModel, FragmentMainDiscoveryPageBinding>() {
     
     /**
      *
@@ -65,7 +67,7 @@ class MainDiscoveryPageFragment : BaseDataBindingFragment<MainDiscoveryViewModel
         //
         viewModel.wxArticleContentModel.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, articleAdapter, recyclerView, swipeRefresh)
+            // loadListData(it, articleAdapter, recyclerView, swipeRefreshLayout)
         })
     }
     
@@ -73,10 +75,11 @@ class MainDiscoveryPageFragment : BaseDataBindingFragment<MainDiscoveryViewModel
      * 加载的列表数据
      */
     private fun loadListData(
-            data: ListDataStateWrapper<WXArticleContent>,
-            articleAdapter: HomeArticleAdapter,
-            recyclerView: SwipeRecyclerView,
-            swipeRefreshLayout: SwipeRefreshLayout) {
+        data: ListDataStateWrapper<ArticleModel>,
+        articleAdapter: HomeArticleAdapter,
+        recyclerView: SwipeRecyclerView,
+        swipeRefreshLayout: SwipeRefreshLayout
+    ) {
         swipeRefreshLayout.isRefreshing = false
         recyclerView.loadMoreFinish(data.isEmpty, data.hasMore)
         if (data.isSuccess) {

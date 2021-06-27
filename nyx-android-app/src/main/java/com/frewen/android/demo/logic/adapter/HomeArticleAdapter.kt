@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.frewen.android.demo.R
+import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.WXArticleContent
 import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.aura.toolkits.ktx.ext.toHtml
@@ -20,28 +21,29 @@ import com.frewen.aura.toolkits.ktx.ext.toHtml
  * @introduction:
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-class HomeArticleAdapter(data: MutableList<WXArticleContent>?) : BaseDelegateMultiAdapter<WXArticleContent, BaseViewHolder>(data) {
+class HomeArticleAdapter(data: MutableList<ArticleModel>?) :
+    BaseDelegateMultiAdapter<ArticleModel, BaseViewHolder>(data) {
     private val Article = 1//文章类型
     private val Project = 2//项目类型
     private var showTag = false//是否展示标签 tag 一般主页才用的到
     
-    constructor(data: MutableList<WXArticleContent>?, showTag: Boolean) : this(data) {
+    constructor(data: MutableList<ArticleModel>?, showTag: Boolean) : this(data) {
         this.showTag = showTag
     }
     
-    override fun convert(helper: BaseViewHolder, item: WXArticleContent) {
+    override fun convert(helper: BaseViewHolder, item: ArticleModel) {
         when (helper.itemViewType) {
             Article -> {
                 //文章布局的赋值
                 item.run {
                     helper.setText(
-                            R.id.item_home_author,
-                            if (author.isNotEmpty()) author else shareUser
+                        R.id.item_home_author,
+                        if (author.isNotEmpty()) author else shareUser
                     )
                     helper.setText(R.id.item_home_content, title.toHtml())
                     helper.setText(R.id.item_home_type2, "$superChapterName·$chapterName".toHtml())
                     helper.setText(R.id.item_home_date, niceDate)
-            
+                    
                     // helper.getView<CollectView>(R.id.item_home_collect).isChecked = collect
                     if (showTag) {
                         //展示标签
@@ -71,14 +73,14 @@ class HomeArticleAdapter(data: MutableList<WXArticleContent>?) : BaseDelegateMul
                 //项目布局的赋值
                 item.run {
                     helper.setText(
-                            R.id.item_project_author,
-                            if (author.isNotEmpty()) author else shareUser
+                        R.id.item_project_author,
+                        if (author.isNotEmpty()) author else shareUser
                     )
                     helper.setText(R.id.item_project_title, title.toHtml())
                     helper.setText(R.id.item_project_content, desc.toHtml())
                     helper.setText(
-                            R.id.item_project_type,
-                            "$superChapterName·$chapterName".toHtml()
+                        R.id.item_project_type,
+                        "$superChapterName·$chapterName".toHtml()
                     )
                     helper.setText(R.id.item_project_date, niceDate)
                     if (showTag) {
@@ -99,8 +101,8 @@ class HomeArticleAdapter(data: MutableList<WXArticleContent>?) : BaseDelegateMul
                     }
 //                    helper.getView<CollectView>(R.id.item_project_collect).isChecked = collect
                     Glide.with(context).load(envelopePic)
-                            .transition(DrawableTransitionOptions.withCrossFade(500))
-                            .into(helper.getView(R.id.item_project_imageview))
+                        .transition(DrawableTransitionOptions.withCrossFade(500))
+                        .into(helper.getView(R.id.item_project_imageview))
                 }
 //                helper.getView<CollectView>(R.id.item_project_collect)
 //                        .setOnCollectViewClickListener(object : CollectView.OnCollectViewClickListener {
@@ -123,8 +125,8 @@ class HomeArticleAdapter(data: MutableList<WXArticleContent>?) : BaseDelegateMul
             this.setAnimationWithDefault(BaseQuickAdapter.AnimationType.values()[animMode - 1])
         }
         // 第一步，设置代理
-        setMultiTypeDelegate(object : BaseMultiTypeDelegate<WXArticleContent>() {
-            override fun getItemType(data: List<WXArticleContent>, position: Int): Int {
+        setMultiTypeDelegate(object : BaseMultiTypeDelegate<ArticleModel>() {
+            override fun getItemType(data: List<ArticleModel>, position: Int): Int {
                 return if (TextUtils.isEmpty(data[position].envelopePic)) Article else Project
             }
         })
@@ -134,4 +136,5 @@ class HomeArticleAdapter(data: MutableList<WXArticleContent>?) : BaseDelegateMul
             it.addItemType(Project, R.layout.item_project)
         }
     }
+    
 }

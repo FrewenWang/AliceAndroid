@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.model.ArticleCommonBean;
+import com.frewen.android.demo.logic.model.ArticleModel;
 
 import java.util.List;
 
@@ -21,13 +21,13 @@ import java.util.List;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2020/8/3 19:27
- * Copyright ©2020 Frewen.Wong. All Rights Reserved.
+ *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.CardImageViewHolder> {
     private Context mContext;
-    private List<ArticleCommonBean> articleCommonBeans;
+    private List<ArticleModel> articleCommonBeans;
 
-    public CardImageAdapter(Context mContext, List<ArticleCommonBean> articleBeans) {
+    public CardImageAdapter(Context mContext, List<ArticleModel> articleBeans) {
         this.mContext = mContext;
         this.articleCommonBeans = articleBeans;
     }
@@ -41,11 +41,11 @@ public class CardImageAdapter extends RecyclerView.Adapter<CardImageAdapter.Card
 
     @Override
     public void onBindViewHolder(@NonNull CardImageAdapter.CardImageViewHolder holder, int position) {
-        ArticleCommonBean articleCommonBean = articleCommonBeans.get(position);
+        ArticleModel articleCommonBean = articleCommonBeans.get(position);
 
         holder.articleListTitle.setText(articleCommonBean.getTitle());
         holder.articleListSummary.setText(articleCommonBean.getAuthor());
-        Glide.with(mContext).load(articleCommonBean.getImageUrl()).fitCenter()
+        Glide.with(mContext).load(articleCommonBean.getApkLink()).fitCenter()
                 .into(holder.articleListImg);
 
     }

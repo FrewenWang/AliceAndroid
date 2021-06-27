@@ -1,9 +1,11 @@
 package com.frewen.android.demo.network
 
+import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.android.demo.logic.model.WXArticleContent
 import com.frewen.android.demo.logic.model.WXArticleTitle
 import com.frewen.android.demo.logic.model.wrapper.ApiPagerResponseWrapper
+import com.frewen.network.response.BasePagerResponseData
 import com.frewen.network.response.AuraNetResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -30,7 +32,13 @@ interface NyxApiService {
      * 获取置顶文章集合数据
      */
     @GET("article/top/json")
-    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<WXArticleContent>>
+    suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleModel>>
+    
+    /**
+     * 获取首页的文章数据
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getArticleList(@Path("page") pageNo: Int): AuraNetResponse<BasePagerResponseData<ArrayList<ArticleModel>>>
     
     
     /**
@@ -41,8 +49,8 @@ interface NyxApiService {
     
     @GET("wxarticle/list/{id}/{page}/json")
     suspend fun getWXContentData(
-            @Path("page") pageNo: Int,
-            @Path("id") id: Int
+        @Path("page") pageNo: Int,
+        @Path("id") id: Int
     ): AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>>
     
     

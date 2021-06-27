@@ -2,11 +2,15 @@ package com.frewen.android.demo.logic.samples.course.fragments
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
-import androidx.paging.ItemKeyedDataSource
 import androidx.paging.PagedList
+import com.frewen.android.demo.logic.model.ArticleModel
+import com.frewen.android.demo.logic.model.BannerModel
+import com.frewen.android.demo.logic.model.ListDataStateWrapper
 import com.frewen.android.demo.logic.model.Post
-import com.frewen.aura.framework.mvvm.vm.AbsPagedListViewModel
+import com.frewen.android.demo.network.NyxNetworkApi
+import com.frewen.demo.library.ktx.ext.request
+import com.frewen.demo.library.mvvm.vm.BaseViewModel
+import com.frewen.demo.library.network.ResultState
 import javax.inject.Inject
 
 /**
@@ -19,15 +23,17 @@ import javax.inject.Inject
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class HomeViewModel @Inject constructor() : AbsPagedListViewModel<Post>() {
-
+class HomeViewModel @Inject constructor() : BaseViewModel() {
+    
     /**
      * Kotlin中，我们使用TAG 一般使用伴生对象
      */
     companion object {
         private const val TAG = "HomeViewModel"
     }
-
+    
+    private var pageNo: Int = 0
+    
     /**
      * 由于LiveData和MutableLiveData都是一个概念的东西(只是作用范围不同)所以就不重复解释了,直接理解LiveData就可以明白MutableLiveData
      * 直接理解LiveData的字面意思是前台数据,其实这其实是很准确的表达.下面我们来说说LiveData的几个特征:
@@ -43,64 +49,45 @@ class HomeViewModel @Inject constructor() : AbsPagedListViewModel<Post>() {
      * 3.MutableLiveData则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
      */
     private val cacheLiveData: MutableLiveData<PagedList<Post>> = MutableLiveData()
-
-    private var mFeedType: String? = null
-
+    
+    //首页轮播图数据
+    var bannerData: MutableLiveData<ResultState<ArrayList<BannerModel>>> = MutableLiveData()
+    
+    //首页文章列表数据
+    var homeDataState: MutableLiveData<ListDataStateWrapper<ArticleModel>> = MutableLiveData()
+    
     /**
-     * 是否是缓存的标志变量
+     * 获取首页的轮播图数据
      */
-    @Volatile
-    private var withCache: Boolean = false
-
-
-    fun getCacheLiveData(): MutableLiveData<PagedList<Post>> {
-        return cacheLiveData
+    fun getBannerData() {
+        Log.d(TAG, "getBannerData() called")
+        request({ NyxNetworkApi.instance.getBanner() }, bannerData)
     }
-
-    fun setFeedType(feedType: String?) {
-        mFeedType = feedType
-    }
-
+    
     /**
-     * 创建PagedList的DataSource
+     * 获取首页文章列表数据
+     * @param isRefresh 是否是刷新，即第一页
      */
-    override fun createDataSource(): DataSource<Int, Post> {
-        return PostDataSource()
+    fun getHomeData(isRefresh: Boolean) {
+        Log.d(TAG, "getHomeData() called with: isRefresh = $isRefresh")
+        if (isRefresh) {
+            pageNo = 0
+        }
+        
+        request({ NyxNetworkApi.instance.getHomeData(pageNo) }, {
+            //请求成功
+            pageNo++
+            val listDataUiState = ListDataStateWrapper(
+                isSuccess = true,
+                isRefresh = isRefresh,
+                isEmpty = it.isEmpty(),
+                hasMore = it.hasMoreData(),
+                isFirstEmpty = isRefresh && it.isEmpty(),
+                listData = it.dataList
+            )
+            homeDataState.value = listDataUiState
+        })
+        
     }
-
-    /**
-     *
-     */
-    inner class PostDataSource : ItemKeyedDataSource<Int, Post>() {
-        override fun getKey(item: Post): Int {
-            return item.id
-        }
-
-        override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Post>) {
-            Log.d(Companion.TAG, "loadInitial() called with: params = $params, callback = $callback")
-            // 进行ViewModel里面页面逻辑实现的数据请求
-            loadData(0, params.requestedLoadSize, callback)
-            withCache = false
-        }
-
-        override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Post>) {
-            Log.d(TAG, "loadAfter() called with: params = $params, callback = $callback")
-            loadData(params.key, params.requestedLoadSize, callback as LoadInitialCallback<Post>)
-        }
-
-        override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Post>) {
-            Log.d(TAG, "loadBefore() called with: params = $params, callback = $callback")
-            callback.onResult(emptyList<Any>() as MutableList<Post>)
-        }
-
-    }
-
-
-    /**
-     * ViewModel里面进行数据的逻辑请求的具体方法
-     */
-    private fun loadData(key: Int, requestedLoadSize: Int, callback: ItemKeyedDataSource.LoadInitialCallback<Post>) {
-
-
-    }
+    
 }

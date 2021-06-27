@@ -12,9 +12,9 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 fun RecyclerView.init(
-        layoutManger: RecyclerView.LayoutManager,
-        bindAdapter: RecyclerView.Adapter<*>,
-        isScroll: Boolean = true
+    layoutManger: RecyclerView.LayoutManager,
+    bindAdapter: RecyclerView.Adapter<*>,
+    isScroll: Boolean = true
 ): RecyclerView {
     layoutManager = layoutManger
     setHasFixedSize(true)
@@ -23,10 +23,13 @@ fun RecyclerView.init(
     return this
 }
 
+/**
+ *
+ */
 fun SwipeRecyclerView.init(
-        layoutManger: RecyclerView.LayoutManager,
-        bindAdapter: RecyclerView.Adapter<*>,
-        isScroll: Boolean = true
+    layoutManger: RecyclerView.LayoutManager,
+    bindAdapter: RecyclerView.Adapter<*>,
+    isScroll: Boolean = true
 ): SwipeRecyclerView {
     layoutManager = layoutManger
     setHasFixedSize(true)

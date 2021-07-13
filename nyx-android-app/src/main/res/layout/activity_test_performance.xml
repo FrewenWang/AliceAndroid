@@ -7,17 +7,16 @@
     tools:context="com.frewen.android.demo.performance.TestPerformanceActivity">
 
 
-    <Button
-        android:id="@+id/button34"
+    <TextView
+        android:id="@+id/tv_test_performance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/actionBarSize"
-        android:onClick="enterPerformancePage"
-        android:text="测试页面"
+        android:text="Android性能优化"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="153dp"
-        tools:layout_editor_absoluteY="66dp" />
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </TextView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

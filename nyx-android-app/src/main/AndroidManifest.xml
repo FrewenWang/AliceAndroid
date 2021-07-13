@@ -42,11 +42,10 @@
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme"
         tools:replace="android:allowBackup">
+        <activity android:name=".performance.PerformanceActivity"></activity>
         <activity
             android:name=".logic.samples.view.TranslucentActivity"
-            android:theme="@style/TransparentTheme">
-
-        </activity>
+            android:theme="@style/TransparentTheme"></activity>
         <activity android:name=".logic.samples.AnimationDrawableActivity" />
         <activity android:name=".logic.samples.media.camera2.Camera2Activity" />
         <activity android:name=".logic.samples.opencv.TesseractActivity" />
@@ -74,7 +73,7 @@
             android:theme="@style/NyxAppMaterialTheme.NoActionBar" />
         <activity android:name=".error.ErrorActivity" />
         <activity android:name=".logic.samples.net.ProtobufActivity" />
-        <activity android:name=".performance.PerformanceActivity" />
+        <activity android:name=".performance.TestPerformanceActivity" />
         <activity android:name=".logic.samples.view.recyclerview.AdapterSampleActivity" />
         <activity android:name=".logic.samples.view.recyclerview.AnimatorSampleActivity" />
         <activity android:name=".logic.samples.designpattern.chainresponsibility.ChainResponsibilityActivity" />

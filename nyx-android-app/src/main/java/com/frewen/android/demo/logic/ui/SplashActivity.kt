@@ -11,15 +11,6 @@ import android.view.animation.*
 import android.widget.ImageView
 import butterknife.BindView
 import com.frewen.android.demo.R
-import com.frewen.android.demo.logic.main.MainPageActivity
-import com.frewen.android.demo.logic.samples.AnimationDrawableActivity
-import com.frewen.android.demo.logic.samples.androidapi.ActivityDemoActivity
-import com.frewen.android.demo.logic.samples.animation.AnimationDemoActivity
-import com.frewen.android.demo.logic.samples.jni.HelloJNIActivity
-import com.frewen.android.demo.logic.samples.media.camera2.Camera2Activity
-import com.frewen.android.demo.logic.samples.network.aura.AuraNetWorkDemoActivity
-import com.frewen.android.demo.logic.samples.opencv.OpenCVActivity
-import com.frewen.android.demo.logic.samples.view.ViewDemoActivity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.android.demo.performance.PerformanceActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
@@ -64,7 +55,7 @@ class SplashActivity : BaseButterKnifeActivity() {
     
     private fun startHomeActivity() {
         // When animation set ended, intent to the MainActivity.
-        val intent = Intent(this@SplashActivity, WelcomeActivity::class.java)
+        val intent = Intent(this@SplashActivity, PerformanceActivity::class.java)
         startActivity(intent)
     }
     

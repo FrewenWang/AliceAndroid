@@ -4,11 +4,15 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ScaleGestureDetector;
 
+import com.frewen.android.demo.logic.samples.opengles.OpenGLESDemoActivity;
 import com.frewen.android.demo.logic.samples.opengles.render.MyNativeRender;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+
+import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRender.SAMPLE_TYPE;
 
 /**
  * @filename: OpenGLESSurfaceView
@@ -27,29 +31,43 @@ public class OpenGLESSurfaceView extends GLSurfaceView {
     public static final int IMAGE_FORMAT_I420 = 0x04;
 
     private MyGLRender mGLRender;
-    private MyNativeRender mNativeRender;
+    private int mRatioWidth;
+    private int mRatioHeight;
 
-    public OpenGLESSurfaceView(Context context) {
-        this(context, null);
+    public OpenGLESSurfaceView(OpenGLESDemoActivity context, MyGLRender glRender) {
+        this(context, glRender, null);
     }
 
-    public OpenGLESSurfaceView(Context context, AttributeSet attrs) {
+    public OpenGLESSurfaceView(Context context, MyGLRender glRender, AttributeSet attrs) {
         super(context, attrs);
         // TODO API 含义？
-        this.setEGLContextClientVersion(3);
-        mNativeRender = new MyNativeRender();
-
-        mGLRender = new MyGLRender(mNativeRender);
+        this.setEGLContextClientVersion(2);
+        mGLRender = glRender;
+        /*If no setEGLConfigChooser method is called,
+        then by default the view will choose an RGB_888 surface with a depth buffer depth of at least 16 bits.*/
+        setEGLConfigChooser(8, 8, 8, 8, 16, 8);
         setRenderer(mGLRender);
-        setRenderMode(RENDERMODE_CONTINUOUSLY);
+        setRenderMode(RENDERMODE_WHEN_DIRTY);
     }
+
+    public void setAspectRatio(int width, int height) {
+        Log.d(TAG, "FMsg:setAspectRatio() called with: width: " + width + ", height: " + height + "");
+        if (width < 0 || height < 0) {
+            throw new IllegalArgumentException("Size cannot be negative.");
+        }
+        mRatioWidth = width;
+        mRatioHeight = height;
+        requestLayout();
+    }
+
 
     public static class MyGLRender implements Renderer {
 
         private MyNativeRender mNativeRender;
+        private int mSampleType;
 
-        MyGLRender(MyNativeRender myNativeRender) {
-            mNativeRender = myNativeRender;
+        public MyGLRender() {
+            mNativeRender = new MyNativeRender();
         }
 
         @Override
@@ -66,8 +84,23 @@ public class OpenGLESSurfaceView extends GLSurfaceView {
 
         @Override
         public void onDrawFrame(GL10 gl) {
-            Log.d(TAG, "FMsg:onDrawFrame  with: gl: " + gl + "");
+            // Log.d(TAG, "FMsg:onDrawFrame  with: gl: " + gl + "");
             mNativeRender.native_OnDrawFrame();
+        }
+
+        public void init() {
+            mNativeRender.native_OnInit();
+        }
+
+        public void unInit() {
+            mNativeRender.native_OnUnInit();
+        }
+
+        public void setParamsInt(int paramType, int value0, int value1) {
+            if (paramType == SAMPLE_TYPE) {
+                mSampleType = value0;
+            }
+            mNativeRender.native_SetParamsInt(paramType, value0, value1);
         }
     }
 }

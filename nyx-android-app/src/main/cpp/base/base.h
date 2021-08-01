@@ -7,6 +7,7 @@
 
 #include <android/log.h>
 #include <jni.h>
+#include <sys/time.h>
 
 #define LOG_TAG "AURA_JNI"
 

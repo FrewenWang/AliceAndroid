@@ -23,10 +23,8 @@ JNIEXPORT jstring JNICALL   //
 Java_com_frewen_android_demo_logic_samples_jni_HelloJNIActivity_stringFromJNI(JNIEnv *env,
                                                                               jobject /* this */) {
     // 实例化一个Hello的字符串
-    // std::string hello = "Hello from C++";
-    // 我们这个HelloJni和Native的People关联之后，我们就可以访问C++的代码
-    People people;
-    return env->NewStringUTF(people.getStringMsg().c_str());
+    std::string hello = "Hello from C++";
+    return env->NewStringUTF(hello.c_str());
 }
 
 /**
@@ -39,7 +37,8 @@ Java_com_frewen_android_demo_logic_samples_jni_HelloJNIActivity_stringFromJNI(JN
  */
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_frewen_android_demo_logic_samples_jni_HelloJNIActivity_stringFromJNI2(JNIEnv *env, jobject thiz,
+Java_com_frewen_android_demo_logic_samples_jni_HelloJNIActivity_stringFromJNI2(JNIEnv *env,
+                                                                               jobject thiz,
                                                                                jstring msg) {
     const char *str = env->GetStringUTFChars(msg, 0);
 

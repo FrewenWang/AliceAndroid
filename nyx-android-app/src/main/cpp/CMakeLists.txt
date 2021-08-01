@@ -19,7 +19,6 @@ message(${msg})
 message(${CMAKE_CURRENT_LIST_FILE})
 message(${CMAKE_CURRENT_LIST_DIR})
 
-
 # 由于People是在people的二级目录下，如果我们想要在全局的搜索路径进行搜索
 # 我们就需要放到全局的搜索路径下面，使用下面：
 include_directories(people/)
@@ -63,31 +62,53 @@ add_library(
         base/jvm.cpp
 )  # 库关联所有的源文件
 
+# 引用NDK中的库log，命名为log-lib。用于在安卓系统中查找一些动态库
+# find_library这个函数的意思是给系统的log库起个别名，命名为log-lib。
+# log-lib: 库路径对应的变量名
+# log: 指的是原生NDK中的对应库名
+find_library(log-lib log)
 
 
 # ================OpenGL ES的Native库，通过add_library会再生成一个jni的SO==========================
-add_library(
-        # 设置库的名字。Java层调用可以使用：System.loadLibrary("nyx-opengles-lib");
-        nyx-opengles-lib
+file(GLOB opengl-src-files
+        ${CMAKE_SOURCE_DIR}/jni/jni_nyx_opengl_es.cpp
+        ${CMAKE_SOURCE_DIR}/opengl/*.cpp
+        ${CMAKE_SOURCE_DIR}/opengl/samples/*.cpp)
+# 设置库的名字。Java层调用可以使用：System.loadLibrary("nyx-opengles-lib");
+# 库的类型 共享库（动态）库、如果是STATIC的话，就是静态库
+add_library(nyx-opengles-jni
         # Sets the library as a shared library.
-        SHARED                          #库的类型 共享库（动态）库、如果是STATIC的话，就是静态库
-        opengles/hello_opengl_es.cpp    # 库关联所有的源文件
-)
+        SHARED
+        ${opengl-src-files})
 
 
-# 引用NDK中的库log，命名为log-lib。用于在安卓系统中查找一些动态库
-find_library( # Sets the name of the path variable.
-        log-lib  #库路径对应的变量名
-        log)   #NDK中的库名
-
-
-# 关联库(链接库)，确保hello-jni中 能使用log库。
-# 我们将我们的hello-jni和poeple-jni的链接库进行关联起来
 target_link_libraries( # Specifies the target library.
         hello-jni
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib}
+        android)
+
+target_link_libraries( # Specifies the target library.
         poeple-jni
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib}
+        android)
+
+target_link_libraries( # Specifies the target library.
         dynamic-register-jni
         # Links the target library to the log library
         # included in the NDK.
-        ${log-lib})
+        ${log-lib}
+        android)
 
+# 由于我们是需要调试OpenGLES3的Demo。所以我们需要链接EGL、GLESv3的动态链接库
+target_link_libraries( # Specifies the target library.
+        nyx-opengles-jni
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib}
+        EGL
+        GLESv3
+        android)

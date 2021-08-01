@@ -11,6 +11,7 @@ import android.view.animation.*
 import android.widget.ImageView
 import butterknife.BindView
 import com.frewen.android.demo.R
+import com.frewen.android.demo.logic.samples.opengles.OpenGLESDemoActivity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.android.demo.performance.PerformanceActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
@@ -55,7 +56,7 @@ class SplashActivity : BaseButterKnifeActivity() {
     
     private fun startHomeActivity() {
         // When animation set ended, intent to the MainActivity.
-        val intent = Intent(this@SplashActivity, PerformanceActivity::class.java)
+        val intent = Intent(this@SplashActivity, OpenGLESDemoActivity::class.java)
         startActivity(intent)
     }
     

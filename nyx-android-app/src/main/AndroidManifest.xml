@@ -42,10 +42,13 @@
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".performance.PerformanceActivity"></activity>
+        <activity
+            android:name=".logic.samples.opengles.OpenGLESDemoActivity"
+            android:exported="true" />
+        <activity android:name=".performance.PerformanceActivity" />
         <activity
             android:name=".logic.samples.view.TranslucentActivity"
-            android:theme="@style/TransparentTheme"></activity>
+            android:theme="@style/TransparentTheme" />
         <activity android:name=".logic.samples.AnimationDrawableActivity" />
         <activity android:name=".logic.samples.media.camera2.Camera2Activity" />
         <activity android:name=".logic.samples.opencv.TesseractActivity" />

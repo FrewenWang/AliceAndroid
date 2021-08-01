@@ -64,6 +64,17 @@ add_library(
 )  # 库关联所有的源文件
 
 
+
+# ================OpenGL ES的Native库，通过add_library会再生成一个jni的SO==========================
+add_library(
+        # 设置库的名字。Java层调用可以使用：System.loadLibrary("nyx-opengles-lib");
+        nyx-opengles-lib
+        # Sets the library as a shared library.
+        SHARED                          #库的类型 共享库（动态）库、如果是STATIC的话，就是静态库
+        opengles/hello_opengl_es.cpp    # 库关联所有的源文件
+)
+
+
 # 引用NDK中的库log，命名为log-lib。用于在安卓系统中查找一些动态库
 find_library( # Sets the name of the path variable.
         log-lib  #库路径对应的变量名

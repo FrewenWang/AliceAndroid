@@ -59,7 +59,6 @@ import butterknife.BindView;
  * 6、其他操作符相关
  * 如Func1...N 的变化，现在同样用Consumer和BiConsumer对Action1 和Action2进行了替换。
  * 后面的Action都被替换了，只保留了ActionN。
- *
  */
 public class RxJava2Activity extends BaseButterKnifeActivity {
     @BindView(R.id.home_toolbar)

@@ -82,10 +82,10 @@ add_library(nyx-opengles-jni
         ${opengl-src-files})
 
 
+# ==========================下面是进行链接库的依赖=================================================
+# 指定目标库进行连接：执行目标库为hello-jni.需要链接android log-lib模块
 target_link_libraries( # Specifies the target library.
         hello-jni
-        # Links the target library to the log library
-        # included in the NDK.
         ${log-lib}
         android)
 
@@ -103,11 +103,10 @@ target_link_libraries( # Specifies the target library.
         ${log-lib}
         android)
 
-# 由于我们是需要调试OpenGLES3的Demo。所以我们需要链接EGL、GLESv3的动态链接库
-target_link_libraries( # Specifies the target library.
+# 指定目标库进行连接：执行目标库为nyx-opengles-jni.需要链接android log-lib模块
+# 由于我们是需要调试OpenGLES3的Demo。所以我们还需要链接EGL、GLESv3的动态链接库
+target_link_libraries(
         nyx-opengles-jni
-        # Links the target library to the log library
-        # included in the NDK.
         ${log-lib}
         EGL
         GLESv3

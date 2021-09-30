@@ -1,5 +1,6 @@
 package com.frewen.android.demo.logic.samples.rxjava2.usecase;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -69,70 +70,64 @@ public class RxNetSingleActivity extends BaseToolBarActivity {
     }
 
 
+    @SuppressLint("CheckResult")
     @OnClick(R.id.rx_operators_btn)
     public void onViewClicked() {
-        Observable
-                .create(new ObservableOnSubscribe<Response>() {
-                    @Override
-                    public void subscribe(ObservableEmitter<Response> emitter) throws Exception {
-                        Log.e(TAG, "网络请求开始执行:" + Thread.currentThread().getName() + "\n");
-                        Request.Builder builder = new Request.Builder()
-                                .url("http://www.kuaidi100.com/query?type=yuantong&postid=11111111111")
-                                .get();
-                        Request request = builder.build();
-                        Call call = new OkHttpClient().newCall(request);
-                        /// 进行同步的网络请求
-                        Response response = call.execute();
-                        Log.e(TAG, "网络请求开始执行:" + Thread.currentThread().getName() + "   Response : ");
-                        // 通过发射器来进行发射
-                        emitter.onNext(response);
+        Observable.create(new ObservableOnSubscribe<Response>() {
+            @Override
+            public void subscribe(ObservableEmitter<Response> emitter) throws Exception {
+                Log.e(TAG, "网络请求开始执行:" + Thread.currentThread().getName() + "\n");
+                Request.Builder builder = new Request.Builder()
+                        .url("http://www.kuaidi100.com/query?type=yuantong&postid=11111111111")
+                        .get();
+                Request request = builder.build();
+                Call call = new OkHttpClient().newCall(request);
+                /// 进行同步的网络请求
+                Response response = call.execute();
+                Log.e(TAG, "网络请求开始执行:" + Thread.currentThread().getName() + "   Response : ");
+                // 通过发射器来进行发射
+                emitter.onNext(response);
+            }
+        }).map(new Function<Response, ExpressInfo>() {
+            @Override
+            public ExpressInfo apply(Response response) throws Exception {
+                Log.e(TAG, "Map中间结果进行处理:" + Thread.currentThread().getName() + "\n");
+                if (response.isSuccessful()) {
+                    ResponseBody body = response.body();
+                    if (body != null) {
+                        Log.e(TAG, "map:转换前:" + body);
+                        return new Gson().fromJson(body.string(), ExpressInfo.class);
                     }
-                })
-                .map(new Function<Response, ExpressInfo>() {
-                    @Override
-                    public ExpressInfo apply(Response response) throws Exception {
-                        Log.e(TAG, "Map中间结果进行处理:" + Thread.currentThread().getName() + "\n");
-                        if (response.isSuccessful()) {
-                            ResponseBody body = response.body();
-                            if (body != null) {
-                                Log.e(TAG, "map:转换前:" + body);
-                                return new Gson().fromJson(body.string(), ExpressInfo.class);
-                            }
-                        }
-                        return null;
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(new Consumer<ExpressInfo>() {
-                    @Override
-                    public void accept(@NonNull ExpressInfo s) throws Exception {
-                        Log.e(TAG, "doOnNext逻辑开始处理 线程:" + Thread.currentThread().getName() + "\n");
-                        mRxOperatorsText.append("\ndoOnNext 线程:" + Thread.currentThread().getName() + "\n");
-                        Log.e(TAG, "doOnNext: 保存成功：" + s.toString() + "\n");
-                        mRxOperatorsText.append("doOnNext: 保存成功：" + s.toString() + "\n");
+                }
+                return null;
+            }
+        }).observeOn(AndroidSchedulers.mainThread()).doOnNext(new Consumer<ExpressInfo>() {
+            @Override
+            public void accept(@NonNull ExpressInfo s) throws Exception {
+                Log.e(TAG, "doOnNext逻辑开始处理 线程:" + Thread.currentThread().getName() + "\n");
+                mRxOperatorsText.append("\ndoOnNext 线程:" + Thread.currentThread().getName() + "\n");
+                Log.e(TAG, "doOnNext: 保存成功：" + s.toString() + "\n");
+                mRxOperatorsText.append("doOnNext: 保存成功：" + s.toString() + "\n");
 
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ExpressInfo>() {
-                    @Override
-                    public void accept(@NonNull ExpressInfo data) throws Exception {
-                        Log.e(TAG, "subscribe 线程:" + Thread.currentThread().getName() + "\n");
-                        mRxOperatorsText.append("\nsubscribe 线程:" + Thread.currentThread().getName() + "\n");
-                        Log.e(TAG, "成功:" + data.toString() + "\n");
-                        mRxOperatorsText.append("成功:" + data.toString() + "\n");
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(@NonNull Throwable throwable) throws Exception {
-                        Log.e(TAG, "subscribe 线程:" + Thread.currentThread().getName() + "\n");
-                        mRxOperatorsText.append("\nsubscribe 线程:" + Thread.currentThread().getName() + "\n");
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<ExpressInfo>() {
+            @Override
+            public void accept(@NonNull ExpressInfo data) throws Exception {
+                Log.e(TAG, "subscribe 线程:" + Thread.currentThread().getName() + "\n");
+                mRxOperatorsText.append("\nsubscribe 线程:" + Thread.currentThread().getName() + "\n");
+                Log.e(TAG, "成功:" + data.toString() + "\n");
+                mRxOperatorsText.append("成功:" + data.toString() + "\n");
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(@NonNull Throwable throwable) throws Exception {
+                Log.e(TAG, "subscribe 线程:" + Thread.currentThread().getName() + "\n");
+                mRxOperatorsText.append("\nsubscribe 线程:" + Thread.currentThread().getName() + "\n");
 
-                        Log.e(TAG, "失败：" + throwable.getMessage() + "\n");
-                        mRxOperatorsText.append("失败：" + throwable.getMessage() + "\n");
-                    }
-                });
+                Log.e(TAG, "失败：" + throwable.getMessage() + "\n");
+                mRxOperatorsText.append("失败：" + throwable.getMessage() + "\n");
+            }
+        });
 
     }
 

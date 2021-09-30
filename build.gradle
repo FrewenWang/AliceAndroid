@@ -38,7 +38,7 @@ buildscript {
 
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
         // Navigation开源框架，应用Fragment的安全的参数传递
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2"
         // 导入Chaquopy框架的包

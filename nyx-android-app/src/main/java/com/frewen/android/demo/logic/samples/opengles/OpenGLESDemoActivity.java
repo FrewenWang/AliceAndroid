@@ -87,6 +87,7 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
     private Toolbar mToolBar;
     private ViewGroup mRootView;
     private OpenGLESSurfaceView mGLSurfaceView;
+    private AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,18 +106,15 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
     private void initToolBar() {
         mToolBar.setBackgroundColor(R.color.color_white_alpha10);
         mToolBar.inflateMenu(R.menu.menu_opengl_es);
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_opengl_es_check:
-                showOpenGLSampleDialog();
-                break;
-        }
-        return true;
+        mToolBar.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            switch (id) {
+                case R.id.action_opengl_es_check:
+                    showOpenGLSampleDialog();
+                    break;
+            }
+            return true;
+        });
     }
 
     @Override
@@ -132,30 +130,25 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        /**
-         * Once the EGL context gets destroyed all the GL buffers etc will get destroyed with it,
-         * so this is unnecessary.
-         * */
         mGLRender.unInit();
     }
-
 
     private void showOpenGLSampleDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         final View rootView = inflater.inflate(R.layout.layout_action_bar_menu_list, null);
-        final AlertDialog dialog = builder.create();
-
+        mDialog = builder.create();
+        // Dialog的布局中的确认按钮
         Button confirmBtn = rootView.findViewById(R.id.confirm_btn);
-        confirmBtn.setOnClickListener(v -> dialog.cancel());
+        confirmBtn.setOnClickListener(v -> mDialog.cancel());
 
+        /// 设置Dialog的列表布局
         final RecyclerView resolutionsListView = rootView.findViewById(R.id.resolution_list_view);
         final OpenGLESAdapter openGLESAdapter = new OpenGLESAdapter(this, Arrays.asList(SAMPLE_TITLES));
         openGLESAdapter.setSelectIndex(mSampleSelectedIndex);
         openGLESAdapter.setOnItemClickListener((view, position) -> {
             mRootView.removeView(mGLSurfaceView);
             addGLSurfaceView();
-
             int selectIndex = openGLESAdapter.getSelectIndex();
             openGLESAdapter.setSelectIndex(position);
             openGLESAdapter.notifyItemChanged(selectIndex);
@@ -168,30 +161,23 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
                 mGLSurfaceView.setAspectRatio(mRootView.getWidth(), mRootView.getHeight());
             }
 
-            mGLRender.setParamsInt(SAMPLE_TYPE, position + SAMPLE_TYPE, 0);
-
-            int sampleType = position + SAMPLE_TYPE;
-            switch (sampleType) {
+            int samplePosition = position + SAMPLE_TYPE;
+            switch (samplePosition) {
                 case SAMPLE_TYPE_TRIANGLE:
+                    mGLRender.setParamsInt(SAMPLE_TYPE, samplePosition, 0);
                     break;
             }
-
             mGLSurfaceView.requestRender();
-
-            dialog.cancel();
-
+            mDialog.cancel();
         });
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         resolutionsListView.setLayoutManager(manager);
-
         resolutionsListView.setAdapter(openGLESAdapter);
         resolutionsListView.scrollToPosition(mSampleSelectedIndex);
-
-
-        Objects.requireNonNull(dialog.getWindow()).setContentView(rootView);
-        dialog.show();
+        mDialog.show();
+        mDialog.getWindow().setContentView(rootView);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.frewen.android.demo.logic.samples.rxjava2.operators;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +39,7 @@ public class RxFilterActivity extends BaseToolBarActivity {
          */
         Observable.just(1, 20, 65, -5, 7, 19)
                 .filter(new Predicate<Integer>() {
+                    @SuppressLint("CheckResult")
                     @Override
                     public boolean test(Integer integer) throws Exception {
                         /// 进行条件判断。如果integer他大于0 说明符合条件，然后返回True

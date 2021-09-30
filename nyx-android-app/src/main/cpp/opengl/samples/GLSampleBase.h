@@ -7,7 +7,11 @@
 
 #include <GLES3/gl3.h>
 
+/**
+ * OpenGLES的实例的基类
+ */
 class GLSampleBase {
+
 public:
     GLSampleBase() {
 

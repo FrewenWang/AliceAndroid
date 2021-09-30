@@ -43,9 +43,12 @@
         android:theme="@style/NyxAppMaterialTheme"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".logic.samples.rxjava2.usecase.RxSubjectActivity"
+            android:exported="true" />
+        <activity
             android:name=".logic.samples.opengles.OpenGLESDemoActivity"
             android:exported="true" />
-        <activity android:name=".performance.PerformanceActivity" />
+        <activity android:name=".performance.TestAuraPerfGuardActivity" />
         <activity
             android:name=".logic.samples.view.TranslucentActivity"
             android:theme="@style/TransparentTheme" />

@@ -216,11 +216,8 @@ dependencies {
     //==========</editor-folder desc = "Dependence:添加单元测试相关的依赖">============================
 
     //==============<editor-folder desc = "Dependence:ConstraintLayout依赖">=========================
-    // https://developer.android.google.cn/training/constraint-layout?hl=zh_cn
-    // https://developer.android.google.cn/reference/androidx/constraintlayout/widget/ConstraintLayout
-    // 2.0集成了MotionLayout
-    implementation "androidx.constraintlayout:constraintlayout:2.0.2"
-    //==============</editor-folder desc = "Dependence:ConstraintLayout依赖">=========================
+    implementation dep.constraintlayout
+    //==============</editor-folder desc = "Dependence:ConstraintLayout依赖">========================
 
     //======<editor-folder desc = "Dependence:性能监控方面的依赖">====================================
     //======<editor-folder desc = "Dependence:Android Performance Monitor依赖">======================

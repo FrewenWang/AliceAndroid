@@ -18,6 +18,8 @@ public:
 
     static NyxOpenGLRenderContext *instance();
 
+    void setImageData(int format, int width, int height, uint8_t *pData);
+
     /**
      * 上层GLSurfaceView的create()
      */

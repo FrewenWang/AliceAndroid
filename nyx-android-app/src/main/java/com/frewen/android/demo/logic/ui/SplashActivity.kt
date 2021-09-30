@@ -12,8 +12,8 @@ import android.widget.ImageView
 import butterknife.BindView
 import com.frewen.android.demo.R
 import com.frewen.android.demo.logic.samples.opengles.OpenGLESDemoActivity
+import com.frewen.android.demo.logic.samples.rxjava2.RxJava2Activity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
-import com.frewen.android.demo.performance.PerformanceActivity
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
 import com.frewen.aura.toolkits.common.ResourcesUtils
 import com.frewen.aura.toolkits.common.SharedPrefUtils
@@ -68,16 +68,16 @@ class SplashActivity : BaseButterKnifeActivity() {
         // 一个onCreate里面不能两次调用super.onCreate。否则会报Already attached异常
         //super.onCreate(savedInstanceState);
         //去除标题栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        //去除状态栏
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        // Make sure this is before calling super.onCreate
-        // 我们在清单文件里面设置的启动的透明主题，来减少白屏，但是在Activity启动之后，我们要设置回来
-        // 我们可以通过代码来设置主题。我们通过设置透明主题,来减少白屏
-        setTheme(R.style.NyxAppMaterialTheme)
+//        requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        //去除状态栏
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        )
+//        // Make sure this is before calling super.onCreate
+//        // 我们在清单文件里面设置的启动的透明主题，来减少白屏，但是在Activity启动之后，我们要设置回来
+//        // 我们可以通过代码来设置主题。我们通过设置透明主题,来减少白屏
+//        setTheme(R.style.NyxAppMaterialTheme)
         super.onCreate(savedInstanceState)
         
     }

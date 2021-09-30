@@ -7,6 +7,9 @@
 
 #include "GLSampleBase.h"
 
+/**
+ * 心型的实例
+ */
 class BeatingHeartSample : public GLSampleBase {
 public:
     BeatingHeartSample();

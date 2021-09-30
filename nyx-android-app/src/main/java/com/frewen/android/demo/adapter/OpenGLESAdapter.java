@@ -40,7 +40,7 @@ public class OpenGLESAdapter extends RecyclerView.Adapter<OpenGLESAdapter.MyView
     @NotNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_action_bar_menu_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_action_bar_menu_list, parent, false);
         MyViewHolder myViewHolder = new MyViewHolder(view);
         view.setOnClickListener(this);
         return myViewHolder;

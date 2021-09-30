@@ -62,7 +62,6 @@ public class OpenGLESSurfaceView extends GLSurfaceView {
 
 
     public static class MyGLRender implements Renderer {
-
         private MyNativeRender mNativeRender;
         private int mSampleType;
 

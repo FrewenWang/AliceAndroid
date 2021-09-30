@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingRight="16dp">
 
@@ -23,7 +22,7 @@
             android:button="@null"
             android:checked="true"
             android:gravity="center"
-            android:text="Select Sample"
+            android:text="选择OpenGLES的样例"
             android:textColor="@color/colorAccent" />
     </RadioGroup>
 

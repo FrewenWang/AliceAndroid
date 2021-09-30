@@ -32,11 +32,16 @@ ext {
     //ui
     flexboxVersion = '0.2.6'
 
+    constraintlayout_version = '2.0.4'
+
     //RxJava RxAndroid dependencies
     rxJavaVersion = '1.1.0'
     rxAndroidVersion = '1.1.0'
     rxJava2Version = '2.2.12'
     rxAndroid2Version = '2.1.1'
+    rxJava3Version = '3.0.0'
+    rxAndroid3Version = '3.0.0'
+
     // Butterknife Version
     butterknifeVersion = '10.2.0'
     stethoVersion = '1.5.0'
@@ -101,6 +106,8 @@ ext {
             rxandroid                : "io.reactivex:rxandroid:$rxAndroidVersion",
             rxjava2                  : "io.reactivex.rxjava2:rxjava:$rxJava2Version",
             rxandroid2               : "io.reactivex.rxjava2:rxandroid:$rxAndroid2Version",
+            rxJava3                  : "io.reactivex.rxjava3:rxjava:$rxJava3Version",
+            rxAndroid3               : "io.reactivex.rxjava3:rxandroid:$rxAndroid3Version",
             //===========================================ButterKnife================================
             butterknife              : "com.jakewharton:butterknife:$butterknifeVersion",
             butterknifeCompiler      : "com.jakewharton:butterknife-compiler:$butterknifeVersion",
@@ -131,6 +138,14 @@ ext {
             //======================================================================================
             //用于方便调试性能问题的打印插件。给访法加上@DebugLog，就能输出该方法的调用参数，以及执行时间；
             hugo                     : "com.jakewharton.hugo:hugo-plugin:1.2.1",
+
+
+            //=================<editor-folder desc = "Dependence:Android系统控件依赖">===============
+            // https://developer.android.google.cn/training/constraint-layout?hl=zh_cn
+            // https://developer.android.google.cn/reference/androidx/constraintlayout/widget/ConstraintLayout
+            // 2.0集成了MotionLayout
+            constraintlayout         : "androidx.constraintlayout:constraintlayout:$constraintlayout_version",
+            //=================</editor-folder desc = "Dependence:Android系统控件依赖">==============
 
             //=================<editor-folder desc = "Dependence:MaterialDesign材料设计">============
             material                 : "com.google.android.material:material:$material_version",

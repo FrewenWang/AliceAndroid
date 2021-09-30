@@ -8,6 +8,7 @@ import android.os.Trace;
 
 import com.androidnetworking.AndroidNetworking;
 import com.frewen.android.demo.app.helper.KeepAliveHelper;
+import com.frewen.android.demo.app.helper.StrictModeHelper;
 import com.frewen.android.demo.app.taskstarter.BuglyInitTask;
 import com.frewen.android.demo.app.taskstarter.DexposedInitTask;
 import com.frewen.android.demo.app.taskstarter.LoadStateServiceTask;
@@ -24,6 +25,9 @@ import com.frewen.android.demo.logic.ui.SplashActivity;
 import com.frewen.aura.framework.app.BaseMVPApp;
 import com.frewen.aura.framework.taskstarter.ModuleProvider;
 import com.frewen.aura.framework.taskstarter.LaunchTaskDispatcher;
+import com.frewen.aura.perfguard.core.AuraPerfGuard;
+import com.frewen.aura.perfguard.core.PerfGuardConfig;
+import com.frewen.aura.perfguard.core.engine.cpu.CpuConfig;
 import com.frewen.aura.toolkits.concurrent.ThreadFactoryImpl;
 import com.frewen.aura.toolkits.core.AuraToolKits;
 import com.frewen.network.api.BaseApiService;
@@ -188,11 +192,23 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
      * 初始化性能监控的相关逻辑检测器
      */
     private void initPerformanceDetector() {
-        initBlockCanary();
-        initAnrWatchDog();
+        // initBlockCanary();
+        // initAnrWatchDog();
         // StrictModeHelper.init();
         // 初始化Bugly
         // initBugly();
+
+        initAuraPerfGuard();
+    }
+
+    /**
+     * 初始化AuraPerfGuard性能监控工具
+     */
+    private void initAuraPerfGuard() {
+        PerfGuardConfig config = new PerfGuardConfig.Builder()
+                .setCpuConfig(new CpuConfig())
+                .build();
+        AuraPerfGuard.instance().init(this, config);
     }
 
     private void initAnrWatchDog() {

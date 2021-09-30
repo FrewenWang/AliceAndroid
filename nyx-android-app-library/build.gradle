@@ -53,6 +53,8 @@ dependencies {
         api project(path: ':aura-network')
         api project(path: ':aura-ui')
         api project(path: ':aura-toolkits')
+        api project(path: ':aura-logger')
+        api project(path: ':aura-perf-guard-core')
     } else {
         api 'wang.frewen.aura:aura-toolkits:1.0.0'
         api 'wang.frewen.aura:aura-ui:1.0.0'

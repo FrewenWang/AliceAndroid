@@ -67,6 +67,13 @@ public class MyNativeRender {
 
     public native void native_OnSurfaceCreated();
 
+    /**
+     * 设置动画类型
+     *
+     * @param paramType
+     * @param value0
+     * @param value1
+     */
     public native void native_SetParamsInt(int paramType, int value0, int value1);
 
     public native void native_OnSurfaceChanged(int width, int height);

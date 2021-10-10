@@ -1,5 +1,5 @@
 #include <jni.h>
-#include <base.h>
+#include <utils/AuraLogger.h>
 #include "../opengl/nyx_opengl_es_context.h"
 
 
@@ -69,7 +69,21 @@ extern "C" JNIEXPORT void JNICALL native_OnDrawFrame(JNIEnv *env, jobject instan
     NyxOpenGLRenderContext::instance()->onDrawFrame();
 }
 
+/**
+ * Class:     com_frewen_android_demo_logic_samples_opengles_render_MyNativeRender
+ * Method:    native_SetParamsInt
+ * Signature: (III)V
+ */
+extern "C" JNIEXPORT void JNICALL native_SetParamsInt(JNIEnv *env, jobject instance,
+                                                      jint paramType,
+                                                      jfloat value0, jfloat value1) {
+    NyxOpenGLRenderContext::instance()->setParamsInt(paramType, value0, value1);
+}
 
+
+/**
+ * 下面建立Java层和Native层的方法的映射关系
+ */
 static JNINativeMethod g_NativeMethods[] = {
         {"native_OnInit",           "()V",      (void *) (native_OnInit)},
         {"native_OnUnInit",         "()V",      (void *) (native_OnUnInit)},
@@ -77,6 +91,7 @@ static JNINativeMethod g_NativeMethods[] = {
         {"native_OnSurfaceCreated", "()V",      (void *) (native_OnSurfaceCreated)},
         {"native_OnSurfaceChanged", "(II)V",    (void *) (native_OnSurfaceChanged)},
         {"native_OnDrawFrame",      "()V",      (void *) (native_OnDrawFrame)},
+        {"native_SetParamsInt",     "(III)V",   (void *) (native_SetParamsInt)},
 };
 
 static int
@@ -95,9 +110,11 @@ RegisterNativeMethods(JNIEnv *env, const char *className, JNINativeMethod *metho
 }
 /**
  * 我们使用动态注册来进行Native方法的注册
+ * 当加载Lis的时候，JNI_OnLoad方法就会被调用
  */
 extern "C" jint JNI_OnLoad(JavaVM *jvm, void *p) {
-    // 需要引入#include <base.h>
+    // 如果需要打印日志
+    // 需要引入#include <utils/AuraLogger.h>
     // include_directories(base/) 我们需要把base目录放到全局搜索目录下
     LOG_D("===== JNI_OnLoad =====");
     jint jniRet = JNI_ERR;

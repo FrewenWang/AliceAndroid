@@ -2,7 +2,7 @@
 // Created by Frewen.Wong on 2021/8/1.
 //
 
-#include <base.h>
+#include <utils/AuraLogger.h>
 #include "BeatingHeartSample.h"
 
 BeatingHeartSample::BeatingHeartSample() {

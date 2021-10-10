@@ -7,6 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,7 +40,7 @@ import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRend
  * https://blog.csdn.net/sinat_22657459/category_8874366.html
  * https://blog.csdn.net/Kennethdroid/article/details/95622391
  */
-public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeObserver.OnGlobalLayoutListener {
+public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeObserver.OnGlobalLayoutListener, SensorEventListener {
 
     private int mSampleSelectedIndex = SAMPLE_TYPE_KEY_BEATING_HEART - SAMPLE_TYPE;
 
@@ -96,9 +99,15 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
 
         mToolBar = findViewById(R.id.toolbar);
         initToolBar();
+        // 初始化传感器相关逻辑
+        initSensor();
         mRootView = (ViewGroup) findViewById(R.id.rootView);
         mRootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
         mGLRender.init();
+
+    }
+
+    private void initSensor() {
 
     }
 
@@ -108,10 +117,8 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
         mToolBar.inflateMenu(R.menu.menu_opengl_es);
         mToolBar.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
-            switch (id) {
-                case R.id.action_opengl_es_check:
-                    showOpenGLSampleDialog();
-                    break;
+            if (id == R.id.action_opengl_es_check) {
+                showOpenGLSampleDialog();
             }
             return true;
         });
@@ -199,5 +206,15 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
 
         mGLSurfaceView = new OpenGLESSurfaceView(this, mGLRender);
         mRootView.addView(mGLSurfaceView, lp);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }

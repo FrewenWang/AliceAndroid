@@ -29,6 +29,8 @@ public:
 
     void onDrawFrame();
 
+    void setParamsInt(int i, float d, float d1);
+
 private:
     // 静态单例对象
     static NyxOpenGLRenderContext *mPtr_Context;

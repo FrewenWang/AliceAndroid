@@ -2,7 +2,7 @@
 // Created by Frewen.Wong on 1/30/21.
 //
 #include <jni.h>
-#include <base.h>
+#include <utils/AuraLogger.h>
 
 
 // JNI的数据类型和C++中的数据类型的对照表

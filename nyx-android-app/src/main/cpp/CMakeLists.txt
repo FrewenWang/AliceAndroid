@@ -29,9 +29,12 @@ include_directories(people/)
 # include_directories(people/) 将其加入到全局搜索目录下面，所以就可以直接使用尖括号
 # include <People.h>
 # 放到全局的搜索路径下面，使用下面：
-include_directories(base/)
-include_directories(jni/)
-include_directories(thread/)
+include_directories(
+        base
+        jni
+        thread
+        base/utils
+)
 
 # 添加源文件或者库.根据C++文件，我们要把hello-jni.cpp编译成一个hello-jni的SO
 add_library( # Sets the name of the library.
@@ -70,9 +73,21 @@ find_library(log-lib log)
 
 
 # ================OpenGL ES的Native库，通过add_library会再生成一个jni的SO==========================
+# 由于ImageDef.h是在opengl/utils的二级目录下，如果我们想要在全局的搜索路径进行搜索
+# 我们就需要放到全局的搜索路径下面，使用下面：
+# 这样我们在进行导入ImageDef类的时候
+# 双引号是从相对路径进行搜索
+# #include "opengl/utils/ImageDef.h"
+# 而尖括号是从全局搜索路径进行搜索.因为我们已经通过上面的方法将其加入到全局搜索目录下面，所以就可以直接使用尖括号
+# include <由于ImageDef.h>
+include_directories(
+        opengl/utils/
+        opengl/glm/
+)
 file(GLOB opengl-src-files
         ${CMAKE_SOURCE_DIR}/jni/jni_nyx_opengl_es.cpp
         ${CMAKE_SOURCE_DIR}/opengl/*.cpp
+        ${CMAKE_SOURCE_DIR}/opengl/utils/*.cpp
         ${CMAKE_SOURCE_DIR}/opengl/samples/*.cpp)
 # 设置库的名字。Java层调用可以使用：System.loadLibrary("nyx-opengles-lib");
 # 库的类型 共享库（动态）库、如果是STATIC的话，就是静态库

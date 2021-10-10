@@ -4,7 +4,8 @@
 
 #include "nyx_opengl_es_context.h"
 #include "samples/BeatingHeartSample.h"
-#include <base.h>
+#include "samples/TriangleSample.h"
+#include <utils/AuraLogger.h>
 
 NyxOpenGLRenderContext *NyxOpenGLRenderContext::mPtr_Context = nullptr;
 
@@ -13,7 +14,7 @@ NyxOpenGLRenderContext *NyxOpenGLRenderContext::mPtr_Context = nullptr;
  * @return
  */
 NyxOpenGLRenderContext *NyxOpenGLRenderContext::instance() {
-    LOG_D("NyxOpenGLRenderContext::instance");
+    // LOG_D("NyxOpenGLRenderContext::instance");
     if (mPtr_Context == nullptr) {
         mPtr_Context = new NyxOpenGLRenderContext();
     }
@@ -22,7 +23,7 @@ NyxOpenGLRenderContext *NyxOpenGLRenderContext::instance() {
 
 NyxOpenGLRenderContext::NyxOpenGLRenderContext() {
     LOG_D("NyxOpenGLRenderContext::constructor");
-    mPtr_CurSample = new BeatingHeartSample();
+    mPtr_CurSample = new TriangleSample();
     mPtr_BeforeSample = nullptr;
 }
 
@@ -68,5 +69,9 @@ void NyxOpenGLRenderContext::onDrawFrame() {
         mPtr_CurSample->init();
         mPtr_CurSample->draw(m_ScreenW, m_ScreenH);
     }
+}
 
+void NyxOpenGLRenderContext::setParamsInt(int paramType, float value0, float value1) {
+    LOG_D("NyxOpenGLRenderContext::SetParamsFloat paramType=%d, value0=%f, value1=%f", paramType,
+          value0, value1);
 }

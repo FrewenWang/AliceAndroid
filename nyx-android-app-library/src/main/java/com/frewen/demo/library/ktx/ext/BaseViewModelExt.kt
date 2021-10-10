@@ -30,11 +30,13 @@ import kotlinx.coroutines.launch
  * @param isShowDialog 是否显示加载框
  * @param loadingMessage 加载框提示内容
  */
-fun <T> BaseViewModel.request(block: suspend () -> AuraNetResponse<T>,
-                              success: (T) -> Unit,
-                              error: (AuraNetException) -> Unit = {},
-                              isShowDialog: Boolean = false,
-                              loadingMessage: String = "请求网络中..."): Job {
+fun <T> BaseViewModel.request(
+    block: suspend () -> AuraNetResponse<T>,
+    success: (T) -> Unit,
+    error: (AuraNetException) -> Unit = {},
+    isShowDialog: Boolean = false,
+    loadingMessage: String = "请求网络中..."
+): Job {
     //如果需要弹窗 通知Activity/fragment弹窗
     return viewModelScope.launch {
         runCatching {
@@ -62,10 +64,11 @@ fun <T> BaseViewModel.request(block: suspend () -> AuraNetResponse<T>,
 
 
 fun <T> BaseViewModel.request(
-        block: suspend () -> AuraNetResponse<T>,
-        resultState: MutableLiveData<ResultState<T>>,
-        isShowDialog: Boolean = false,
-        loadingMessage: String = "请求网络中..."): Job {
+    block: suspend () -> AuraNetResponse<T>,
+    resultState: MutableLiveData<ResultState<T>>,
+    isShowDialog: Boolean = false,
+    loadingMessage: String = "请求网络中..."
+): Job {
     return viewModelScope.launch {
         runCatching {
             //请求体
@@ -81,8 +84,10 @@ fun <T> BaseViewModel.request(
 /**
  * 请求结果过滤，判断请求服务器请求结果是否成功，不成功则会抛出异常
  */
-suspend fun <T> executeResponse(response: AuraNetResponse<T>,
-                                success: suspend CoroutineScope.(T) -> Unit) {
+suspend fun <T> executeResponse(
+    response: AuraNetResponse<T>,
+    success: suspend CoroutineScope.(T) -> Unit
+) {
     coroutineScope {
         when {
             response.isSuccess -> {

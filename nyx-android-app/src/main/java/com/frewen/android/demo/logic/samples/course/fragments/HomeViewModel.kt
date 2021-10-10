@@ -73,14 +73,13 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
         if (isRefresh) {
             pageNo = 0
         }
-        
         request({ NyxNetworkApi.instance.getHomeData(pageNo) }, {
             //请求成功
             pageNo++
             val listDataUiState = ListDataStateWrapper(
                 isSuccess = true,
                 isRefresh = isRefresh,
-                isEmpty = it.isEmpty(),
+                isEmpty = it.isEmpty,
                 hasMore = it.hasMoreData(),
                 isFirstEmpty = isRefresh && it.isEmpty(),
                 listData = it.dataList

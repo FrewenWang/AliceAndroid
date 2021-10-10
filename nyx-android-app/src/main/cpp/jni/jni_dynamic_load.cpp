@@ -2,7 +2,7 @@
 // Created by Frewen.Wong on 1/30/21.
 //
 // 放到全局搜索的目录下
-#include <base.h>
+#include <utils/AuraLogger.h>
 #include <jvm.h>
 #include <jni.h>
 

@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.frewen.android.demo">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 使用摄像头权限 -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- 使用网络权限 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 读取网络状态 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 读写外部存储 -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- 使用摄像头权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- 使用蓝牙权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 使用网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -16,13 +17,13 @@
 
     <permission
         android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE"
-        android:protectionLevel="normal" /> <!-- 访问WIFI状态 -->
+        android:protectionLevel="normal" />
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 这个权限的声明是在服务端来进行的。所以需要绑定到我们的服务的都需要声明这个权限 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 所以这个权限不要随便泄漏啊 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 这个权限的声明是在服务端来进行的。所以需要绑定到我们的服务的都需要声明这个权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- 所以这个权限不要随便泄漏啊 -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE" />

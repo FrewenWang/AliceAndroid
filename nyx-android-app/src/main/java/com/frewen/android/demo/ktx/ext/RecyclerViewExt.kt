@@ -1,7 +1,7 @@
 package com.frewen.android.demo.ktx.ext
 
 import com.frewen.android.demo.NyxApp
-import com.frewen.android.demo.views.DefineLoadMoreView
+import com.frewen.demo.library.recyclerview.DefineLoadMoreView
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 /**

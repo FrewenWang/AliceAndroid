@@ -5,7 +5,7 @@
     <data>
 
     </data>
-
+    <!--通用的RecyclerView和FloatingActionButton镶嵌的布局-->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

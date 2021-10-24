@@ -66,6 +66,10 @@ import static com.frewen.android.demo.constant.AppKeyConstants.APP_ID_BUGLY;
 public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModuleProvider {
 
     private static final String TAG = "T:NyxAndroidApp";
+
+    public static NyxApp getInstance() {
+        return (NyxApp)sInstance;
+    }
     /**
      * 分发Activity的注入
      * <p>

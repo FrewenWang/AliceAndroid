@@ -1,14 +1,12 @@
 package com.frewen.android.demo.network
 
-import com.frewen.android.demo.logic.model.ArticleModel
-import com.frewen.android.demo.logic.model.BannerModel
-import com.frewen.android.demo.logic.model.WXArticleContent
-import com.frewen.android.demo.logic.model.WXArticleTitle
+import com.frewen.android.demo.logic.model.*
 import com.frewen.android.demo.logic.model.wrapper.ApiPagerResponseWrapper
-import com.frewen.network.response.BasePagerResponseData
+import com.frewen.network.response.BasePagerRespData
 import com.frewen.network.response.AuraNetResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 /**
@@ -38,8 +36,7 @@ interface NyxApiService {
      * 获取首页的文章数据
      */
     @GET("article/list/{page}/json")
-    suspend fun getArticleList(@Path("page") pageNo: Int): AuraNetResponse<BasePagerResponseData<ArrayList<ArticleModel>>>
-    
+    suspend fun getArticleList(@Path("page") pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
     
     /**
      * 公众号分类
@@ -52,6 +49,28 @@ interface NyxApiService {
         @Path("page") pageNo: Int,
         @Path("id") id: Int
     ): AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>>
+    
+    /**
+     * 推荐页面的项目分类的标题
+     */
+    @GET("project/tree/json")
+    suspend fun getRecommendTabData(): AuraNetResponse<ArrayList<RecommendTabRespData>>
+    
+    /**
+     * 获取最新项目数据
+     */
+    @GET("article/listproject/{page}/json")
+    suspend fun getProjectNewData(
+        @Path("page") pageNo: Int
+    ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
+    
+    /**
+     * 根据分类id获取项目数据
+     */
+    @GET("project/list/{page}/json")
+    suspend fun getProjectDataByType(
+        @Path("page") pageNo: Int, @Query("cid") cid: Int
+    ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
     
     
 }

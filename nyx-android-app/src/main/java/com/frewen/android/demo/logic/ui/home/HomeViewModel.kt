@@ -1,4 +1,4 @@
-package com.frewen.android.demo.logic.samples.course.fragments
+package com.frewen.android.demo.logic.ui.home
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -74,6 +74,7 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
             pageNo = 0
         }
         request({ NyxNetworkApi.instance.getHomeData(pageNo) }, {
+            Log.d(TAG, "getHomeData Response = $it")
             //请求成功
             pageNo++
             val listDataUiState = ListDataStateWrapper(
@@ -81,10 +82,12 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
                 isRefresh = isRefresh,
                 isEmpty = it.isEmpty,
                 hasMore = it.hasMoreData(),
-                isFirstEmpty = isRefresh && it.isEmpty(),
+                isFirstEmpty = isRefresh && it.isEmpty,
                 listData = it.dataList
             )
             homeDataState.value = listDataUiState
+        }, {
+            Log.d(TAG, "getHomeData Exception = $it")
         })
         
     }

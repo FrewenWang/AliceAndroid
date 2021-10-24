@@ -1,4 +1,4 @@
-package com.frewen.demo.library.ktx.ext
+package com.frewen.android.demo.ktx.ext
 
 import android.view.View
 import android.widget.TextView

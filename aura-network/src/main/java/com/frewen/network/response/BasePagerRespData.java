@@ -1,5 +1,7 @@
 package com.frewen.network.response;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -10,11 +12,11 @@ import java.util.List;
  * @introduction: 网络请求中的分页响应数据
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class BasePagerResponseData<T> {
+public class BasePagerRespData<T> {
+    @SerializedName("datas")
+    private T datas;
 
-    private T dataList;
-
-    private int currentPage;
+    private int curPage;
 
     private int offset;
 
@@ -28,15 +30,15 @@ public class BasePagerResponseData<T> {
 
 
     public boolean isEmpty() {
-        return 0 == ((List) dataList).size();
+        return 0 == ((List) datas).size();
     }
 
     public int getCurrentPage() {
-        return currentPage;
+        return curPage;
     }
 
     public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
+        this.curPage = currentPage;
     }
 
     public int getOffset() {
@@ -80,14 +82,27 @@ public class BasePagerResponseData<T> {
     }
 
     public void setDataList(T dataList) {
-        this.dataList = dataList;
+        this.datas = dataList;
     }
 
     public T getDataList() {
-        return dataList;
+        return datas;
     }
 
     public boolean hasMoreData() {
         return !over;
+    }
+
+    @Override
+    public String toString() {
+        return "BasePagerResponseData{" +
+                "dataList=" + datas +
+                ", currentPage=" + curPage +
+                ", offset=" + offset +
+                ", over=" + over +
+                ", pageCount=" + pageCount +
+                ", size=" + size +
+                ", total=" + total +
+                '}';
     }
 }

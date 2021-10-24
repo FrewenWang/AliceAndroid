@@ -11,15 +11,13 @@ import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.adapter.holder.HomeBannerViewHolder
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
-import com.frewen.android.demo.ktx.ext.addExtFooterView
-import com.frewen.android.demo.ktx.ext.init
-import com.frewen.android.demo.ktx.ext.parseState
+import com.frewen.android.demo.ktx.ext.*
 import com.frewen.android.demo.logic.adapter.HomeArticleAdapter
 import com.frewen.android.demo.logic.adapter.HomeBannerAdapter
 import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.android.demo.logic.model.ListDataStateWrapper
-import com.frewen.android.demo.logic.samples.course.fragments.HomeViewModel
+import com.frewen.aura.logger.core.AuraLogger
 import com.frewen.aura.toolkits.display.DisplayHelper
 import com.frewen.aura.ui.recyclerview.SpaceItemDecoration
 import com.frewen.demo.library.di.injector.Injectable
@@ -61,13 +59,9 @@ class HomeFragment : BaseDataBindingLazyViewFragment<HomeViewModel, FragmentMain
     override fun getLayoutId() = R.layout.fragment_main_home
     
     override fun initView(view: View, savedInstanceState: Bundle?) {
-        Log.d(
-            "TAG",
-            "initView() called with: view = $view, savedInstanceState = $savedInstanceState"
-        )
+        AuraLogger.d("initView")
         //状态页配置
         loadStateService = loadStateServiceInit(swipeRefreshLayout) {
-            Log.d("TAG", "loadStateServiceInit initView() called")
             //点击重试时触发的操作
             loadStateService.showLoading()
             viewModel.getBannerData()

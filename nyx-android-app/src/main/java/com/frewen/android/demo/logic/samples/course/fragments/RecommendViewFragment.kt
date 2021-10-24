@@ -17,24 +17,24 @@ import com.frewen.aura.framework.fragment.BaseViewFragment
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 class RecommendViewFragment : BaseViewFragment() {
-
+    
     private lateinit var recommendViewModel: RecommendViewModel
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recommendViewModel = ViewModelProviders.of(this).get(RecommendViewModel::class.java)
-
+        
         val textureView: TextView = view.findViewById(R.id.content)
-
+        
         recommendViewModel.text.observe(viewLifecycleOwner) {
             textureView.text = it
         }
-
+        
     }
-
+    
     override fun getLayoutId(): Int {
         return R.layout.fragment_tiktok_msg
     }
-
-
+    
+    
 }

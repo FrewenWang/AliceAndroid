@@ -29,7 +29,6 @@ fun MagicIndicator.bindViewPager2(
     mStringList: ArrayList<String> = arrayListOf(),
     action: (index: Int) -> Unit = {}
 ) {
-    
     val commonNavigator = CommonNavigator(
         NyxApp.getInstance(
             NyxApp::class.java

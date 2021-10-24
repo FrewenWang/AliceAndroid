@@ -18,7 +18,7 @@ sealed class ResultState<out T> {
         fun <T> onLoading(loadingMessage: String): ResultState<T> = Loading(loadingMessage)
         fun <T> onError(error: AuraNetException): ResultState<T> = Error(error)
     }
-
+    
     data class Loading(val loadingMessage: String) : ResultState<Nothing>()
     data class Success<out T>(val data: T) : ResultState<T>()
     data class Error(val error: AuraNetException) : ResultState<Nothing>()

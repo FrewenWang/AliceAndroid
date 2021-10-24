@@ -1,4 +1,4 @@
-package com.frewen.android.demo.views
+package com.frewen.demo.library.recyclerview
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import com.frewen.android.demo.R
 import com.frewen.aura.toolkits.display.DisplayHelper
+import com.frewen.demo.library.R
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 /**
@@ -19,7 +19,7 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
  * @author: Frewen.Wong
  * @time: 2021/6/27 14:37
  * @version: 1.0.0
- * @introduction:  Class File Init
+ * @introduction:  自定义SwipeRecyclerView的加载的自定义View布局
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
 class DefineLoadMoreView(context: Context) : LinearLayout(context),

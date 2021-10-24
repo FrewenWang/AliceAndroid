@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.*
  * 首页的发现页面的Fragment
  */
 @FragmentDestination(pageUrl = "main/tabs/discovery", asStarter = false)
-class DiscoveryFragment : BaseDataBindingFragment<MyProfileViewModel, FragmentMainDiscoveryBinding>(), Injectable {
+class DiscoveryFragment : BaseDataBindingFragment<DiscoveryViewModel, FragmentMainDiscoveryBinding>(), Injectable {
     
     var titleData = arrayListOf("广场", "每日一问", "体系", "导航")
     

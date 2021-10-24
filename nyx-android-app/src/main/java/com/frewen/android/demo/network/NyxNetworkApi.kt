@@ -1,15 +1,12 @@
 package com.frewen.android.demo.network
 
 import android.util.Log
-import com.frewen.android.demo.logic.model.ArticleModel
-import com.frewen.android.demo.logic.model.BannerModel
-import com.frewen.android.demo.logic.model.WXArticleContent
-import com.frewen.android.demo.logic.model.WXArticleTitle
+import com.frewen.android.demo.logic.model.*
 import com.frewen.android.demo.logic.model.wrapper.ApiPagerResponseWrapper
 import com.frewen.demo.library.network.core.NetworkApi
 import com.frewen.demo.library.utils.TencentUtils.getAuthorization
 import com.frewen.demo.library.utils.TencentUtils.timeStr
-import com.frewen.network.response.BasePagerResponseData
+import com.frewen.network.response.BasePagerRespData
 import com.frewen.network.response.AuraNetResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -18,6 +15,8 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.http.GET
+import retrofit2.http.Path
 import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -116,7 +115,7 @@ class NyxNetworkApi : NetworkApi() {
         return getService(NyxApiService::class.java).getBanner()
     }
     
-    suspend fun getHomeData(pageNo: Int): AuraNetResponse<BasePagerResponseData<ArrayList<ArticleModel>>> {
+    suspend fun getHomeData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
         return withContext(Dispatchers.IO) {
             val listData = async { getService(NyxApiService::class.java).getArticleList(pageNo) }
             if (pageNo == 0) {
@@ -134,9 +133,38 @@ class NyxNetworkApi : NetworkApi() {
         return getService(NyxApiService::class.java).getTopArticleList()
     }
     
+    /**
+     * 推荐页面的项目分类的标题
+     */
+    suspend fun getRecommendTabData(): AuraNetResponse<ArrayList<RecommendTabRespData>> {
+        return getService(NyxApiService::class.java).getRecommendTabData()
+    }
+    
     
     suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleTitle>> {
         return getService(NyxApiService::class.java).getWXArticleTitle()
+    }
+    
+    /**
+     * 获取最新项目数据
+     */
+    suspend fun getProjectNewData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
+        return getService(NyxApiService::class.java).getProjectNewData(pageNo)
+    }
+    
+    /**
+     * 根据分类id获取项目数据
+     */
+    suspend fun getProjectDataByType(
+        pageNo: Int,
+        cid: Int,
+        isNew: Boolean = false
+    ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
+        return if (isNew) {
+            getService(NyxApiService::class.java).getProjectNewData(pageNo)
+        } else {
+            getService(NyxApiService::class.java).getProjectDataByType(pageNo, cid)
+        }
     }
     
     /**

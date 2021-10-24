@@ -14,11 +14,11 @@ public class AuraNetResponse<T> implements Serializable {
     /**
      * 返回码
      */
-    private int code;
+    private int errorCode;
     /**
      * 返回信息
      */
-    private String msg;
+    private String errorMsg;
     /**
      * 返回数据
      */
@@ -29,24 +29,24 @@ public class AuraNetResponse<T> implements Serializable {
     private boolean isSuccess;
 
     public boolean isSuccess() {
-        this.isSuccess = code == 0 && data != null;
+        this.isSuccess = errorCode == 0 && data != null;
         return isSuccess;
     }
 
     public int getCode() {
-        return code;
+        return errorCode;
     }
 
     public void setCode(int code) {
-        this.code = code;
+        this.errorCode = code;
     }
 
     public String getMsg() {
-        return msg;
+        return errorMsg;
     }
 
     public void setMsg(String msg) {
-        this.msg = msg;
+        this.errorMsg = msg;
     }
 
     public T getData() {
@@ -56,8 +56,8 @@ public class AuraNetResponse<T> implements Serializable {
     @Override
     public String toString() {
         return "Response {" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
+                "errorCode=" + errorCode +
+                ", errorMsg='" + errorMsg + '\'' +
                 ", data=" + data.toString() +
                 '}';
     }

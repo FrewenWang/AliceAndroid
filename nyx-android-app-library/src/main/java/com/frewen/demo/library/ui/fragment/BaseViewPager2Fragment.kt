@@ -41,7 +41,7 @@ abstract class BaseViewPager2Fragment : BaseViewFragment() {
     /**
      *
      */
-    abstract val contentFragments: Array<Fragment>
+    abstract val contentFragments: ArrayList<Fragment>
     
     override fun getLayoutId(): Int {
         return R.layout.page_coordinator_view_pager2
@@ -59,16 +59,16 @@ abstract class BaseViewPager2Fragment : BaseViewFragment() {
     private fun initViewPager() {
         //初始化viewpager2
         viewPager2
-                .initOnFragment(this, contentFragments)
-                .offscreenPageLimit = offscreenPageLimit
+            .initOnFragment(this, contentFragments)
+            .offscreenPageLimit = offscreenPageLimit
         centerTabLayout?.setTabData(tabTitles)
         centerTabLayout?.setOnTabSelectListener(object : OnTabSelectListener {
             override fun onTabSelect(position: Int) {
                 viewPager2?.currentItem = position
             }
-    
+            
             override fun onTabReselect(position: Int) {
-        
+            
             }
         })
         pageChangeCallback = PageChangeCallBack()

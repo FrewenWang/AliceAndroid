@@ -13,5 +13,5 @@
         <include layout="@layout/layout_include_top_indicator_view_pager2" />
 
     </LinearLayout>
-    
+
 </layout>

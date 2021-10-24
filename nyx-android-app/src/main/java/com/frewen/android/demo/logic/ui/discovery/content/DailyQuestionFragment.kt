@@ -36,7 +36,7 @@ class DailyQuestionFragment : BaseDataBindingFragment<DailyQuestionViewModel, Fr
     }
     
     override fun getLayoutId(): Int {
-        return R.layout.fragment_daily_question
+        return R.layout.layout_float_button_recyler_view
     }
     
     

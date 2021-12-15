@@ -32,7 +32,7 @@ ext {
     //ui
     flexboxVersion = '0.2.6'
 
-    constraintlayout_version = '2.0.4'
+    constraintlayout_version = '2.1.1'
 
     //RxJava RxAndroid dependencies
     rxJavaVersion = '1.1.0'

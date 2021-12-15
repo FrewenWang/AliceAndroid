@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frewen.android.demo.R;
+import com.frewen.android.demo.logic.model.User;
 
 /**
  * @filename: HelloJNIActivity
@@ -27,6 +28,9 @@ import com.frewen.android.demo.R;
  * @copyright Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class HelloJNIActivity extends AppCompatActivity {
+
+    private static final String[] sStrings = {"123", "456", "789"};
+
     /**
      * 加载loadLibrary
      * 用于在应用程序启动时加载“ hello-jni”库。
@@ -35,6 +39,8 @@ public class HelloJNIActivity extends AppCompatActivity {
     static {
         System.loadLibrary("dynamic-register-jni");
         System.loadLibrary("hello-jni");
+        // System的load是代码的绝对路径的加载
+        //System.load("");
     }
 
     @Override
@@ -43,23 +49,30 @@ public class HelloJNIActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hello_jni);
 
         TextView basicTv = findViewById(R.id.jniBasicType);
-        basicTv.setText("基础数据类型：jint:" + JniBasicType.callNativeInt(1)
+        basicTv.setText(stringFromJNI());
+
+
+        TextView jniBasicDataType = findViewById(R.id.jniBasicDataType);
+        jniBasicDataType.setText("基础数据类型：jint:" + JniBasicType.callNativeInt(1)
                 + ", jbyte:" + JniBasicType.callNativeByte((byte) 2)
-                + ", jchar:" + JniBasicType.callNativeChar((char) 3)
+                + ", jchar:" + JniBasicType.callNativeChar((char) 'A')
                 + ", jshort:" + JniBasicType.callNativeShort((short) 4)
                 + ", jlong:" + JniBasicType.callNativeLong(5)
                 + ", jfloat:" + JniBasicType.callNativeFloat(6.0f)
                 + ", jdouble:" + JniBasicType.callNativeDouble(7.0)
-                + ", jboolean:" + JniBasicType.callNativeBoolean(true));
+                + ", jboolean:" + JniBasicType.callNativeBoolean(false));
 
-        // Example of a call to a native method
-        TextView tv = findViewById(R.id.sample_text);
-        String msg = stringFromJNI();
-        Log.d("HelloJNIActivity", msg);
-        tv.setText(stringFromJNI2("hello"));
 
-        TextView tv2 = findViewById(R.id.textView2);
-        tv2.setText(stringFromJNIUser("hello"));
+        TextView jniStringDataType = findViewById(R.id.jniStringType);
+        jniStringDataType.setText(JniBasicType.callNativeString("Hello JNI String"));
+
+
+        TextView jniReferenceType = findViewById(R.id.jniReferenceType);
+        jniReferenceType.setText(JniBasicType.callNativeReferenceType(sStrings));
+
+        User user = new User("XiaoMing",18);
+        TextView jniAccessField = findViewById(R.id.jniAccessField);
+        jniAccessField.setText(JniAccessField.callNativeAccessStaticField(user));
     }
 
 

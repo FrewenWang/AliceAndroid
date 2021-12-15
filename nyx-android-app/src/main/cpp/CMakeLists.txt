@@ -16,11 +16,20 @@ message(${msg})
 set(msg 1234567)
 message(${msg})
 # 当前的Cmake的文件路径的常量
+message(===========cmake常量===============)
+# 打印的是Camke文件的路径
 message(${CMAKE_CURRENT_LIST_FILE})
+# Cmake的文件夹的路径
 message(${CMAKE_CURRENT_LIST_DIR})
+message(===========cmake常量===============)
+# cmake逻辑代码
+if (TRUE)
+    message("this is true")
+endif ()
+
 
 # 由于People是在people的二级目录下，如果我们想要在全局的搜索路径进行搜索
-# 我们就需要放到全局的搜索路径下面，使用下面：
+# 我们就需要people类的include文件放到全局的搜索路径下面，使用下面：
 include_directories(people/)
 # 这样我们在进行导入People类的时候
 # 双引号是从相对路径进行搜索
@@ -29,6 +38,7 @@ include_directories(people/)
 # include_directories(people/) 将其加入到全局搜索目录下面，所以就可以直接使用尖括号
 # include <People.h>
 # 放到全局的搜索路径下面，使用下面：
+# 我们将base目录下面的头文件放到搜索目录中
 include_directories(
         base
         jni
@@ -36,7 +46,7 @@ include_directories(
         base/utils
 )
 
-# 添加源文件或者库.根据C++文件，我们要把hello-jni.cpp编译成一个hello-jni的SO
+# 添加源文件或者库.根据C++文件，我们要把hello-jni.cpp编译成一个hello-jni的SO的语法
 add_library( # Sets the name of the library.
         hello-jni   # 库的名字
         # Sets the library as a shared library.
@@ -44,7 +54,9 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         hello-jni.cpp
         jni/jni_basic_type.cpp
+        jni/jni_basic_type.cpp
         )  # 库的源文件
+
 # 我们创建一个的动态链接库，我们想将people/People.cpp也打包成一个SO库
 add_library( # Sets the name of the library.
         poeple-jni   # 库的名字
@@ -53,7 +65,7 @@ add_library( # Sets the name of the library.
         # Provides a relative path to your source file(s).
         people/People.cpp)  # 库的源文件
 
-# =========================Jni的函数的动态注册，通过add_library会再生成一个jni的SO================================
+# =========================Jni的函数的动态注册，通过add_library会再生成一个jni的SO=========================
 add_library(
         # 设置库的名字。Java层调用可以使用：System.loadLibrary("dynamic-register-jni");
         dynamic-register-jni
@@ -99,8 +111,10 @@ add_library(nyx-opengles-jni
 
 # ==========================下面是进行链接库的依赖=================================================
 # 指定目标库进行连接：执行目标库为hello-jni.需要链接android log-lib模块
-target_link_libraries( # Specifies the target library.
+# 当然我们也可以关联自己编写的库，比如 hello-jni 可以关联 poeple-jni动态库
+target_link_libraries(
         hello-jni
+        poeple-jni
         ${log-lib}
         android)
 

@@ -11,6 +11,8 @@ class People {
 // 下面是public的模块
 public:
     std::string getStringMsg();
+
+
 };
 
 

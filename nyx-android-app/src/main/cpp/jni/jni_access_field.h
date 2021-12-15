@@ -1,0 +1,8 @@
+//
+// Created by Frewen.Wong on 2021/11/27.
+//
+
+#ifndef NYXANDROID_JNI_ACCESS_FIELD_H
+#define NYXANDROID_JNI_ACCESS_FIELD_H
+
+#endif //NYXANDROID_JNI_ACCESS_FIELD_H

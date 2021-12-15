@@ -4,7 +4,8 @@
 // 双引号是从相对路径进行搜索
 //#include "people/People.h"
 // 而尖括号是从全局搜索路径进行搜索.因为我们已经通过
-// include_directories(people/) 将其加入到全局搜索目录下面，所以就可以直接使用尖括号
+// include_directories(people/) 将其include文件加入到全局搜索目录下面，
+// 所以就可以直接使用尖括号
 # include <People.h>
 
 // 定义JNI的Class的Path
@@ -24,7 +25,12 @@ Java_com_frewen_android_demo_logic_samples_jni_HelloJNIActivity_stringFromJNI(JN
                                                                               jobject /* this */) {
     // 实例化一个Hello的字符串
     std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    // return env->NewStringUTF(hello.c_str());
+    // 实例化一个people对象。通过关联的people库来获得
+    People people;
+    // TODO 我们可以通过people.getStringMsg()来获取People对象的信息
+    // 至于为什么要c_str()的调用，后续学习
+    return env->NewStringUTF(people.getStringMsg().c_str());
 }
 
 /**

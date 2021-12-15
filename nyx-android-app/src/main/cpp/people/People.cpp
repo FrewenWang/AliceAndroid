@@ -6,5 +6,5 @@
 
 // People类的具体实现
 std::string People::getStringMsg() {
-    return "this is msg from Native People";
+    return "this is msg from Native People Object";
 }

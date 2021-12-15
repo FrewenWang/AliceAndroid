@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:defaultDuration="@android:integer/config_mediumAnimTime">
 
-    <!--    根标签MotionScene有一个defaultDuration属性，表示所有未指定时间的动画的默认时间，默认为300毫秒。-->
-    <!--    当然，我们可以自己指定-->
+    <!-- 根标签MotionScene有一个defaultDuration属性，表示所有未指定时间的动画的默认时间，默认为300毫秒。-->
+    <!-- 当然，我们可以自己指定-->
 
     <!-- MotionScene标签可以包含TransitionSet标签，这是可选的。-->
     <ConstraintSet android:id="@+id/start">

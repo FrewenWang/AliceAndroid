@@ -36,22 +36,23 @@ void TriangleSample::init() {
     if (mProgramObj != 0) {
         return;
     }
-    // TODO 这两个字符数组是什么意思？需要学习
+    // TODO 顶点着色器和判断着色器的实例化方法需要学习
+    // 初始化一个顶点着色器。实例对象是一个char数组
     char vShaderStr[] =
-            "#version 300 es                          \n"
-            "layout(location = 0) in vec4 vPosition;  \n"
+            "#version 300 es                          \n"   //声明着色器版本
+            "layout(location = 0) in vec4 vPosition;  \n"   //输入一个属性数组
             "void main()                              \n"
             "{                                        \n"
-            "   gl_Position = vPosition;              \n"
+            "   gl_Position = vPosition;              \n"  //将属性数组拷贝到gl_Position的特殊输出变量中
             "}                                        \n";
-
+    // 初始化一个片段着色器，实例化对象是一个char 数组
     char fShaderStr[] =
-            "#version 300 es                              \n"
-            "precision mediump float;                     \n"
-            "out vec4 fragColor;                          \n"
+            "#version 300 es                              \n"       //声明着色器版本
+            "precision mediump float;                     \n"       //声明着色器中浮点变量的默认精度
+            "out vec4 fragColor;                          \n"       //声明一个输出变量
             "void main()                                  \n"
             "{                                            \n"
-            "   fragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );  \n"
+            "   fragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );  \n"       //给这个输出变量赋值
             "}                                            \n";
     mProgramObj = OpenGLUtil::createProgram(vShaderStr, fShaderStr, mVertexShader, mFragmentShader);
 }

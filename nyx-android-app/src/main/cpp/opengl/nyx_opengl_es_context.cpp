@@ -23,8 +23,8 @@ NyxOpenGLRenderContext *NyxOpenGLRenderContext::instance() {
 
 NyxOpenGLRenderContext::NyxOpenGLRenderContext() {
     LOG_D("NyxOpenGLRenderContext::constructor");
-    mPtr_CurSample = new TriangleSample();
-    mPtr_BeforeSample = nullptr;
+    mPtrCurSample = new TriangleSample();
+    mPtrBeforeSample = nullptr;
 }
 
 /**
@@ -32,19 +32,20 @@ NyxOpenGLRenderContext::NyxOpenGLRenderContext() {
  */
 NyxOpenGLRenderContext::~NyxOpenGLRenderContext() {
     // 指针动态申请的空间进行释放
-    if (mPtr_CurSample) {
-        delete mPtr_CurSample;
-        mPtr_CurSample = nullptr;
+    if (mPtrCurSample) {
+        delete mPtrCurSample;
+        mPtrCurSample = nullptr;
     }
 
-    if (mPtr_BeforeSample) {
-        delete mPtr_BeforeSample;
-        mPtr_BeforeSample = nullptr;
+    if (mPtrBeforeSample) {
+        delete mPtrBeforeSample;
+        mPtrBeforeSample = nullptr;
     }
 }
 
 void NyxOpenGLRenderContext::onSurfaceCreated() {
     LOG_D("NyxOpenGLRenderContext::OnSurfaceCreated");
+    // 设置好清除颜色
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
@@ -59,15 +60,15 @@ void NyxOpenGLRenderContext::onDrawFrame() {
     // LOG_D("NyxOpenGLRenderContext::onDrawFrame");
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
-    if (mPtr_BeforeSample) {
-        mPtr_BeforeSample->destroy();
-        delete mPtr_BeforeSample;
-        mPtr_BeforeSample = nullptr;
+    if (mPtrBeforeSample) {
+        mPtrBeforeSample->destroy();
+        delete mPtrBeforeSample;
+        mPtrBeforeSample = nullptr;
     }
 
-    if (mPtr_CurSample) {
-        mPtr_CurSample->init();
-        mPtr_CurSample->draw(m_ScreenW, m_ScreenH);
+    if (mPtrCurSample) {
+        mPtrCurSample->init();
+        mPtrCurSample->draw(m_ScreenW, m_ScreenH);
     }
 }
 

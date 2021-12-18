@@ -57,7 +57,7 @@ class SplashActivity : BaseButterKnifeActivity() {
     
     private fun startHomeActivity() {
         // When animation set ended, intent to the MainActivity.
-        val intent = Intent(this@SplashActivity, HelloJNIActivity::class.java)
+        val intent = Intent(this@SplashActivity, OpenGLESDemoActivity::class.java)
         startActivity(intent)
     }
     

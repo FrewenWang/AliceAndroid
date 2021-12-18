@@ -97,14 +97,14 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opengles_demo);
 
-        mToolBar = findViewById(R.id.toolbar);
         initToolBar();
         // 初始化传感器相关逻辑
         initSensor();
+        // 获取RootView的getViewTreeObserver添加addOnGlobalLayoutListener
+        // 在RootView发生改变的时候获得监听
         mRootView = (ViewGroup) findViewById(R.id.rootView);
         mRootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
         mGLRender.init();
-
     }
 
     private void initSensor() {
@@ -113,6 +113,7 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
 
     @SuppressLint("ResourceAsColor")
     private void initToolBar() {
+        mToolBar = findViewById(R.id.toolbar);
         mToolBar.setBackgroundColor(R.color.color_white_alpha10);
         mToolBar.inflateMenu(R.menu.menu_opengl_es);
         mToolBar.setOnMenuItemClickListener(item -> {
@@ -203,7 +204,7 @@ public class OpenGLESDemoActivity extends AppCompatActivity implements ViewTreeO
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         lp.addRule(RelativeLayout.CENTER_IN_PARENT);
-
+        // 在RootView发生改变的时候。我们给Root添加一个OpenGLESSurfaceView
         mGLSurfaceView = new OpenGLESSurfaceView(this, mGLRender);
         mRootView.addView(mGLSurfaceView, lp);
     }

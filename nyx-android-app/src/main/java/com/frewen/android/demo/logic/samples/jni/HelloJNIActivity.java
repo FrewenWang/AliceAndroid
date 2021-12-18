@@ -72,7 +72,7 @@ public class HelloJNIActivity extends AppCompatActivity {
 
         User user = new User("XiaoMing",18);
         TextView jniAccessField = findViewById(R.id.jniAccessField);
-        jniAccessField.setText(JniAccessField.callNativeAccessStaticField(user));
+        // jniAccessField.setText(JniAccessField.callNativeAccessStaticField(user));
     }
 
 

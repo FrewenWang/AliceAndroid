@@ -24,7 +24,7 @@ public:
     }
 
     /**
-     * 初始化
+     * 初始化(纯虚函数)
      */
     virtual void init() = 0;
 

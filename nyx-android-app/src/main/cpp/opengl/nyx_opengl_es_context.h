@@ -34,8 +34,11 @@ public:
 private:
     // 静态单例对象
     static NyxOpenGLRenderContext *mPtr_Context;
-    GLSampleBase *mPtr_CurSample;
-    GLSampleBase *mPtr_BeforeSample;
+    /**
+     * 前一个OpenGLSample的指针对象
+     */
+    GLSampleBase *mPtrCurSample;
+    GLSampleBase *mPtrBeforeSample;
     int m_ScreenW;
     int m_ScreenH;
 };

@@ -11,8 +11,13 @@
  */
 class TriangleSample : public GLSampleBase {
 public:
+    /**
+     * 构造函数
+     */
     TriangleSample();
-
+    /**
+     * 析构函数。析构函数是默认的虚函数
+     */
     virtual ~TriangleSample();
 
     virtual void init();

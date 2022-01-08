@@ -59,3 +59,6 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+
+# 设置GradlePlugin的版本版本仓库的忽略名单
+/repo/

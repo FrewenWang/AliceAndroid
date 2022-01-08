@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.chaquo.python'
 
+// 应用自己开发的Gradle Plugin
+apply plugin: 'com.frewen.aura.gradle.plugin'
+//apply plugin: 'hello-plugin'
 
 // 或者这样也可以 https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx
 // apply plugin: 'android-aspectjx'
@@ -120,7 +123,7 @@ android {
             cmake {
                 path "src/main/cpp/CMakeLists.txt"  //构建脚本的路径
                 // version "3.10.2"                    //CMake的版本
-                 version "3.6.0"                    //CMake的版本
+                version "3.6.0"                    //CMake的版本
             }
         }
     }

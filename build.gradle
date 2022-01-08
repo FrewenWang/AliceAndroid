@@ -27,6 +27,8 @@ buildscript {
         maven { url 'https://oss.sonatype.org/content/repositories/public' }
         // 设置仓库
         maven { url "https://chaquo.com/maven" }
+        // 设置本地maven依赖仓库
+        maven { url('./repo') }
     }
     /**
      * 该闭包使用classpath声明了一个Gradle插件， 由于Gradle并不只是用来构建Android项目
@@ -38,7 +40,7 @@ buildscript {
 
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
         // Navigation开源框架，应用Fragment的安全的参数传递
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2"
         // 导入Chaquopy框架的包
@@ -54,6 +56,9 @@ buildscript {
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.13'
 
         //classpath 'me.ele:lancet-plugin:1.0.6'
+
+        // 添加自己本地maven插件仓库的: groupId:artifactId:version
+        classpath 'com.frewen.aura.gradle.plugin:hello-plugin:0.0.1'
 
     }
 }

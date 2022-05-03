@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.chaquo.python'
 
 // 应用自己开发的Gradle Plugin
-apply plugin: 'com.frewen.aura.gradle.plugin'
+//apply plugin: 'com.frewen.aura.gradle.plugin'
 //apply plugin: 'hello-plugin'
 
 // 或者这样也可以 https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx

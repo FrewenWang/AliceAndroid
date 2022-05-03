@@ -59,10 +59,24 @@ public class MyNativeRender {
         System.loadLibrary("nyx-opengles-jni");
     }
 
+    /**
+     * 初始化Native层的OpenGLES的逻辑
+     */
     public native void native_OnInit();
 
+    /**
+     * 反初始化
+     */
     public native void native_OnUnInit();
 
+    /**
+     * 设置渲染的Image数据
+     *
+     * @param format
+     * @param width
+     * @param height
+     * @param bytes
+     */
     public native void native_SetImageData(int format, int width, int height, byte[] bytes);
 
     public native void native_OnSurfaceCreated();
@@ -70,11 +84,11 @@ public class MyNativeRender {
     /**
      * 设置动画类型
      *
-     * @param paramType
-     * @param value0
+     * @param paramType      参数类型
+     * @param samplePosition 示例位置，其实就是Sample的类型参数
      * @param value1
      */
-    public native void native_SetParamsInt(int paramType, int value0, int value1);
+    public native void native_SetParamsInt(int paramType, int samplePosition, int value1);
 
     public native void native_OnSurfaceChanged(int width, int height);
 

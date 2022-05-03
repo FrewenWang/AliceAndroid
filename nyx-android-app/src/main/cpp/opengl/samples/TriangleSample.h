@@ -15,11 +15,15 @@ public:
      * 构造函数
      */
     TriangleSample();
+
     /**
      * 析构函数。析构函数是默认的虚函数
      */
     virtual ~TriangleSample();
 
+    /**
+     * 虚函数，初始化
+     */
     virtual void init();
 
     /**
@@ -29,6 +33,10 @@ public:
      */
     virtual void draw(int screenW, int screenH);
 
+    /**
+     * 虚函数。加载图片
+     * @param pImage
+     */
     virtual void loadImage(NativeImage *pImage);
 
     virtual void destroy();

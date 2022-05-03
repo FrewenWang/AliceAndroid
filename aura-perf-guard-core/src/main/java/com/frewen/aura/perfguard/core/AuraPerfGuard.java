@@ -1,11 +1,14 @@
 package com.frewen.aura.perfguard.core;
 
+import android.app.admin.UnsafeStateException;
 import android.content.Context;
 import android.util.Log;
 
 import com.frewen.aura.perfguard.core.engine.IPerfGuardEngine;
 import com.frewen.aura.perfguard.core.engine.cpu.CPUEngine;
 import com.frewen.aura.perfguard.core.engine.cpu.CpuConfig;
+import com.frewen.aura.perfguard.core.engine.startup.StartupInfo;
+import com.frewen.aura.toolkits.exceptions.UnInstallException;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -96,6 +99,17 @@ public class AuraPerfGuard {
         if (null != this.mConfig.getGuardMonitor()) {
             this.mConfig.getGuardMonitor().stopMonitor();
         }
+    }
+
+    /**
+     * 应用启动完成之后调用此方法，用于记录应用的启动时长
+     *
+     * @param startupInfo
+     *
+     * @throws UnInstallException
+     */
+    public void onAppStartEnd(StartupInfo startupInfo) throws UnInstallException {
+
     }
 
     /**

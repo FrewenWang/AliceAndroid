@@ -72,7 +72,7 @@ void NyxOpenGLRenderContext::onDrawFrame() {
     }
 }
 
-void NyxOpenGLRenderContext::setParamsInt(int paramType, float value0, float value1) {
-    LOG_D("NyxOpenGLRenderContext::SetParamsFloat paramType=%d, value0=%f, value1=%f", paramType,
-          value0, value1);
+void NyxOpenGLRenderContext::setParamsInt(int paramType, float samplePos, float value1) {
+    LOG_D("NyxOpenGLRenderContext::SetParamsFloat paramType=%d, samplePos=%f, value1=%f", paramType,
+          samplePos, value1);
 }

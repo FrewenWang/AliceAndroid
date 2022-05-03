@@ -19,7 +19,7 @@ import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRend
  * @author: Frewen.Wong
  * @time: 2021/7/31 23:10
  * @version: 1.0.0
- * @introduction: Class File Init
+ * @introduction: 使用c++中的opengl来实现特效 和 使用java中的opengl实现特效 在性能上会有明显的区别吗？ 答案：使用C++更快
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
 public class OpenGLESSurfaceView extends GLSurfaceView {
@@ -95,11 +95,11 @@ public class OpenGLESSurfaceView extends GLSurfaceView {
             mNativeRender.native_OnUnInit();
         }
 
-        public void setParamsInt(int paramType, int value0, int value1) {
+        public void setParamsInt(int paramType, int samplePosition, int value1) {
             if (paramType == SAMPLE_TYPE) {
-                mSampleType = value0;
+                mSampleType = samplePosition;
             }
-            mNativeRender.native_SetParamsInt(paramType, value0, value1);
+            mNativeRender.native_SetParamsInt(paramType, samplePosition, value1);
         }
     }
 }

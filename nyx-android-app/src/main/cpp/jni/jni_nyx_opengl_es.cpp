@@ -70,19 +70,20 @@ extern "C" JNIEXPORT void JNICALL native_OnDrawFrame(JNIEnv *env, jobject instan
 }
 
 /**
+ * 设置
  * Class:     com_frewen_android_demo_logic_samples_opengles_render_MyNativeRender
  * Method:    native_SetParamsInt
  * Signature: (III)V
  */
 extern "C" JNIEXPORT void JNICALL native_SetParamsInt(JNIEnv *env, jobject instance,
                                                       jint paramType,
-                                                      jfloat value0, jfloat value1) {
-    NyxOpenGLRenderContext::instance()->setParamsInt(paramType, value0, value1);
+                                                      jfloat samplePos, jfloat value1) {
+    NyxOpenGLRenderContext::instance()->setParamsInt(paramType, samplePos, value1);
 }
 
 
 /**
- * 下面建立Java层和Native层的方法的映射关系
+ * Native层下面动态建立Java层和Native层的方法的映射关系
  */
 static JNINativeMethod g_NativeMethods[] = {
         {"native_OnInit",           "()V",      (void *) (native_OnInit)},

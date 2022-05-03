@@ -36,7 +36,7 @@ void TriangleSample::init() {
     if (mProgramObj != 0) {
         return;
     }
-    // TODO 顶点着色器和判断着色器的实例化方法需要学习
+    // TODO 顶点着色器和片段着色器的实例化方法需要学习
     // 初始化一个顶点着色器。实例对象是一个char数组
     char vShaderStr[] =
             "#version 300 es                          \n"   //声明着色器版本
@@ -59,6 +59,8 @@ void TriangleSample::init() {
 
 void TriangleSample::draw(int screenW, int screenH) {
     LOG_E("TriangleSample::Draw");
+
+    // 第一个点的坐标: (0.0f, 0.5f, 0.0f)、(-0.5f, -0.5f, 0.0f)、( 0.5f, -0.5f, 0.0f)
     GLfloat vVertices[] = {
             0.0f, 0.5f, 0.0f,
             -0.5f, -0.5f, 0.0f,

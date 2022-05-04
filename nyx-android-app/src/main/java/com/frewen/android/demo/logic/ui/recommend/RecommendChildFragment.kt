@@ -10,7 +10,7 @@ import com.frewen.android.demo.R
 import com.frewen.demo.library.ui.fragment.BaseDataBindingLazyViewFragment
 import com.frewen.android.demo.databinding.LayoutFloatButtonRecylerViewBinding
 import com.frewen.android.demo.ktx.ext.*
-import com.frewen.android.demo.logic.adapter.DiscoveryArticleAdapter
+import com.frewen.android.demo.logic.adapter.ArticleAdapter
 import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.ListDataStateWrapper
 import com.frewen.demo.library.recyclerview.DefineLoadMoreView
@@ -50,7 +50,7 @@ class RecommendChildFragment :
     /**
      *
      */
-    private val articleAdapter: DiscoveryArticleAdapter by lazy { DiscoveryArticleAdapter(arrayListOf()) }
+    private val articleAdapter: ArticleAdapter by lazy { ArticleAdapter(arrayListOf()) }
     
     //recyclerview的底部加载view 因为在首页要动态改变他的颜色，所以加了他这个字段
     private lateinit var footView: DefineLoadMoreView
@@ -140,7 +140,7 @@ class RecommendChildFragment :
     
     private fun loadListData(
         data: ListDataStateWrapper<ArticleModel>?,
-        baseQuickAdapter: DiscoveryArticleAdapter,
+        baseQuickAdapter: ArticleAdapter,
         loadService: LoadService<Any>,
         recyclerView: SwipeRecyclerView?,
         swipeRefreshLayout: SwipeRefreshLayout?

@@ -1,6 +1,4 @@
 package com.frewen.android.demo.adapter.holder
-
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -21,14 +19,9 @@ class HomeBannerViewHolder(view: View) : BaseViewHolder<BannerModel>(view) {
 
     override fun bindData(data: BannerModel?, position: Int, pageSize: Int) {
         val img = itemView.findViewById<ImageView>(R.id.img_banner_view)
-        Log.d(
-            "TAG",
-            "bindData() called with: data = $data, position = $position, pageSize = $pageSize"
-        )
         data?.let {
             Glide.with(
-                NyxApp.getInstance(
-                    NyxApp::class.java))
+                NyxApp.getInstance(NyxApp::class.java))
                     .load(it.imagePath)
                     .transition(DrawableTransitionOptions.withCrossFade(500))
                     .into(img)

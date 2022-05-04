@@ -7,7 +7,7 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.LayoutFloatButtonRecylerViewBinding
 import com.frewen.android.demo.ktx.ext.loadStateServiceInit
 import com.frewen.android.demo.ktx.ext.showLoading
-import com.frewen.android.demo.logic.adapter.DiscoveryArticleAdapter
+import com.frewen.android.demo.logic.adapter.ArticleAdapter
 import com.frewen.aura.toolkits.display.DisplayHelper
 import com.frewen.aura.ui.recyclerview.SpaceItemDecoration
 import com.frewen.demo.library.ktx.ext.init
@@ -16,7 +16,6 @@ import com.frewen.demo.library.ktx.ext.initFooter
 import com.frewen.demo.library.recyclerview.DefineLoadMoreView
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import com.kingja.loadsir.core.LoadService
-import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_float_button_recyler_view.*
 import kotlinx.android.synthetic.main.layout_include_recyclerview_common.*
 
@@ -34,8 +33,8 @@ class DiscoveryPlazaFragment :
     /**
      * 文章显示的适配器
      */
-    private val articleAdapter: DiscoveryArticleAdapter by lazy {
-        DiscoveryArticleAdapter(arrayListOf(), showTag = true)
+    private val articleAdapter: ArticleAdapter by lazy {
+        ArticleAdapter(arrayListOf(), showTag = true)
     }
 
     /**

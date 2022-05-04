@@ -110,7 +110,9 @@ class NyxNetworkApi : NetworkApi() {
         }
     }
 
-
+    /**
+     * 获取首页的Banner数据
+     */
     suspend fun getBanner(): AuraNetResponse<ArrayList<BannerModel>> {
         return getService(NyxApiService::class.java).getBanner()
     }

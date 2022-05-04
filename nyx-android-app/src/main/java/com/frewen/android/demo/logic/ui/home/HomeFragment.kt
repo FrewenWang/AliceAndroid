@@ -12,7 +12,7 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.adapter.holder.HomeBannerViewHolder
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
 import com.frewen.android.demo.ktx.ext.*
-import com.frewen.android.demo.logic.adapter.DiscoveryArticleAdapter
+import com.frewen.android.demo.logic.adapter.ArticleAdapter
 import com.frewen.android.demo.logic.adapter.HomeBannerAdapter
 import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.BannerModel
@@ -49,8 +49,8 @@ class HomeFragment : BaseDataBindingLazyViewFragment<HomeViewModel, FragmentMain
 
     private lateinit var loadStateService: LoadService<Any>
 
-    private val articleAdapter: DiscoveryArticleAdapter by lazy {
-        DiscoveryArticleAdapter(
+    private val articleAdapter: ArticleAdapter by lazy {
+        ArticleAdapter(
             arrayListOf(),
             true
         )
@@ -149,7 +149,7 @@ class HomeFragment : BaseDataBindingLazyViewFragment<HomeViewModel, FragmentMain
 
     private fun loadListData(
         data: ListDataStateWrapper<ArticleModel>?,
-        baseQuickAdapter: DiscoveryArticleAdapter,
+        baseQuickAdapter: ArticleAdapter,
         loadService: LoadService<Any>,
         recyclerView: SwipeRecyclerView?,
         swipeRefreshLayout: SwipeRefreshLayout?

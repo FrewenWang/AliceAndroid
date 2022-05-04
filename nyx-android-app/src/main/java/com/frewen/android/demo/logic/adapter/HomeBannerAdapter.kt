@@ -10,11 +10,11 @@ class HomeBannerAdapter : BaseBannerAdapter<BannerModel, HomeBannerViewHolder>()
     override fun getLayoutId(viewType: Int): Int {
         return R.layout.item_image_banner_view_home
     }
-    
+
     override fun createViewHolder(itemView: View, viewType: Int): HomeBannerViewHolder {
         return HomeBannerViewHolder(itemView)
     }
-    
+
     override fun onBind(
         holder: HomeBannerViewHolder?,
         data: BannerModel?,

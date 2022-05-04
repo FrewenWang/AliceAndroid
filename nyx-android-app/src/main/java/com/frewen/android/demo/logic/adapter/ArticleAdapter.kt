@@ -14,14 +14,14 @@ import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.aura.toolkits.ktx.ext.toHtml
 
 /**
- * @filename: HomeArticleAdapter
+ * @filename: ArticleAdapter
  * @author: Frewen.Wong
  * @time: 2/12/21 3:50 PM
  * @version: 1.0.0
- * @introduction:
+ * @introduction: 请求文章内容的Adapter
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-class DiscoveryArticleAdapter(data: MutableList<ArticleModel>?) :
+class ArticleAdapter(data: MutableList<ArticleModel>?) :
     BaseDelegateMultiAdapter<ArticleModel, BaseViewHolder>(data) {
     private val Article = 1//文章类型
     private val Project = 2//项目类型

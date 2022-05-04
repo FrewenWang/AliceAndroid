@@ -2,13 +2,10 @@ package com.frewen.android.demo;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Debug;
-import android.os.Trace;
 
 import com.androidnetworking.AndroidNetworking;
 import com.frewen.android.demo.app.helper.KeepAliveHelper;
-import com.frewen.android.demo.app.helper.StrictModeHelper;
 import com.frewen.android.demo.app.taskstarter.BuglyInitTask;
 import com.frewen.android.demo.app.taskstarter.DexposedInitTask;
 import com.frewen.android.demo.app.taskstarter.LoadStateServiceTask;
@@ -30,6 +27,7 @@ import com.frewen.aura.perfguard.core.PerfGuardConfig;
 import com.frewen.aura.perfguard.core.engine.cpu.CpuConfig;
 import com.frewen.aura.toolkits.concurrent.ThreadFactoryImpl;
 import com.frewen.aura.toolkits.core.AuraToolKits;
+import com.frewen.demo.library.utils.TraceUtil;
 import com.frewen.network.api.BaseApiService;
 import com.frewen.network.core.AuraRxHttp;
 import com.frewen.aura.toolkits.utils.ProcessInfoUtils;
@@ -37,16 +35,12 @@ import com.github.anrwatchdog.ANRError;
 import com.github.anrwatchdog.ANRWatchDog;
 import com.github.moduth.blockcanary.BlockCanary;
 import com.tencent.bugly.crashreport.CrashReport;
-import com.tencent.mmkv.MMKV;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
-
-import androidx.annotation.RequiresApi;
-import androidx.core.os.TraceCompat;
 
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 import dagger.android.AndroidInjector;
@@ -65,8 +59,7 @@ import static com.frewen.android.demo.constant.AppKeyConstants.APP_ID_BUGLY;
  * 让子线程来分担主线程的任务，通过并行的任务来进行减少执行时间
  */
 public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModuleProvider {
-
-    private static final String TAG = "T:NyxAndroidApp";
+    private static final String TAG = "NyxAndroidApp";
 
     public static NyxApp getInstance() {
         return (NyxApp) sInstance;
@@ -109,14 +102,7 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
     public void onCreate() {
         // 使用TraceView生成TraceView的，文件默认存储8M的信息
         Debug.startMethodTracing("NyxAndroid Start");
-
-        // 使用SysTrace进行分析
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            Trace.beginSection("NyxAndroid Start");
-        } else {
-            TraceCompat.beginSection("NyxAndroid Start");
-        }
-
+        TraceUtil.beginSection("NyxAndroid Start");
         super.onCreate();
 
         //CPU的数量. 我们在启动的时候尽量使用CPU密集型的线程池，我们尽量榨取CPU执行的调度能力
@@ -156,12 +142,7 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
 
         // 执行结束的时候录制TraceView的相关信息
         Debug.stopMethodTracing();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            Trace.endSection();
-        } else {
-            TraceCompat.endSection();
-        }
+        TraceUtil.endSection();
     }
 
     private void initModuleTaskDispatcher() {
@@ -203,7 +184,6 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
         // StrictModeHelper.init();
         // 初始化Bugly
         // initBugly();
-
         initAuraPerfGuard();
     }
 

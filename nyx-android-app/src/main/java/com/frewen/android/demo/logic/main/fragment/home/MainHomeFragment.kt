@@ -9,17 +9,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.frewen.android.demo.R
 import com.frewen.android.demo.adapter.holder.HomeBannerViewHolder
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
-import com.frewen.android.demo.logic.adapter.DiscoveryArticleAdapter
+import com.frewen.android.demo.ktx.ext.loadStateServiceInit
+import com.frewen.android.demo.ktx.ext.showLoading
+import com.frewen.android.demo.logic.adapter.ArticleAdapter
 import com.frewen.android.demo.logic.adapter.HomeBannerAdapter
 import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.android.demo.mvvm.viewmodel.MainHomeViewModel
 import com.frewen.aura.toolkits.utils.ToastUtils
 import com.frewen.demo.library.ktx.ext.init
 import com.frewen.demo.library.network.ResultState
+import com.frewen.demo.library.recyclerview.DefineLoadMoreView
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import com.frewen.network.response.exception.AuraNetException
+import com.kingja.loadsir.core.LoadService
 import com.zhpan.bannerview.BannerViewPager
-import kotlinx.android.synthetic.main.activity_coordinator_layout.*
 import kotlinx.android.synthetic.main.layout_include_recyclerview_common.*
 import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.toolbar
 
@@ -33,13 +36,6 @@ import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.toolbar
  */
 class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMainHomeBinding>() {
 
-    private val discoveryArticleAdapter: DiscoveryArticleAdapter by lazy {
-        DiscoveryArticleAdapter(
-            arrayListOf(),
-            true
-        )
-    }
-
     companion object {
         /**
          * 如果想要让Java代码也能调用这个伴生对象的方法
@@ -49,12 +45,31 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
         fun newInstance() = MainHomeFragment()
     }
 
+    /**
+     * 文章显示的适配器
+     */
+    private val articleAdapter: ArticleAdapter by lazy {
+        ArticleAdapter(arrayListOf(), showTag = true)
+    }
+
+    //界面状态管理者
+    private lateinit var loadsir: LoadService<Any>
+
+    //recyclerview的底部加载view 因为在首页要动态改变他的颜色，所以加了他这个字段
+    private lateinit var footView: DefineLoadMoreView
+
     override fun getLayoutId() = R.layout.fragment_main_home
 
     override fun initView(view: View, savedInstanceState: Bundle?) {
+        //状态页配置
+        loadsir = loadStateServiceInit(swipeRefreshLayout) {
+            //点击重试时触发的操作
+            loadsir.showLoading()
+            viewModel.getBannerData()
+            viewModel.getHomeData(true)
+        }
 
         initToolBar()
-
         initRecyclerView()
     }
 
@@ -63,6 +78,7 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
      */
     override fun initData(savedInstanceState: Bundle?) {
         viewModel.getBannerData()
+        viewModel.getHomeData(true)
     }
 
     override fun initObserver(savedInstanceState: Bundle?) {
@@ -84,7 +100,11 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
                         swipeRecyclerView.scrollToPosition(0)
                     }
                 })
+            })
 
+            homeDataState.observe(viewLifecycleOwner, Observer {
+                //设值 新写了个拓展函数，搞死了这个恶心的重复代码
+                loadListData(it, articleAdapter, loadsir, swipeRecyclerView, swipeRefreshLayout)
             })
         }
     }
@@ -93,10 +113,8 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
      * 我们解析返回的回调的结果的State的结果
      */
     private fun <T> parseState(
-        resultState: ResultState<T>,
-        onSuccess: (T) -> Unit,
-        onError: ((AuraNetException) -> Unit)? = null,
-        onLoading: (() -> Unit)? = null
+        resultState: ResultState<T>, onSuccess: (T) -> Unit,
+        onError: ((AuraNetException) -> Unit)? = null, onLoading: (() -> Unit)? = null
     ) {
         when (resultState) {
             is ResultState.Loading -> {
@@ -117,7 +135,7 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
 
 
     private fun initRecyclerView() {
-        swipeRecyclerView.init(LinearLayoutManager(context), discoveryArticleAdapter)
+        swipeRecyclerView.init(LinearLayoutManager(context), articleAdapter)
     }
 
     private fun initToolBar() {

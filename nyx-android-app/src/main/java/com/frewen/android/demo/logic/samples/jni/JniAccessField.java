@@ -8,5 +8,5 @@ import com.frewen.android.demo.logic.model.UserInfo;
 public class JniAccessField {
 
 
-    public static native int callNativeAccessStaticField(User user);
+    public static native int callNativeAccessStaticField(UserInfo user);
 }

@@ -52,7 +52,7 @@ public class OpenCVActivity extends AppCompatActivity implements View.OnClickLis
 
     private void startRGBToGray() {
         Bitmap bitmap = BitmapFactory.decodeResource(
-                OpenCVActivity.this.getResources(), R.drawable.test_avatar);
+                OpenCVActivity.this.getResources(), R.drawable.ic_avatar);
         Mat src = new Mat();
         Mat dst = new Mat();
         Utils.bitmapToMat(bitmap, src);

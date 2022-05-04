@@ -44,7 +44,7 @@ class MainRecyclerViewAdapter(private val context: Context, private val dataList
      */
     override fun onBindViewHolder(holder: MainRecyclerViewHolder, position: Int) {
         Log.d(TAG, "onBindViewHolder() called with: position = $position")
-        Glide.with(context).load(R.drawable.test_avatar).into(holder.mImageView)
+        Glide.with(context).load(R.drawable.ic_avatar).into(holder.mImageView)
         holder.mTVTitle.text = dataList[position]
         holder.mTVContent.text = dataList[position]
         holder.mImageView.setOnClickListener {

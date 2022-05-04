@@ -72,9 +72,9 @@ public class UserInfo implements Serializable {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        if (obj == null || !(obj instanceof User))
+        if (obj == null || !(obj instanceof UserInfo))
             return false;
-        UserInfo newUser = (User) obj;
+        UserInfo newUser = (UserInfo) obj;
         return TextUtils.equals(name, newUser.name)
                 && TextUtils.equals(avatar, newUser.avatar)
                 && TextUtils.equals(description, newUser.description)

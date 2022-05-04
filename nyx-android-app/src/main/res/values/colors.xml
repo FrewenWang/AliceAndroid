@@ -13,6 +13,11 @@
     <color name="yellow_300">#f8f99f</color>
     <color name="yellow_500">#ffff63</color>
 
+    <!--提示性文字颜色-->
+    <color name="textHint">@color/color_black_alpha85</color>
+    <!--整个应用布局的背景颜色-->
+    <color name="windowBackground">@color/color_white_alpha35</color>
+
     <color name="colorAccentAlpha60">#6661f2d4</color>
 
     <color name="none_received">#999999</color>

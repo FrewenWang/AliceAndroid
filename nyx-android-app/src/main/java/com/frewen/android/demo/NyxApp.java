@@ -47,6 +47,7 @@ import javax.inject.Inject;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.os.TraceCompat;
+
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -56,9 +57,9 @@ import static com.frewen.android.demo.constant.AppKeyConstants.APP_ID_BUGLY;
 
 /**
  * NyxAndroidApp
- *
+ * <p>
  * Application的启动的异步优化：
- *
+ * <p>
  * 1、Theme的切换
  * 2、异步优化：
  * 让子线程来分担主线程的任务，通过并行的任务来进行减少执行时间
@@ -68,8 +69,9 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
     private static final String TAG = "T:NyxAndroidApp";
 
     public static NyxApp getInstance() {
-        return (NyxApp)sInstance;
+        return (NyxApp) sInstance;
     }
+
     /**
      * 分发Activity的注入
      * <p>
@@ -154,8 +156,6 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
 
         // 执行结束的时候录制TraceView的相关信息
         Debug.stopMethodTracing();
-
-        appViewModelInstance = getAppViewModelProvider().get(AppViewModel::class.java)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             Trace.endSection();

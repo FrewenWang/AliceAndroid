@@ -17,8 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/test_avatar" />
-
+        app:srcCompat="@drawable/ic_avatar" />
 
     <LinearLayout
         android:layout_width="0dp"

@@ -29,7 +29,7 @@ class MainMyProfileViewModel : BaseViewModel() {
 
     var imageUrl = StringObservableField(AppThemeUtil.randomImage())
 
-    fun getIntegral() {
+    fun getIntegralData() {
         request({ NyxNetworkApi.instance.getIntegralData() }, integralData)
     }
 }

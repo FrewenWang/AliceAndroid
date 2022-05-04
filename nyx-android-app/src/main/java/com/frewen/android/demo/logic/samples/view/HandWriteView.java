@@ -32,7 +32,7 @@ public class HandWriteView extends View {
     public HandWriteView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         /// 使用BitmapFactory创建出Bitmap
-        originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.test_avatar);
+        originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_avatar);
         // 通过原始的BitMap来创建新的Bitmap
         newBitmap = Bitmap.createBitmap(originalBitmap);
     }

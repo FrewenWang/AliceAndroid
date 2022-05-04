@@ -91,12 +91,12 @@ public class GsonDemoActivity extends AppCompatActivity {
         System.out.println("---------------------Gson测试null支持------------------");
         Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
 
-        UserInfo userInfo = new User(null, 18);
+        UserInfo userInfo = new UserInfo(null, 18);
 
         String userJson = gson.toJson(userInfo);
         System.out.println(userJson);
 
-        User user = gson.fromJson(userJson, UserInfo.class);
+        UserInfo user = gson.fromJson(userJson, UserInfo.class);
         System.out.println("user name: " + user.getName());
         System.out.println("user age: " + user.getAge());
 
@@ -178,8 +178,8 @@ public class GsonDemoActivity extends AppCompatActivity {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         List<UserInfo> listOfUser = new ArrayList<UserInfo>();
 
-        User user1 = new UserInfo("格式化输出1", 1);
-        User user2 = new UserInfo("格式化输出2", 2);
+        UserInfo user1 = new UserInfo("格式化输出1", 1);
+        UserInfo user2 = new UserInfo("格式化输出2", 2);
         listOfUser.add(user1);
         listOfUser.add(user2);
         String prettyJsonString = gson.toJson(listOfUser);
@@ -199,7 +199,7 @@ public class GsonDemoActivity extends AppCompatActivity {
 
         Gson gson = gsonBuilder.create();
 
-        User user = new UserInfo("自定义序列化", 12);
+        UserInfo user = new UserInfo("自定义序列化", 12);
 
         String userJson = gson.toJson(user);
 
@@ -207,7 +207,7 @@ public class GsonDemoActivity extends AppCompatActivity {
         System.out.println(userJson);
 
 
-        UserInfo user1 = gson.fromJson(userJson, User.class);
+        UserInfo user1 = gson.fromJson(userJson, UserInfo.class);
         System.out.println("Custom DeSerializer : Java Object Creation");
         System.out.println(user1.toString());
 

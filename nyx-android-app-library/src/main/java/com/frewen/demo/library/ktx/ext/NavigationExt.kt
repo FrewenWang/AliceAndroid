@@ -4,24 +4,12 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.frewen.android.demo.utils.MmkvUtil
 
 /**
  * 获取导航管理类
  */
 fun Fragment.nav(): NavController {
     return NavHostFragment.findNavController(this)
-}
-
-/**
- * 拦截登录操作，如果没有登录跳转登录，登录过了贼执行你的方法
- */
-fun NavController.jumpByLogin(action: (NavController) -> Unit) {
-    if (com.frewen.android.demo.utils.MmkvUtil.isLogin()) {
-        action(this)
-    } else {
-        // this.navigateAction(R.id.action_to_loginFragment)
-    }
 }
 
 var lastNavTime = 0L

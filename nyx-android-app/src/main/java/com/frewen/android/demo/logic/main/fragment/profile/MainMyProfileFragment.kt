@@ -6,12 +6,11 @@ import androidx.lifecycle.Observer
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainMyProfileBinding
 import com.frewen.android.demo.ktx.ext.init
+import com.frewen.android.demo.ktx.ext.jumpByLogin
 import com.frewen.android.demo.ktx.ext.parseState
 import com.frewen.android.demo.logic.model.IntegralModel
 import com.frewen.aura.toolkits.utils.ToastUtils
-import com.frewen.demo.library.ktx.ext.jumpByLogin
 import com.frewen.demo.library.ktx.ext.nav
-import com.frewen.demo.library.ktx.ext.navigateAction
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import kotlinx.android.synthetic.main.fragment_main_my_profile.*
 
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_main_my_profile.*
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
 class MainMyProfileFragment :
-    BaseDataBindingFragment<MainMyProfileViewModel, FragmentMainMyProfileBinding>() {
+        BaseDataBindingFragment<MainMyProfileViewModel, FragmentMainMyProfileBinding>() {
 
 
     companion object {
@@ -47,7 +46,7 @@ class MainMyProfileFragment :
 
     override fun initData(savedInstanceState: Bundle?) {
         swipeRefreshLayout.init {
-            viewModel.getIntegral()
+            viewModel.getIntegralData()
         }
     }
 
@@ -73,13 +72,56 @@ class MainMyProfileFragment :
 
         /** 积分 */
         fun jumpIntegral() {
-            nav().jumpByLogin {
-                it.navigateAction(R.id.action_mainfragment_to_integralFragment,
-                    Bundle().apply {
-                        putParcelable("rank", rank)
-                    }
-                )
-            }
+            //nav().jumpByLogin {
+            //    it.navigateAction(R.id.action_mainfragment_to_integralFragment,
+            //        Bundle().apply {
+            //            putParcelable("rank", rank)
+            //        }
+            //    )
+            //}
+        }
+
+        /** 收藏 */
+        fun jumpCollect() {
+            // nav().jumpByLogin {
+            //     it.navigateAction(R.id.action_mainfragment_to_collectFragment)
+            // }
+        }
+
+        /** 文章 */
+        fun jumpArticle() {
+            // nav().jumpByLogin {
+            //     it.navigateAction(R.id.action_mainfragment_to_ariticleFragment)
+            // }
+        }
+
+        fun jumpTodo() {
+            // nav().jumpByLogin {
+            //     it.navigateAction(R.id.action_mainfragment_to_todoListFragment)
+            // }
+        }
+
+        /** 玩Android开源网站 */
+        fun jumpAbout() {
+            // nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
+            //     putParcelable(
+            //             "bannerdata",
+            //             BannerResponse(
+            //                     title = "玩Android网站",
+            //                     url = "https://www.wanandroid.com/"
+            //             )
+            //     )
+            // })
+        }
+
+        /** 加入我们 */
+        fun jumpJoin() {
+            // joinQQGroup("9n4i5sHt4189d4DvbotKiCHy-5jZtD4D")
+        }
+
+        /** 设置*/
+        fun jumSetting() {
+            // nav().navigateAction(R.id.action_mainfragment_to_settingFragment)
         }
     }
 

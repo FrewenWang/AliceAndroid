@@ -19,6 +19,6 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/test_avatar" />
+        android:src="@drawable/ic_avatar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,6 @@ class DataBindingExpandUtils {
          * EditText 按键监听
          */
         @BindingAdapter("keyListener")
-        @JvmStatic
         fun editTextKeyListener(view: EditText?, listener: View.OnKeyListener) {
             view?.apply {
                 this.setOnKeyListener(listener)
@@ -32,7 +31,6 @@ class DataBindingExpandUtils {
         }
 
         @BindingAdapter("imgUrl")
-        @JvmStatic
         fun setImageUrl(view: ImageView?, imageUrl: String) {
             view?.apply {
                 var builder: RequestBuilder<Drawable> = Glide.with(view).load(imageUrl)
@@ -44,7 +42,6 @@ class DataBindingExpandUtils {
                 builder.into(view)
             }
         }
-
     }
 
 }

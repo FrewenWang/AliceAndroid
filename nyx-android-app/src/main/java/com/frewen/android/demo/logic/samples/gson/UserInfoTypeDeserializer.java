@@ -21,7 +21,7 @@ public class UserInfoTypeDeserializer implements JsonDeserializer<UserInfo> {
 
 
     @Override
-    public User deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public UserInfo deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         UserInfo user = new UserInfo(jsonObject.get("user_name").getAsString(), jsonObject.get("age").getAsInt());
         return user;

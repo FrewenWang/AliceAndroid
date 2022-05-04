@@ -5,8 +5,8 @@ import android.view.View
 import com.frewen.android.aura.annotations.FragmentDestination
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainMyProfileBinding
+import com.frewen.android.demo.ktx.ext.jumpByLogin
 import com.frewen.demo.library.di.injector.Injectable
-import com.frewen.demo.library.ktx.ext.jumpByLogin
 import com.frewen.demo.library.ktx.ext.nav
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 

@@ -39,7 +39,7 @@ public class RxTimerActivity extends BaseToolBarActivity {
     @Override
     protected void initToolBar() {
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.icon_back);
+        mToolbar.setNavigationIcon(R.drawable.ic_arrow_left_white);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

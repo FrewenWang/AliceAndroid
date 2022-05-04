@@ -46,7 +46,7 @@ public class Comment extends BaseObservable implements Serializable {
     public int width;
     public int height;
     public boolean hasLiked;
-    public User author;
+    public UserInfo author;
     /**
      * 用户生成数据：点赞数、评论数、转发数等等
      */

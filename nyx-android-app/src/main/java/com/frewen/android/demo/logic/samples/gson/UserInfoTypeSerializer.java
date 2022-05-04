@@ -20,7 +20,7 @@ import java.lang.reflect.Type;
 public class UserInfoTypeSerializer implements JsonSerializer<UserInfo> {
 
     @Override
-    public JsonElement serialize(User user, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(UserInfo user, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject obj = new JsonObject();
         obj.addProperty("user_name", user.getName());
         obj.addProperty("age", user.getAge());

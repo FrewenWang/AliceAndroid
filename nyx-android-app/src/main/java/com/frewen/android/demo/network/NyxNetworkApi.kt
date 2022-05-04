@@ -184,7 +184,7 @@ class NyxNetworkApi : NetworkApi() {
     /**
      * 获取当前账户的个人积分
      */
-    fun getIntegralData(): AuraNetResponse<IntegralModel> {
+    suspend fun getIntegralData(): AuraNetResponse<IntegralModel> {
         return getService(NyxApiService::class.java).getIntegralData()
     }
 

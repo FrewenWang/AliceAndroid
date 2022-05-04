@@ -50,7 +50,7 @@ public class Post extends BaseObservable implements Serializable {
     public String url;
     public String cover;
 
-    public User author;
+    public UserInfo author;
     public Comment topComment;
     public Ugc ugc;
 

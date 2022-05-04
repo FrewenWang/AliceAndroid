@@ -70,7 +70,7 @@ public class HelloJNIActivity extends AppCompatActivity {
         TextView jniReferenceType = findViewById(R.id.jniReferenceType);
         jniReferenceType.setText(JniBasicType.callNativeReferenceType(sStrings));
 
-        UserInfo user = new User("XiaoMing",18);
+        UserInfo user = new UserInfo("XiaoMing",18);
         TextView jniAccessField = findViewById(R.id.jniAccessField);
         // jniAccessField.setText(JniAccessField.callNativeAccessStaticField(user));
     }

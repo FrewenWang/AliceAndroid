@@ -12,7 +12,7 @@ import com.frewen.demo.library.ui.activity.BaseDataBindingActivity
 /**
  * App的主页的Activity的实现
  */
-class HomeMainActivity : BaseDataBindingActivity<MainPageViewModel, ActivityHomeMainBinding>() {
+class HomeActivity : BaseDataBindingActivity<MainPageViewModel, ActivityHomeMainBinding>() {
     var exitTime = 0L
     override fun getContentViewId(): Int {
         return R.layout.activity_home_main
@@ -49,7 +49,7 @@ class HomeMainActivity : BaseDataBindingActivity<MainPageViewModel, ActivityHome
             override fun handleOnBackPressed() {
                 // 我们从这个宿主的HostFragment中获取导航控制器
                 val navController =
-                    Navigation.findNavController(this@HomeMainActivity, R.id.host_fragment)
+                    Navigation.findNavController(this@HomeActivity, R.id.host_fragment)
                 // 判断导航控制器中的navController中的currentDestination是不是mainFragment
                 if (navController.currentDestination != null && navController.currentDestination!!.id != R.id.mainFragment) {
                     //如果当前界面不是主页，那么直接调用返回即可

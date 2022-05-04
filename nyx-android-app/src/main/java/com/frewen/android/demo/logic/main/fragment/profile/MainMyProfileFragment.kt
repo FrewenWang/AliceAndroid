@@ -23,8 +23,7 @@ import kotlinx.android.synthetic.main.fragment_main_my_profile.*
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
 class MainMyProfileFragment :
-        BaseDataBindingFragment<MainMyProfileViewModel, FragmentMainMyProfileBinding>() {
-
+    BaseDataBindingFragment<MainMyProfileViewModel, FragmentMainMyProfileBinding>() {
 
     companion object {
         /**

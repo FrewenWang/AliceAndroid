@@ -17,7 +17,7 @@ import androidx.core.view.ViewCompat;
  * @introduction: 自定义FloatingActionBtn的Behavior  FAB 上滑显示 下滑隐藏
  * @author: Frewen.Wong
  * @time: 2020/8/3 11:49
- *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
+ * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class FloatingActionBtnBehavior extends FloatingActionButton.Behavior {
 

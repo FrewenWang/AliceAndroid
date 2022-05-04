@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class BasePagerRespData<T> {
     @SerializedName("datas")
-    private T datas;
+    private T dataList;
 
     private int curPage;
 
@@ -30,7 +30,7 @@ public class BasePagerRespData<T> {
 
 
     public boolean isEmpty() {
-        return 0 == ((List) datas).size();
+        return 0 == ((List) dataList).size();
     }
 
     public int getCurrentPage() {
@@ -82,11 +82,11 @@ public class BasePagerRespData<T> {
     }
 
     public void setDataList(T dataList) {
-        this.datas = dataList;
+        this.dataList = dataList;
     }
 
     public T getDataList() {
-        return datas;
+        return dataList;
     }
 
     public boolean hasMoreData() {
@@ -96,7 +96,7 @@ public class BasePagerRespData<T> {
     @Override
     public String toString() {
         return "BasePagerResponseData{" +
-                "dataList=" + datas +
+                "dataList=" + dataList +
                 ", currentPage=" + curPage +
                 ", offset=" + offset +
                 ", over=" + over +

@@ -32,40 +32,6 @@ fun RecyclerView.init(
 /**
  *
  */
-fun SwipeRecyclerView.init(
-    layoutManger: RecyclerView.LayoutManager,
-    bindAdapter: RecyclerView.Adapter<*>,
-    isScroll: Boolean = true
-): SwipeRecyclerView {
-    layoutManager = layoutManger
-    setHasFixedSize(true)
-    adapter = bindAdapter
-    isNestedScrollingEnabled = isScroll
-    return this
-}
-
-fun SwipeRecyclerView.initFooter(
-    appContext: Context,
-    loadMoreListener: SwipeRecyclerView.LoadMoreListener
-): DefineLoadMoreView {
-    val footerView = DefineLoadMoreView(appContext)
-    //给尾部设置颜色
-    // footerView.setLoadViewColor(SettingUtil.getOneColorStateList(appContext))
-    //设置尾部点击回调
-    footerView.setLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
-        footerView.onLoading()
-        loadMoreListener.onLoadMore()
-    })
-    this.run {
-        //添加加载更多尾部
-        addFooterView(footerView)
-        setLoadMoreView(footerView)
-        //设置加载更多回调
-        setLoadMoreListener(loadMoreListener)
-    }
-    return footerView
-}
-
 fun RecyclerView.initFloatBtn(floatBtn: FloatingActionButton) {
     //监听recyclerview滑动到顶部的时候，需要把向上返回顶部的按钮隐藏
     addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -87,4 +53,41 @@ fun RecyclerView.initFloatBtn(floatBtn: FloatingActionButton) {
             smoothScrollToPosition(0)//有滚动动画返回到顶部(有点慢)
         }
     }
+}
+
+/**
+ *  带滑动刷新功能的RecyclerView的初始化方法
+ */
+fun SwipeRecyclerView.init(
+    layoutManger: RecyclerView.LayoutManager,
+    bindAdapter: RecyclerView.Adapter<*>,
+    isScroll: Boolean = true
+): SwipeRecyclerView {
+    layoutManager = layoutManger
+    setHasFixedSize(true)
+    adapter = bindAdapter
+    isNestedScrollingEnabled = isScroll
+    return this
+}
+
+fun SwipeRecyclerView.initFooter(
+    context: Context,
+    loadMoreListener: SwipeRecyclerView.LoadMoreListener
+): DefineLoadMoreView {
+    val footerView = DefineLoadMoreView(context)
+    //给尾部设置颜色
+    // footerView.setLoadViewColor(SettingUtil.getOneColorStateList(appContext))
+    //设置尾部点击回调
+    footerView.setLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
+        footerView.onLoading()
+        loadMoreListener.onLoadMore()
+    })
+    this.run {
+        //添加加载更多尾部
+        addFooterView(footerView)
+        setLoadMoreView(footerView)
+        //设置加载更多回调
+        setLoadMoreListener(loadMoreListener)
+    }
+    return footerView
 }

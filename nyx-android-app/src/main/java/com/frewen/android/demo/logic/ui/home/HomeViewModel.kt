@@ -24,16 +24,16 @@ import javax.inject.Inject
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 class HomeViewModel @Inject constructor() : BaseViewModel() {
-    
+
     /**
      * Kotlin中，我们使用TAG 一般使用伴生对象
      */
     companion object {
         private const val TAG = "HomeViewModel"
     }
-    
+
     private var pageNo: Int = 0
-    
+
     /**
      * 由于LiveData和MutableLiveData都是一个概念的东西(只是作用范围不同)所以就不重复解释了,直接理解LiveData就可以明白MutableLiveData
      * 直接理解LiveData的字面意思是前台数据,其实这其实是很准确的表达.下面我们来说说LiveData的几个特征:
@@ -49,13 +49,13 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
      * 3.MutableLiveData则是完全是整个实体类或者数据类型变化后才通知.不会细节到某个字段
      */
     private val cacheLiveData: MutableLiveData<PagedList<Post>> = MutableLiveData()
-    
+
     //首页轮播图数据
     var bannerData: MutableLiveData<ResultState<ArrayList<BannerModel>>> = MutableLiveData()
-    
+
     //首页文章列表数据
     var homeDataState: MutableLiveData<ListDataStateWrapper<ArticleModel>> = MutableLiveData()
-    
+
     /**
      * 获取首页的轮播图数据
      */
@@ -63,7 +63,7 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
         Log.d(TAG, "getBannerData() called")
         request({ NyxNetworkApi.instance.getBanner() }, bannerData)
     }
-    
+
     /**
      * 获取首页文章列表数据
      * @param isRefresh 是否是刷新，即第一页
@@ -89,7 +89,7 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
         }, {
             Log.d(TAG, "getHomeData Exception = $it")
         })
-        
+
     }
-    
+
 }

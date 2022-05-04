@@ -21,7 +21,7 @@
             android:layout_marginRight="12dp"
             android:layout_marginBottom="24dp"
             android:scaleType="center"
-            android:src="@mipmap/icon_fab_back_to_top"
+            android:src="@mipmap/ic_fab_back_to_top"
             android:visibility="invisible"
             app:elevation="5dp"
             app:fabSize="mini"

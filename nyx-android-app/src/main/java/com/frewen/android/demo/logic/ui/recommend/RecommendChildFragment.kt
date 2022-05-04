@@ -10,7 +10,7 @@ import com.frewen.android.demo.R
 import com.frewen.demo.library.ui.fragment.BaseDataBindingLazyViewFragment
 import com.frewen.android.demo.databinding.LayoutFloatButtonRecylerViewBinding
 import com.frewen.android.demo.ktx.ext.*
-import com.frewen.android.demo.logic.adapter.HomeArticleAdapter
+import com.frewen.android.demo.logic.adapter.DiscoveryArticleAdapter
 import com.frewen.android.demo.logic.model.ArticleModel
 import com.frewen.android.demo.logic.model.ListDataStateWrapper
 import com.frewen.demo.library.recyclerview.DefineLoadMoreView
@@ -24,7 +24,6 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.layout_common_recyclerview.*
 import kotlinx.android.synthetic.main.layout_include_coordinator_recycler_view.*
 import kotlinx.android.synthetic.main.layout_include_recyclerview_common.*
-import kotlinx.android.synthetic.main.layout_include_recyclerview_common.recyclerView
 
 /**
  * @filename: RecommendChildFragment
@@ -51,7 +50,7 @@ class RecommendChildFragment :
     /**
      *
      */
-    private val articleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter(arrayListOf()) }
+    private val articleAdapter: DiscoveryArticleAdapter by lazy { DiscoveryArticleAdapter(arrayListOf()) }
     
     //recyclerview的底部加载view 因为在首页要动态改变他的颜色，所以加了他这个字段
     private lateinit var footView: DefineLoadMoreView
@@ -92,7 +91,7 @@ class RecommendChildFragment :
      * 初始化RecyclerView
      */
     private fun initRecyclerView() {
-        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
+        swipeRecyclerView.init(LinearLayoutManager(context), articleAdapter).let {
             it.addItemDecoration(SpaceItemDecoration(0, DisplayHelper.dip2px(8f)))
             footView = it.initFooter(requireContext(), SwipeRecyclerView.LoadMoreListener {
                 //触发加载更多时请求数据
@@ -129,7 +128,7 @@ class RecommendChildFragment :
     override fun initObserver(savedInstanceState: Bundle?) {
         recommendModel.projectDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, articleAdapter, loadStateService, recyclerView, swipeRefresh)
+            loadListData(it, articleAdapter, loadStateService, swipeRecyclerView, swipeRefresh)
         })
     }
     
@@ -141,7 +140,7 @@ class RecommendChildFragment :
     
     private fun loadListData(
         data: ListDataStateWrapper<ArticleModel>?,
-        baseQuickAdapter: HomeArticleAdapter,
+        baseQuickAdapter: DiscoveryArticleAdapter,
         loadService: LoadService<Any>,
         recyclerView: SwipeRecyclerView?,
         swipeRefreshLayout: SwipeRefreshLayout?

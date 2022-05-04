@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+    <!--顶部带有导航栏的ViewPager的布局容器-->
 
     <FrameLayout
         android:id="@+id/view_pager_container"
@@ -22,7 +23,6 @@
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp" />
-
     </FrameLayout>
 
     <!--下面的ViewPager的布局区域-->

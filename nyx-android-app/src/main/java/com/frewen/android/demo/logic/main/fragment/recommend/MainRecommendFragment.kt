@@ -1,13 +1,10 @@
-package com.frewen.android.demo.logic.main.fragment.home
+package com.frewen.android.demo.logic.main.fragment.recommend
 
 import android.os.Bundle
 import android.view.View
 import com.frewen.android.demo.R
-import com.frewen.android.demo.databinding.FragmentMainHomeBinding
 import com.frewen.android.demo.databinding.FragmentMainRecommendBinding
-import com.frewen.android.demo.logic.ui.recommend.content.EyeRecommendFragment
 import com.frewen.android.demo.mvvm.viewmodel.MainHomeViewModel
-import com.frewen.aura.framework.fragment.BaseFragment
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 
 /**

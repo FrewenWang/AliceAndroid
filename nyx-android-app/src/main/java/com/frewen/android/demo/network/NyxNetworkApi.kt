@@ -145,11 +145,19 @@ class NyxNetworkApi : NetworkApi() {
         return getService(NyxApiService::class.java).getWXArticleTitle()
     }
 
+
     /**
-     * 获取最新项目数据
+     * 获取最新项目分分页数据
      */
     suspend fun getProjectNewData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
         return getService(NyxApiService::class.java).getProjectNewData(pageNo)
+    }
+
+    /**
+     * 获取广场列表的分页数据
+     */
+    suspend fun getSquareData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
+        return getService(NyxApiService::class.java).getSquareData(pageNo)
     }
 
     /**

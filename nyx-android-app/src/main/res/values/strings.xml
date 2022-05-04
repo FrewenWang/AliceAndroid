@@ -164,5 +164,6 @@
     <string name="load_error_retry">点击重试</string>
 
     <string name="user_avatar" tools:ignore="ExtraTranslation">用户头像</string>
+    <string name="add">添加</string>
 
 </resources>

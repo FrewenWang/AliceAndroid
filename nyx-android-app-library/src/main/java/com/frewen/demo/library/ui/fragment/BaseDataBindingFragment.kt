@@ -31,9 +31,9 @@ abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : 
      * 根据Fragment动态清理和获取binding对象
      */
     var binding by autoCleared<VDB>()
-    
+
     lateinit var viewModel: VM
-    
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,48 +50,48 @@ abstract class BaseDataBindingFragment<VM : ViewModel, VDB : ViewDataBinding> : 
         // 目前此方法已经过时，我们使用下面实现方法
         //viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
         viewModel = ViewModelProvider(this).get(getViewModelClass(this, 0))
-        
+
         return binding?.root
     }
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         initView(view, savedInstanceState)
-        
+
         initObserver(savedInstanceState)
-        
+
         initData(savedInstanceState)
     }
-    
-    
+
+
     /**
      * 抽象方法，供子类传入LayoutID
      */
     abstract fun getLayoutId(): Int
-    
+
     /**
      * 定义View初始化完成之后的逻辑
      */
     abstract fun initView(view: View, savedInstanceState: Bundle?)
-    
+
     /**
      * 初始化数据
      */
     abstract fun initData(savedInstanceState: Bundle?)
-    
+
     /**
      * 初始化ViewModel的监听器的逻辑
      */
     abstract fun initObserver(savedInstanceState: Bundle?)
-    
-    
+
+
     /**
      *
      */
     fun showLoading(loadingMessage: String) {
-    
+
     }
-    
-    
+
+
 }

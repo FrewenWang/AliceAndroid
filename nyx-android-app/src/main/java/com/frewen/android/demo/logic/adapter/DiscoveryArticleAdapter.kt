@@ -21,16 +21,16 @@ import com.frewen.aura.toolkits.ktx.ext.toHtml
  * @introduction:
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-class HomeArticleAdapter(data: MutableList<ArticleModel>?) :
+class DiscoveryArticleAdapter(data: MutableList<ArticleModel>?) :
     BaseDelegateMultiAdapter<ArticleModel, BaseViewHolder>(data) {
     private val Article = 1//文章类型
     private val Project = 2//项目类型
     private var showTag = false//是否展示标签 tag 一般主页才用的到
-    
+
     constructor(data: MutableList<ArticleModel>?, showTag: Boolean) : this(data) {
         this.showTag = showTag
     }
-    
+
     override fun convert(helper: BaseViewHolder, item: ArticleModel) {
         when (helper.itemViewType) {
             Article -> {
@@ -43,7 +43,7 @@ class HomeArticleAdapter(data: MutableList<ArticleModel>?) :
                     helper.setText(R.id.item_home_content, title.toHtml())
                     helper.setText(R.id.item_home_type2, "$superChapterName·$chapterName".toHtml())
                     helper.setText(R.id.item_home_date, niceDate)
-                    
+
                     // helper.getView<CollectView>(R.id.item_home_collect).isChecked = collect
                     if (showTag) {
                         //展示标签
@@ -113,7 +113,7 @@ class HomeArticleAdapter(data: MutableList<ArticleModel>?) :
             }
         }
     }
-    
+
     init {
         // 获取设置里面持久化缓存的列表动画模式
         val animMode = AppThemeUtil.getListAnimMode()
@@ -136,5 +136,5 @@ class HomeArticleAdapter(data: MutableList<ArticleModel>?) :
             it.addItemType(Project, R.layout.item_project)
         }
     }
-    
+
 }

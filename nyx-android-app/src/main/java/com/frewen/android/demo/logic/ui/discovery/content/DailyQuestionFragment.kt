@@ -45,7 +45,7 @@ class DailyQuestionFragment : BaseDataBindingFragment<DailyQuestionViewModel, Fr
      */
     private fun initView(savedInstanceState: Bundle?) {
         // 调用recyclerView的初始化扩展函数
-        recyclerView.init(LinearLayoutManager(context), dailyQuestionAdapter)?.let {
+        swipeRecyclerView.init(LinearLayoutManager(context), dailyQuestionAdapter)?.let {
             it.addItemDecoration(DividerItemDecoration(0, DisplayHelper.dip2px(8f)))
         }
         

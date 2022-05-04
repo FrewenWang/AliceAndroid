@@ -4,7 +4,8 @@
     android:id="@+id/toolbar"
     style="@style/NyxAppTheme.ToolbarStyle"
     android:background="@color/colorPrimary"
+    app:contentInsetStart="0dp"
     app:layout_scrollFlags="scroll|enterAlways"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
+    app:popupTheme="@style/AppTheme.PopupOverlay">
 
 </androidx.appcompat.widget.Toolbar>

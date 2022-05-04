@@ -60,9 +60,15 @@ interface NyxApiService {
      * 获取最新项目数据
      */
     @GET("article/listproject/{page}/json")
-    suspend fun getProjectNewData(
-        @Path("page") pageNo: Int
-    ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
+    suspend fun getProjectNewData(@Path("page") pageNo: Int)
+            : AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
+
+    /**
+     * 获取广场列表的分页数据
+     */
+    @GET("user_article/list/{page}/json")
+    suspend fun getSquareData(@Path("page") page: Int)
+            : AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
 
     /**
      * 根据分类id获取项目数据

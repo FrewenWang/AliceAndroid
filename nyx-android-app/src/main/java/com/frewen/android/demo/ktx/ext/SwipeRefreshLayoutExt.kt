@@ -7,11 +7,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
  * @author: Frewen.Wong
  * @time: 2021/6/27 18:56
  * @version: 1.0.0
- * @introduction:  Class File Init
+ * @introduction:  初始化 SwipeRefreshLayout
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
- */
-/**
- * 初始化 SwipeRefreshLayout
  */
 fun SwipeRefreshLayout.init(onRefreshListener: () -> Unit) {
     this.run {

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.frewen.android.demo.R
 import com.frewen.android.demo.adapter.holder.HomeBannerViewHolder
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
-import com.frewen.android.demo.logic.adapter.HomeArticleAdapter
+import com.frewen.android.demo.logic.adapter.DiscoveryArticleAdapter
 import com.frewen.android.demo.logic.adapter.HomeBannerAdapter
 import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.android.demo.mvvm.viewmodel.MainHomeViewModel
@@ -19,8 +19,9 @@ import com.frewen.demo.library.network.ResultState
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import com.frewen.network.response.exception.AuraNetException
 import com.zhpan.bannerview.BannerViewPager
+import kotlinx.android.synthetic.main.activity_coordinator_layout.*
 import kotlinx.android.synthetic.main.layout_include_recyclerview_common.*
-import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.*
+import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.toolbar
 
 /**
  * @filename: MainHomeFragment
@@ -32,8 +33,8 @@ import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.*
  */
 class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMainHomeBinding>() {
 
-    private val homeArticleAdapter: HomeArticleAdapter by lazy {
-        HomeArticleAdapter(
+    private val discoveryArticleAdapter: DiscoveryArticleAdapter by lazy {
+        DiscoveryArticleAdapter(
             arrayListOf(),
             true
         )
@@ -70,7 +71,7 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
                 Log.e(TAG, "initObserver() called with: resultState = $resultState")
                 parseState(resultState, { data ->
                     //请求轮播图数据成功，添加轮播图到HeadView ，如果等于0说明没有添加过头部，添加一个
-                    if (recyclerView.headerCount == 0) {
+                    if (swipeRecyclerView.headerCount == 0) {
                         val headView = LayoutInflater.from(context)
                             .inflate(R.layout.layout_include_bannner_view_common, null).apply {
                                 findViewById<BannerViewPager<BannerModel, HomeBannerViewHolder>>(R.id.banner_view).apply {
@@ -79,8 +80,8 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
                                     create(data)
                                 }
                             }
-                        recyclerView.addHeaderView(headView)
-                        recyclerView.scrollToPosition(0)
+                        swipeRecyclerView.addHeaderView(headView)
+                        swipeRecyclerView.scrollToPosition(0)
                     }
                 })
 
@@ -116,7 +117,7 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
 
 
     private fun initRecyclerView() {
-        recyclerView.init(LinearLayoutManager(context), homeArticleAdapter)
+        swipeRecyclerView.init(LinearLayoutManager(context), discoveryArticleAdapter)
     }
 
     private fun initToolBar() {

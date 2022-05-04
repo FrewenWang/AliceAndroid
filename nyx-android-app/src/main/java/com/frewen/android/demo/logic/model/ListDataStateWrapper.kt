@@ -5,7 +5,7 @@ package com.frewen.android.demo.logic.model
  * @author: Frewen.Wong
  * @time: 3/20/21 6:20 PM
  * @version: 1.0.0
- * @introduction:  Class File Init
+ * @introduction: 列表数据来封装其UI状态的逻辑
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
 data class ListDataStateWrapper<T>(

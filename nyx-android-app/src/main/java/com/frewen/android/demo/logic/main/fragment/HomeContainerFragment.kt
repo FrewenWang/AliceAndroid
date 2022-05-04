@@ -5,10 +5,10 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainPageBinding
-import com.frewen.android.demo.logic.main.fragment.home.MainDiscoveryFragment
+import com.frewen.android.demo.logic.main.fragment.discovery.MainDiscoveryFragment
 import com.frewen.android.demo.logic.main.fragment.home.MainHomeFragment
 import com.frewen.android.demo.logic.main.fragment.profile.MainMyProfileFragment
-import com.frewen.android.demo.logic.main.fragment.home.MainRecommendFragment
+import com.frewen.android.demo.logic.main.fragment.recommend.MainRecommendFragment
 import com.frewen.android.demo.mvvm.viewmodel.MainPageViewModel
 import com.frewen.demo.library.ktx.ext.init
 import com.frewen.demo.library.ktx.ext.initOnFragment
@@ -19,7 +19,8 @@ import kotlinx.android.synthetic.main.fragment_main_page.*
 /**
  * 主页面的Fragment页面
  */
-class HomeMainFragment : BaseDataBindingFragment<MainPageViewModel, FragmentMainPageBinding>() {
+class HomeContainerFragment :
+    BaseDataBindingFragment<MainPageViewModel, FragmentMainPageBinding>() {
 
     override fun getLayoutId() = R.layout.fragment_main_page
 

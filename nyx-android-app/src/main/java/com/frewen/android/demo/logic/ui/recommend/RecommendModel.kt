@@ -10,22 +10,22 @@ import com.frewen.demo.library.mvvm.vm.BaseViewModel
 import com.frewen.demo.library.network.ResultState
 
 class RecommendModel : BaseViewModel() {
-    
+
     var pageNo = 1
-    
+
     //首页轮播图数据
     var recommendTabData: MutableLiveData<ResultState<ArrayList<RecommendTabRespData>>> =
         MutableLiveData()
-    
+
     /**
      * 获取推荐页面的项目数据
      */
     var projectDataState: MutableLiveData<ListDataStateWrapper<ArticleModel>> = MutableLiveData()
-    
+
     fun getRecommendData() {
         request({ NyxNetworkApi.instance.getRecommendTabData() }, recommendTabData)
     }
-    
+
     fun getProjectData(isRefresh: Boolean, cid: Int, isNew: Boolean = false) {
         if (isRefresh) {
             pageNo = if (isNew) 0 else 1
@@ -44,7 +44,7 @@ class RecommendModel : BaseViewModel() {
                 )
             projectDataState.value = listDataUiState
         })
-        
+
     }
-    
+
 }

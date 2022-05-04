@@ -5,15 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewTreeObserver
-import android.view.Window
-import android.view.WindowManager
 import android.view.animation.*
 import android.widget.ImageView
 import butterknife.BindView
 import com.frewen.android.demo.R
-import com.frewen.android.demo.logic.samples.jni.HelloJNIActivity
-import com.frewen.android.demo.logic.samples.opengles.OpenGLESDemoActivity
-import com.frewen.android.demo.logic.samples.rxjava2.RxJava2Activity
+import com.frewen.android.demo.logic.main.HomeMainActivity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
 import com.frewen.aura.toolkits.common.ResourcesUtils
@@ -33,18 +29,18 @@ import kotlinx.coroutines.launch
  */
 class SplashActivity : BaseButterKnifeActivity() {
     private val TAG = "SplashActivity"
-    
+
     @JvmField
     @BindView(R.id.ivSplashPicture)
     var splashBg: ImageView? = null
-    
+
     @JvmField
     @BindView(R.id.ivSlogan)
     var ivSlogan: ImageView? = null
     private val splashDuration = 3 * 1000L
-    
+
     private val job by lazy { Job() }
-    
+
     companion object {
         /**
          * 是否首次进入APP应用
@@ -53,15 +49,15 @@ class SplashActivity : BaseButterKnifeActivity() {
             get() = SharedPrefUtils.getBoolean("is_first_entry_app", true)
             set(value) = SharedPrefUtils.putBoolean("is_first_entry_app", value)
     }
-    
-    
+
+
     private fun startHomeActivity() {
-        // When animation set ended, intent to the MainActivity.
-        val intent = Intent(this@SplashActivity, OpenGLESDemoActivity::class.java)
+        // When animation set ended, intent to the HomeActivity.
+        val intent = Intent(this@SplashActivity, HomeMainActivity::class.java)
         startActivity(intent)
     }
-    
-    
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // java.lang.RuntimeException: Unable to start activity
         // ComponentInfo{com.frewen.android.demo/com.frewen.android.demo.logic.ui.SplashActivity}:
@@ -80,23 +76,23 @@ class SplashActivity : BaseButterKnifeActivity() {
 //        // 我们可以通过代码来设置主题。我们通过设置透明主题,来减少白屏
 //        setTheme(R.style.NyxAppMaterialTheme)
         super.onCreate(savedInstanceState)
-        
+
     }
-    
+
     override fun initView(savedInstanceState: Bundle?) {
         /**
          * 进行APP权限申请
          */
         requestPermissions()
     }
-    
+
     /**
      * 设置SetContentView的布局ID
      */
     override fun getContentViewId(): Int {
         return R.layout.activity_splash
     }
-    
+
     /**
      * 我们使用这个框架：https://github.com/guolindev/PermissionX
      * 添加依赖：implementation 'com.permissionx.guolindev:permission-support:1.2.2'
@@ -124,7 +120,7 @@ class SplashActivity : BaseButterKnifeActivity() {
             }
             .request { allGranted: Boolean, grantedList: List<String?>?, deniedList: List<String?>? -> requestReadPhoneStatePermission() }
     }
-    
+
     private fun requestReadPhoneStatePermission() {
         PermissionX.init(this)
             .permissions(Manifest.permission.READ_PHONE_STATE)
@@ -150,7 +146,7 @@ class SplashActivity : BaseButterKnifeActivity() {
             }
             .request { allGranted, grantedList, deniedList -> initAnimation() }
     }
-    
+
     /**
      * 初始化Splash页面的动画
      */
@@ -167,7 +163,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         }
         isFirstEntryApp = false
     }
-    
+
     /**
      * 展示中心Logo的展示动画序列
      */
@@ -176,7 +172,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         val animation = AnimationSet(false)
         // Set FillAfter to true, so the view won't reset after animations end.
         animation.fillAfter = true
-        
+
         // Create an animation that make the lens icon move straight left.
         val straightLeftAnimation: Animation = TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f,
@@ -187,14 +183,14 @@ class SplashActivity : BaseButterKnifeActivity() {
         straightLeftAnimation.duration = 3000
         // 将LinearInterpolator设置为动画以统一其播放速度。
         straightLeftAnimation.interpolator = LinearInterpolator()
-        
+
         // 一个简单的自定义Animation类，可以水平执行半圆运动。
         val firstSemicircleAnimation: Animation = SemicircleAnimation(0.0f, 1.5f)
         // Set the start offset right after the animation above ended.
         firstSemicircleAnimation.startOffset = 100
         firstSemicircleAnimation.duration = 1000
         firstSemicircleAnimation.interpolator = LinearInterpolator()
-        
+
         // Second semicircle animation for the lens icon.
         val secondSemicircleAnimation: Animation = SemicircleAnimation(0.0f, (-1).toFloat())
         secondSemicircleAnimation.startOffset = 100
@@ -207,11 +203,11 @@ class SplashActivity : BaseButterKnifeActivity() {
             Animation.RELATIVE_TO_SELF, 0.5f
         )
         enlargeAnimation.duration = 1500
-        
+
         // 从半透明到开始进行透明度变换动画
         val alphaAnimation: Animation = AlphaAnimation(0.5f, 1.0f)
         alphaAnimation.duration = 1500
-        
+
         // 将上面四个动画加入到
         animation.addAnimation(straightLeftAnimation)
         animation.addAnimation(firstSemicircleAnimation)
@@ -222,12 +218,12 @@ class SplashActivity : BaseButterKnifeActivity() {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
             }
-            
+
             override fun onAnimationRepeat(animation: Animation) {}
         })
         ivSlogan!!.startAnimation(animation)
     }
-    
+
     private fun initSplashBgScaleAnimation() {
         /// 动画开始时应用的水平缩放系数
         /// 在动画结束时应用的水平缩放系数
@@ -245,7 +241,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         )
         scaleAnimation.duration = splashDuration
         scaleAnimation.fillAfter = true
-        
+
         /**
          * TODO 关于View的addOnPreDrawListener需要学习
          * 注意：viewTreeObserver.addOnDrawListener的是最低API要求是16这个需要注意
@@ -259,13 +255,13 @@ class SplashActivity : BaseButterKnifeActivity() {
                     return true
                 }
             })
-        
+
         //splashBg!!.doOnPreDraw { endRecord("Application") }
-        
+
         splashBg!!.startAnimation(scaleAnimation)
-        
+
     }
-    
+
     /**
      * onWindowFocusChanged只是首帧的时间的回调。并不代表页面完全展现出来
      * 在进行打点记录启动的时间的时候，很多时候都是在onWindowFocusChanged里面进行调用。
@@ -275,7 +271,7 @@ class SplashActivity : BaseButterKnifeActivity() {
         super.onWindowFocusChanged(hasFocus)
         Log.d(TAG, "onWindowFocusChanged() called with: hasFocus = $hasFocus")
     }
-    
+
     /**
      * A simple custom Animation class that does semicircle motion horizontally.
      * 一个简单的自定义Animation类，可以水平执行半圆运动。
@@ -293,12 +289,12 @@ class SplashActivity : BaseButterKnifeActivity() {
             super.initialize(width, height, parentWidth, parentHeight)
             val fromXDelta = resolveSize(RELATIVE_TO_SELF, mFromXValue, width, parentWidth)
             val toXDelta = resolveSize(RELATIVE_TO_SELF, mToXValue, width, parentWidth)
-            
+
             // Calculate the radius of the semicircle motion.
             // Note: Radius can be negative here.
             mRadius = (toXDelta - fromXDelta) / 2
         }
-        
+
         override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
             var dx = 0f
             var dy = 0f
@@ -312,6 +308,6 @@ class SplashActivity : BaseButterKnifeActivity() {
             dy = (-mRadius * Math.sin(angleRad.toDouble())).toFloat()
             t.matrix.setTranslate(dx, dy)
         }
-        
+
     }
 }

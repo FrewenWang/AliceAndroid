@@ -9,7 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.model.User;
+import com.frewen.android.demo.logic.model.UserInfo;
 
 /**
  * @filename: HelloJNIActivity
@@ -70,7 +70,7 @@ public class HelloJNIActivity extends AppCompatActivity {
         TextView jniReferenceType = findViewById(R.id.jniReferenceType);
         jniReferenceType.setText(JniBasicType.callNativeReferenceType(sStrings));
 
-        User user = new User("XiaoMing",18);
+        UserInfo user = new User("XiaoMing",18);
         TextView jniAccessField = findViewById(R.id.jniAccessField);
         // jniAccessField.setText(JniAccessField.callNativeAccessStaticField(user));
     }

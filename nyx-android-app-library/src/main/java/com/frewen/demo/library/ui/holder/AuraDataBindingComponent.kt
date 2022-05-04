@@ -3,11 +3,11 @@ package com.frewen.demo.library.ui.holder
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingComponent
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
-import com.frewen.aura.ui.circlezoomview.CircleImageView
 
 /**
  * @filename: AuraDataBindingComponent
@@ -24,20 +24,19 @@ class DataBindingExpandUtils {
          * EditText 按键监听
          */
         @BindingAdapter("keyListener")
+        @JvmStatic
         fun editTextKeyListener(view: EditText?, listener: View.OnKeyListener) {
             view?.apply {
                 this.setOnKeyListener(listener)
             }
         }
 
-        /**
-         * EditText 按键监听
-         */
         @BindingAdapter("imgUrl")
-        fun setImageUrl(view: CircleImageView?, imageUrl: String) {
+        @JvmStatic
+        fun setImageUrl(view: ImageView?, imageUrl: String) {
             view?.apply {
                 var builder: RequestBuilder<Drawable> = Glide.with(view).load(imageUrl)
-                //TODO 这个地方是进行Glide加载图片的尺寸的复写，防止URL给的图片尺寸太大，占用内存，所以我们进行裁剪
+                // 这个地方是进行Glide加载图片的尺寸的复写，防止URL给的图片尺寸太大，占用内存，所以我们进行裁剪
                 var layoutParams = view.layoutParams;
                 if (layoutParams != null && layoutParams.height > 0 && layoutParams.width > 0) {
                     builder.override(layoutParams.width, layoutParams.height)
@@ -45,7 +44,6 @@ class DataBindingExpandUtils {
                 builder.into(view)
             }
         }
-
 
     }
 

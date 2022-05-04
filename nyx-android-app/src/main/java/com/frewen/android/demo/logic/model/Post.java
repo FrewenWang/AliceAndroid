@@ -63,7 +63,7 @@ public class Post extends BaseObservable implements Serializable {
     }
 
     @Bindable
-    public User getAuthor() {
+    public UserInfo getAuthor() {
         return author;
     }
 

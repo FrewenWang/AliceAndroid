@@ -23,18 +23,19 @@ import kotlinx.android.synthetic.main.layout_include_top_indicator_view_pager2.*
  * @introduction:  Class File Init
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-class MainDiscoveryFragment : BaseDataBindingFragment<MainDiscoveryViewModel, FragmentMainDiscoveryBinding>() {
-    
+class MainDiscoveryFragment :
+    BaseDataBindingFragment<MainDiscoveryViewModel, FragmentMainDiscoveryBinding>() {
+
     /**
      * 微信公众号的集合对象，通过arrayListOf()来实例化一个空集合
      */
     private var mWXArticleList: ArrayList<String> = arrayListOf()
-    
+
     /**
      *
      */
     private var fragments: ArrayList<Fragment> = arrayListOf()
-    
+
     companion object {
         /**
          * 如果想要让Java代码也能调用这个伴生对象的方法
@@ -43,24 +44,23 @@ class MainDiscoveryFragment : BaseDataBindingFragment<MainDiscoveryViewModel, Fr
         @JvmStatic
         fun newInstance() = MainDiscoveryFragment()
     }
-    
-    
+
+
     override fun getLayoutId() = R.layout.fragment_main_discovery
-    
+
     override fun initView(view: View, savedInstanceState: Bundle?) {
         Log.d(TAG, "initView() called with: view = $view, savedInstanceState = $savedInstanceState")
-        
+
         //初始化viewpager2
         view_pager2.initOnFragment(this, fragments)
         //初始化 magic_indicator
         magic_indicator.bindViewPager2(view_pager2, mWXArticleList)
     }
-    
+
     override fun initData(savedInstanceState: Bundle?) {
-        Log.d(TAG, "initData() called")
         viewModel.requestDiscoveryTitleData()
     }
-    
+
     /**
      * 我们在Fragment中创建Observer监听器。
      * 在这个方法里面。我们调用MutableLiveData数据的observe()方法
@@ -82,5 +82,5 @@ class MainDiscoveryFragment : BaseDataBindingFragment<MainDiscoveryViewModel, Fr
             })
         })
     }
-    
+
 }

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--通用模块文案-->
     <string name="title_home">首页</string>
@@ -163,7 +163,6 @@
     <string name="rx_Flowable">Flowable</string>
     <string name="load_error_retry">点击重试</string>
 
-
-    <string name="align_text_view">Content description    for \r\d\n the header / hero image that is show at the top of the plant detail screen. \r\n Content description     for the header / hero image that is show at the top of the plant detail screen.</string>
+    <string name="user_avatar" tools:ignore="ExtraTranslation">用户头像</string>
 
 </resources>

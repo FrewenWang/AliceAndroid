@@ -183,11 +183,11 @@ public class Comment extends BaseObservable implements Serializable {
         this.hasLiked = hasLiked;
     }
 
-    public User getAuthor() {
+    public UserInfo getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
+    public void setAuthor(UserInfo author) {
         this.author = author;
     }
 

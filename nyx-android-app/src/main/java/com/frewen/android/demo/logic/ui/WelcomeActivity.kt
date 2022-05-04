@@ -13,7 +13,6 @@ import com.frewen.android.demo.widgets.banner.WelcomeBannerViewHolder
 import com.frewen.aura.framework.mvvm.activity.BaseVMDataBindingActivity
 import com.frewen.demo.library.ktx.ext.gone
 import com.frewen.demo.library.ktx.ext.visible
-import com.frewen.demo.library.mvvm.vm.BaseViewModel
 import com.zhpan.bannerview.BannerViewPager
 import kotlinx.android.synthetic.main.activity_welcome.*
 

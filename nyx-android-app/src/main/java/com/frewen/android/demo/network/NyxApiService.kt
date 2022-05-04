@@ -18,44 +18,44 @@ import retrofit2.http.Query
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 interface NyxApiService {
-    
-    
+
+
     /**
      * 获取banner数据
      */
     @GET("banner/json")
     suspend fun getBanner(): AuraNetResponse<ArrayList<BannerModel>>
-    
+
     /**
      * 获取置顶文章集合数据
      */
     @GET("article/top/json")
     suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleModel>>
-    
+
     /**
      * 获取首页的文章数据
      */
     @GET("article/list/{page}/json")
     suspend fun getArticleList(@Path("page") pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
-    
+
     /**
      * 公众号分类
      */
     @GET("wxarticle/chapters/json")
     suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleTitle>>
-    
+
     @GET("wxarticle/list/{id}/{page}/json")
     suspend fun getWXContentData(
         @Path("page") pageNo: Int,
         @Path("id") id: Int
     ): AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>>
-    
+
     /**
      * 推荐页面的项目分类的标题
      */
     @GET("project/tree/json")
     suspend fun getRecommendTabData(): AuraNetResponse<ArrayList<RecommendTabRespData>>
-    
+
     /**
      * 获取最新项目数据
      */
@@ -63,7 +63,7 @@ interface NyxApiService {
     suspend fun getProjectNewData(
         @Path("page") pageNo: Int
     ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
-    
+
     /**
      * 根据分类id获取项目数据
      */
@@ -71,6 +71,12 @@ interface NyxApiService {
     suspend fun getProjectDataByType(
         @Path("page") pageNo: Int, @Query("cid") cid: Int
     ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
-    
-    
+
+    /**
+     * 获取当前账户的个人积分
+     */
+    @GET("lg/coin/userinfo/json")
+    suspend fun getIntegralData(): AuraNetResponse<IntegralModel>
+
+
 }

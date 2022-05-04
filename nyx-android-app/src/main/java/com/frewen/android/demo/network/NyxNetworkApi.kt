@@ -30,7 +30,7 @@ import kotlin.coroutines.suspendCoroutine
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 class NyxNetworkApi : NetworkApi() {
-    
+
     override fun getInterceptor(): Interceptor {
         /**
          * 匿名内部类的实现
@@ -47,23 +47,23 @@ class NyxNetworkApi : NetworkApi() {
             }
         }
     }
-    
+
     override fun getProdUrl(): String {
         return "https://wanandroid.com/"
     }
-    
+
     override fun getPreUrl(): String {
         return "https://wanandroid.com/"
     }
-    
+
     override fun getTestUrl(): String {
         return "https://wanandroid.com/"
     }
-    
+
     override fun getDevUrl(): String {
         return "https://wanandroid.com/"
     }
-    
+
     /**
      * 我们给Call增加一个扩展函数，来处理我们的协程逻辑
      */
@@ -74,7 +74,7 @@ class NyxNetworkApi : NetworkApi() {
                     Log.d(Companion.TAG, "onFailure() called with: call = $call, t = $t")
                     continuation.resumeWithException(t)
                 }
-                
+
                 override fun onResponse(call: Call<T>, response: retrofit2.Response<T>) {
                     Log.d(TAG, "onResponse() called with: call = $call, response = $response")
                     val body = response.body()
@@ -84,13 +84,13 @@ class NyxNetworkApi : NetworkApi() {
             })
         }
     }
-    
+
     /**
      * 这个是DoubleCheck的单例模式的Kotlin实现方法
      */
     companion object {
         private const val TAG = "NyxNetworkApi"
-        
+
         @Volatile
         private var sInstance: NyxNetworkApi? = null
         val instance: NyxNetworkApi
@@ -104,17 +104,17 @@ class NyxNetworkApi : NetworkApi() {
                 }
                 return sInstance!!
             }
-        
+
         fun <T> getService(service: Class<T>): T {
             return instance.getRetrofit(service).create(service)
         }
     }
-    
-    
+
+
     suspend fun getBanner(): AuraNetResponse<ArrayList<BannerModel>> {
         return getService(NyxApiService::class.java).getBanner()
     }
-    
+
     suspend fun getHomeData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
         return withContext(Dispatchers.IO) {
             val listData = async { getService(NyxApiService::class.java).getArticleList(pageNo) }
@@ -127,31 +127,31 @@ class NyxNetworkApi : NetworkApi() {
             }
         }
     }
-    
-    
+
+
     suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleModel>> {
         return getService(NyxApiService::class.java).getTopArticleList()
     }
-    
+
     /**
      * 推荐页面的项目分类的标题
      */
     suspend fun getRecommendTabData(): AuraNetResponse<ArrayList<RecommendTabRespData>> {
         return getService(NyxApiService::class.java).getRecommendTabData()
     }
-    
-    
+
+
     suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleTitle>> {
         return getService(NyxApiService::class.java).getWXArticleTitle()
     }
-    
+
     /**
      * 获取最新项目数据
      */
     suspend fun getProjectNewData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
         return getService(NyxApiService::class.java).getProjectNewData(pageNo)
     }
-    
+
     /**
      * 根据分类id获取项目数据
      */
@@ -166,7 +166,7 @@ class NyxNetworkApi : NetworkApi() {
             getService(NyxApiService::class.java).getProjectDataByType(pageNo, cid)
         }
     }
-    
+
     /**
      * 获取微信公众号的数据
      */
@@ -176,10 +176,17 @@ class NyxNetworkApi : NetworkApi() {
     ): AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>> {
         return getService(NyxApiService::class.java).getWXContentData(pageNo, cid)
     }
-    
+
     fun requestCommunityRecommend(url: String): Any {
         return Any()
     }
-    
-    
+
+    /**
+     * 获取当前账户的个人积分
+     */
+    fun getIntegralData(): AuraNetResponse<IntegralModel> {
+        return getService(NyxApiService::class.java).getIntegralData()
+    }
+
+
 }

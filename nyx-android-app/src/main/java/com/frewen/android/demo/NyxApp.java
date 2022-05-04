@@ -155,6 +155,8 @@ public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModulePro
         // 执行结束的时候录制TraceView的相关信息
         Debug.stopMethodTracing();
 
+        appViewModelInstance = getAppViewModelProvider().get(AppViewModel::class.java)
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             Trace.endSection();
         } else {

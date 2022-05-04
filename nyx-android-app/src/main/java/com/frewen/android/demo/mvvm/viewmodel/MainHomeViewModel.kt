@@ -18,17 +18,17 @@ import com.frewen.demo.library.network.ResultState
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 class MainHomeViewModel : BaseViewModel() {
-    
+
     //页码 首页数据页码从0开始
     var pageNo = 0
-    
+
     var homeDataState: MutableLiveData<WXArticleContent> = MutableLiveData()
-    
+
     //首页轮播图数据
     var bannerData: MutableLiveData<ResultState<ArrayList<BannerModel>>> = MutableLiveData()
     var articleData: MutableLiveData<ResultState<ArrayList<ArticleModel>>> = MutableLiveData()
-    
-    
+
+
     /**
      * 获取轮播图数据
      */

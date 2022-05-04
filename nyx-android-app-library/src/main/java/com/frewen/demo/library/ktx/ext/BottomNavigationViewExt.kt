@@ -29,8 +29,9 @@ fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): Bo
 fun BottomNavigationViewEx.interceptLongClick(vararg ids: Int) {
     val bottomNavigationMenuView: ViewGroup = (this.getChildAt(0) as ViewGroup)
     for (index in ids.indices) {
-        bottomNavigationMenuView.getChildAt(index).findViewById<View>(ids[index]).setOnLongClickListener {
-            true
-        }
+        bottomNavigationMenuView.getChildAt(index).findViewById<View>(ids[index])
+            .setOnLongClickListener {
+                true
+            }
     }
 }

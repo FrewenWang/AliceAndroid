@@ -77,6 +77,11 @@ dependencies {
     testImplementation("com.squareup.okhttp3:mockwebserver:4.8.0")
     //===================添加OKHttp网络请求框架===============================
 
+    // =================<editor-folder desc = "Dependence:LiveData相关的依赖">=======================
+    // 官方文档：https://github.com/KunMinX/UnPeek-LiveData
+    api 'com.kunminx.arch:unpeek-livedata:7.2.0-beta1'
+    // =================</editor-folder desc = "Dependence:LiveData相关的依赖">======================
+
 
     api 'com.github.CarGuo.LazyRecyclerAdapter:CommonRecycler-Kotlin:v4.0.6'
     // https://github.com/H07000223/FlycoTabLayout
@@ -92,13 +97,13 @@ dependencies {
     //======</editor-folder desc = "Dependence:Tencent的开源框架依赖">===============================
 
 
-    //=================<editor-folder desc = "Dependence:腾讯崩溃收集库Bugly">========================
-    // Bugly的依赖库添加：https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20200203205953
-    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    // =================<editor-folder desc = "Dependence:腾讯崩溃收集库Bugly">=======================
+    // Bugly的依赖库：https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20200203205953
+    // 其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
     api 'com.tencent.bugly:crashreport:latest.release'
-    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    // 其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     api 'com.tencent.bugly:nativecrashreport:latest.release'
-    //=================</editor-folder desc = "Dependence:腾讯崩溃收集库Bugly">=======================
+    // =================</editor-folder desc = "Dependence:腾讯崩溃收集库Bugly">======================
 
 
     //======<editor-folder desc = "Dependence:SmartRefreshLayout的开源框架依赖">======================

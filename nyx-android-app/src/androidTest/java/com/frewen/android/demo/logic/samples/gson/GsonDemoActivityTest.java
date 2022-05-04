@@ -1,6 +1,7 @@
 package com.frewen.android.demo.logic.samples.gson;
 
 import com.frewen.android.demo.logic.model.User;
+import com.frewen.android.demo.logic.model.UserInfo;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +21,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 @RunWith(AndroidJUnit4.class)
 public class GsonDemoActivityTest {
 
-    User mUser;
+    UserInfo mUser;
 
     @Before
     public void setUp() throws Exception {

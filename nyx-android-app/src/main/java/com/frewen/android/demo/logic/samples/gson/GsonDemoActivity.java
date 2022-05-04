@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.model.User;
+import com.frewen.android.demo.logic.model.UserInfo;
+import com.frewen.android.demo.logic.model.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -70,7 +71,7 @@ public class GsonDemoActivity extends AppCompatActivity {
      * 这有助于迭代开发和发布值对象。GSON API提供了一种机制来满足这些不同版本数据的请求。
      */
     private void testVersion() {
-        User user = new User("测试版本", 18);
+        UserInfo user = new UserInfo("测试版本", 18);
 
         System.out.println("User json for Version 1.0 ");
         Gson gson = new GsonBuilder().setVersion(1.0).setPrettyPrinting().create();
@@ -90,12 +91,12 @@ public class GsonDemoActivity extends AppCompatActivity {
         System.out.println("---------------------Gson测试null支持------------------");
         Gson gson = new GsonBuilder().serializeNulls().setPrettyPrinting().create();
 
-        User userInfo = new User(null, 18);
+        UserInfo userInfo = new User(null, 18);
 
         String userJson = gson.toJson(userInfo);
         System.out.println(userJson);
 
-        User user = gson.fromJson(userJson, User.class);
+        User user = gson.fromJson(userJson, UserInfo.class);
         System.out.println("user name: " + user.getName());
         System.out.println("user age: " + user.getAge());
 
@@ -175,10 +176,10 @@ public class GsonDemoActivity extends AppCompatActivity {
      */
     private void testPrintFormatter() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        List<User> listOfUser = new ArrayList<User>();
+        List<UserInfo> listOfUser = new ArrayList<UserInfo>();
 
-        User user1 = new User("格式化输出1", 1);
-        User user2 = new User("格式化输出2", 2);
+        User user1 = new UserInfo("格式化输出1", 1);
+        User user2 = new UserInfo("格式化输出2", 2);
         listOfUser.add(user1);
         listOfUser.add(user2);
         String prettyJsonString = gson.toJson(listOfUser);
@@ -192,13 +193,13 @@ public class GsonDemoActivity extends AppCompatActivity {
     private void testCustomSerializer() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         /// 注册注册序列化适配器
-        gsonBuilder.registerTypeAdapter(User.class, new UserInfoTypeSerializer());
+        gsonBuilder.registerTypeAdapter(UserInfo.class, new UserInfoTypeSerializer());
         /// 注册反序列化适配器
-        gsonBuilder.registerTypeAdapter(User.class, new UserInfoTypeDeserializer());
+        gsonBuilder.registerTypeAdapter(UserInfo.class, new UserInfoTypeDeserializer());
 
         Gson gson = gsonBuilder.create();
 
-        User user = new User("自定义序列化", 12);
+        User user = new UserInfo("自定义序列化", 12);
 
         String userJson = gson.toJson(user);
 
@@ -206,7 +207,7 @@ public class GsonDemoActivity extends AppCompatActivity {
         System.out.println(userJson);
 
 
-        User user1 = gson.fromJson(userJson, User.class);
+        UserInfo user1 = gson.fromJson(userJson, User.class);
         System.out.println("Custom DeSerializer : Java Object Creation");
         System.out.println(user1.toString());
 
@@ -224,7 +225,7 @@ public class GsonDemoActivity extends AppCompatActivity {
     }
 
     private void testToGson() {
-        User person = new User("Hello", 19);
+        UserInfo person = new UserInfo("Hello", 19);
         System.out.println(person.getAge());
         Gson gson = new Gson();
         System.out.println(gson.toJson(person));

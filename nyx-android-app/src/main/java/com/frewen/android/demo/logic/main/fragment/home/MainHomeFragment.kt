@@ -32,7 +32,12 @@ import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.*
  */
 class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMainHomeBinding>() {
 
-    private val homeArticleAdapter: HomeArticleAdapter by lazy { HomeArticleAdapter(arrayListOf(), true) }
+    private val homeArticleAdapter: HomeArticleAdapter by lazy {
+        HomeArticleAdapter(
+            arrayListOf(),
+            true
+        )
+    }
 
     companion object {
         /**
@@ -62,17 +67,18 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
     override fun initObserver(savedInstanceState: Bundle?) {
         viewModel.run {
             bannerData.observe(viewLifecycleOwner, Observer { resultState ->
-                 Log.e(TAG, "initObserver() called with: resultState = $resultState")
+                Log.e(TAG, "initObserver() called with: resultState = $resultState")
                 parseState(resultState, { data ->
                     //请求轮播图数据成功，添加轮播图到HeadView ，如果等于0说明没有添加过头部，添加一个
                     if (recyclerView.headerCount == 0) {
-                        val headView = LayoutInflater.from(context).inflate(R.layout.layout_include_bannner_view_common, null).apply {
-                            findViewById<BannerViewPager<BannerModel, HomeBannerViewHolder>>(R.id.banner_view).apply {
-                                adapter = HomeBannerAdapter()
-                                setLifecycleRegistry(lifecycle)
-                                create(data)
+                        val headView = LayoutInflater.from(context)
+                            .inflate(R.layout.layout_include_bannner_view_common, null).apply {
+                                findViewById<BannerViewPager<BannerModel, HomeBannerViewHolder>>(R.id.banner_view).apply {
+                                    adapter = HomeBannerAdapter()
+                                    setLifecycleRegistry(lifecycle)
+                                    create(data)
+                                }
                             }
-                        }
                         recyclerView.addHeaderView(headView)
                         recyclerView.scrollToPosition(0)
                     }
@@ -85,10 +91,12 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
     /**
      * 我们解析返回的回调的结果的State的结果
      */
-    private fun <T> parseState(resultState: ResultState<T>,
-                               onSuccess: (T) -> Unit,
-                               onError: ((AuraNetException) -> Unit)? = null,
-                               onLoading: (() -> Unit)? = null) {
+    private fun <T> parseState(
+        resultState: ResultState<T>,
+        onSuccess: (T) -> Unit,
+        onError: ((AuraNetException) -> Unit)? = null,
+        onLoading: (() -> Unit)? = null
+    ) {
         when (resultState) {
             is ResultState.Loading -> {
                 ToastUtils.showLong("正在请求数据中")

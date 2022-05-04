@@ -18,6 +18,7 @@
     <permission
         android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE"
         android:protectionLevel="normal" />
+
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
@@ -69,7 +70,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".logic.ui.WelcomeActivity" />
-        <activity android:name=".logic.main.MainPageActivity" />
+        <activity android:name=".logic.main.HomeMainActivity" />
         <activity
             android:name=".logic.ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />

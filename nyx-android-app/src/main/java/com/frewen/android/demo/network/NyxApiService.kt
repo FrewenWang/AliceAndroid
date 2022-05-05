@@ -54,7 +54,15 @@ interface NyxApiService {
      * 推荐页面的项目分类的标题
      */
     @GET("project/tree/json")
-    suspend fun getRecommendTabData(): AuraNetResponse<ArrayList<RecommendTabRespData>>
+    suspend fun getProjectTitle(): AuraNetResponse<ArrayList<ProjectClassifyModel>>
+
+    /**
+     * 根据分类id获取项目数据
+     */
+    @GET("project/list/{page}/json")
+    suspend fun getProjectDataByType(
+        @Path("page") pageNo: Int, @Query("cid") cid: Int
+    ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
 
     /**
      * 获取最新项目数据
@@ -70,13 +78,6 @@ interface NyxApiService {
     suspend fun getSquareData(@Path("page") page: Int)
             : AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
 
-    /**
-     * 根据分类id获取项目数据
-     */
-    @GET("project/list/{page}/json")
-    suspend fun getProjectDataByType(
-        @Path("page") pageNo: Int, @Query("cid") cid: Int
-    ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
 
     /**
      * 获取当前账户的个人积分

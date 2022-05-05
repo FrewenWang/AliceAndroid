@@ -15,8 +15,6 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.http.GET
-import retrofit2.http.Path
 import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -138,8 +136,23 @@ class NyxNetworkApi : NetworkApi() {
     /**
      * 推荐页面的项目分类的标题
      */
-    suspend fun getRecommendTabData(): AuraNetResponse<ArrayList<RecommendTabRespData>> {
-        return getService(NyxApiService::class.java).getRecommendTabData()
+    suspend fun getProjectTitle(): AuraNetResponse<ArrayList<ProjectClassifyModel>> {
+        return getService(NyxApiService::class.java).getProjectTitle()
+    }
+
+    /**
+     * 根据分类id获取项目数据
+     */
+    suspend fun getProjectDataByType(
+        pageNo: Int,
+        cid: Int,
+        isNew: Boolean = false
+    ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
+        return if (isNew) {
+            getService(NyxApiService::class.java).getProjectNewData(pageNo)
+        } else {
+            getService(NyxApiService::class.java).getProjectDataByType(pageNo, cid)
+        }
     }
 
 
@@ -160,21 +173,6 @@ class NyxNetworkApi : NetworkApi() {
      */
     suspend fun getSquareData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
         return getService(NyxApiService::class.java).getSquareData(pageNo)
-    }
-
-    /**
-     * 根据分类id获取项目数据
-     */
-    suspend fun getProjectDataByType(
-        pageNo: Int,
-        cid: Int,
-        isNew: Boolean = false
-    ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
-        return if (isNew) {
-            getService(NyxApiService::class.java).getProjectNewData(pageNo)
-        } else {
-            getService(NyxApiService::class.java).getProjectDataByType(pageNo, cid)
-        }
     }
 
     /**

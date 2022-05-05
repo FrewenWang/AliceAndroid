@@ -2,7 +2,6 @@ package com.frewen.android.demo.logic.samples.media.camera2
 
 import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.ImageFormat
 import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraManager
@@ -13,14 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.frewen.android.demo.R
-import com.frewen.android.demo.adapter.GenericListAdapter
-import com.frewen.freeadapter.recyclerview.BaseRvAdapter as BaseRvAdapter1
+import com.frewen.android.demo.logic.adapter.GenericListAdapter
 
 private const val PERMISSIONS_REQUEST_CODE = 10
 private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)

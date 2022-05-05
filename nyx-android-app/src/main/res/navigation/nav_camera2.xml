@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/camera_fragment"
-        android:name="com.frewen.android.demo.adapter.Camera2Fragment"
+        android:name="com.frewen.android.demo.logic.adapter.Camera2Fragment"
         android:label="Camera">
 
         <argument

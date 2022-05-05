@@ -12,8 +12,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -21,17 +19,15 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.adapter.OpenGLESAdapter;
+import com.frewen.android.demo.logic.adapter.OpenGLESAdapter;
 import com.frewen.android.demo.logic.samples.opengles.surface.OpenGLESSurfaceView;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 import static android.opengl.GLSurfaceView.RENDERMODE_CONTINUOUSLY;
 import static android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY;
 import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRender.SAMPLE_TYPE;
 import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRender.SAMPLE_TYPE_KEY_BEATING_HEART;
-import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRender.SAMPLE_TYPE_KEY_VISUALIZE_AUDIO;
 import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRender.SAMPLE_TYPE_TRIANGLE;
 
 /**

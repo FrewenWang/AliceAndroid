@@ -1,8 +1,8 @@
 package com.frewen.android.demo.app.taskstarter;
 
-import com.frewen.android.demo.ui.loadstate.EmptyCallback;
-import com.frewen.android.demo.ui.loadstate.ErrorCallback;
-import com.frewen.android.demo.ui.loadstate.LoadingStateCallback;
+import com.frewen.android.demo.logic.loadstate.EmptyCallback;
+import com.frewen.android.demo.logic.loadstate.ErrorCallback;
+import com.frewen.android.demo.logic.loadstate.LoadingStateCallback;
 import com.frewen.aura.framework.taskstarter.AbsLaunchTask;
 import com.kingja.loadsir.callback.SuccessCallback;
 import com.kingja.loadsir.core.LoadSir;

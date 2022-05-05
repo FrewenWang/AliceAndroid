@@ -23,7 +23,7 @@ import javax.inject.Inject
  * 否则，几个Fragment无法进行注入操作
  * 会报：
  * *Process: com.frewen.android.demo.debug, PID: 2570
- *   java.lang.IllegalArgumentException: No injector was found for com.frewen.android.demo.logic.ui.discovery.DiscoveryFragment
+ *   java.lang.IllegalArgumentException: No injector was found for com.frewen.android.demo.logic.samples.navigation.annotation.discovery.DiscoveryFragment
  *   没有对应注入器
  *
  */

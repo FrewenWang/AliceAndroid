@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.frewen.android.demo.R
-import com.frewen.android.demo.adapter.WelcomeBannerAdapter
+import com.frewen.android.demo.logic.adapter.WelcomeBannerAdapter
 import com.frewen.android.demo.databinding.ActivityWelcomeBinding
 import com.frewen.android.demo.mvvm.viewmodel.WelcomeViewModel
 import com.frewen.android.demo.utils.AppThemeUtil
@@ -25,25 +25,25 @@ import kotlinx.android.synthetic.main.activity_welcome.*
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
 class WelcomeActivity : BaseVMDataBindingActivity<WelcomeViewModel, ActivityWelcomeBinding>() {
-    
+
     private var resList = arrayOf("唱", "跳", "rap")
-    
+
     private lateinit var mViewPager: BannerViewPager<String, WelcomeBannerViewHolder>
-    
+
     override fun getContentViewId() = R.layout.activity_welcome
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
     }
-    
+
     private fun initView() {
         //防止出现按Home键回到桌面时，再次点击重新进入该界面bug
         if (intent.flags and Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT !== 0) {
             finish()
             return
         }
-        
+
         mDataBinding.click = ProxyClick()
         welcome_baseview.setBackgroundColor(AppThemeUtil.getThemeColor(this))
         mViewPager = findViewById(R.id.banner_view)
@@ -77,8 +77,8 @@ class WelcomeActivity : BaseVMDataBindingActivity<WelcomeViewModel, ActivityWelc
             }, 300)
         }
     }
-    
-    
+
+
     inner class ProxyClick {
         fun toHomeActivity() {
             // CacheUtil.setFirst(false)

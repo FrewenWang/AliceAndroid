@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".logic.ui.recommend.RecommendFragment">
+    tools:context=".logic.samples.navigation.annotation.recommend.RecommendFragment">
 
     <ImageView
         android:id="@+id/ivBgPicture"

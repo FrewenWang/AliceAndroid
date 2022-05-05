@@ -2,7 +2,7 @@ package com.frewen.android.demo.logic.adapter
 
 import android.view.View
 import com.frewen.android.demo.R
-import com.frewen.android.demo.adapter.holder.HomeBannerViewHolder
+import com.frewen.android.demo.logic.adapter.holder.HomeBannerViewHolder
 import com.frewen.android.demo.logic.model.BannerModel
 import com.zhpan.bannerview.BaseBannerAdapter
 

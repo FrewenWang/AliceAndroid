@@ -9,11 +9,11 @@
 
         <variable
             name="myProfileVM"
-            type="com.frewen.android.demo.logic.main.fragment.profile.MainMyProfileViewModel" />
+            type="com.frewen.android.demo.logic.ui.main.fragment.profile.MainMyProfileViewModel" />
         <!--变量的中的代理点击的对象-->
         <variable
             name="clickData"
-            type="com.frewen.android.demo.logic.main.fragment.profile.MainMyProfileFragment.ProxyClick" />
+            type="com.frewen.android.demo.logic.ui.main.fragment.profile.MainMyProfileFragment.ProxyClick" />
     </data>
 
     <!--滑动刷新组件-->

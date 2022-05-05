@@ -3,12 +3,12 @@ package com.frewen.android.demo.di.modules
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.frewen.android.demo.di.annotation.ViewModelKey
-import com.frewen.android.demo.logic.ui.home.HomeViewModel
-import com.frewen.android.demo.logic.ui.discovery.DiscoveryViewModel
-import com.frewen.android.demo.logic.ui.profile.MyProfileViewModel
+import com.frewen.android.demo.logic.samples.navigation.annotation.home.HomeViewModel
+import com.frewen.android.demo.logic.samples.navigation.annotation.discovery.DiscoveryViewModel
+import com.frewen.android.demo.logic.samples.navigation.annotation.profile.MyProfileViewModel
 import com.frewen.android.demo.mvvm.viewmodel.ViewModelFactory
-import com.frewen.android.demo.logic.ui.discovery.content.DailyQuestionViewModel
-import com.frewen.android.demo.logic.ui.recommend.content.EyeRecommendViewModel
+import com.frewen.android.demo.logic.samples.navigation.annotation.discovery.content.DailyQuestionViewModel
+import com.frewen.android.demo.logic.samples.navigation.annotation.recommend.content.EyeRecommendViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

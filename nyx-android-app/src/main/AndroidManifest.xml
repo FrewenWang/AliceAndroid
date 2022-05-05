@@ -70,7 +70,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".logic.ui.WelcomeActivity" />
-        <activity android:name=".logic.main.HomeActivity" />
+        <activity android:name="com.frewen.android.demo.logic.ui.main.MainActivity" />
         <activity
             android:name=".logic.ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />
@@ -107,7 +107,7 @@
         <activity android:name=".logic.samples.jni.HelloJNIActivity" />
         <activity android:name=".logic.samples.animation.AnimationDemoActivity" />
         <activity android:name=".logic.samples.sqlite.SQLiteDemoActivity" />
-        <activity android:name=".logic.ui.publish.PublishActivity" />
+        <activity android:name="com.frewen.android.demo.logic.samples.navigation.annotation.publish.PublishActivity" />
         <activity android:name=".logic.samples.dagger2.Dagger2Activity" />
         <activity android:name=".logic.samples.hook.target.TargetActivity" />
         <activity android:name=".logic.samples.hook.HookDemoActivity" />

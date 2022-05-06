@@ -85,5 +85,18 @@ interface NyxApiService {
     @GET("lg/coin/userinfo/json")
     suspend fun getIntegralData(): AuraNetResponse<IntegralModel>
 
+    /**
+     * 获取导航数据
+     */
+    @GET("navi/json")
+    suspend fun getNavigationData(): AuraNetResponse<ArrayList<NavigationModel>>
+
+    /**
+     * 每日一问列表数据
+     */
+    @GET("wenda/list/{page}/json")
+    suspend fun getAskData(@Path("page") page: Int)
+            : AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
+
 
 }

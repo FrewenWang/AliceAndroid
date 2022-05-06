@@ -1,10 +1,7 @@
 package com.frewen.android.demo.logic.ui.main.fragment.discovery
 
 import androidx.lifecycle.MutableLiveData
-import com.frewen.android.demo.logic.model.ArticleModel
-import com.frewen.android.demo.logic.model.ListDataStateWrapper
-import com.frewen.android.demo.logic.model.WXArticleContent
-import com.frewen.android.demo.logic.model.WXArticleTitle
+import com.frewen.android.demo.logic.model.*
 import com.frewen.android.demo.network.NyxNetworkApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel
@@ -31,6 +28,13 @@ class MainDiscoveryViewModel : BaseViewModel() {
 
     var wxArticleContentModel: MutableLiveData<ListDataStateWrapper<WXArticleContent>> =
         MutableLiveData()
+
+    //每日一问数据
+    var askDataState: MutableLiveData<ListDataStateWrapper<ArticleModel>> = MutableLiveData()
+
+    var navigationDataState: MutableLiveData<ListDataStateWrapper<NavigationModel>> =
+        MutableLiveData()
+
 
     /**
      * 请求发现页面的Title的数据
@@ -71,6 +75,56 @@ class MainDiscoveryViewModel : BaseViewModel() {
     }
 
     /**
+     * 获取每日一问数据
+     */
+    fun getAskData(isRefresh: Boolean) {
+        if (isRefresh) {
+            pageNo = 1 //每日一问的页码从1开始
+        }
+        request({ NyxNetworkApi.instance.getAskData(pageNo) }, {
+            //请求成功
+            pageNo++
+            val listDataUiState = ListDataStateWrapper(
+                isSuccess = true,
+                isRefresh = isRefresh,
+                isEmpty = it.isEmpty(),
+                hasMore = it.hasMoreData(),
+                isFirstEmpty = isRefresh && it.isEmpty(),
+                listData = it.dataList
+            )
+            askDataState.value = listDataUiState
+        }, {
+            //请求失败
+            val listDataUiState = ListDataStateWrapper(
+                isSuccess = false,
+                errMessage = it.errorMsg,
+                isRefresh = isRefresh,
+                listData = arrayListOf<ArticleModel>()
+            )
+            askDataState.value = listDataUiState
+        })
+    }
+
+    fun getNavigationData() {
+        request({ NyxNetworkApi.instance.getNavigationData() }, {
+            //请求成功
+            val dataUiState = ListDataStateWrapper(
+                isSuccess = true,
+                listData = it
+            )
+            navigationDataState.value = dataUiState
+        }, {
+            //请求失败
+            val dataUiState = ListDataStateWrapper(
+                isSuccess = false,
+                errMessage = it.errorMsg,
+                listData = arrayListOf<NavigationModel>()
+            )
+            navigationDataState.value = dataUiState
+        })
+    }
+
+    /**
      *  请求发现的页面的的微信公众号的分页数据
      */
     fun getWXContentData(cid: Int, isRefresh: Boolean = true) {
@@ -98,5 +152,6 @@ class MainDiscoveryViewModel : BaseViewModel() {
             wxArticleContentModel.value = listDataUiState
         })
     }
+
 
 }

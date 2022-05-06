@@ -11,6 +11,7 @@ import com.frewen.demo.library.ktx.ext.initOnFragment
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import kotlinx.android.synthetic.main.layout_include_top_indicator_view_pager2.*
 import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.toolbar
+
 /**
  * 首页布局页面的发现页面的容器布局
  */

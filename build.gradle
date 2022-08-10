@@ -58,7 +58,7 @@ buildscript {
         //classpath 'me.ele:lancet-plugin:1.0.6'
 
         // 添加自己本地maven插件仓库的: groupId:artifactId:version
-        classpath 'com.frewen.aura.gradle.plugin:hello-plugin:0.0.1'
+        // classpath 'com.frewen.aura.gradle.plugin:hello-plugin:0.0.1'
 
     }
 }
@@ -73,7 +73,7 @@ allprojects {
         jcenter()
         mavenLocal()
 //        }
-        maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
+        // maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
         maven { url 'https://jitpack.io' }
     }
 }

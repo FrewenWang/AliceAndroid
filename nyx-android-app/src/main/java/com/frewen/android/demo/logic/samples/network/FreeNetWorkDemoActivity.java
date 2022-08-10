@@ -3,8 +3,8 @@ package com.frewen.android.demo.logic.samples.network;
 import android.os.Bundle;
 import android.view.View;
 
-import com.chaquo.python.Python;
-import com.chaquo.python.android.AndroidPlatform;
+//import com.chaquo.python.Python;
+//import com.chaquo.python.android.AndroidPlatform;
 import com.frewen.android.demo.R;
 import com.frewen.network.core.AuraRxHttp;
 
@@ -27,9 +27,9 @@ public class FreeNetWorkDemoActivity extends AppCompatActivity {
     }
 
     private void initPython() {
-        if (!Python.isStarted()) {
-            Python.start(new AndroidPlatform(this));
-        }
+        //if (!Python.isStarted()) {
+        //    Python.start(new AndroidPlatform(this));
+        //}
     }
 
     /**
@@ -37,9 +37,9 @@ public class FreeNetWorkDemoActivity extends AppCompatActivity {
      * @param view
      */
     public void onLogin(View view) {
-        Python py = Python.getInstance();
+        //Python py = Python.getInstance();
 //        py.getBuiltins()
-        py.getModule("httpstat").callAttr("main", "www.baidu.com");
+//        py.getModule("httpstat").callAttr("main", "www.baidu.com");
         //py.getModule("hello").callAttr("print_numpy");
     }
 

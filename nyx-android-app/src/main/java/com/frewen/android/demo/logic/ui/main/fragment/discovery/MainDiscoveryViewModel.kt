@@ -32,6 +32,8 @@ class MainDiscoveryViewModel : BaseViewModel() {
     //每日一问数据
     var askDataState: MutableLiveData<ListDataStateWrapper<ArticleModel>> = MutableLiveData()
 
+    var systemDataState: MutableLiveData<ListDataStateWrapper<SystemModel>> = MutableLiveData()
+
     var navigationDataState: MutableLiveData<ListDataStateWrapper<NavigationModel>> =
         MutableLiveData()
 
@@ -105,6 +107,28 @@ class MainDiscoveryViewModel : BaseViewModel() {
         })
     }
 
+
+    fun getSystemData() {
+        request({ NyxNetworkApi.instance.getSystemData() }, {
+            //请求成功
+            val dataUiState = ListDataStateWrapper(
+                isSuccess = true,
+                listData = it
+            )
+            systemDataState.value = dataUiState
+        }, {
+            //请求失败
+            val dataUiState =
+                ListDataStateWrapper(
+                    isSuccess = false,
+                    errMessage = it.errorMsg,
+                    listData = arrayListOf<SystemModel>()
+                )
+            systemDataState.value = dataUiState
+        })
+    }
+
+
     fun getNavigationData() {
         request({ NyxNetworkApi.instance.getNavigationData() }, {
             //请求成功
@@ -152,6 +176,4 @@ class MainDiscoveryViewModel : BaseViewModel() {
             wxArticleContentModel.value = listDataUiState
         })
     }
-
-
 }

@@ -196,6 +196,11 @@ class NyxNetworkApi : NetworkApi() {
         return getService(NyxApiService::class.java).getIntegralData()
     }
 
+    suspend fun getSystemData(): AuraNetResponse<ArrayList<SystemModel>> {
+        return getService(NyxApiService::class.java).getSystemData()
+    }
+
+
     suspend fun getNavigationData(): AuraNetResponse<ArrayList<NavigationModel>> {
         return getService(NyxApiService::class.java).getNavigationData()
     }
@@ -203,5 +208,6 @@ class NyxNetworkApi : NetworkApi() {
     suspend fun getAskData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
         return getService(NyxApiService::class.java).getAskData(pageNo)
     }
+
 
 }

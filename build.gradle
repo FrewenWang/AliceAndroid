@@ -16,18 +16,15 @@ buildscript {
      * 我们在dev分支进行引用我们本地的插件依赖仓库
      */
     repositories {
-        //        if (gitBranch == "dev") {
-        //            // 这个闭包里面传入的插件依赖的仓库。注意：使用本地依赖库，首先要启动artifactory
-        //            // 具体见：/tool_kits/artifactory-start.sh
-        //            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
-        //        } else {
         google()
-        jcenter()
-        //        }
+        mavenCentral()
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+        maven { url 'https://maven.google.com' }
         maven { url 'https://oss.sonatype.org/content/repositories/public' }
-        // 设置仓库
         maven { url "https://chaquo.com/maven" }
-        // 设置本地maven依赖仓库
         maven { url('./repo') }
     }
     /**
@@ -38,11 +35,11 @@ buildscript {
         // https://developer.android.com/studio/releases/gradle-plugin?hl=zh-cn#kts
         classpath 'com.android.tools.build:gradle:4.0.0'
 
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.20'
         // Navigation开源框架，应用Fragment的安全的参数传递
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.4.1"
         // 导入Chaquopy框架的包
         classpath 'com.chaquo.python:gradle:8.0.0'
 
@@ -65,15 +62,15 @@ buildscript {
 
 allprojects {
     repositories {
-        println("allprojects repositories gitBranch = " + gitBranch)
-//        if (gitBranch == "dev") {
-//            maven { url 'http://localhost:8081/artifactory/frewen_maven_group/' }
-//        } else {
         google()
-        jcenter()
+        mavenCentral()
         mavenLocal()
-//        }
-        // maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
         maven { url 'https://jitpack.io' }
     }
 }

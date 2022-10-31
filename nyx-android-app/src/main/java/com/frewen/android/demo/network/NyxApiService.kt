@@ -98,5 +98,11 @@ interface NyxApiService {
     suspend fun getAskData(@Path("page") page: Int)
             : AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>>
 
+    /**
+     * 获取体系数据
+     */
+    @GET("tree/json")
+    suspend fun getSystemData(): AuraNetResponse<ArrayList<SystemModel>>
+
 
 }

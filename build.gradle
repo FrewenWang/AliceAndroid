@@ -70,7 +70,7 @@ allprojects {
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
         maven { url 'https://maven.google.com' }
-        maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
+//        maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
         maven { url 'https://jitpack.io' }
     }
 }

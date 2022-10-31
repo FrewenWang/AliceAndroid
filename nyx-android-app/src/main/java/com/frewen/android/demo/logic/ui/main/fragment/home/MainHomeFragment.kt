@@ -15,7 +15,7 @@ import com.frewen.android.demo.logic.adapter.ArticleAdapter
 import com.frewen.android.demo.logic.adapter.HomeBannerAdapter
 import com.frewen.android.demo.logic.model.BannerModel
 import com.frewen.android.demo.mvvm.viewmodel.MainHomeViewModel
-import com.frewen.aura.toolkits.utils.ToastUtils
+import com.frewen.aura.toolkits.utils.ToastUtil
 import com.frewen.demo.library.ktx.ext.init
 import com.frewen.demo.library.network.ResultState
 import com.frewen.demo.library.recyclerview.DefineLoadMoreView
@@ -118,7 +118,7 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
     ) {
         when (resultState) {
             is ResultState.Loading -> {
-                ToastUtils.showLong("正在请求数据中")
+                ToastUtil.showLong("正在请求数据中")
                 onLoading?.invoke()
             }
             is ResultState.Success -> {
@@ -128,7 +128,7 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
                 onError?.run { this(resultState.error) }
             }
             else -> {
-                ToastUtils.showLong("正在请求数据中")
+                ToastUtil.showLong("正在请求数据中")
             }
         }
     }
@@ -144,7 +144,7 @@ class MainHomeFragment : BaseDataBindingFragment<MainHomeViewModel, FragmentMain
             title = getString(R.string.title_home)
             inflateMenu(R.menu.main_toolbar_menu)
             setOnMenuItemClickListener {
-                ToastUtils.showShort("点击搜索")
+                ToastUtil.showShort("点击搜索")
                 true
             }
         }

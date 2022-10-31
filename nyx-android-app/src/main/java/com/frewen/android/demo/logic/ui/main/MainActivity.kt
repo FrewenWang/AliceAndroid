@@ -6,7 +6,7 @@ import androidx.navigation.Navigation
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.ActivityHomeMainBinding
 import com.frewen.android.demo.mvvm.viewmodel.MainPageViewModel
-import com.frewen.aura.toolkits.utils.ToastUtils
+import com.frewen.aura.toolkits.utils.ToastUtil
 import com.frewen.demo.library.ui.activity.BaseDataBindingActivity
 
 /**
@@ -57,7 +57,7 @@ class MainActivity : BaseDataBindingActivity<MainPageViewModel, ActivityHomeMain
                 } else {
                     //是主页
                     if (System.currentTimeMillis() - exitTime > 2000) {
-                        ToastUtils.showShort("再按一次退出程序")
+                        ToastUtil.showShort("再按一次退出程序")
                         exitTime = System.currentTimeMillis()
                     } else {
                         finish()

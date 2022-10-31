@@ -1,4 +1,4 @@
-package com.frewen.android.demo.player.exo;
+package com.frewen.android.demo.logic.samples.media.camera2.exo;
 
 import android.content.Context;
 import android.view.LayoutInflater;

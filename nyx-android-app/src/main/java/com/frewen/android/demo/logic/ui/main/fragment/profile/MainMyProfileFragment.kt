@@ -9,7 +9,7 @@ import com.frewen.android.demo.ktx.ext.init
 import com.frewen.android.demo.ktx.ext.jumpByLogin
 import com.frewen.android.demo.ktx.ext.parseState
 import com.frewen.android.demo.logic.model.IntegralModel
-import com.frewen.aura.toolkits.utils.ToastUtils
+import com.frewen.aura.toolkits.utils.ToastUtil
 import com.frewen.demo.library.ktx.ext.nav
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import kotlinx.android.synthetic.main.fragment_main_my_profile.*
@@ -57,7 +57,7 @@ class MainMyProfileFragment :
                 viewModel.rankInfo.set("id：${it.userId}　排名：${it.rank}")
                 viewModel.integral.set(it.coinCount)
             }, {
-                ToastUtils.showShort(it.errorMsg)
+                ToastUtil.showShort(it.errorMsg)
             })
         })
     }

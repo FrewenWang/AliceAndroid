@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainDiscoveryBinding
 import com.frewen.android.demo.ktx.ext.bindViewPager2
-import com.frewen.aura.toolkits.utils.ToastUtils
+import com.frewen.aura.toolkits.utils.ToastUtil
 import com.frewen.demo.library.ktx.ext.initOnFragment
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import kotlinx.android.synthetic.main.layout_include_top_indicator_view_pager2.*
@@ -52,7 +52,7 @@ class MainDiscoveryFragment :
         toolbar.run {
             inflateMenu(R.menu.menu_add)
             setOnMenuItemClickListener {
-                ToastUtils.showShort("点击了添加按钮")
+                ToastUtil.showShort("点击了添加按钮")
                 true
             }
         }

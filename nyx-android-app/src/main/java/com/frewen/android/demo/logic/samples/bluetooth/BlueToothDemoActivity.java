@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.utils.HexUtils;
-import com.frewen.aura.toolkits.utils.ToastUtils;
+import com.frewen.aura.toolkits.utils.ToastUtil;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
@@ -293,7 +293,7 @@ public class BlueToothDemoActivity extends AppCompatActivity {
                             scanDevice();
                         } else {
                             // 用户拒绝了该权限，并且选中『不再询问』
-                            ToastUtils.showLong("用户开启权限后才能使用");
+                            ToastUtil.showLong("用户开启权限后才能使用");
                         }
                     }
                 });

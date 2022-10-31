@@ -10,7 +10,7 @@ import androidx.core.content.getSystemService
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.ActivityErrorBinding
-import com.frewen.aura.toolkits.utils.ToastUtils
+import com.frewen.aura.toolkits.utils.ToastUtil
 import com.frewen.demo.library.ktx.ext.click
 import com.frewen.demo.library.ktx.ext.init
 import com.frewen.demo.library.ktx.ext.showMessageDialog
@@ -47,12 +47,12 @@ class ErrorActivity : BaseVMDataBindingActivity<ErrorViewModel, ActivityErrorBin
                     val mClipData = ClipData.newPlainText("errorLog", it)
                     // 将ClipData内容放到系统剪贴板里。
                     getSystemService<ClipboardManager>()?.primaryClip = mClipData
-                    ToastUtils.showShort("已复制错误日志")
+                    ToastUtil.showShort("已复制错误日志")
                     try {
                         val url = "mqqwpa://im/chat?chat_type=wpa&uin=61511225"
                         startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                     } catch (e: Exception) {
-                        ToastUtils.showShort("请先安装QQ")
+                        ToastUtil.showShort("请先安装QQ")
                     }
                 }, "我不敢")
             }

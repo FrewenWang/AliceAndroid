@@ -1,18 +1,15 @@
 package com.frewen.aura.perfguard.core;
 
-import android.app.admin.UnsafeStateException;
 import android.content.Context;
 import android.util.Log;
 
 import com.frewen.aura.perfguard.core.engine.IPerfGuardEngine;
 import com.frewen.aura.perfguard.core.engine.cpu.CPUEngine;
-import com.frewen.aura.perfguard.core.engine.cpu.CpuConfig;
 import com.frewen.aura.perfguard.core.engine.startup.StartupInfo;
 import com.frewen.aura.toolkits.exceptions.UnInstallException;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.security.InvalidKeyException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;

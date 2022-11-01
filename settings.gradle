@@ -23,7 +23,7 @@ include ':openCVLibrary3412'
 
 
 //include ':router-annotation', ':router-api', ':router-stub', ':router-compiler'
-include ':aura-perf-guard-core'
-include ':aura-perf-gurad-monitor'
+include ':aura-perf-guard:aura-perf-guard-core'
+include ':aura-perf-guard:aura-perf-gurad-monitor'
 include ':aura-logger'
 include ':aura-gradle-plugin'

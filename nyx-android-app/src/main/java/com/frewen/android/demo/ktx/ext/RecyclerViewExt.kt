@@ -1,6 +1,6 @@
 package com.frewen.android.demo.ktx.ext
 
-import com.frewen.android.demo.NyxApp
+import com.frewen.android.demo.AliceApp
 import com.frewen.demo.library.recyclerview.DefineLoadMoreView
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
@@ -14,7 +14,9 @@ import com.yanzhenjie.recyclerview.SwipeRecyclerView
  */
 
 fun SwipeRecyclerView.addExtFooterView(loadMoreListener: SwipeRecyclerView.LoadMoreListener): DefineLoadMoreView {
-    val footerView = DefineLoadMoreView(NyxApp.getInstance(NyxApp::class.java))
+    val footerView = DefineLoadMoreView(
+        AliceApp.getInstance(
+            AliceApp::class.java))
     // 给尾部设置颜色
     // footerView.setLoadViewColor(SettingUtil.getOneColorStateList(appContext))
     //设置尾部点击回调

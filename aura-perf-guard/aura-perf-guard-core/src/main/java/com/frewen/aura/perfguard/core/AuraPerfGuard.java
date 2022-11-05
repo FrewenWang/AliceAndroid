@@ -102,7 +102,6 @@ public class AuraPerfGuard {
      * 应用启动完成之后调用此方法，用于记录应用的启动时长
      *
      * @param startupInfo
-     *
      * @throws UnInstallException
      */
     public void onAppStartEnd(StartupInfo startupInfo) throws UnInstallException {
@@ -126,7 +125,16 @@ public class AuraPerfGuard {
     @StringDef({ModuleName.CPU
     })
     public @interface ModuleName {
-        public static final String CPU = "CPU";
+        String CPU = "CPU";
+        String BATTERY = "BATTERY";
+        String FPS = "FPS";
+        /** @deprecated use {@link #LEAK_CANARY} */
+        @Deprecated
+        String LEAK = "LEAK";
+        String LEAK_CANARY = "LEAK_CANARY";
+        String HEAP = "HEAP";
+        String PSS = "PSS";
+        String RAM = "RAM";
     }
 
 }

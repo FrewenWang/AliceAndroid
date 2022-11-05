@@ -1,6 +1,6 @@
 apply from: 'toolkits/gradle/parseLocalProperties.gradle'
-
-String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+// 添加开源框架依赖
+apply from: 'ext_dependence.gradle'
 
 buildscript {
     ext.kotlin_version = '1.4.30' //kotlin的版本
@@ -70,7 +70,7 @@ allprojects {
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
         maven { url 'https://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
         maven { url 'https://maven.google.com' }
-//        maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
+        //  maven { url 'https://dl.bintray.com/frewenwong/androidmaven' }
         maven { url 'https://jitpack.io' }
     }
 }
@@ -81,5 +81,3 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 apply from: 'toolkits/quality/quality.gradle'
-// 添加开源框架依赖
-apply from: 'ext_dependence.gradle'

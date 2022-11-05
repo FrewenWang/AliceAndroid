@@ -2,12 +2,9 @@ package com.frewen.android.demo.ktx.ext
 
 import android.content.Context
 import androidx.appcompat.widget.Toolbar
-import com.frewen.android.demo.NyxApp
 import com.frewen.android.demo.R
 import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.aura.toolkits.ktx.ext.toHtml
-import com.frewen.demo.library.recyclerview.DefineLoadMoreView
-import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 /**
  * @filename: RecyclerViewExtention

@@ -3,7 +3,7 @@ package com.frewen.network.request;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.frewen.aura.toolkits.utils.AssertUtils;
+import com.frewen.aura.toolkits.utils.Preconditions;
 import com.frewen.network.api.BaseApiService;
 import com.frewen.network.cache.CacheStrategy;
 import com.frewen.network.core.AuraRxHttp;
@@ -264,12 +264,12 @@ public abstract class Request<R extends Request> implements Cloneable {
      * ========================================网络请求设置拦截器=====================================
      */
     public R addInterceptor(Interceptor interceptor) {
-        interceptors.add(AssertUtils.notNull(interceptor, "interceptor == null"));
+        interceptors.add(Preconditions.notNull(interceptor, "interceptor == null"));
         return (R) this;
     }
 
     public R addNetworkInterceptor(Interceptor interceptor) {
-        networkInterceptors.add(AssertUtils.notNull(interceptor, "interceptor == null"));
+        networkInterceptors.add(Preconditions.notNull(interceptor, "interceptor == null"));
         return (R) this;
     }
 

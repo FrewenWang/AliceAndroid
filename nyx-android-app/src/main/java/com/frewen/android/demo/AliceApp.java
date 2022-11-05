@@ -58,11 +58,11 @@ import static com.frewen.android.demo.constant.AppKeyConstants.APP_ID_BUGLY;
  * 2、异步优化：
  * 让子线程来分担主线程的任务，通过并行的任务来进行减少执行时间
  */
-public class NyxApp extends BaseMVPApp implements HasActivityInjector, ModuleProvider {
+public class AliceApp extends BaseMVPApp implements HasActivityInjector, ModuleProvider {
     private static final String TAG = "NyxAndroidApp";
 
-    public static NyxApp getInstance() {
-        return (NyxApp) sInstance;
+    public static AliceApp getInstance() {
+        return (AliceApp) sInstance;
     }
 
     /**

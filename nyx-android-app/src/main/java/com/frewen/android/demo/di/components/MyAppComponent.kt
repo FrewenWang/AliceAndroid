@@ -1,7 +1,7 @@
 package com.frewen.android.demo.di.components
 
 import android.app.Application
-import com.frewen.android.demo.NyxApp
+import com.frewen.android.demo.AliceApp
 import com.frewen.android.demo.di.modules.ActivityBindModule
 import com.frewen.android.demo.di.modules.MyAppModule
 import com.frewen.aura.framework.di.scope.AppScope
@@ -48,6 +48,6 @@ interface MyAppComponent {
         fun build(): MyAppComponent
     }
 
-    fun inject(app: NyxApp)
+    fun inject(app: AliceApp)
 
 }

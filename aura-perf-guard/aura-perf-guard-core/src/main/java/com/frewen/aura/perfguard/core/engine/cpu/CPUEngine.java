@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.frewen.aura.perfguard.core.engine.IPerfGuardEngine;
 import com.frewen.aura.perfguard.core.utils.RxJavaUtils;
-import com.frewen.aura.toolkits.utils.AssertUtils;
+import com.frewen.aura.toolkits.utils.Preconditions;
 
 
 import java.util.concurrent.TimeUnit;
@@ -55,7 +55,7 @@ public class CPUEngine implements IPerfGuardEngine<CpuConfig> {
                 .map(new Function<Long, CpuInfo>() {
                     @Override
                     public CpuInfo apply(Long aLong) throws Throwable {
-                        AssertUtils.onWorkThread("CpuEngine apply");
+                        Preconditions.onWorkThread("CpuEngine apply");
                         return CpuUsageHelper.getCpuInfo(CPUEngine.this.mConfig.pId);
                     }
                 }).filter(new Predicate<CpuInfo>() {
@@ -67,7 +67,7 @@ public class CPUEngine implements IPerfGuardEngine<CpuConfig> {
                     @Override
                     public void accept(CpuInfo cpuInfo) throws Throwable {
                         Log.d(TAG, "accept  cpuInfo: " + cpuInfo);
-                        AssertUtils.onWorkThread("CpuEngine accept");
+                        Preconditions.onWorkThread("CpuEngine accept");
                     }
                 }));
     }

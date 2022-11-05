@@ -5,7 +5,7 @@ import android.content.Context;
 import com.frewen.aura.perfguard.core.monitor.IPerfGuardMonitor;
 import com.frewen.aura.perfgurad.monitor.server.EngineDataDriver;
 import com.frewen.aura.perfgurad.monitor.server.PerfGuardMonitorServer;
-import com.frewen.aura.toolkits.utils.AssertUtils;
+import com.frewen.aura.toolkits.utils.Preconditions;
 import com.koushikdutta.async.http.WebSocket;
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest;
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse;
@@ -31,7 +31,7 @@ public class PerfGuardMonitor implements IPerfGuardMonitor {
             return;
         }
         mIsWorking = true;
-        AssertUtils.notNull(context);
+        Preconditions.notNull(context);
         mPerfGuardMonitorServer = new PerfGuardMonitorServer(port);
         mPerfGuardMonitorServer.setOnServerMonitorListener(new PerfGuardMonitorServer.OnServerMonitorListener() {
             @Override

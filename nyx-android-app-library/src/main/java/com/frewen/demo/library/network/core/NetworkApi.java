@@ -2,7 +2,7 @@ package com.frewen.demo.library.network.core;
 
 import android.util.Log;
 
-import com.frewen.aura.toolkits.utils.AssertUtils;
+import com.frewen.aura.toolkits.utils.Preconditions;
 import com.frewen.demo.library.network.env.AbsProgramEnv;
 import com.frewen.demo.library.network.env.Env;
 import com.frewen.demo.library.network.interceptor.RequestInterceptor;
@@ -51,7 +51,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
     }
 
     protected Retrofit getRetrofit(Class service) {
-        AssertUtils.notNull(mBaseUrl);
+        Preconditions.notNull(mBaseUrl);
         if (retrofitHashMap.get(mBaseUrl + service.getName()) != null) {
             return retrofitHashMap.get(mBaseUrl + service.getName());
         }
@@ -68,7 +68,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
 
 
     private String getHttpBaseUrl(AbsNetworkConfig config) {
-        AssertUtils.notNull(config);
+        Preconditions.notNull(config);
         Env env = config.switchProgramEnv();
         switch (env) {
             case DEV:
@@ -113,7 +113,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
     public abstract Interceptor getInterceptor();
 
     public String getBaseUrl() {
-        AssertUtils.notNull(mBaseUrl);
+        Preconditions.notNull(mBaseUrl);
         return mBaseUrl;
     }
 

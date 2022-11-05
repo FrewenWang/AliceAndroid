@@ -1,6 +1,6 @@
 package com.frewen.android.demo.mvvm.viewmodel
 
-import com.frewen.android.demo.NyxApp
+import com.frewen.android.demo.AliceApp
 import com.frewen.android.demo.logic.model.UserInfo
 import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.demo.library.mvvm.livedata.EventLiveData
@@ -28,7 +28,7 @@ class AppViewModel : BaseViewModel() {
         //默认值保存的账户信息，没有登陆过则为null
         userInfo.value = MmkvUtil.getUser()
         //默认值颜色
-        appColor.value = AppThemeUtil.getThemeColor(NyxApp.getInstance())
+        appColor.value = AppThemeUtil.getThemeColor(AliceApp.getInstance())
         //初始化列表动画
         appAnimation.value = AppThemeUtil.getListAnimMode()
     }

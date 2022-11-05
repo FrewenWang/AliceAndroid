@@ -1,4 +1,7 @@
+String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()
+
 ext {
+    branch = gitBranch
     compileSdkVersion = 28
     buildToolsVersion = '28.0.3'
     targetSdkVersion = 28

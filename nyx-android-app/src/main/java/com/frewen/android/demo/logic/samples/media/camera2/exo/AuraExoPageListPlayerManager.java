@@ -3,7 +3,7 @@ package com.frewen.android.demo.logic.samples.media.camera2.exo;
 import android.app.Application;
 import android.net.Uri;
 
-import com.frewen.android.demo.NyxApp;
+import com.frewen.android.demo.AliceApp;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
@@ -34,7 +34,7 @@ public class AuraExoPageListPlayerManager {
     private static final ProgressiveMediaSource.Factory mediaSourceFactory;
 
     static {
-        Application application = NyxApp.getInstance(NyxApp.class);
+        Application application = AliceApp.getInstance(AliceApp.class);
         //创建http视频资源如何加载的工厂对象
         DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory(Util.getUserAgent(application, application.getPackageName()));
         //创建缓存，指定缓存位置，和缓存策略,为最近最少使用原则,最大为200m
@@ -72,7 +72,7 @@ public class AuraExoPageListPlayerManager {
     public static AuraExoPageListPlayer get(String pageName) {
         AuraExoPageListPlayer pageListPlay = sPageListPlayHashMap.get(pageName);
         if (pageListPlay == null) {
-            Application application = NyxApp.getInstance(NyxApp.class);
+            Application application = AliceApp.getInstance(AliceApp.class);
             pageListPlay = new AuraExoPageListPlayer(application);
             sPageListPlayHashMap.put(pageName, pageListPlay);
         }

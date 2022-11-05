@@ -13,13 +13,11 @@ import androidx.annotation.Nullable;
  * @introduction: Class File Init
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-public interface LogProxy {
+public interface ILogAdapter {
 
     boolean logEnable(@AuraLogger.LogLevel int level, @Nullable String tag);
 
     /**
-     * Each log will use this pipeline
-     *
      * @param level   is the log level e.g. DEBUG, WARNING
      * @param tag     is the given tag for the log message.
      * @param message is the given message for the log message.

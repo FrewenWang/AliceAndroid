@@ -82,7 +82,21 @@ public class LogPrinter implements IPrinter {
                                  @Nullable String tag,
                                  @Nullable String message,
                                  @Nullable Throwable throwable) {
-
+        // if (throwable != null && message != null) {
+        //     message += " : " + Utils.getStackTraceString(throwable);
+        // }
+        // if (throwable != null && message == null) {
+        //     message = Utils.getStackTraceString(throwable);
+        // }
+        // if (Utils.isEmpty(message)) {
+        //     message = "Empty/NULL log message";
+        // }
+        //
+        // for (LogAdapter adapter : logAdapters) {
+        //     if (adapter.isLoggable(priority, tag)) {
+        //         adapter.log(priority, tag, message);
+        //     }
+        // }
     }
 
 

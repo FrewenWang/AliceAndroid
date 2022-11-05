@@ -1,7 +1,5 @@
 package com.frewen.aura.logger.core;
 
-import android.util.Printer;
-
 import com.frewen.aura.logger.printer.IPrinter;
 import com.frewen.aura.logger.printer.LogPrinter;
 
@@ -23,6 +21,10 @@ import androidx.annotation.Nullable;
 public class AuraLogger {
     @NonNull
     private static IPrinter printer = new LogPrinter();
+
+    private AuraLogger() {
+
+    }
 
     public static void d(@Nullable Object object) {
         printer.d(object);

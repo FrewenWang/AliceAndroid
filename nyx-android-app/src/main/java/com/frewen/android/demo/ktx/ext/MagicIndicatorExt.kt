@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.viewpager2.widget.ViewPager2
-import com.frewen.android.demo.NyxApp
+import com.frewen.android.demo.AliceApp
 import com.frewen.android.demo.widgets.ScaleTransitionPagerTitleView
 import com.frewen.aura.toolkits.ktx.ext.toHtml
 import net.lucode.hackware.magicindicator.MagicIndicator
@@ -30,8 +30,8 @@ fun MagicIndicator.bindViewPager2(
     action: (index: Int) -> Unit = {}
 ) {
     val commonNavigator = CommonNavigator(
-        NyxApp.getInstance(
-            NyxApp::class.java
+        AliceApp.getInstance(
+            AliceApp::class.java
         )
     )
     // 实例化一个匿名对象，实现CommonNavigatorAdapter抽象类
@@ -52,8 +52,8 @@ fun MagicIndicator.bindViewPager2(
              * apply一般用于一个对象实例初始化的时候，需要对对象中的属性进行赋值。
              */
             return ScaleTransitionPagerTitleView(
-                NyxApp.getInstance(
-                    NyxApp::class.java
+                AliceApp.getInstance(
+                    AliceApp::class.java
                 )
             ).apply {
                 text = if (mDataList.size != 0) {
@@ -76,19 +76,19 @@ fun MagicIndicator.bindViewPager2(
                 mode = LinePagerIndicator.MODE_EXACTLY
                 //线条的宽高度
                 lineHeight = UIUtil.dip2px(
-                    NyxApp.getInstance(
-                        NyxApp::class.java
+                    AliceApp.getInstance(
+                        AliceApp::class.java
                     ), 3.0
                 ).toFloat()
                 lineWidth = UIUtil.dip2px(
-                    NyxApp.getInstance(
-                        NyxApp::class.java
+                    AliceApp.getInstance(
+                        AliceApp::class.java
                     ), 30.0
                 ).toFloat()
                 //线条的圆角
                 roundRadius = UIUtil.dip2px(
-                    NyxApp.getInstance(
-                        NyxApp::class.java
+                    AliceApp.getInstance(
+                        AliceApp::class.java
                     ), 6.0
                 ).toFloat()
                 startInterpolator = AccelerateInterpolator()

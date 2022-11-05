@@ -33,7 +33,7 @@ class MainActivity : BaseDataBindingActivity<MainPageViewModel, ActivityHomeMain
     }
 
     private fun initStatusBar() {
-
+        // StatusBarUtil.setColor(this, it, 0) }
     }
 
     private fun checkAppUpgrade() {

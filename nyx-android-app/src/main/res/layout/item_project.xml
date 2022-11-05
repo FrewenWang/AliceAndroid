@@ -29,8 +29,8 @@
                 android:id="@+id/item_project_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_card_img_white"
-                android:textColor="@color/color_black_alpha60"
+                android:background="@drawable/selector_item_img"
+                android:textColor="@color/color_black_alpha45"
                 android:textSize="13dp"
                 tools:text="有何高见" />
 
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/shape_label_green_stroke"
+                android:background="@drawable/shape_label_red_stroke"
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
                 android:text="问答"
@@ -80,7 +80,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:textColor="@color/color_black_alpha60"
+                android:textColor="@color/color_black_alpha45"
                 android:textSize="13dp"
                 tools:text="1小时前" />
         </LinearLayout>
@@ -97,8 +97,9 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
-                android:background="@color/color_white_alpha20"
-                android:scaleType="centerCrop" />
+                android:background="@color/windowBackground"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@drawable/ic_avatar" />
 
             <TextView
                 android:id="@+id/item_project_title"
@@ -109,9 +110,10 @@
                 android:layout_toEndOf="@+id/item_project_imageview"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textColor="@color/color_white_alpha20"
+                android:textColor="@color/color_black_alpha45"
                 android:textSize="14dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="这是一个菜的扣jio的人写的项目" />
 
             <TextView
                 android:id="@+id/item_project_content"
@@ -128,9 +130,9 @@
                 android:includeFontPadding="true"
                 android:lineSpacingMultiplier="1.4"
                 android:maxLines="3"
-                android:textColor="@color/color_white_alpha60"
+                android:textColor="@color/color_black_alpha45"
                 android:textSize="13dp"
-                tools:text="基于MVVM模式集成谷歌官方推荐的JetPack组件库：LiveData、ViewModel、Lifecycle组件 使用Kotlin语言，添加大量拓展函数，简化代码 加入Retrofit网络请求,协程，帮你简化各种操作，让你快速开发项目" />
+                tools:text="一个Jetpack结合MVVM的快速开发框架，基于MVVM模式集成谷歌官方推荐的JetPack组件库：LiveData、ViewModel、Lifecycle组件 使用Kotlin语言，添加大量拓展函数，简化代码 加入Retrofit网络请求,协程，帮你简化各种操作，让你快速开发项目" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -146,9 +148,17 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:textColor="@color/color_white_alpha60"
+                android:textColor="@color/color_black_alpha45"
                 android:textSize="13dp"
                 tools:text="分类·项目" />
+
+            <com.frewen.aura.ui.view.heart.HeartCollectView
+                android:id="@+id/item_project_collect"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp" />
         </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

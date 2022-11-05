@@ -11,4 +11,4 @@
 aura-navigation-annotations
 
 
-![create-java-module](../../images/nyx-video-player/create-java-module.png)
+![create-java-module](../images/create-java-module.png)

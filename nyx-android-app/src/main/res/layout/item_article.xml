@@ -9,7 +9,8 @@
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="4dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    tools:ignore="MissingDefaultResource">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,9 +29,9 @@
                 android:id="@+id/item_home_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/selector_card_img_white"
-                android:textColor="@color/color_black_alpha60"
-                android:textSize="13dp"
+                android:background="@drawable/selector_item_img"
+                android:textColor="@color/color_black_alpha45"
+                android:textSize="13sp"
                 tools:text="有何高见" />
 
             <TextView
@@ -43,7 +44,7 @@
                 android:paddingRight="3dp"
                 android:text="置顶"
                 android:textColor="@android:color/holo_red_light"
-                android:textSize="10dp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/item_home_new"
@@ -55,19 +56,19 @@
                 android:paddingRight="3dp"
                 android:text="新"
                 android:textColor="@android:color/holo_red_light"
-                android:textSize="10dp" />
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/item_home_type1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:background="@drawable/shape_label_green_stroke"
+                android:background="@drawable/shape_label_red_stroke"
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
                 android:text="问答"
                 android:textColor="@android:color/holo_green_dark"
-                android:textSize="10dp" />
+                android:textSize="10sp" />
 
             <View
                 android:layout_width="0dp"
@@ -79,8 +80,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:textColor="@color/color_black_alpha60"
-                android:textSize="13dp"
+                android:textColor="@color/color_black_alpha45"
+                android:textSize="13sp"
                 tools:text="1小时前" />
         </LinearLayout>
 
@@ -93,10 +94,10 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:textColor="@color/color_black_alpha45"
-            android:textSize="14dp"
+            android:textColor="@color/color_black_alpha20"
+            android:textSize="14sp"
             android:textStyle="bold"
-            tools:text="Android的一个APP" />
+            tools:text="这是一个根据JetpackMvvm框架开发玩Android的一个APP" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -104,16 +105,24 @@
 
             <TextView
                 android:id="@+id/item_home_type2"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:textColor="@color/color_black_alpha70"
-                android:textSize="13dp"
+                android:textColor="@color/color_black_alpha45"
+                android:textSize="13sp"
                 tools:text="分类·项目" />
+
+            <com.frewen.aura.ui.view.heart.HeartCollectView
+                android:id="@+id/item_home_collect"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp" />
         </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

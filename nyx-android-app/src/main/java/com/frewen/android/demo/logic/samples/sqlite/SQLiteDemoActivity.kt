@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.frewen.android.aura.annotations.ActivityDestination
 import com.frewen.android.demo.R
 
 class SQLiteDemoActivity : AppCompatActivity() {

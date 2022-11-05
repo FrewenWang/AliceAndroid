@@ -1,7 +1,6 @@
 include ':nyx-android-app-login'
 include ':nyx-demo-jetpack-sunflower'
-include ':aura-navigation-compiler'
-include ':aura-navigation-annotations'
+
 include ':nyx-android-app', ':optimusnetwork', ':aura-network'
 
 
@@ -25,5 +24,10 @@ include ':openCVLibrary3412'
 //include ':router-annotation', ':router-api', ':router-stub', ':router-compiler'
 include ':aura-perf-guard:aura-perf-guard-core'
 include ':aura-perf-guard:aura-perf-gurad-monitor'
+
+include ':aura-navigation:aura-navigation-compiler'
+include ':aura-navigation:aura-navigation-annotations'
+
+
 include ':aura-logger'
 include ':aura-gradle-plugin'

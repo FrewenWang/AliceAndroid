@@ -1,7 +1,7 @@
-package com.frewen.android.demo.logic.samples.gson;
+package com.frewen.android.demo.business.samples.gson;
 
-import com.frewen.android.demo.logic.model.User;
-import com.frewen.android.demo.logic.model.UserInfo;
+import com.frewen.android.demo.business.model.User;
+import com.frewen.android.demo.business.model.UserInfo;
 
 import org.junit.After;
 import org.junit.Before;

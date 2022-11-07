@@ -7,7 +7,7 @@
 
         <variable
             name="comment"
-            type="com.frewen.android.demo.logic.model.Comment" />
+            type="com.frewen.android.demo.business.model.Comment" />
 
         <variable
             name="lifeCycleOwner"
@@ -120,7 +120,7 @@
                     android:layout_gravity="center"
                     android:background="@color/color_gray"
                     android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}"
-                    tools:src="@mipmap/ic_launcher" />
+                    tools:src="@drawable/ic_launcher" />
 
                 <ImageView
                     android:layout_width="20dp"

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.frewen.android.demo.logic.model.NavigationDestination;
+import com.frewen.android.demo.business.model.NavigationDestination;
 import com.frewen.android.demo.jetpack.navigation.BottomNavigationBar;
 import com.frewen.aura.toolkits.common.FileUtils;
 import com.frewen.aura.toolkits.core.AuraToolKits;

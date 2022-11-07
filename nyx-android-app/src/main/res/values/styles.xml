@@ -43,8 +43,11 @@
 
 
     <!-- 定义全屏的AppTheme -->
+    <style name="AppTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
     <!--这个是包含Material风格的Theme主题-->
-    <style name="AppTheme.FullScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme.MaterialFullScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
 
@@ -64,6 +67,7 @@
         <item name="android:windowBackground">@color/color_common_bg</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <!--ToolbarStyle样式-->

@@ -1,7 +1,7 @@
 package com.frewen.android.demo.network
 
-import com.frewen.android.demo.logic.model.*
-import com.frewen.android.demo.logic.model.wrapper.ApiPagerResponseWrapper
+import com.frewen.android.demo.business.model.*
+import com.frewen.android.demo.business.model.wrapper.ApiPagerResponseWrapper
 import com.frewen.network.response.BasePagerRespData
 import com.frewen.network.response.AuraNetResponse
 import retrofit2.http.GET

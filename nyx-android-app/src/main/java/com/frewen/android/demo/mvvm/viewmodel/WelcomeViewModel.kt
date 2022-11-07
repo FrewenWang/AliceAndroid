@@ -1,8 +1,8 @@
 package com.frewen.android.demo.mvvm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.frewen.android.demo.logic.model.BannerModel
-import com.frewen.android.demo.logic.model.WXArticleContent
+import com.frewen.android.demo.business.model.BannerModel
+import com.frewen.android.demo.business.model.WXArticleContent
 import com.frewen.android.demo.network.NyxNetworkApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel

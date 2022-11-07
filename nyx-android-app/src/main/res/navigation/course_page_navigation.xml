@@ -23,19 +23,19 @@
     <!--id必须和navigation的id保持一致-->
     <fragment
         android:id="@+id/navigation_recommend"
-        android:name="com.frewen.android.demo.logic.samples.course.fragments.MsgViewFragment"
+        android:name="com.frewen.android.demo.business.samples.course.fragments.MsgViewFragment"
         android:label="@string/title_recommend"
         tools:layout="@layout/fragment_main_recommend" />
 
     <fragment
         android:id="@+id/navigation_discovery"
-        android:name="com.frewen.android.demo.logic.samples.course.fragments.RecommendViewFragment"
+        android:name="com.frewen.android.demo.business.samples.course.fragments.RecommendViewFragment"
         android:label="@string/title_discovery"
         tools:layout="@layout/fragment_main_discovery" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.frewen.android.demo.logic.samples.course.fragments.MineViewFragment"
+        android:name="com.frewen.android.demo.business.samples.course.fragments.MineViewFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_main_my_profile" />
 </navigation>

@@ -1,7 +1,7 @@
 package com.frewen.android.demo.utils
 
 import android.text.TextUtils
-import com.frewen.android.demo.logic.model.UserInfo
+import com.frewen.android.demo.business.model.UserInfo
 import com.google.gson.Gson
 import com.tencent.mmkv.MMKV
 

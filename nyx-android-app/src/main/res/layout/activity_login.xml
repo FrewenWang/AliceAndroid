@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/dp_vertical_margin_16"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/dp_vertical_margin_16"
-    tools:context=".logic.ui.login.ui.login.LoginActivity">
+    tools:context=".business.ui.login.ui.login.LoginActivity">
 
     <Button
         android:id="@+id/login"

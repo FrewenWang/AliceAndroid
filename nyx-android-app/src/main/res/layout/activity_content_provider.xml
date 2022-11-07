@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.samples.ipc.client.ContentProviderActivity">
+    tools:context=".business.samples.ipc.client.ContentProviderActivity">
 
     <Button
         android:id="@+id/button2"

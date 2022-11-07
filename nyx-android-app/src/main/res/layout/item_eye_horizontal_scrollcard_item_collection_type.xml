@@ -4,7 +4,7 @@
     android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".logic.samples.navigation.annotation.recommend.RecommendFragment"
+    tools:context=".business.samples.navigation.annotation.recommend.RecommendFragment"
     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
     tools:listitem="@layout/item_eye_horizontal_scroll_card_itemcollection_item_type"
     tools:orientation="horizontal" />

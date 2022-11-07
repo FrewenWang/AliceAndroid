@@ -12,7 +12,7 @@
             name="lifeCycleOwner"
             type="androidx.lifecycle.LifecycleOwner" />
 
-        <import type="com.frewen.android.demo.logic.model.Post"></import>
+        <import type="com.frewen.android.demo.business.model.Post"></import>
 
     </data>
 

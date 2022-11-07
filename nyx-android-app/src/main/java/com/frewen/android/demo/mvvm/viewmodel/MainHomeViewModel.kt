@@ -5,10 +5,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.frewen.android.demo.ktx.ext.showEmpty
 import com.frewen.android.demo.ktx.ext.showError
-import com.frewen.android.demo.logic.model.ArticleModel
-import com.frewen.android.demo.logic.model.BannerModel
-import com.frewen.android.demo.logic.model.ListDataStateWrapper
-import com.frewen.android.demo.logic.model.WXArticleContent
+import com.frewen.android.demo.business.model.ArticleModel
+import com.frewen.android.demo.business.model.BannerModel
+import com.frewen.android.demo.business.model.ListDataStateWrapper
+import com.frewen.android.demo.business.model.WXArticleContent
 import com.frewen.android.demo.network.NyxNetworkApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel

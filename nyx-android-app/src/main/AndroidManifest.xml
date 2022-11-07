@@ -36,30 +36,15 @@
     <application
         android:name=".AliceApp"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NyxAppMaterialTheme"
-        tools:replace="android:allowBackup">
-        <activity
-            android:name=".logic.samples.rxjava2.usecase.RxSubjectActivity"
-            android:exported="true" />
-        <activity
-            android:name=".logic.samples.opengles.OpenGLESDemoActivity"
-            android:exported="true" />
-        <activity android:name=".performance.TestAuraPerfGuardActivity" />
-        <activity
-            android:name=".logic.samples.view.TranslucentActivity"
-            android:theme="@style/TransparentTheme" />
-        <activity android:name=".logic.samples.AnimationDrawableActivity" />
-        <activity android:name=".logic.samples.media.camera2.Camera2Activity" />
-        <activity android:name=".logic.samples.opencv.TesseractActivity" />
-        <activity android:name=".logic.samples.opencv.OpenCVActivity" />
-        <activity android:name=".logic.samples.network.aura.AuraNetWorkDemoActivity" />
-        <activity android:name=".logic.samples.FrameAnimationActivity" />
+        tools:replace="android:allowBackup"
+        tools:targetApi="n">
+
         <activity
             android:name=".logic.ui.SplashActivity"
             android:theme="@style/AppTheme.Splash">
@@ -69,82 +54,99 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".logic.ui.WelcomeActivity" />
-        <activity android:name="com.frewen.android.demo.logic.ui.main.MainActivity" />
+
         <activity
-            android:name=".logic.ui.HomeActivity"
+            android:name=".business.samples.rxjava2.usecase.RxSubjectActivity"
+            android:exported="true" />
+        <activity
+            android:name=".business.samples.opengles.OpenGLESDemoActivity"
+            android:exported="true" />
+        <activity android:name=".performance.TestAuraPerfGuardActivity" />
+        <activity
+            android:name=".business.samples.view.TranslucentActivity"
+            android:theme="@style/TransparentTheme" />
+        <activity android:name=".business.samples.AnimationDrawableActivity" />
+        <activity android:name=".business.samples.media.camera2.Camera2Activity" />
+        <activity android:name=".business.samples.opencv.TesseractActivity" />
+        <activity android:name=".business.samples.opencv.OpenCVActivity" />
+        <activity android:name=".business.samples.network.aura.AuraNetWorkDemoActivity" />
+        <activity android:name=".business.samples.FrameAnimationActivity" />
+        <activity android:name=".business.ui.WelcomeActivity" />
+        <activity android:name="com.frewen.android.demo.business.ui.main.MainActivity" />
+        <activity
+            android:name=".business.ui.HomeActivity"
             android:theme="@style/AppTheme.FullScreen" />
         <activity android:name=".logic.samples.view.custom.recyclerview.AuraRecyclerViewActivity" />
         <activity
-            android:name=".logic.samples.window.WindowDemoActivity"
+            android:name=".business.samples.window.WindowDemoActivity"
             android:label="@string/title_activity_window_demo"
             android:theme="@style/NyxAppMaterialTheme.NoActionBar" />
         <activity android:name=".error.ErrorActivity" />
-        <activity android:name=".logic.samples.net.ProtobufActivity" />
+        <activity android:name=".business.samples.net.ProtobufActivity" />
         <activity android:name=".performance.TestPerformanceActivity" />
-        <activity android:name=".logic.samples.view.recyclerview.AdapterSampleActivity" />
-        <activity android:name=".logic.samples.view.recyclerview.AnimatorSampleActivity" />
-        <activity android:name=".logic.samples.designpattern.chainresponsibility.ChainResponsibilityActivity" />
-        <activity android:name=".logic.samples.designpattern.NotificationActivity" />
+        <activity android:name=".business.samples.view.recyclerview.AdapterSampleActivity" />
+        <activity android:name=".business.samples.view.recyclerview.AnimatorSampleActivity" />
+        <activity android:name=".business.samples.designpattern.chainresponsibility.ChainResponsibilityActivity" />
+        <activity android:name=".business.samples.designpattern.NotificationActivity" />
         <activity android:name=".logic.samples.designpattern.ProxyPatternActivity" />
         <activity
             android:name=".logic.samples.course.CaiNiaoCourceActivity"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity
-            android:name=".logic.ui.login.ui.login.LoginActivity"
+            android:name=".business.ui.login.ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".logic.samples.view.MotionLayoutActivity" />
-        <activity android:name=".logic.samples.webview.WebViewActivity" />
-        <activity android:name=".logic.samples.view.CollapsingToolbarLayoutActivity" />
-        <activity android:name=".logic.samples.view.CoordinatorLayoutActivity" />
-        <activity android:name=".logic.samples.gson.GsonDemoActivity" />
+        <activity android:name=".business.samples.view.MotionLayoutActivity" />
+        <activity android:name=".business.samples.webview.WebViewActivity" />
+        <activity android:name=".business.samples.view.CollapsingToolbarLayoutActivity" />
+        <activity android:name=".business.samples.view.CoordinatorLayoutActivity" />
+        <activity android:name=".business.samples.gson.GsonDemoActivity" />
         <activity
-            android:name=".logic.samples.androidapi.SecondActivity"
+            android:name=".business.samples.androidapi.SecondActivity"
             android:theme="@style/AppTheme.NotFullScreenActivity" />
-        <activity android:name=".logic.samples.androidapi.ActivityDemoActivity" />
-        <activity android:name=".logic.samples.view.ConstraintLayoutDemoActivity" />
-        <activity android:name=".logic.samples.view.RecyclerViewDemoActivity" />
+        <activity android:name=".business.samples.androidapi.ActivityDemoActivity" />
+        <activity android:name=".business.samples.view.ConstraintLayoutDemoActivity" />
+        <activity android:name=".business.samples.view.RecyclerViewDemoActivity" />
         <activity android:name=".logic.samples.jni.HelloJNIActivity" />
-        <activity android:name=".logic.samples.animation.AnimationDemoActivity" />
+        <activity android:name=".business.samples.animation.AnimationDemoActivity" />
         <activity android:name=".logic.samples.sqlite.SQLiteDemoActivity" />
-        <activity android:name="com.frewen.android.demo.logic.samples.navigation.annotation.publish.PublishActivity" />
-        <activity android:name=".logic.samples.dagger2.Dagger2Activity" />
-        <activity android:name=".logic.samples.hook.target.TargetActivity" />
-        <activity android:name=".logic.samples.hook.HookDemoActivity" />
-        <activity android:name=".logic.samples.unitest.AndroidUnitTestActivity" />
-        <activity android:name=".logic.samples.view.ViewTouchConflictActivity" />
-        <activity android:name=".logic.samples.retrofit.RetrofitActivity" />
-        <activity android:name=".logic.samples.SampleDemoActivity" />
+        <activity android:name="com.frewen.android.demo.business.samples.navigation.annotation.publish.PublishActivity" />
+        <activity android:name=".business.samples.dagger2.Dagger2Activity" />
+        <activity android:name=".business.samples.hook.target.TargetActivity" />
+        <activity android:name=".business.samples.hook.HookDemoActivity" />
+        <activity android:name=".business.samples.unitest.AndroidUnitTestActivity" />
+        <activity android:name=".business.samples.view.ViewTouchConflictActivity" />
+        <activity android:name=".business.samples.retrofit.RetrofitActivity" />
+        <activity android:name=".business.samples.SampleDemoActivity" />
         <activity android:name=".logic.samples.bluetooth.BlueToothDemoActivity" />
-        <activity android:name=".logic.samples.jobscheduler.JobSchedulerDemoActivity" />
-        <activity android:name=".logic.samples.network.WebSocketDemoActivity" />
-        <activity android:name=".logic.samples.keeplive.KeepLiveActivity" />
-        <activity android:name=".logic.samples.view.ViewDemoActivity" />
+        <activity android:name=".business.samples.jobscheduler.JobSchedulerDemoActivity" />
+        <activity android:name=".business.samples.network.WebSocketDemoActivity" />
+        <activity android:name=".business.samples.keeplive.KeepLiveActivity" />
+        <activity android:name=".business.samples.view.ViewDemoActivity" />
         <activity android:name=".logic.samples.glide.Glide4Activity" />
-        <activity android:name=".logic.samples.network.FreeNetWorkDemoActivity" />
-        <activity android:name=".logic.samples.OptimusNetWorkActivity" />
-        <activity android:name=".logic.samples.PermissionActivity" />
-        <activity android:name=".logic.samples.okhttp.OkHttp3Activity" />
-        <activity android:name=".logic.samples.AgoraDemoActivity" />
-        <activity android:name=".logic.samples.concurrent.HandlerThreadActivity" />
+        <activity android:name=".business.samples.network.FreeNetWorkDemoActivity" />
+        <activity android:name=".business.samples.OptimusNetWorkActivity" />
+        <activity android:name=".business.samples.PermissionActivity" />
+        <activity android:name=".business.samples.okhttp.OkHttp3Activity" />
+        <activity android:name=".business.samples.AgoraDemoActivity" />
+        <activity android:name=".business.samples.concurrent.HandlerThreadActivity" />
         <activity android:name=".logic.samples.ipc.IPCDemoActivity" />
-        <activity android:name=".logic.samples.ipc.client.ContentProviderActivity" />
-        <activity android:name=".logic.samples.ipc.socket.SocketActivity" />
-        <activity android:name=".logic.samples.rxjava2.RxJava2Activity" />
+        <activity android:name=".business.samples.ipc.client.ContentProviderActivity" />
+        <activity android:name=".business.samples.ipc.socket.SocketActivity" />
+        <activity android:name=".business.samples.rxjava2.RxJava2Activity" />
         <activity android:name=".logic.samples.ipc.client.AIDLDemoActivity" />
-        <activity android:name=".logic.samples.bitmap.BitmapDemoActivity" />
-        <activity android:name=".logic.samples.eventbus.StickyMsgActivity" />
-        <activity android:name=".logic.samples.fragment.FragmentDemoActivity" />
+        <activity android:name=".business.samples.bitmap.BitmapDemoActivity" />
+        <activity android:name=".business.samples.eventbus.StickyMsgActivity" />
+        <activity android:name=".business.samples.fragment.FragmentDemoActivity" />
         <activity android:name=".logic.samples.fragment.FragmentStackActivity" /> <!-- RxJava2的基础知识学习的相关Activity -->
-        <activity android:name=".logic.samples.rxjava2.operators.RxCreateActivity" />
+        <activity android:name=".business.samples.rxjava2.operators.RxCreateActivity" />
         <activity android:name=".logic.samples.rxjava2.operators.RxZipActivity" />
-        <activity android:name=".logic.samples.rxjava2.operators.RxMapActivity" />
-        <activity android:name=".logic.samples.rxjava2.operators.RxFlatMapActivity" />
-        <activity android:name=".logic.samples.rxjava2.operators.RxConcatMapActivity" />
-        <activity android:name=".logic.samples.rxjava2.operators.RxTimerActivity" />
-        <activity android:name=".logic.samples.rxjava2.operators.RxTakeActivity" />
-        <activity android:name=".logic.samples.rxjava2.operators.RxSkipActivity" />
-        <activity android:name=".logic.samples.rxjava2.usecase.RxNetSingleActivity" /> <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
+        <activity android:name=".business.samples.rxjava2.operators.RxMapActivity" />
+        <activity android:name=".business.samples.rxjava2.operators.RxFlatMapActivity" />
+        <activity android:name=".business.samples.rxjava2.operators.RxConcatMapActivity" />
+        <activity android:name=".business.samples.rxjava2.operators.RxTimerActivity" />
+        <activity android:name=".business.samples.rxjava2.operators.RxTakeActivity" />
+        <activity android:name=".business.samples.rxjava2.operators.RxSkipActivity" />
+        <activity android:name=".business.samples.rxjava2.usecase.RxNetSingleActivity" /> <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
         <!-- 因此，android:authorities必须是唯一的，这里建议读者在命名的时候加上包名前缀。 -->
         <!-- 为了演示进程间通信，我们让BookProvider运行在独立的进程中并给它添加了权限， -->
         <!-- 这样外界应用如果想访问BookProvider，就必须声明“com.frewen.content.provider”这个权限。 -->
@@ -155,7 +157,7 @@
         <!-- 如果你在安装一个带有provider的应用时，系统会检查当前已安装应用的authority是否和你要安装应用的authority相同， -->
         <!-- 如果相同则会弹出警告INSTALL FAILED CONFLICTING PROVIDER，并且安装失败。 -->
         <provider
-            android:name=".logic.samples.ipc.server.StudentContentProvider"
+            android:name=".business.samples.ipc.server.StudentContentProvider"
             android:authorities="${applicationId}.provider"
             android:process=":server"
             android:readPermission="com.frewen.content.provider.READ"
@@ -171,11 +173,11 @@
             android:enabled="true"
             android:exported="true" /> <!-- Socket通信的服务端，运行在单独的进程中 -->
         <service
-            android:name=".logic.samples.ipc.remote.socket.RemoteTCPService"
+            android:name=".business.samples.ipc.remote.socket.RemoteTCPService"
             android:process=":socket_server" />
 
         <receiver
-            android:name=".logic.samples.designpattern.chainresponsibility.FirstBroadCastReceiver"
+            android:name=".business.samples.designpattern.chainresponsibility.FirstBroadCastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -185,7 +187,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".logic.samples.broadcastreceiver.CommonBroadcastReceiver"
+            android:name=".business.samples.broadcastreceiver.CommonBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

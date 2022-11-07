@@ -7,7 +7,7 @@
     android:orientation="horizontal">
 
 
-    <com.frewen.android.demo.logic.samples.animation.v1.FrameAnimDrawable
+    <com.frewen.android.demo.business.samples.animation.v1.FrameAnimDrawable
         android:id="@+id/frame_surfaceView"
         android:layout_width="630dp"
         android:layout_height="630dp"

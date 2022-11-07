@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.frewen.android.demo.logic.samples.media.camera2.views.AutoFitSurfaceView
+    <com.frewen.android.demo.business.samples.media.camera2.views.AutoFitSurfaceView
         android:id="@+id/view_finder"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.samples.lombok.LombokActivity">
+    tools:context=".business.samples.lombok.LombokActivity">
 
 </androidx.constraintlayout.ConstraintLayout>

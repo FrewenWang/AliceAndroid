@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.samples.designpattern.NotificationActivity">
+    tools:context=".business.samples.designpattern.NotificationActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

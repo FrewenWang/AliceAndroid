@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.samples.animation.AnimationDemoActivity">
+    tools:context=".business.samples.animation.AnimationDemoActivity">
 
     <com.frewen.android.demo.logic.samples.animation.surface.FrameSurfaceView
         android:id="@+id/sv_frame"
@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.frewen.android.demo.logic.samples.animation.v1.FrameAnimDrawable
+    <com.frewen.android.demo.business.samples.animation.v1.FrameAnimDrawable
         android:id="@+id/ivFrameAnimation"
         android:layout_width="200dp"
         android:layout_height="200dp"

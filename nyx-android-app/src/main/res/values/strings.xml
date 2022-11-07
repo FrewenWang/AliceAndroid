@@ -23,7 +23,7 @@
     <!-- After you entered the App ID, remove <##> outside of Your App ID -->
     <!-- For formal released project, please use Security Keys/Token
         https://docs.agora.io/en/2.3.1/product/Video/Agora%20Platform/key_native?platform=Android -->
-    <string name="app_name">NyxAndroid</string>
+    <string name="app_name">枫锐云</string>
     <string name="agora_app_id">9d396b2200cf40eda79a6d734da20c4a</string>
 
     <string name="enable_camera">Enable Camera</string>

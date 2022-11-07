@@ -12,7 +12,7 @@
     android:keepScreenOn="true"
     app:defaultNavHost="true"
     app:navGraph="@navigation/nav_camera2"
-    tools:context=".logic.samples.media.camera2.Camera2Activity" />
+    tools:context=".business.samples.media.camera2.Camera2Activity" />
 
     <!--defaultNavHost 启动默认的Navigation的路由起点-->
     <!--keepScreenOn 保持屏幕常量？-->

@@ -7,9 +7,9 @@
 
         <variable
             name="user"
-            type="com.frewen.android.demo.logic.model.UserInfo" />
+            type="com.frewen.android.demo.business.model.UserInfo" />
 
-        <import type="com.frewen.android.demo.logic.model.UserInfo"></import>
+        <import type="com.frewen.android.demo.business.model.UserInfo"></import>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

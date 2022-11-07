@@ -1,6 +1,5 @@
-package com.frewen.android.demo.logic.samples.gson;
+package com.frewen.android.demo.business.samples.gson;
 
-import com.frewen.android.demo.logic.model.UserInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

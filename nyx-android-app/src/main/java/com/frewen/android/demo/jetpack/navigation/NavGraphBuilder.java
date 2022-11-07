@@ -2,7 +2,7 @@ package com.frewen.android.demo.jetpack.navigation;
 
 import android.content.ComponentName;
 
-import com.frewen.android.demo.logic.model.NavigationDestination;
+import com.frewen.android.demo.business.model.NavigationDestination;
 import com.frewen.android.demo.constant.AppConfig;
 import com.frewen.aura.toolkits.common.AppInfoUtils;
 import com.frewen.aura.toolkits.core.AuraToolKits;

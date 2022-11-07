@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".logic.samples.designpattern.chainresponsibility.ChainResponsibilityActivity">
+    tools:context=".business.samples.designpattern.chainresponsibility.ChainResponsibilityActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

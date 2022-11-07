@@ -6,7 +6,7 @@
 
         <variable
             name="click"
-            type="com.frewen.android.demo.logic.ui.WelcomeActivity.ProxyClick" />
+            type="com.frewen.android.demo.business.ui.WelcomeActivity.ProxyClick" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,7 +55,7 @@
             android:id="@+id/welcome_image"
             android:layout_width="108dp"
             android:layout_height="108dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

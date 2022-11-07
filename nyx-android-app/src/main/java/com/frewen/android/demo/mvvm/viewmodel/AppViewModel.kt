@@ -1,7 +1,7 @@
 package com.frewen.android.demo.mvvm.viewmodel
 
 import com.frewen.android.demo.AliceApp
-import com.frewen.android.demo.logic.model.UserInfo
+import com.frewen.android.demo.business.model.UserInfo
 import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.demo.library.mvvm.livedata.EventLiveData
 import com.frewen.demo.library.mvvm.vm.BaseViewModel

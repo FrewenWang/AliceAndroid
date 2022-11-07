@@ -8,7 +8,7 @@
     <!--默认主页面的Fragment-->
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.frewen.android.demo.logic.ui.main.MainFragment"
+        android:name="com.frewen.android.demo.business.ui.main.MainFragment"
         android:label="MainPageFragment" />
 
 

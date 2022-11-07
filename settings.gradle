@@ -1,7 +1,7 @@
 include ':nyx-android-app-login'
-include ':nyx-demo-jetpack-sunflower'
+include ':alice-demo-jetpack-sunflower'
 
-include ':nyx-android-app', ':optimusnetwork', ':aura-network'
+include ':alice-android-app', ':optimusnetwork', ':aura-network'
 
 
 String gitBranch = 'git symbolic-ref --short -q HEAD'.execute().text.trim()

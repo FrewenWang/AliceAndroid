@@ -7,11 +7,11 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.frewen.android.demo.R
+import com.frewen.android.demo.business.adapter.ArticleAdapter
 import com.frewen.android.demo.business.adapter.holder.HomeBannerViewHolder
 import com.frewen.android.demo.databinding.FragmentMainHomeBinding
 import com.frewen.android.demo.ktx.ext.loadStateServiceInit
 import com.frewen.android.demo.ktx.ext.showLoading
-import com.frewen.android.demo.logic.adapter.ArticleAdapter
 import com.frewen.android.demo.business.adapter.HomeBannerAdapter
 import com.frewen.android.demo.business.model.BannerModel
 import com.frewen.android.demo.mvvm.viewmodel.MainHomeViewModel

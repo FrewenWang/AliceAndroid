@@ -1,29 +1,22 @@
 package com.frewen.android.demo.business.ui.main.fragment.discovery
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
-import android.widget.FrameLayout
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.LayoutFloatButtonRecylerViewBinding
 import com.frewen.android.demo.ktx.ext.*
 import com.frewen.android.demo.business.adapter.SystemAdapter
-import com.frewen.android.demo.logic.model.SystemModel
+import com.frewen.android.demo.business.model.SystemModel
 import com.frewen.aura.toolkits.display.DisplayHelper
 import com.frewen.aura.ui.recyclerview.SpaceItemDecoration
 import com.frewen.demo.library.ktx.ext.init
 import com.frewen.demo.library.ktx.ext.initFloatBtn
-import com.frewen.demo.library.ktx.ext.nav
-import com.frewen.demo.library.ktx.ext.navigateAction
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import com.kingja.loadsir.core.LoadService
 import kotlinx.android.synthetic.main.layout_float_button_recyler_view.*
 import kotlinx.android.synthetic.main.layout_include_recyclerview_common.*
-import kotlinx.android.synthetic.main.layout_include_top_indicator_view_pager2.*
-import kotlinx.android.synthetic.main.layout_include_top_toolbar_common.*
 
 /**
  * 发现页面里面的广场的页面

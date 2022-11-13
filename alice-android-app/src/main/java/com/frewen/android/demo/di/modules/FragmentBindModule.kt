@@ -3,7 +3,7 @@ package com.frewen.android.demo.di.modules
 import com.frewen.android.demo.business.samples.navigation.annotation.discovery.DiscoveryFragment
 import com.frewen.android.demo.business.samples.navigation.annotation.discovery.content.DailyQuestionFragment
 import com.frewen.android.demo.business.samples.navigation.annotation.home.HomeFragment
-import com.frewen.android.demo.logic.samples.navigation.annotation.profile.MyProfileFragment
+import com.frewen.android.demo.business.samples.navigation.annotation.profile.MyProfileFragment
 import com.frewen.android.demo.business.samples.navigation.annotation.recommend.RecommendFragment
 import com.frewen.android.demo.business.samples.navigation.annotation.recommend.content.EyeRecommendFragment
 import dagger.Module

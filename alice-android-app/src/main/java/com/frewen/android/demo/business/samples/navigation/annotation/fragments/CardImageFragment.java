@@ -3,7 +3,7 @@ package com.frewen.android.demo.business.samples.navigation.annotation.fragments
 import android.os.Bundle;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.adapter.CardImageAdapter;
+import com.frewen.android.demo.business.adapter.CardImageAdapter;
 import com.frewen.android.demo.business.model.ArticleModel;
 import com.frewen.aura.framework.fragment.BaseButterKnifeFragment;
 import com.frewen.aura.toolkits.common.FileUtils;

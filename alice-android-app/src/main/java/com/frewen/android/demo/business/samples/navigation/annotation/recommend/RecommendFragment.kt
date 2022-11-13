@@ -7,7 +7,7 @@ import com.frewen.demo.library.ui.fragment.BaseDataBindingLazyViewFragment
 import com.frewen.demo.library.di.injector.Injectable
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainRecommendBinding
-import com.frewen.android.demo.logic.ui.main.fragment.recommend.MainRecommendViewModel
+import com.frewen.android.demo.business.ui.main.fragment.recommend.MainRecommendViewModel
 
 /**
  * @filename: RecommendFragment

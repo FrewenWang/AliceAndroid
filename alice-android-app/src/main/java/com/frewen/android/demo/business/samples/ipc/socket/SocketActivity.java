@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.samples.ipc.remote.socket.RemoteTCPService;
+import com.frewen.android.demo.business.samples.ipc.remote.socket.RemoteTCPService;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

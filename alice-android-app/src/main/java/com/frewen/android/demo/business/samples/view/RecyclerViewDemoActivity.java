@@ -13,7 +13,7 @@ import android.widget.CompoundButton;
 
 import com.frewen.android.demo.R;
 import com.frewen.android.demo.business.samples.view.recyclerview.AdapterSampleActivity;
-import com.frewen.android.demo.logic.samples.view.recyclerview.AnimatorSampleActivity;
+import com.frewen.android.demo.business.samples.view.recyclerview.AnimatorSampleActivity;
 
 public class RecyclerViewDemoActivity extends AppCompatActivity {
     private static final String TAG = "RecyclerViewActivity";

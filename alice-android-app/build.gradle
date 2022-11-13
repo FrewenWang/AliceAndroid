@@ -366,6 +366,18 @@ dependencies {
     // Tesseract是一个兼容各种操作系统平台的开源OCR识别引擎:https://github.com/rmtheis/tess-two
     implementation 'com.rmtheis:tess-two:8.0.0' //
     //==========</editor-folder desc = "Dependence:OpenCV的相关依赖">============================
+
+    //==========<editor-folder desc = "Dependence:AndroidSupportSkin框架">===========================
+    // skin-support 基础控件支持
+    // implementation 'skin.support:skin-support:3.1.4'
+    // skin-support-design material design 控件支持[可选]
+    // implementation 'skin.support:skin-support-design:3.1.4'
+    // skin-support-cardview CardView 控件支持[可选]
+    // implementation 'skin.support:skin-support-cardview:3.1.4'
+    // skin-support-constraint-layout ConstraintLayout 控件支持[可选]
+    // implementation 'skin.support:skin-support-constraint-layout:3.1.4'
+    //==========</editor-folder desc = "Dependence:AndroidSupportSkin框架">==========================
+
 }
 
 

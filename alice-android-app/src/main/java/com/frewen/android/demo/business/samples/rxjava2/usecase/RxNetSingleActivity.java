@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.model.ExpressInfo;
+import com.frewen.android.demo.business.model.ExpressInfo;
 import com.frewen.demo.library.ui.activity.BaseToolBarActivity;
 import com.google.gson.Gson;
 

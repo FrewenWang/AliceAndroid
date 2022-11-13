@@ -2,8 +2,8 @@ package com.frewen.android.demo.business.ui.main.fragment.recommend
 
 import androidx.lifecycle.MutableLiveData
 import com.frewen.android.demo.business.model.ArticleModel
-import com.frewen.android.demo.logic.model.ListDataStateWrapper
-import com.frewen.android.demo.logic.model.ProjectClassifyModel
+import com.frewen.android.demo.business.model.ListDataStateWrapper
+import com.frewen.android.demo.business.model.ProjectClassifyModel
 import com.frewen.android.demo.network.NyxNetworkApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel

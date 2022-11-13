@@ -1,6 +1,6 @@
 package com.frewen.android.demo.business.samples.sqlite;
 
-import static com.frewen.android.demo.logic.samples.sqlite.BaseColumns.ID;
+import static com.frewen.android.demo.business.samples.sqlite.BaseColumns.ID;
 import static com.frewen.android.demo.business.samples.sqlite.UserColumns.TABLE_NAME;
 import static com.frewen.android.demo.business.samples.sqlite.UserColumns.USER_AGE;
 import static com.frewen.android.demo.business.samples.sqlite.UserColumns.USER_CONTENT;

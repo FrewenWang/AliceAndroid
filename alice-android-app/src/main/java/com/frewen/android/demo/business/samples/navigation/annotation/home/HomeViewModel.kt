@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.frewen.android.demo.business.model.ArticleModel
-import com.frewen.android.demo.logic.model.BannerModel
+import com.frewen.android.demo.business.model.BannerModel
 import com.frewen.android.demo.business.model.ListDataStateWrapper
 import com.frewen.android.demo.business.model.Post
 import com.frewen.android.demo.network.NyxNetworkApi

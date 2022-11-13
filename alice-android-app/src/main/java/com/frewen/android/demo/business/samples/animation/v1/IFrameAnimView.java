@@ -1,6 +1,6 @@
 package com.frewen.android.demo.business.samples.animation.v1;
 
-import com.frewen.android.demo.logic.samples.animation.surface.FrameSurfaceView;
+import com.frewen.android.demo.business.samples.animation.surface.FrameSurfaceView;
 
 /**
  * @filename: IFrameAnimView

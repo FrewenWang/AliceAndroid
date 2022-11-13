@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.samples.media.camera2.exo.AuraExoPageListPlayer;
+import com.frewen.android.demo.business.samples.media.camera2.exo.AuraExoPageListPlayer;
 import com.frewen.android.demo.business.samples.media.camera2.exo.AuraExoPageListPlayerManager;
 import com.frewen.android.demo.business.samples.media.camera2.exo.IPlayTarget;
 import com.frewen.aura.toolkits.display.DisplayHelper;

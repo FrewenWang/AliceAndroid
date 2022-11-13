@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.samples.network.websocket.NyxWebSocketClient;
+import com.frewen.android.demo.business.samples.network.websocket.NyxWebSocketClient;
 
 import java.net.URI;
 

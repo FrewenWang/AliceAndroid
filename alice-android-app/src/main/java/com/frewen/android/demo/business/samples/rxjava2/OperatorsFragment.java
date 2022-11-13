@@ -7,10 +7,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.adapter.OperatorsAdapter;
+import com.frewen.android.demo.business.adapter.OperatorsAdapter;
 import com.frewen.android.demo.business.model.ContentData;
 import com.frewen.android.demo.business.samples.rxjava2.operators.RxConcatMapActivity;
-import com.frewen.android.demo.logic.samples.rxjava2.operators.RxCreateActivity;
+import com.frewen.android.demo.business.samples.rxjava2.operators.RxCreateActivity;
 import com.frewen.android.demo.business.samples.rxjava2.operators.RxFlatMapActivity;
 import com.frewen.android.demo.business.samples.rxjava2.operators.RxMapActivity;
 import com.frewen.android.demo.business.samples.rxjava2.operators.RxSkipActivity;

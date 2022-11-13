@@ -27,8 +27,8 @@ import java.util.Arrays;
 import static android.opengl.GLSurfaceView.RENDERMODE_CONTINUOUSLY;
 import static android.opengl.GLSurfaceView.RENDERMODE_WHEN_DIRTY;
 import static com.frewen.android.demo.business.samples.opengles.render.MyNativeRender.SAMPLE_TYPE;
-import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRender.SAMPLE_TYPE_KEY_BEATING_HEART;
-import static com.frewen.android.demo.logic.samples.opengles.render.MyNativeRender.SAMPLE_TYPE_TRIANGLE;
+import static com.frewen.android.demo.business.samples.opengles.render.MyNativeRender.SAMPLE_TYPE_KEY_BEATING_HEART;
+import static com.frewen.android.demo.business.samples.opengles.render.MyNativeRender.SAMPLE_TYPE_TRIANGLE;
 
 /**
  * 代码参考：

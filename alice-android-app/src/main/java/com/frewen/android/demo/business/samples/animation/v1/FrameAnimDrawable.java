@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.frewen.android.demo.logic.samples.animation.surface.FrameSurfaceView;
+import com.frewen.android.demo.business.samples.animation.surface.FrameSurfaceView;
 
 import java.io.File;
 import java.io.IOException;

@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.adapter.FragmentPagerViewAdapter;
-import com.frewen.android.demo.logic.samples.navigation.annotation.fragments.CardImageFragment;
+import com.frewen.android.demo.business.adapter.FragmentPagerViewAdapter;
+import com.frewen.android.demo.business.samples.navigation.annotation.fragments.CardImageFragment;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 

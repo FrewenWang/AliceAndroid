@@ -3,13 +3,12 @@ package com.frewen.android.demo.business.samples.jni;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frewen.android.demo.R;
-import com.frewen.android.demo.logic.model.UserInfo;
+import com.frewen.android.demo.business.model.UserInfo;
 
 /**
  * @filename: HelloJNIActivity

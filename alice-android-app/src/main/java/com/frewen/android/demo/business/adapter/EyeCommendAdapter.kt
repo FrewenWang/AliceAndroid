@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.frewen.android.demo.R
 import com.frewen.android.demo.extention.inflate
-import com.frewen.android.demo.logic.model.data.CommunityRecommendModel
+import com.frewen.android.demo.business.model.data.CommunityRecommendModel
 import com.frewen.android.demo.business.samples.navigation.annotation.recommend.content.EyeRecommendFragment
 import com.frewen.aura.toolkits.ktx.ext.gone
 import com.frewen.demo.library.adapter.holder.EmptyViewHolder

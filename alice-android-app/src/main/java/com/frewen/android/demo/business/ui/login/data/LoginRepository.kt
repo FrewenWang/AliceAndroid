@@ -1,6 +1,6 @@
 package com.frewen.android.demo.business.ui.login.data
 
-import com.frewen.android.demo.logic.ui.login.data.model.LoggedInUser
+import com.frewen.android.demo.business.ui.login.data.model.LoggedInUser
 
 /**
  * Class that requests authentication and user information from the remote data source and

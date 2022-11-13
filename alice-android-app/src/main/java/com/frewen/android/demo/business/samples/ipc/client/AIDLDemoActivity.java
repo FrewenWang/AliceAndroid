@@ -5,27 +5,27 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.RemoteException;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.frewen.android.demo.R;
+import com.frewen.android.demo.business.samples.ipc.remote.aidl.RemoteService;
+import com.frewen.android.demo.business.samples.ipc.remote.aidl.RemoteTicket;
 import com.frewen.android.demo.business.samples.ipc.remote.aidl.IOnNewTicketArrivedListener;
 import com.frewen.android.demo.business.samples.ipc.remote.aidl.IRemoteServiceInterface;
-import com.frewen.android.demo.business.samples.ipc.remote.aidl.RemoteService;
-import com.frewen.android.demo.logic.samples.ipc.remote.aidl.RemoteTicket;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * @author Frewen.Wong

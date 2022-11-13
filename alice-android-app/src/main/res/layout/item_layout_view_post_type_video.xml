@@ -4,7 +4,7 @@
 
     <data>
         <!-- DataBinding文件中导入实体变量 -->
-        <import type="com.frewen.android.demo.logic.model.Post" />
+        <import type="com.frewen.android.demo.business.model.Post" />
         <!-- 声明变量 -->
         <variable
             name="post"

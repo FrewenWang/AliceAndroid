@@ -10,10 +10,10 @@ import com.frewen.android.demo.R
 import com.frewen.demo.library.ui.fragment.BaseDataBindingLazyViewFragment
 import com.frewen.android.demo.databinding.LayoutFloatButtonRecylerViewBinding
 import com.frewen.android.demo.ktx.ext.*
-import com.frewen.android.demo.logic.adapter.ArticleAdapter
+import com.frewen.android.demo.business.adapter.ArticleAdapter
 import com.frewen.android.demo.business.model.ArticleModel
-import com.frewen.android.demo.logic.model.ListDataStateWrapper
-import com.frewen.android.demo.logic.samples.navigation.annotation.recommend.RecommendModel
+import com.frewen.android.demo.business.model.ListDataStateWrapper
+import com.frewen.android.demo.business.samples.navigation.annotation.recommend.RecommendModel
 import com.frewen.demo.library.recyclerview.DefineLoadMoreView
 import com.frewen.aura.toolkits.display.DisplayHelper
 import com.frewen.aura.ui.recyclerview.SpaceItemDecoration

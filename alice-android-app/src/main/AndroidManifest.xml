@@ -46,7 +46,7 @@
         tools:targetApi="n">
 
         <activity
-            android:name=".logic.ui.SplashActivity"
+            android:name=".business.ui.SplashActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

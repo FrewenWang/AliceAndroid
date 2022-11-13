@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.liveData
-import com.frewen.android.demo.logic.model.data.CommunityRecommendModel
+import com.frewen.android.demo.business.model.data.CommunityRecommendModel
 import com.frewen.android.demo.business.repository.MainPageRepository
 import com.frewen.aura.framework.mvvm.vm.AbsViewModel
 import javax.inject.Inject

@@ -9,6 +9,9 @@ import android.os.SystemClock;
 import android.util.Log;
 
 
+import com.frewen.android.demo.business.samples.ipc.remote.aidl.IOnNewTicketArrivedListener;
+import com.frewen.android.demo.business.samples.ipc.remote.aidl.IRemoteServiceInterface;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

@@ -52,9 +52,9 @@ class Camera2ListFragment : Fragment() {
             adapter = GenericListAdapter(cameraList, itemLayoutId = layoutId) { view, item, _ ->
                 view.findViewById<TextView>(android.R.id.text1).text = item.title
                 view.setOnClickListener {
-                    Navigation.findNavController(requireActivity(), R.id.fragment_container)
-                            .navigate(Camera2ListFragmentDirections.actionCameraListToCamera(
-                                    item.cameraId, item.format))
+                    // Navigation.findNavController(requireActivity(), R.id.fragment_container)
+                    //         .navigate(Camera2ListFragmentDirections.actionCameraListToCamera(
+                    //                 item.cameraId, item.format))
                 }
             }
             

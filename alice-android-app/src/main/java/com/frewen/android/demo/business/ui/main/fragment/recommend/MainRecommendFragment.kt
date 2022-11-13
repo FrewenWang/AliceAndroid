@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import com.frewen.android.demo.R
 import com.frewen.android.demo.databinding.FragmentMainRecommendBinding
 import com.frewen.android.demo.ktx.ext.*
-import com.frewen.android.demo.logic.loadstate.ErrorCallback
+import com.frewen.android.demo.business.loadstate.ErrorCallback
 import com.frewen.demo.library.ktx.ext.initOnFragment
 import com.frewen.demo.library.ui.fragment.BaseDataBindingFragment
 import com.kingja.loadsir.core.LoadService

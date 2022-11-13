@@ -1,8 +1,8 @@
 // IRemoteServiceInterface.aidl
-package com.frewen.android.demo.logic.samples.ipc.remote.aidl;
+package com.frewen.android.demo.business.samples.ipc.remote.aidl;
 // Declare any non-default types here with import statements
-import com.frewen.android.demo.logic.samples.ipc.remote.aidl.RemoteTicket;
-import com.frewen.android.demo.logic.samples.ipc.remote.aidl.IOnNewTicketArrivedListener;
+import com.frewen.android.demo.business.samples.ipc.remote.aidl.RemoteTicket;
+import com.frewen.android.demo.business.samples.ipc.remote.aidl.IOnNewTicketArrivedListener;
 
 interface IRemoteServiceInterface {
    /**

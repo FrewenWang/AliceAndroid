@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi;
 import static com.frewen.android.demo.business.samples.jobscheduler.JobSchedulerDemoActivity.MESSENGER_INTENT_KEY;
 import static com.frewen.android.demo.business.samples.jobscheduler.JobSchedulerDemoActivity.MSG_COLOR_START;
 import static com.frewen.android.demo.business.samples.jobscheduler.JobSchedulerDemoActivity.MSG_COLOR_STOP;
-import static com.frewen.android.demo.logic.samples.jobscheduler.JobSchedulerDemoActivity.WORK_DURATION_KEY;
+import static com.frewen.android.demo.business.samples.jobscheduler.JobSchedulerDemoActivity.WORK_DURATION_KEY;
 
 /**
  * @filename: MyJobScheduler

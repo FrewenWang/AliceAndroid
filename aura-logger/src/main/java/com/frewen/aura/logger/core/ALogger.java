@@ -18,11 +18,11 @@ import androidx.annotation.Nullable;
  * @introduction: Class File Init
  * @copyright: Copyright ©2021 Frewen.Wong. All Rights Reserved.
  */
-public class AuraLogger {
+public class ALogger {
     @NonNull
     private static IPrinter printer = new LogPrinter();
 
-    private AuraLogger() {
+    private ALogger() {
 
     }
 

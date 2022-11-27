@@ -3,7 +3,7 @@ package com.frewen.aura.logger.format;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.frewen.aura.logger.core.AuraLogger;
+import com.frewen.aura.logger.core.ALogger;
 import com.frewen.aura.logger.log.LogStrategy;
 import com.frewen.aura.logger.log.LogcatLogStrategy;
 import com.frewen.aura.logger.printer.LogPrinter;
@@ -204,7 +204,7 @@ public class PrettyFormatStrategy implements IFormatStrategy {
         for (int i = MIN_STACK_OFFSET; i < trace.length; i++) {
             StackTraceElement e = trace[i];
             String name = e.getClassName();
-            if (!name.equals(LogPrinter.class.getName()) && !name.equals(AuraLogger.class.getName())) {
+            if (!name.equals(LogPrinter.class.getName()) && !name.equals(ALogger.class.getName())) {
                 return --i;
             }
         }

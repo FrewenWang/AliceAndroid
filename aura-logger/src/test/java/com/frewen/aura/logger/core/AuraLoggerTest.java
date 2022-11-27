@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 public class AuraLoggerTest extends TestCase {
 
     public void testD() {
-        AuraLogger.d("Hello AuraLogger");
+        ALogger.d("Hello AuraLogger");
     }
 
     public void testTestD() {

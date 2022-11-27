@@ -44,7 +44,13 @@
 
     <!-- 定义全屏的AppTheme -->
     <style name="AppTheme.FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <!--TODO 为什么加了下面的就不再全屏-->
+        <!--<item name="android:windowFullscreen">true</item>-->
     </style>
     <!--这个是包含Material风格的Theme主题-->
     <style name="AppTheme.MaterialFullScreen" parent="Theme.MaterialComponents.Light.NoActionBar">

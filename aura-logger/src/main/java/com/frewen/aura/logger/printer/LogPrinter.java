@@ -8,12 +8,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import static androidx.core.util.Preconditions.checkNotNull;
-import static com.frewen.aura.logger.core.AuraLogger.LogLevel.ASSERT;
-import static com.frewen.aura.logger.core.AuraLogger.LogLevel.DEBUG;
-import static com.frewen.aura.logger.core.AuraLogger.LogLevel.ERROR;
-import static com.frewen.aura.logger.core.AuraLogger.LogLevel.INFO;
-import static com.frewen.aura.logger.core.AuraLogger.LogLevel.VERBOSE;
-import static com.frewen.aura.logger.core.AuraLogger.LogLevel.WARN;
+import static com.frewen.aura.logger.core.ALogger.LogLevel.ASSERT;
+import static com.frewen.aura.logger.core.ALogger.LogLevel.DEBUG;
+import static com.frewen.aura.logger.core.ALogger.LogLevel.ERROR;
+import static com.frewen.aura.logger.core.ALogger.LogLevel.INFO;
+import static com.frewen.aura.logger.core.ALogger.LogLevel.VERBOSE;
+import static com.frewen.aura.logger.core.ALogger.LogLevel.WARN;
 
 
 public class LogPrinter implements IPrinter {

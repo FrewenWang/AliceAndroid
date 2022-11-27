@@ -11,7 +11,7 @@ import com.frewen.android.demo.R
 import com.frewen.android.demo.business.ui.main.MainActivity
 import com.frewen.android.demo.performance.LaunchTimeRecord.endRecord
 import com.frewen.aura.framework.ui.BaseButterKnifeActivity
-import com.frewen.aura.logger.core.AuraLogger
+import com.frewen.aura.logger.core.ALogger
 import com.frewen.aura.toolkits.common.ResourcesUtils
 import com.frewen.aura.toolkits.common.SharedPrefUtils
 import com.permissionx.guolindev.PermissionX
@@ -274,7 +274,7 @@ class SplashActivity : BaseButterKnifeActivity() {
      */
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        AuraLogger.d(TAG, "onWindowFocusChanged() called with: hasFocus = $hasFocus")
+        ALogger.d(TAG, "onWindowFocusChanged() called with: hasFocus = $hasFocus")
     }
 
     /**

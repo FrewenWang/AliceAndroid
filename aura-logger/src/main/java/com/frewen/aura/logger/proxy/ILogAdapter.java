@@ -1,6 +1,6 @@
 package com.frewen.aura.logger.proxy;
 
-import com.frewen.aura.logger.core.AuraLogger;
+import com.frewen.aura.logger.core.ALogger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,12 +15,12 @@ import androidx.annotation.Nullable;
  */
 public interface ILogAdapter {
 
-    boolean logEnable(@AuraLogger.LogLevel int level, @Nullable String tag);
+    boolean logEnable(@ALogger.LogLevel int level, @Nullable String tag);
 
     /**
      * @param level   is the log level e.g. DEBUG, WARNING
      * @param tag     is the given tag for the log message.
      * @param message is the given message for the log message.
      */
-    void log(@AuraLogger.LogLevel int level, @Nullable String tag, @NonNull String message);
+    void log(@ALogger.LogLevel int level, @Nullable String tag, @NonNull String message);
 }

@@ -24,9 +24,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2020/5/13 20:36
- *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
+ * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public abstract class NetworkApi implements AbsProgramEnv {
+
     private static final String TAG = "NetworkApi";
     private static Map<String, Retrofit> retrofitHashMap = new HashMap<>();
     private static AbsNetworkConfig networkConfig;

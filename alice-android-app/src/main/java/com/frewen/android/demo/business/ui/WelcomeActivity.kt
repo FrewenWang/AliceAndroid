@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
 import com.frewen.android.demo.R
 import com.frewen.android.demo.business.adapter.WelcomeBannerAdapter
+import com.frewen.android.demo.business.ui.main.MainActivity
 import com.frewen.android.demo.databinding.ActivityWelcomeBinding
 import com.frewen.android.demo.mvvm.viewmodel.WelcomeViewModel
 import com.frewen.android.demo.utils.AppThemeUtil
@@ -70,7 +71,7 @@ class WelcomeActivity : BaseVMDataBindingActivity<WelcomeViewModel, ActivityWelc
             //不是第一次打开App 0.3秒后自动跳转到主页
             welcome_image.visible()
             mViewPager.postDelayed({
-                startActivity(Intent(this, HomeActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
                 //带点渐变动画
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -82,7 +83,7 @@ class WelcomeActivity : BaseVMDataBindingActivity<WelcomeViewModel, ActivityWelc
     inner class ProxyClick {
         fun toHomeActivity() {
             // CacheUtil.setFirst(false)
-            startActivity(Intent(this@WelcomeActivity, HomeActivity::class.java))
+            startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
             finish()
             //带点渐变动画
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)

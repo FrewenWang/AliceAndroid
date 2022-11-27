@@ -18,8 +18,6 @@ import retrofit2.http.Query
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 interface NyxApiService {
-
-
     /**
      * 获取banner数据
      */

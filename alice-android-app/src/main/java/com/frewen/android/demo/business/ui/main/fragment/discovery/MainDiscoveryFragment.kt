@@ -29,11 +29,12 @@ class MainDiscoveryFragment :
     }
 
     /** 首页的发现页面的顶部标题栏 */
-    var titleData = arrayListOf("广场", "每日一问", "体系", "导航")
+    var titleData = arrayListOf("基础实例", "广场", "每日一问", "体系", "导航")
 
     private var fragments: ArrayList<Fragment> = arrayListOf()
 
     init {
+        fragments.add(DiscoveryBasicFragment())
         fragments.add(DiscoveryPlazaFragment())
         fragments.add(DiscoveryQuestionFragment())
         fragments.add(DiscoverySystemFragment())

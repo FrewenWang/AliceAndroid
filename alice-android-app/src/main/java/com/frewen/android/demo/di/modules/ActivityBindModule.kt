@@ -1,6 +1,6 @@
 package com.frewen.android.demo.di.modules
 
-import com.frewen.android.demo.business.ui.HomeActivity
+import com.frewen.android.demo.business.ui.main.MainActivity
 import com.frewen.aura.framework.di.scope.ActivityScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -21,6 +21,6 @@ abstract class ActivityBindModule {
 
     @ActivityScope
     @ContributesAndroidInjector(modules = [HomeActivityModule::class, MainFragmentBindModule::class])
-    abstract fun homeActivityInjector(): HomeActivity
+    abstract fun homeActivityInjector(): MainActivity
 
 }

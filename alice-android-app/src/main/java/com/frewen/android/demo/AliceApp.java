@@ -184,7 +184,7 @@ public class AliceApp extends BaseMVPApp implements HasActivityInjector, ModuleP
         // StrictModeHelper.init();
         // 初始化Bugly
         // initBugly();
-        initAuraPerfGuard();
+        // initAuraPerfGuard();
     }
 
     /**

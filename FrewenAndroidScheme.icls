@@ -1,0 +1,38 @@
+<scheme name="FrewenAndroidScheme" version="142" parent_scheme="Darcula">
+  <metaInfo>
+    <property name="created">2022-11-27T15:07:18</property>
+    <property name="ide">AndroidStudio</property>
+    <property name="ideVersion">2021.3.1.17</property>
+    <property name="modified">2022-11-27T15:07:28</property>
+    <property name="originalScheme">FrewenAndroidScheme</property>
+  </metaInfo>
+  <attributes>
+    <option name="HTML_CODE">
+      <value />
+    </option>
+    <option name="KOTLIN_LABEL">
+      <value />
+    </option>
+    <option name="LOGCAT_DEBUG_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="38a49b" />
+      </value>
+    </option>
+    <option name="LOGCAT_INFO_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="ff09" />
+      </value>
+    </option>
+    <option name="LOGCAT_WARNING_OUTPUT">
+      <value>
+        <option name="FOREGROUND" value="eec600" />
+      </value>
+    </option>
+    <option name="MATCHED_BRACE_ATTRIBUTES">
+      <value>
+        <option name="BACKGROUND" value="3b514d" />
+        <option name="FONT_TYPE" value="1" />
+      </value>
+    </option>
+  </attributes>
+</scheme>

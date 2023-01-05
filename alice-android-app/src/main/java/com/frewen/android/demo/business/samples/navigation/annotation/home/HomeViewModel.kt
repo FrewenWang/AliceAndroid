@@ -7,7 +7,7 @@ import com.frewen.android.demo.business.model.ArticleModel
 import com.frewen.android.demo.business.model.BannerModel
 import com.frewen.android.demo.business.model.ListDataStateWrapper
 import com.frewen.android.demo.business.model.Post
-import com.frewen.android.demo.network.NyxNetworkApi
+import com.frewen.android.demo.network.WanAndroidApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel
 import com.frewen.demo.library.network.ResultState
@@ -61,7 +61,7 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
      */
     fun getBannerData() {
         Log.d(TAG, "getBannerData() called")
-        request({ NyxNetworkApi.instance.getBanner() }, bannerData)
+        request({ WanAndroidApi.instance.getBanner() }, bannerData)
     }
 
     /**
@@ -73,7 +73,7 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
         if (isRefresh) {
             pageNo = 0
         }
-        request({ NyxNetworkApi.instance.getHomeData(pageNo) }, {
+        request({ WanAndroidApi.instance.getHomeData(pageNo) }, {
             Log.d(TAG, "getHomeData Response = $it")
             //请求成功
             pageNo++

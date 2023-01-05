@@ -1,6 +1,6 @@
 package com.frewen.demo.library.network.interceptor
 
-import android.util.Log
+import com.frewen.aura.logger.core.ALogger
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -18,7 +18,7 @@ class ResponseInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBeginTime = System.currentTimeMillis()
         val response = chain.proceed(chain.request())
-        Log.d(TAG, "request cost time=" + (System.currentTimeMillis() - requestBeginTime))
+        ALogger.d(TAG, "request cost time=" + (System.currentTimeMillis() - requestBeginTime))
         return response
     }
 

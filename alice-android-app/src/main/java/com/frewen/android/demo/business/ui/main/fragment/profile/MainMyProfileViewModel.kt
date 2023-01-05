@@ -2,7 +2,7 @@ package com.frewen.android.demo.business.ui.main.fragment.profile
 
 import androidx.lifecycle.MutableLiveData
 import com.frewen.android.demo.business.model.IntegralModel
-import com.frewen.android.demo.network.NyxNetworkApi
+import com.frewen.android.demo.network.WanAndroidApi
 import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.databind.IntObservableField
@@ -23,13 +23,13 @@ class MainMyProfileViewModel : BaseViewModel() {
 
     var integral = IntObservableField(0)
 
-    var rankInfo = StringObservableField("id：--　排名：-")
+    var rankInfo = StringObservableField("id：--排名：-")
 
     var integralData = MutableLiveData<ResultState<IntegralModel>>()
 
     var imageUrl = StringObservableField(AppThemeUtil.randomImage())
 
     fun getIntegralData() {
-        request({ NyxNetworkApi.instance.getIntegralData() }, integralData)
+        request({ WanAndroidApi.instance.getIntegralData() }, integralData)
     }
 }

@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * @time: 2020/5/13 20:36
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public abstract class NetworkApi implements AbsProgramEnv {
+public abstract class AbsNetworkApi implements AbsProgramEnv {
 
     private static final String TAG = "NetworkApi";
     private static Map<String, Retrofit> retrofitHashMap = new HashMap<>();
@@ -38,7 +38,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
      * NetworkApi 构造函数
      * 根据环境获取mBaseUrl
      */
-    public NetworkApi() {
+    public AbsNetworkApi() {
         mBaseUrl = getHttpBaseUrl(networkConfig);
     }
 
@@ -48,7 +48,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
      * @param config
      */
     public static void init(AbsNetworkConfig config) {
-        NetworkApi.networkConfig = config;
+        AbsNetworkApi.networkConfig = config;
     }
 
     protected Retrofit getRetrofit(Class service) {
@@ -63,7 +63,7 @@ public abstract class NetworkApi implements AbsProgramEnv {
         retrofitBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         Retrofit retrofit = retrofitBuilder.build();
         retrofitHashMap.put(mBaseUrl + service.getName(), retrofit);
-        Log.d(TAG, "FMsg:getRetrofit() called with: service = [" + retrofit.baseUrl() + "]");
+        Log.d(TAG, "getRetrofit() called with: service = [" + retrofit.baseUrl() + "]");
         return retrofit;
     }
 

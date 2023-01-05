@@ -4,7 +4,6 @@
     package="com.frewen.android.demo">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <!-- 使用网络权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -23,9 +22,7 @@
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- 所以这个权限不要随便泄漏啊 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 所以这个权限不要随便泄漏啊 -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="com.frewen.android.demo.permission.ACCESS_TICKET_SERVICE" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -44,7 +41,6 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup"
         tools:targetApi="n">
-
         <activity
             android:name=".business.ui.SplashActivity"
             android:theme="@style/AppTheme.FullScreen">
@@ -74,10 +70,6 @@
         <activity android:name=".business.ui.WelcomeActivity" />
         <activity android:name="com.frewen.android.demo.business.ui.main.MainActivity" />
         <activity
-            android:name=".business.ui.HomeActivity"
-            android:theme="@style/AppTheme.FullScreen" />
-        <activity android:name=".logic.samples.view.custom.recyclerview.AuraRecyclerViewActivity" />
-        <activity
             android:name=".business.samples.window.WindowDemoActivity"
             android:label="@string/title_activity_window_demo"
             android:theme="@style/NyxAppMaterialTheme.NoActionBar" />
@@ -88,13 +80,6 @@
         <activity android:name=".business.samples.view.recyclerview.AnimatorSampleActivity" />
         <activity android:name=".business.samples.designpattern.chainresponsibility.ChainResponsibilityActivity" />
         <activity android:name=".business.samples.designpattern.NotificationActivity" />
-        <activity android:name=".logic.samples.designpattern.ProxyPatternActivity" />
-        <activity
-            android:name=".logic.samples.course.CaiNiaoCourceActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
-        <activity
-            android:name=".business.ui.login.ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
         <activity android:name=".business.samples.view.MotionLayoutActivity" />
         <activity android:name=".business.samples.webview.WebViewActivity" />
         <activity android:name=".business.samples.view.CollapsingToolbarLayoutActivity" />
@@ -106,47 +91,39 @@
         <activity android:name=".business.samples.androidapi.ActivityDemoActivity" />
         <activity android:name=".business.samples.view.ConstraintLayoutDemoActivity" />
         <activity android:name=".business.samples.view.RecyclerViewDemoActivity" />
-        <activity android:name=".logic.samples.jni.HelloJNIActivity" />
         <activity android:name=".business.samples.animation.AnimationDemoActivity" />
-        <activity android:name=".logic.samples.sqlite.SQLiteDemoActivity" />
         <activity android:name="com.frewen.android.demo.business.samples.navigation.annotation.publish.PublishActivity" />
         <activity android:name=".business.samples.dagger2.Dagger2Activity" />
-        <activity android:name=".business.samples.hook.target.TargetActivity" />
         <activity android:name=".business.samples.hook.HookDemoActivity" />
         <activity android:name=".business.samples.unitest.AndroidUnitTestActivity" />
         <activity android:name=".business.samples.view.ViewTouchConflictActivity" />
         <activity android:name=".business.samples.retrofit.RetrofitActivity" />
         <activity android:name=".business.samples.SampleDemoActivity" />
-        <activity android:name=".logic.samples.bluetooth.BlueToothDemoActivity" />
         <activity android:name=".business.samples.jobscheduler.JobSchedulerDemoActivity" />
         <activity android:name=".business.samples.network.WebSocketDemoActivity" />
         <activity android:name=".business.samples.keeplive.KeepLiveActivity" />
         <activity android:name=".business.samples.view.ViewDemoActivity" />
-        <activity android:name=".logic.samples.glide.Glide4Activity" />
         <activity android:name=".business.samples.network.FreeNetWorkDemoActivity" />
         <activity android:name=".business.samples.OptimusNetWorkActivity" />
         <activity android:name=".business.samples.PermissionActivity" />
         <activity android:name=".business.samples.okhttp.OkHttp3Activity" />
         <activity android:name=".business.samples.AgoraDemoActivity" />
         <activity android:name=".business.samples.concurrent.HandlerThreadActivity" />
-        <activity android:name=".logic.samples.ipc.IPCDemoActivity" />
         <activity android:name=".business.samples.ipc.client.ContentProviderActivity" />
         <activity android:name=".business.samples.ipc.socket.SocketActivity" />
         <activity android:name=".business.samples.rxjava2.RxJava2Activity" />
-        <activity android:name=".logic.samples.ipc.client.AIDLDemoActivity" />
         <activity android:name=".business.samples.bitmap.BitmapDemoActivity" />
         <activity android:name=".business.samples.eventbus.StickyMsgActivity" />
         <activity android:name=".business.samples.fragment.FragmentDemoActivity" />
-        <activity android:name=".logic.samples.fragment.FragmentStackActivity" /> <!-- RxJava2的基础知识学习的相关Activity -->
         <activity android:name=".business.samples.rxjava2.operators.RxCreateActivity" />
-        <activity android:name=".logic.samples.rxjava2.operators.RxZipActivity" />
         <activity android:name=".business.samples.rxjava2.operators.RxMapActivity" />
         <activity android:name=".business.samples.rxjava2.operators.RxFlatMapActivity" />
         <activity android:name=".business.samples.rxjava2.operators.RxConcatMapActivity" />
         <activity android:name=".business.samples.rxjava2.operators.RxTimerActivity" />
         <activity android:name=".business.samples.rxjava2.operators.RxTakeActivity" />
         <activity android:name=".business.samples.rxjava2.operators.RxSkipActivity" />
-        <activity android:name=".business.samples.rxjava2.usecase.RxNetSingleActivity" /> <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
+        <activity android:name=".business.samples.rxjava2.usecase.RxNetSingleActivity" />
+        <!-- android:authorities是Content-Provider的唯一标识，通过这个属性外部应用就可以访问我们的StudentContentProvider， -->
         <!-- 因此，android:authorities必须是唯一的，这里建议读者在命名的时候加上包名前缀。 -->
         <!-- 为了演示进程间通信，我们让BookProvider运行在独立的进程中并给它添加了权限， -->
         <!-- 这样外界应用如果想访问BookProvider，就必须声明“com.frewen.content.provider”这个权限。 -->
@@ -162,16 +139,6 @@
             android:process=":server"
             android:readPermission="com.frewen.content.provider.READ"
             android:writePermission="com.frewen.content.provider.WRITE" />
-
-        <service
-            android:name=".logic.samples.ipc.remote.aidl.RemoteService"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":aidl_remote" />
-        <service
-            android:name=".logic.samples.network.websocket.NyxSocketClientService"
-            android:enabled="true"
-            android:exported="true" /> <!-- Socket通信的服务端，运行在单独的进程中 -->
         <service
             android:name=".business.samples.ipc.remote.socket.RemoteTCPService"
             android:process=":socket_server" />

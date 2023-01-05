@@ -3,7 +3,7 @@ package com.frewen.android.demo.network
 import android.util.Log
 import com.frewen.android.demo.business.model.*
 import com.frewen.android.demo.business.model.wrapper.ApiPagerResponseWrapper
-import com.frewen.demo.library.network.core.NetworkApi
+import com.frewen.demo.library.network.core.AbsNetworkApi
 import com.frewen.demo.library.utils.TencentUtils.getAuthorization
 import com.frewen.demo.library.utils.TencentUtils.timeStr
 import com.frewen.network.response.BasePagerRespData
@@ -27,7 +27,7 @@ import kotlin.coroutines.suspendCoroutine
  * @time: 2020/5/13 21:30
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-class NyxNetworkApi : NetworkApi() {
+class WanAndroidApi : AbsNetworkApi() {
 
     override fun getInterceptor(): Interceptor {
         /**
@@ -90,13 +90,13 @@ class NyxNetworkApi : NetworkApi() {
         private const val TAG = "NyxNetworkApi"
 
         @Volatile
-        private var sInstance: NyxNetworkApi? = null
-        val instance: NyxNetworkApi
+        private var sInstance: WanAndroidApi? = null
+        val instance: WanAndroidApi
             get() {
                 if (sInstance == null) {
-                    synchronized(NyxNetworkApi::class.java) {
+                    synchronized(WanAndroidApi::class.java) {
                         if (sInstance == null) {
-                            sInstance = NyxNetworkApi()
+                            sInstance = WanAndroidApi()
                         }
                     }
                 }

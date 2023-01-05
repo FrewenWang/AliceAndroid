@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2020/5/13 21:31
- *         Copyright ©2020 Frewen.Wong. All Rights Reserved.
+ * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
 public class MyNetworkConfig implements AbsNetworkConfig {
 
@@ -21,6 +21,7 @@ public class MyNetworkConfig implements AbsNetworkConfig {
 
     /**
      * MyNetworkConfig构造函数
+     *
      * @param application
      */
     public MyNetworkConfig(Application application) {

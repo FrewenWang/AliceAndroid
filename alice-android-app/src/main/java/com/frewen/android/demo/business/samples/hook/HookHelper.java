@@ -13,7 +13,7 @@ import java.lang.reflect.Proxy;
  * @introduction:
  * @author: Frewen.Wong
  * @time: 2019/11/19 0019 下午9:05
- *         Copyright ©2019 Frewen.Wong. All Rights Reserved.
+ * Copyright ©2019 Frewen.Wong. All Rights Reserved.
  */
 public class HookHelper {
     private static final String TAG = "T:HookHelper";
@@ -31,20 +31,16 @@ public class HookHelper {
                 //获取AMN的gDefault单例gDefault，gDefault是静态的
                 iActivityManagerSingleton = ReflectionInvokeHelper.getStaticFieldObject("android.app.ActivityManagerNative", "gDefault");
             }
-
             //gDefault是一个android.util.Singleton的单例对象 我们需要取出这个单例里面的mInstance
             // 通过获取iActivityManagerSingleton来获取iActivityManager
             Object iActivityManager = ReflectionInvokeHelper.getFieldObject(
                     "android.util.Singleton",
                     iActivityManagerSingleton, "mInstance");
-
             // 创建这个对象的代理对象，然后替换这个对象，让我们的代理对象来帮我们干活
             // 获取IActivityManager的Class文件
             Class<?> iActivityManagerClazz = Class.forName("android.app.IActivityManager");
-
             Object proxy = Proxy.newProxyInstance(iActivityManager.getClass().getClassLoader(),
                     new Class<?>[]{iActivityManagerClazz}, new HookInvocationHandler(iActivityManager));
-
             ReflectionInvokeHelper.setFieldObject("android.util.Singleton", iActivityManager, "mInstance", proxy);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

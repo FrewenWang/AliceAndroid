@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.frewen.android.demo.business.model.ArticleModel
 import com.frewen.android.demo.business.model.ListDataStateWrapper
 import com.frewen.android.demo.business.model.ProjectClassifyModel
-import com.frewen.android.demo.network.NyxNetworkApi
+import com.frewen.android.demo.network.WanAndroidApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel
 import com.frewen.demo.library.network.ResultState
@@ -29,7 +29,7 @@ class MainRecommendViewModel : BaseViewModel() {
      * 获取推荐页面的项目标题数据
      */
     fun getProjectTitleData() {
-        request({ NyxNetworkApi.instance.getProjectTitle() }, titleData)
+        request({ WanAndroidApi.instance.getProjectTitle() }, titleData)
     }
 
     /**
@@ -39,7 +39,7 @@ class MainRecommendViewModel : BaseViewModel() {
         if (isRefresh) {
             pageNo = if (isNew) 0 else 1
         }
-        request({ NyxNetworkApi.instance.getProjectDataByType(pageNo, cid, isRefresh) }, {
+        request({ WanAndroidApi.instance.getProjectDataByType(pageNo, cid, isRefresh) }, {
             pageNo++
             val listDataUiState = ListDataStateWrapper(
                 isSuccess = true,

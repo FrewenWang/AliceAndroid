@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.frewen.android.demo.business.model.ArticleModel
 import com.frewen.android.demo.business.model.ListDataStateWrapper
 import com.frewen.android.demo.business.model.RecommendTabRespData
-import com.frewen.android.demo.network.WanAndroidApi
+import com.frewen.android.demo.network.AliceNetworkApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel
 import com.frewen.demo.library.network.ResultState
@@ -31,7 +31,7 @@ class RecommendModel : BaseViewModel() {
             pageNo = if (isNew) 0 else 1
         }
         request({
-            WanAndroidApi.instance.getProjectDataByType(pageNo, cid)
+            AliceNetworkApi.instance.getProjectDataByType(pageNo, cid)
         }, {
             val listDataUiState =
                 ListDataStateWrapper(

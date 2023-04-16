@@ -8,7 +8,7 @@ import com.frewen.android.demo.ktx.ext.showError
 import com.frewen.android.demo.business.model.ArticleModel
 import com.frewen.android.demo.business.model.BannerModel
 import com.frewen.android.demo.business.model.ListDataStateWrapper
-import com.frewen.android.demo.network.WanAndroidApi
+import com.frewen.android.demo.network.AliceNetworkApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel
 import com.frewen.demo.library.network.ResultState
@@ -41,7 +41,7 @@ class MainHomeViewModel : BaseViewModel() {
      * 获取轮播图数据
      */
     fun getBannerData() {
-        request({ WanAndroidApi.instance.getBanner() }, bannerData)
+        request({ AliceNetworkApi.instance.getBanner() }, bannerData)
     }
 
     /**
@@ -52,7 +52,7 @@ class MainHomeViewModel : BaseViewModel() {
         if (isRefresh) {
             pageNo = 0
         }
-        request({ WanAndroidApi.instance.getHomeData(pageNo) }, {
+        request({ AliceNetworkApi.instance.getHomeData(pageNo) }, {
             //请求成功
             pageNo++
             val listDataUiState = ListDataStateWrapper(

@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * @time: 2020/5/13 21:31
  * Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-public class MyNetworkConfig implements AbsNetworkConfig {
+public class AliceNetworkConfig implements AbsNetworkConfig {
 
     private final Application mApplication;
 
@@ -24,7 +24,7 @@ public class MyNetworkConfig implements AbsNetworkConfig {
      *
      * @param application
      */
-    public MyNetworkConfig(Application application) {
+    public AliceNetworkConfig(Application application) {
         this.mApplication = application;
     }
 

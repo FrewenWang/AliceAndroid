@@ -1,15 +1,18 @@
 package com.frewen.demo.library.network.core;
-
-import android.util.Log;
-
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.frewen.aura.toolkits.utils.Preconditions;
 import com.frewen.demo.library.network.env.AbsProgramEnv;
 import com.frewen.demo.library.network.env.Env;
+import com.frewen.demo.library.network.interceptor.CacheInterceptor;
 import com.frewen.demo.library.network.interceptor.RequestInterceptor;
 import com.frewen.demo.library.network.interceptor.ResponseInterceptor;
+import com.frewen.demo.library.network.interceptor.HeadInterceptor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -33,6 +36,8 @@ public abstract class AbsNetworkApi implements AbsProgramEnv {
     private static AbsNetworkConfig networkConfig;
     private String mBaseUrl;
     private OkHttpClient mOkHttpClient;
+    private PersistentCookieJar mCookieJar = new PersistentCookieJar(new SetCookieCache(),
+            new SharedPrefsCookiePersistor(networkConfig.getAppContext()));
 
     /**
      * NetworkApi 构造函数
@@ -89,23 +94,34 @@ public abstract class AbsNetworkApi implements AbsProgramEnv {
     private OkHttpClient getOkHttpClient() {
         if (mOkHttpClient == null) {
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient.Builder();
-            if (getInterceptor() != null) {
-                okHttpClientBuilder.addInterceptor(getInterceptor());
-            }
-            // 缓存大小是10MB
+            // 设置缓存，缓存大小是10MB。
             int cacheSize = 10 * 1024 * 1024;
             okHttpClientBuilder.cache(new Cache(networkConfig.getAppContext().getCacheDir(), cacheSize));
+            //添加Cookies自动持久化
+            okHttpClientBuilder.cookieJar(mCookieJar);
+            // 设置请求拦截器。
             okHttpClientBuilder.addInterceptor(new RequestInterceptor(networkConfig));
             okHttpClientBuilder.addInterceptor(new ResponseInterceptor());
+
+            //示例：添加公共heads 注意要设置在日志拦截器之前，不然Log中会不显示head信息
+            okHttpClientBuilder.addInterceptor(new CacheInterceptor(networkConfig, 7));
+            // 添加
             if (networkConfig != null && (networkConfig.isDebug())) {
                 //OKHttp内置拦截器 https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
                 HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
                 okHttpClientBuilder.addInterceptor(httpLoggingInterceptor);
             }
+            if (getInterceptor() != null) {
+                okHttpClientBuilder.addInterceptor(getInterceptor());
+            }
+
+            //超时时间 连接、读、写
+            okHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS);
+            okHttpClientBuilder.readTimeout(5, TimeUnit.SECONDS);
+            okHttpClientBuilder.writeTimeout(5, TimeUnit.SECONDS);
             mOkHttpClient = okHttpClientBuilder.build();
-        }
-        return mOkHttpClient;
+        } return mOkHttpClient;
     }
 
     /**

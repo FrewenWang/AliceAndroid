@@ -17,7 +17,7 @@ import retrofit2.http.Query
  * @version: 1.0.0
  * @copyright: Copyright ©2020 Frewen.Wong. All Rights Reserved.
  */
-interface NyxApiService {
+interface AliceApiService {
     /**
      * 获取banner数据
      */

@@ -2,7 +2,7 @@ package com.frewen.android.demo.business.ui.main.fragment.discovery
 
 import androidx.lifecycle.MutableLiveData
 import com.frewen.android.demo.business.model.*
-import com.frewen.android.demo.network.WanAndroidApi
+import com.frewen.android.demo.network.AliceNetworkApi
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.vm.BaseViewModel
 import com.frewen.demo.library.network.ResultState
@@ -42,7 +42,7 @@ class MainDiscoveryViewModel : BaseViewModel() {
      * 请求发现页面的Title的数据
      */
     fun requestDiscoveryTitleData() {
-        request({ WanAndroidApi.instance.getWXArticleTitle() }, wxArticleTitleData)
+        request({ AliceNetworkApi.instance.getWXArticleTitle() }, wxArticleTitleData)
     }
 
     /**
@@ -52,7 +52,7 @@ class MainDiscoveryViewModel : BaseViewModel() {
         if (isRefresh) {
             pageNo = 0
         }
-        request({ WanAndroidApi.instance.getSquareData(pageNo) }, {
+        request({ AliceNetworkApi.instance.getSquareData(pageNo) }, {
             //请求成功
             pageNo++
             val listDataUiState = ListDataStateWrapper(
@@ -83,7 +83,7 @@ class MainDiscoveryViewModel : BaseViewModel() {
         if (isRefresh) {
             pageNo = 1 //每日一问的页码从1开始
         }
-        request({ WanAndroidApi.instance.getAskData(pageNo) }, {
+        request({ AliceNetworkApi.instance.getAskData(pageNo) }, {
             //请求成功
             pageNo++
             val listDataUiState = ListDataStateWrapper(
@@ -109,7 +109,7 @@ class MainDiscoveryViewModel : BaseViewModel() {
 
 
     fun getSystemData() {
-        request({ WanAndroidApi.instance.getSystemData() }, {
+        request({ AliceNetworkApi.instance.getSystemData() }, {
             //请求成功
             val dataUiState = ListDataStateWrapper(
                 isSuccess = true,
@@ -130,7 +130,7 @@ class MainDiscoveryViewModel : BaseViewModel() {
 
 
     fun getNavigationData() {
-        request({ WanAndroidApi.instance.getNavigationData() }, {
+        request({ AliceNetworkApi.instance.getNavigationData() }, {
             //请求成功
             val dataUiState = ListDataStateWrapper(
                 isSuccess = true,
@@ -155,7 +155,7 @@ class MainDiscoveryViewModel : BaseViewModel() {
         if (isRefresh) {
             pageNo = 1
         }
-        request({ WanAndroidApi.instance.getWXContentData(pageNo, cid) }, { //请求成功
+        request({ AliceNetworkApi.instance.getWXContentData(pageNo, cid) }, { //请求成功
             pageNo++
             val listDataUiState = ListDataStateWrapper(
                 isSuccess = true,

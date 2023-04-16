@@ -2,7 +2,7 @@ package com.frewen.android.demo.business.ui.main.fragment.profile
 
 import androidx.lifecycle.MutableLiveData
 import com.frewen.android.demo.business.model.IntegralModel
-import com.frewen.android.demo.network.WanAndroidApi
+import com.frewen.android.demo.network.AliceNetworkApi
 import com.frewen.android.demo.utils.AppThemeUtil
 import com.frewen.demo.library.ktx.ext.request
 import com.frewen.demo.library.mvvm.databind.IntObservableField
@@ -30,6 +30,6 @@ class MainMyProfileViewModel : BaseViewModel() {
     var imageUrl = StringObservableField(AppThemeUtil.randomImage())
 
     fun getIntegralData() {
-        request({ WanAndroidApi.instance.getIntegralData() }, integralData)
+        request({ AliceNetworkApi.instance.getIntegralData() }, integralData)
     }
 }

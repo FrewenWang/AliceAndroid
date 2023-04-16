@@ -1,6 +1,6 @@
 package com.frewen.android.demo.business.repository
 
-import com.frewen.android.demo.network.WanAndroidApi
+import com.frewen.android.demo.network.AliceNetworkApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -37,7 +37,7 @@ class MainPageRepository private constructor() {
 
 
     private suspend fun requestCommunityRecommend(url: String) = withContext(Dispatchers.IO) {
-        val response = WanAndroidApi.instance?.requestCommunityRecommend(url)
+        val response = AliceNetworkApi.instance?.requestCommunityRecommend(url)
         response
     }
 

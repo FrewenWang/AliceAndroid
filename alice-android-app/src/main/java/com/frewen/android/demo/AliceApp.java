@@ -12,8 +12,8 @@ import com.frewen.android.demo.app.taskstarter.LoadStateServiceTask;
 import com.frewen.android.demo.app.taskstarter.MmkvInitTask;
 import com.frewen.android.demo.di.AppInjector;
 import com.frewen.android.demo.error.ErrorActivity;
-import com.frewen.android.demo.network.MyNetworkConfig;
-import com.frewen.android.demo.network.WanAndroidApi;
+import com.frewen.android.demo.network.AliceNetworkConfig;
+import com.frewen.android.demo.network.AliceNetworkApi;
 import com.frewen.android.demo.performance.AppBlockCanaryContext;
 import com.frewen.android.demo.performance.LaunchTimeRecord;
 import com.frewen.android.demo.business.samples.hook.HookHelper;
@@ -244,7 +244,7 @@ public class AliceApp extends BaseMVPApp implements HasActivityInjector, ModuleP
     }
 
     private void initNetworkApi() {
-        WanAndroidApi.init(new MyNetworkConfig(this));
+        AliceNetworkApi.init(new AliceNetworkConfig(this));
 
         // 初始化AndroidNetworking网络请求框架
         // https://github.com/amitshekhariitbhu/Fast-Android-Networking

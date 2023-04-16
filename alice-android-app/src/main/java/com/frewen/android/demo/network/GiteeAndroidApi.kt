@@ -112,14 +112,14 @@ class GiteeAndroidApi : AbsNetworkApi() {
      * 获取首页的Banner数据
      */
     suspend fun getBanner(): AuraNetResponse<ArrayList<BannerModel>> {
-        return getService(NyxApiService::class.java).getBanner()
+        return getService(AliceApiService::class.java).getBanner()
     }
 
     suspend fun getHomeData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
         return withContext(Dispatchers.IO) {
-            val listData = async { getService(NyxApiService::class.java).getArticleList(pageNo) }
+            val listData = async { getService(AliceApiService::class.java).getArticleList(pageNo) }
             if (pageNo == 0) {
-                val topData = async { getService(NyxApiService::class.java).getTopArticleList() }
+                val topData = async { getService(AliceApiService::class.java).getTopArticleList() }
                 listData.await().data.dataList.addAll(0, topData.await().data)
                 listData.await()
             } else {
@@ -130,14 +130,14 @@ class GiteeAndroidApi : AbsNetworkApi() {
 
 
     suspend fun getTopArticleList(): AuraNetResponse<ArrayList<ArticleModel>> {
-        return getService(NyxApiService::class.java).getTopArticleList()
+        return getService(AliceApiService::class.java).getTopArticleList()
     }
 
     /**
      * 推荐页面的项目分类的标题
      */
     suspend fun getProjectTitle(): AuraNetResponse<ArrayList<ProjectClassifyModel>> {
-        return getService(NyxApiService::class.java).getProjectTitle()
+        return getService(AliceApiService::class.java).getProjectTitle()
     }
 
     /**
@@ -149,15 +149,15 @@ class GiteeAndroidApi : AbsNetworkApi() {
         isNew: Boolean = false
     ): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
         return if (isNew) {
-            getService(NyxApiService::class.java).getProjectNewData(pageNo)
+            getService(AliceApiService::class.java).getProjectNewData(pageNo)
         } else {
-            getService(NyxApiService::class.java).getProjectDataByType(pageNo, cid)
+            getService(AliceApiService::class.java).getProjectDataByType(pageNo, cid)
         }
     }
 
 
     suspend fun getWXArticleTitle(): AuraNetResponse<ArrayList<WXArticleTitle>> {
-        return getService(NyxApiService::class.java).getWXArticleTitle()
+        return getService(AliceApiService::class.java).getWXArticleTitle()
     }
 
 
@@ -165,14 +165,14 @@ class GiteeAndroidApi : AbsNetworkApi() {
      * 获取最新项目分分页数据
      */
     suspend fun getProjectNewData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
-        return getService(NyxApiService::class.java).getProjectNewData(pageNo)
+        return getService(AliceApiService::class.java).getProjectNewData(pageNo)
     }
 
     /**
      * 获取广场列表的分页数据
      */
     suspend fun getSquareData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
-        return getService(NyxApiService::class.java).getSquareData(pageNo)
+        return getService(AliceApiService::class.java).getSquareData(pageNo)
     }
 
     /**
@@ -180,7 +180,7 @@ class GiteeAndroidApi : AbsNetworkApi() {
      */
     suspend fun getWXContentData(pageNo: Int, cid: Int):
             AuraNetResponse<ApiPagerResponseWrapper<ArrayList<WXArticleContent>>> {
-        return getService(NyxApiService::class.java).getWXContentData(pageNo, cid)
+        return getService(AliceApiService::class.java).getWXContentData(pageNo, cid)
     }
 
     fun requestCommunityRecommend(url: String): Any {
@@ -191,20 +191,20 @@ class GiteeAndroidApi : AbsNetworkApi() {
      * 获取当前账户的个人积分
      */
     suspend fun getIntegralData(): AuraNetResponse<IntegralModel> {
-        return getService(NyxApiService::class.java).getIntegralData()
+        return getService(AliceApiService::class.java).getIntegralData()
     }
 
     suspend fun getSystemData(): AuraNetResponse<ArrayList<SystemModel>> {
-        return getService(NyxApiService::class.java).getSystemData()
+        return getService(AliceApiService::class.java).getSystemData()
     }
 
 
     suspend fun getNavigationData(): AuraNetResponse<ArrayList<NavigationModel>> {
-        return getService(NyxApiService::class.java).getNavigationData()
+        return getService(AliceApiService::class.java).getNavigationData()
     }
 
     suspend fun getAskData(pageNo: Int): AuraNetResponse<BasePagerRespData<ArrayList<ArticleModel>>> {
-        return getService(NyxApiService::class.java).getAskData(pageNo)
+        return getService(AliceApiService::class.java).getAskData(pageNo)
     }
 
 
